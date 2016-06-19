@@ -13,13 +13,12 @@
 		<tags>xamarin forms maps xamarinforms xamarinformsmaps xamarin.forms.maps google googlemap</tags>
 	<dependencies>
       <group>
-        <dependency id="Xamarin.Forms" version="2.1.0.6529" />
+        <dependency id="Xamarin.Forms" version="[2.1.0.6529]" />
       </group>
       <group targetFramework="MonoAndroid10">
         <dependency id="Xamarin.GooglePlayServices.Maps" version="[29.0.0.1]"/>
         <dependency id="Xamarin.Android.Support.v7.MediaRouter" version="[23.3.0]"/>
         <dependency id="Xamarin.Android.Support.v7.AppCompat" version="[23.3.0]"/>
-        <dependency id="Xamarin.Forms$IdAppend$" version="$version$"/>
       </group>
       <group targetFramework="Xamarin.iOS10">
         <dependency id="Xamarin.Google.iOS.Maps" version="[1.13.1]"/>
