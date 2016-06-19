@@ -2,9 +2,10 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
 	<metadata minClientVersion="2.8.3">
 		<id>Xamarin.Forms.GoogleMaps</id>
-		<version>0.7.2</version>
+		<version>0.7.3</version>
 		<title>Xamarin.Forms.GoogleMaps</title>
-		<authors>@amay077</authors>
+		<authors>amay077</authors>
+		<iconUrl>https://raw.githubusercontent.com/amay077/Xamarin.Forms.GoogleMaps/master/logo.png</iconUrl>
     <licenseUrl>https://github.com/amay077/Xamarin.Forms.GoogleMaps/blob/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/amay077/Xamarin.Forms.GoogleMaps</projectUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
