@@ -5,7 +5,7 @@
 		<version>0.7.0</version>
 		<title>Yet another Maps library for Xamarin.Forms that optimized for Google maps</title>
 		<authors>@amay077</authors>
-    <licenseUrl>https://github.com/P3PPP/MapExtensions/blob/master/LICENSE</licenseUrl>
+    <licenseUrl>https://github.com/amay077/Xamarin.Forms.GoogleMaps/blob/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/amay077/Xamarin.Forms.GoogleMaps</projectUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
 		<description>Yet another Maps library for Xamarin.Forms that optimized for Google maps.</description>
