@@ -1,22 +1,19 @@
-<?xml version="1.0"?>
-<package >
-  <metadata>
-    <id>$id$</id>
-    <version>$version$</version>
-    <title>$title$</title>
-    <authors>$author$</authors>
-    <owners>$author$</owners>
-    <description>$description$</description>
-    <tags>xamarin forms maps xamarinforms xamarinformsmaps xamarin.forms.maps google googlemap</tags>
-    <!--<licenseUrl>http://download.xamarin.com/content/licenses/Xamarin.Forms.rtf</licenseUrl>
-    <iconUrl>http://xamarin.com/content/images/nuget/xamarin.png</iconUrl>-->
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+	<metadata minClientVersion="2.8.3">
+		<id>Xamarin.Forms.GoogleMaps</id>
+		<version>0.7.0</version>
+		<title>Yet another Maps library for Xamarin.Forms that optimized for Google maps</title>
+		<authors>@amay077</authors>
+    <licenseUrl>https://github.com/P3PPP/MapExtensions/blob/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/amay077/Xamarin.Forms.GoogleMaps</projectUrl>
-    <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Yet another maps library for Xamarin.Forms that optimized for Google Maps</description>
-    <copyright>Copyright 2016</copyright>
-    <dependencies>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+		<description>Yet another Maps library for Xamarin.Forms that optimized for Google maps.</description>
+		<summary>Yet another Maps library for Xamarin.Forms that optimized for Google maps</summary>
+		<tags>xamarin forms maps xamarinforms xamarinformsmaps xamarin.forms.maps google googlemap</tags>
+	<dependencies>
       <group>
-        <dependency id="Xamarin.Forms" version="[2.3.0.49]"/>
+        <dependency id="Xamarin.Forms" version="2.1.0.6529" />
       </group>
       <group targetFramework="MonoAndroid10">
         <dependency id="Xamarin.GooglePlayServices.Maps" version="[29.0.0.1]"/>
@@ -27,114 +24,73 @@
       <group targetFramework="Xamarin.iOS10">
         <dependency id="Xamarin.Google.iOS.Maps" version="[1.13.1]"/>
       </group>
-    </dependencies>
-    <references>
-      <group targetFramework="portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10">
-        <reference file="Xamarin.Forms.GoogleMaps.dll" />
-      </group>
-      <group targetFramework="Xamarin.iOS10">
-        <reference file="Xamarin.Forms.GoogleMaps.dll" />
-        <reference file="Xamarin.Forms.GoogleMaps.iOS.dll" />
-      </group>
-      <!--<group targetFramework="MonoTouch10">
-        <reference file="Xamarin.Forms.GoogleMaps.dll" />
-        <reference file="Xamarin.Forms.GoogleMaps.iOS.Classic.dll" />
-      </group>-->
-      <group targetFramework="MonoAndroid10">
-        <reference file="Xamarin.Forms.GoogleMaps.dll" />
-        <reference file="Xamarin.Forms.GoogleMaps.Android.dll" />
-      </group>
-      <!--<group targetFramework="win81">
-        <reference file="Xamarin.Forms.GoogleMaps.dll" />
-      </group>
-      <group targetFramework="wpa81">
-        <reference file="Xamarin.Forms.GoogleMaps.dll" />
-        <reference file="Xamarin.Forms.GoogleMaps.WinRT.Phone.dll" />
-      </group>
-      <group targetFramework="uap10.0">
-        <reference file="Xamarin.Forms.GoogleMaps.dll" />
-        <reference file="Xamarin.Forms.GoogleMaps.UWP.dll" />
-      </group>
-      <group targetFramework="WP80">
-        <reference file="Xamarin.Forms.GoogleMaps.dll" />
-        <reference file="Xamarin.Forms.GoogleMaps.WP8.dll" />
-      </group>-->
-    </references>
-  </metadata>
-  <files>
-    <file src="..\Xamarin.Forms.Maps\bin\Release\Xamarin.Forms.GoogleMaps.dll" target="lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10" />
-    <file src="..\docs\Xamarin.Forms.GoogleMaps.xml" target="lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10" />
+	</dependencies>
+	</metadata>
+	<files>
+		<!--Core-->
+		<file src="Xamarin.Forms.GoogleMaps\Xamarin.Forms.GoogleMaps\bin\Release\Xamarin.Forms.GoogleMaps.dll" target="lib\portable-net45+wp8+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10+UAP10\Xamarin.Forms.GoogleMaps.dll" />
+		<!--<file src="Xamarin.Forms.GoogleMaps\MapExtensions.Forms.Plugin.Abstractions\bin\Release\MapExtensions.Forms.Plugin.Abstractions.dll" target="lib\portable-net45+wp8+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10+UAP10\MapExtensions.Forms.Plugin.Abstractions.dll" />
+		<file src="Xamarin.Forms.GoogleMaps\MapExtensions.Forms.Plugin.Abstractions\bin\Release\MapExtensions.Forms.Plugin.Abstractions.xml" target="lib\portable-net45+wp8+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10+UAP10\MapExtensions.Forms.Plugin.Abstractions.xml" />
+		<file src="Xamarin.Forms.GoogleMaps\MapExtensions.Forms.Plugin.Abstractions\bin\Release\MapExtensions.Forms.Plugin.Abstractions.pdb" target="lib\portable-net45+wp8+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10+UAP10\MapExtensions.Forms.Plugin.Abstractions.pdb" />-->		
+		
+		<!--dotnet
+		<file src="Xamarin.Forms.GoogleMaps\Xamarin.Forms.GoogleMaps\bin\Release\Xamarin.Forms.GoogleMaps.dll" target="lib\dotnet\Xamarin.Forms.GoogleMaps.dll" />
+		<file src="Xamarin.Forms.GoogleMaps\Xamarin.Forms.GoogleMaps\bin\Release\MapExtensions.Forms.Plugin.xml" target="lib\dotnet\MapExtensions.Forms.Plugin.xml" />
+		<file src="Xamarin.Forms.GoogleMaps\Xamarin.Forms.GoogleMaps\bin\Release\MapExtensions.Forms.Plugin.pdb" target="lib\dotnet\MapExtensions.Forms.Plugin.pdb" />
+		<file src="Xamarin.Forms.GoogleMaps\MapExtensions.Forms.Plugin.Abstractions\bin\Release\MapExtensions.Forms.Plugin.Abstractions.dll" target="lib\dotnet\MapExtensions.Forms.Plugin.Abstractions.dll" />
+		<file src="Xamarin.Forms.GoogleMaps\MapExtensions.Forms.Plugin.Abstractions\bin\Release\MapExtensions.Forms.Plugin.Abstractions.xml" target="lib\dotnet\MapExtensions.Forms.Plugin.Abstractions.xml" />
+		<file src="Xamarin.Forms.GoogleMaps\MapExtensions.Forms.Plugin.Abstractions\bin\Release\MapExtensions.Forms.Plugin.Abstractions.pdb" target="lib\dotnet\MapExtensions.Forms.Plugin.Abstractions.pdb" />
+    -->
 
-    <file src="..\Xamarin.Forms.GoogleMaps.Android\bin\Release\Xamarin.Forms.GoogleMaps.Android.dll" target="lib\MonoAndroid10" />
-    <file src="..\Xamarin.Forms.Maps\bin\Release\Xamarin.Forms.GoogleMaps.dll" target="lib\MonoAndroid10" />
-    <file src="..\docs\Xamarin.Forms.GoogleMaps.xml" target="lib\MonoAndroid10" />
+    <!--Win Phone Silverlight
+		<file src="Xamarin.Forms.GoogleMaps\MapExtensions.Forms.Plugin.WindowsPhone8\bin\Release\Xamarin.Forms.GoogleMaps.dll" target="lib\wp8\Xamarin.Forms.GoogleMaps.dll" />
+		<file src="Xamarin.Forms.GoogleMaps\MapExtensions.Forms.Plugin.WindowsPhone8\bin\Release\MapExtensions.Forms.Plugin.xml" target="lib\wp8\MapExtensions.Forms.Plugin.xml" />
+		<file src="Xamarin.Forms.GoogleMaps\MapExtensions.Forms.Plugin.WindowsPhone8\bin\Release\MapExtensions.Forms.Plugin.pdb" target="lib\wp8\MapExtensions.Forms.Plugin.pdb" />
+		<file src="Xamarin.Forms.GoogleMaps\MapExtensions.Forms.Plugin.Abstractions\bin\Release\MapExtensions.Forms.Plugin.Abstractions.dll" target="lib\wp8\MapExtensions.Forms.Plugin.Abstractions.dll" />
+		<file src="Xamarin.Forms.GoogleMaps\MapExtensions.Forms.Plugin.Abstractions\bin\Release\MapExtensions.Forms.Plugin.Abstractions.xml" target="lib\wp8\MapExtensions.Forms.Plugin.Abstractions.xml" />
+		<file src="Xamarin.Forms.GoogleMaps\MapExtensions.Forms.Plugin.Abstractions\bin\Release\MapExtensions.Forms.Plugin.Abstractions.pdb" target="lib\wp8\MapExtensions.Forms.Plugin.Abstractions.pdb" />
+    -->
 
-    <file src="..\Xamarin.Forms.GoogleMaps.iOS\bin\iPhoneSimulator\Release\Xamarin.Forms.GoogleMaps.iOS.dll" target="lib\Xamarin.iOS10" />
-    <file src="..\Xamarin.Forms.Maps\bin\Release\Xamarin.Forms.GoogleMaps.dll" target="lib\Xamarin.iOS10" />
-    <file src="..\docs\Xamarin.Forms.GoogleMaps.xml" target="lib\Xamarin.iOS10" />
+    <!--Win Phone 81
+		<file src="Xamarin.Forms.GoogleMaps\MapExtensions.Forms.Plugin.WindowsPhone81\bin\Release\Xamarin.Forms.GoogleMaps.dll" target="lib\wpa81\Xamarin.Forms.GoogleMaps.dll" />
+		<file src="Xamarin.Forms.GoogleMaps\MapExtensions.Forms.Plugin.WindowsPhone81\bin\Release\MapExtensions.Forms.Plugin.xml" target="lib\wpa81\MapExtensions.Forms.Plugin.xml" />
+		<file src="Xamarin.Forms.GoogleMaps\MapExtensions.Forms.Plugin.WindowsPhone81\bin\Release\MapExtensions.Forms.Plugin.pdb" target="lib\wpa81\MapExtensions.Forms.Plugin.pdb" />
+		<file src="Xamarin.Forms.GoogleMaps\MapExtensions.Forms.Plugin.Abstractions\bin\Release\MapExtensions.Forms.Plugin.Abstractions.dll" target="lib\wpa81\MapExtensions.Forms.Plugin.Abstractions.dll" />
+		<file src="Xamarin.Forms.GoogleMaps\MapExtensions.Forms.Plugin.Abstractions\bin\Release\MapExtensions.Forms.Plugin.Abstractions.xml" target="lib\wpa81\MapExtensions.Forms.Plugin.Abstractions.xml" />
+		<file src="Xamarin.Forms.GoogleMaps\MapExtensions.Forms.Plugin.Abstractions\bin\Release\MapExtensions.Forms.Plugin.Abstractions.pdb" target="lib\wpa81\MapExtensions.Forms.Plugin.Abstractions.pdb" />
+    -->
 
-    <!--<file src="..\Xamarin.Forms.GoogleMaps.iOS\classic_bin\iPhoneSimulator\Release\Xamarin.Forms.GoogleMaps.iOS.Classic.dll" target="lib\MonoTouch10" />
-    <file src="..\Xamarin.Forms.Maps\bin\Release\Xamarin.Forms.GoogleMaps.dll" target="lib\MonoTouch10" />
-    <file src="..\docs\Xamarin.Forms.GoogleMaps.xml" target="lib\MonoTouch10" />-->
+    <!--WinStore
+		<file src="Xamarin.Forms.GoogleMaps\MapExtensions.Forms.Plugin.WindowsStore\bin\Release\Xamarin.Forms.GoogleMaps.dll" target="lib\win8\Xamarin.Forms.GoogleMaps.dll" />
+		<file src="Xamarin.Forms.GoogleMaps\MapExtensions.Forms.Plugin.WindowsStore\bin\Release\MapExtensions.Forms.Plugin.xml" target="lib\win8\MapExtensions.Forms.Plugin.xml" />
+		<file src="Xamarin.Forms.GoogleMaps\MapExtensions.Forms.Plugin.WindowsStore\bin\Release\MapExtensions.Forms.Plugin.pdb" target="lib\win8\MapExtensions.Forms.Plugin.pdb" />
+		<file src="Xamarin.Forms.GoogleMaps\MapExtensions.Forms.Plugin.Abstractions\bin\Release\MapExtensions.Forms.Plugin.Abstractions.dll" target="lib\win8\MapExtensions.Forms.Plugin.Abstractions.dll" />
+		<file src="Xamarin.Forms.GoogleMaps\MapExtensions.Forms.Plugin.Abstractions\bin\Release\MapExtensions.Forms.Plugin.Abstractions.xml" target="lib\win8\MapExtensions.Forms.Plugin.Abstractions.xml" />
+		<file src="Xamarin.Forms.GoogleMaps\MapExtensions.Forms.Plugin.Abstractions\bin\Release\MapExtensions.Forms.Plugin.Abstractions.pdb" target="lib\win8\MapExtensions.Forms.Plugin.Abstractions.pdb" />
+    -->
 
-    <!--<file src="..\Xamarin.Forms.GoogleMaps.WP8\bin\Release\Xamarin.Forms.GoogleMaps.WP8.dll" target="lib\WP80" />
-    <file src="..\Xamarin.Forms.Maps\bin\Release\Xamarin.Forms.GoogleMaps.dll" target="lib\WP80" />
-    <file src="..\docs\Xamarin.Forms.GoogleMaps.xml" target="lib\WP80" />-->
-    
-    <!--UWP-->
-    <!--<file src="..\Xamarin.Forms.GoogleMaps.UWP\bin\Release\Xamarin.Forms.GoogleMaps.UWP.dll" target="lib\uap10.0" />
-    <file src="..\Xamarin.Forms.GoogleMaps.UWP\bin\Release\Xamarin.Forms.GoogleMaps.UWP.pri" target="lib\uap10.0" />
-    <file src="..\Xamarin.Forms.Maps\bin\Release\Xamarin.Forms.GoogleMaps.dll" target="lib\uap10.0" />-->
-    
-    <!--WinRT Phone-->
-    <!--<file src="..\Xamarin.Forms.GoogleMaps.WinRT.Phone\bin\Release\Xamarin.Forms.GoogleMaps.WinRT.Phone.dll" target="lib\wpa81" />
-    <file src="..\Xamarin.Forms.GoogleMaps.WinRT.Phone\bin\Release\Xamarin.Forms.GoogleMaps.WinRT.Phone.pri" target="lib\wpa81" />
-    <file src="..\Xamarin.Forms.Maps\bin\Release\Xamarin.Forms.GoogleMaps.dll" target="lib\wpa81" />-->
-    
-    <!--WinRT Tablet-->
-    <!--<file src="Xamarin.Forms.GoogleMaps.targets" target="build\win81\Xamarin.Forms.Maps$IdAppend$.targets" />
-    <file src="Xamarin.Forms.GoogleMaps.props" target="build\win81\Xamarin.Forms.Maps$IdAppend$.props" />
-    
-    <file src="..\Xamarin.Forms.Maps\bin\Release\Xamarin.Forms.GoogleMaps.dll" target="lib\win81" />
-    <file src="..\docs\Xamarin.Forms.GoogleMaps.xml" target="lib\win81" />
-    
-    <file src="..\Xamarin.Forms.GoogleMaps.WinRT.Tablet\bin\x86\Release\Xamarin.Forms.GoogleMaps.WinRT.Tablet.dll" target="build\win81\x86" />
-    <file src="..\Xamarin.Forms.GoogleMaps.WinRT.Tablet\bin\x86\Release\Xamarin.Forms.GoogleMaps.WinRT.Tablet.pri" target="build\win81\x86" />   
-    <file src="..\Xamarin.Forms.Platform.WinRT.Tablet\bin\x86\Release\Xamarin.Forms.Platform.WinRT.Tablet.dll" target="build\win81\x86" />
-    <file src="..\Xamarin.Forms.Platform.WinRT.Tablet\bin\x86\Release\Xamarin.Forms.Platform.WinRT.Tablet.pri" target="build\win81\x86" />
-    <file src="..\Xamarin.Forms.Platform.WinRT.Tablet\bin\x86\Release\Xamarin.Forms.Platform.WinRT.Tablet.xr.xml" target="build\win81\x86\Xamarin.Forms.Platform.WinRT.Tablet" />
-    <file src="..\Xamarin.Forms.Platform.WinRT.Tablet\bin\x86\Release\Resources.xbf" target="build\win81\x86\Xamarin.Forms.Platform.WinRT.Tablet" />
-    <file src="..\Xamarin.Forms.Platform.WinRT.Tablet\bin\x86\Release\TabletResources.xbf" target="build\win81\x86\Xamarin.Forms.Platform.WinRT.Tablet" />
-    <file src="..\Xamarin.Forms.Platform.WinRT.Tablet\bin\x86\Release\FormsTextBoxStyle.xbf" target="build\win81\x86\Xamarin.Forms.Platform.WinRT.Tablet" />
+    <!--Xamarin.Android-->
+		<file src="Xamarin.Forms.GoogleMaps\Xamarin.Forms.GoogleMaps.Android\bin\Release\Xamarin.Forms.GoogleMaps.Android.dll" target="lib\MonoAndroid10\Xamarin.Forms.GoogleMaps.Android.dll" />
+		<!--<file src="Xamarin.Forms.GoogleMaps\MapExtensions.Forms.Plugin.Abstractions\bin\Release\MapExtensions.Forms.Plugin.Abstractions.dll" target="lib\MonoAndroid10\MapExtensions.Forms.Plugin.Abstractions.dll" />
+		<file src="Xamarin.Forms.GoogleMaps\MapExtensions.Forms.Plugin.Abstractions\bin\Release\MapExtensions.Forms.Plugin.Abstractions.xml" target="lib\MonoAndroid10\MapExtensions.Forms.Plugin.Abstractions.xml" />
+		<file src="Xamarin.Forms.GoogleMaps\MapExtensions.Forms.Plugin.Abstractions\bin\Release\MapExtensions.Forms.Plugin.Abstractions.pdb" target="lib\MonoAndroid10\MapExtensions.Forms.Plugin.Abstractions.pdb" />-->
 
-    <file src="..\Xamarin.Forms.GoogleMaps.WinRT.Tablet\bin\x64\Release\Xamarin.Forms.GoogleMaps.WinRT.Tablet.dll" target="build\win81\x64" />
-    <file src="..\Xamarin.Forms.GoogleMaps.WinRT.Tablet\bin\x64\Release\Xamarin.Forms.GoogleMaps.WinRT.Tablet.pri" target="build\win81\x64" />  
-    <file src="..\Xamarin.Forms.Platform.WinRT.Tablet\bin\x64\Release\Xamarin.Forms.Platform.WinRT.Tablet.dll" target="build\win81\x64" />
-    <file src="..\Xamarin.Forms.Platform.WinRT.Tablet\bin\x64\Release\Xamarin.Forms.Platform.WinRT.Tablet.pri" target="build\win81\x64" />
-    <file src="..\Xamarin.Forms.Platform.WinRT.Tablet\bin\x64\Release\Xamarin.Forms.Platform.WinRT.Tablet.xr.xml" target="build\win81\x64\Xamarin.Forms.Platform.WinRT.Tablet" />
-    <file src="..\Xamarin.Forms.Platform.WinRT.Tablet\bin\x64\Release\Resources.xbf" target="build\win81\x64\Xamarin.Forms.Platform.WinRT.Tablet" />
-    <file src="..\Xamarin.Forms.Platform.WinRT.Tablet\bin\x64\Release\TabletResources.xbf" target="build\win81\x64\Xamarin.Forms.Platform.WinRT.Tablet" />
-    <file src="..\Xamarin.Forms.Platform.WinRT.Tablet\bin\x64\Release\FormsTextBoxStyle.xbf" target="build\win81\x64\Xamarin.Forms.Platform.WinRT.Tablet" />
-    
-    <file src="..\Xamarin.Forms.GoogleMaps.WinRT.Tablet\bin\ARM\Release\Xamarin.Forms.GoogleMaps.WinRT.Tablet.dll" target="build\win81\ARM" />
-    <file src="..\Xamarin.Forms.GoogleMaps.WinRT.Tablet\bin\ARM\Release\Xamarin.Forms.GoogleMaps.WinRT.Tablet.pri" target="build\win81\ARM" />   
-    <file src="..\Xamarin.Forms.Platform.WinRT.Tablet\bin\ARM\Release\Xamarin.Forms.Platform.WinRT.Tablet.dll" target="build\win81\ARM" />
-    <file src="..\Xamarin.Forms.Platform.WinRT.Tablet\bin\ARM\Release\Xamarin.Forms.Platform.WinRT.Tablet.pri" target="build\win81\ARM" />
-    <file src="..\Xamarin.Forms.Platform.WinRT.Tablet\bin\ARM\Release\Xamarin.Forms.Platform.WinRT.Tablet.xr.xml" target="build\win81\ARM\Xamarin.Forms.Platform.WinRT.Tablet" />
-    <file src="..\Xamarin.Forms.Platform.WinRT.Tablet\bin\ARM\Release\Resources.xbf" target="build\win81\ARM\Xamarin.Forms.Platform.WinRT.Tablet" />
-    <file src="..\Xamarin.Forms.Platform.WinRT.Tablet\bin\ARM\Release\TabletResources.xbf" target="build\win81\ARM\Xamarin.Forms.Platform.WinRT.Tablet" />
-    <file src="..\Xamarin.Forms.Platform.WinRT.Tablet\bin\ARM\Release\FormsTextBoxStyle.xbf" target="build\win81\ARM\Xamarin.Forms.Platform.WinRT.Tablet" />-->
+		<!--Xamarin.iOS-->
+		<file src="Xamarin.Forms.GoogleMaps\Xamarin.Forms.GoogleMaps.iOS\bin\iPhone\Release\Xamarin.Forms.GoogleMaps.iOS.dll" target="lib\Xamarin.iOS10\Xamarin.Forms.GoogleMaps.iOS.dll" />
+		<!--<file src="Xamarin.Forms.GoogleMaps\MapExtensions.Forms.Plugin.Abstractions\bin\Release\MapExtensions.Forms.Plugin.Abstractions.dll" target="lib\Xamarin.iOS10\MapExtensions.Forms.Plugin.Abstractions.dll" />
+		<file src="Xamarin.Forms.GoogleMaps\MapExtensions.Forms.Plugin.Abstractions\bin\Release\MapExtensions.Forms.Plugin.Abstractions.xml" target="lib\Xamarin.iOS10\MapExtensions.Forms.Plugin.Abstractions.xml" />-->
 
-    <!-- Xaml Design-time Stuff -->
-    <!--<file src="..\Xamarin.Forms.GoogleMaps.Design\bin\Release\Xamarin.Forms.GoogleMaps.Design.dll" target="lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Design" />
-    <file src="..\Xamarin.Forms.GoogleMaps.Design\bin\Release\Xamarin.Forms.GoogleMaps.Design.dll" target="lib\MonoAndroid10\Design" />
-    <file src="..\Xamarin.Forms.GoogleMaps.Design\bin\Release\Xamarin.Forms.GoogleMaps.Design.dll" target="lib\Xamarin.iOS10\Design" />
-    <file src="..\Xamarin.Forms.GoogleMaps.Design\bin\Release\Xamarin.Forms.GoogleMaps.Design.dll" target="lib\MonoTouch10\Design" />
-    <file src="..\Xamarin.Forms.GoogleMaps.Design\bin\Release\Xamarin.Forms.GoogleMaps.Design.dll" target="lib\WP80\Design" />
-    <file src="..\Xamarin.Forms.GoogleMaps.Design\bin\Release\Xamarin.Forms.GoogleMaps.Design.dll" target="lib\wpa81\Design" />
-    <file src="..\Xamarin.Forms.GoogleMaps.Design\bin\Release\Xamarin.Forms.GoogleMaps.Design.dll" target="lib\win81\Design" />
-    <file src="..\Xamarin.Forms.GoogleMaps.Design\bin\Release\Xamarin.Forms.GoogleMaps.Design.dll" target="lib\uap10.0\Design" />-->
+    <!--uap-->
+		<!--<file src="Xamarin.Forms.GoogleMaps\MapExtensions.Forms.Plugin.UWP\bin\Release\Xamarin.Forms.GoogleMaps.dll" target="lib\UAP10\Xamarin.Forms.GoogleMaps.dll" />
+		<file src="Xamarin.Forms.GoogleMaps\MapExtensions.Forms.Plugin.Abstractions\bin\Release\MapExtensions.Forms.Plugin.Abstractions.dll" target="lib\UAP10\MapExtensions.Forms.Plugin.Abstractions.dll" />
+		<file src="Xamarin.Forms.GoogleMaps\MapExtensions.Forms.Plugin.Abstractions\bin\Release\MapExtensions.Forms.Plugin.Abstractions.xml" target="lib\UAP10\MapExtensions.Forms.Plugin.Abstractions.xml" />
+		<file src="Xamarin.Forms.GoogleMaps\MapExtensions.Forms.Plugin.Abstractions\bin\Release\MapExtensions.Forms.Plugin.Abstractions.pdb" target="lib\UAP10\MapExtensions.Forms.Plugin.Abstractions.pdb" />-->
 
-
-  </files>
+    <!--Xamarin.Mac
+		<file src="Xamarin.Forms.GoogleMaps\MapExtensions.Forms.Plugin.Mac\bin\iPhone\Release\Xamarin.Forms.GoogleMaps.dll" target="lib\Xamarin.Mac20\Xamarin.Forms.GoogleMaps.dll" />
+		<file src="Xamarin.Forms.GoogleMaps\MapExtensions.Forms.Plugin.Mac\bin\iPhone\Release\MapExtensions.Forms.Plugin.xml" target="lib\Xamarin.Mac20\MapExtensions.Forms.Plugin.xml" />
+		<file src="Xamarin.Forms.GoogleMaps\MapExtensions.Forms.Plugin.Abstractions\bin\Release\MapExtensions.Forms.Plugin.Abstractions.dll" target="lib\Xamarin.Mac20\MapExtensions.Forms.Plugin.Abstractions.dll" />
+		<file src="Xamarin.Forms.GoogleMaps\MapExtensions.Forms.Plugin.Abstractions\bin\Release\MapExtensions.Forms.Plugin.Abstractions.xml" target="lib\Xamarin.Mac20\MapExtensions.Forms.Plugin.Abstractions.xml" />
+        -->
+	</files>
 </package>
