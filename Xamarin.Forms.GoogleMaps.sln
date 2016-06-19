@@ -1,0 +1,29 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Forms.GoogleMaps", "Xamarin.Forms.GoogleMaps\Xamarin.Forms.GoogleMaps.csproj", "{F1C8F5A0-A55D-4C7D-9737-472F7AC222D4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Forms.GoogleMaps.Android", "Xamarin.Forms.GoogleMaps.Android\Xamarin.Forms.GoogleMaps.Android.csproj", "{D12EADE4-1457-4126-8EA7-9BEDF5393409}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Forms.GoogleMaps.iOS", "Xamarin.Forms.GoogleMaps.iOS\Xamarin.Forms.GoogleMaps.iOS.csproj", "{AB1D9407-E4B2-403C-88CD-9CAC7A6914EF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F1C8F5A0-A55D-4C7D-9737-472F7AC222D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1C8F5A0-A55D-4C7D-9737-472F7AC222D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1C8F5A0-A55D-4C7D-9737-472F7AC222D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1C8F5A0-A55D-4C7D-9737-472F7AC222D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D12EADE4-1457-4126-8EA7-9BEDF5393409}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D12EADE4-1457-4126-8EA7-9BEDF5393409}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D12EADE4-1457-4126-8EA7-9BEDF5393409}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D12EADE4-1457-4126-8EA7-9BEDF5393409}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB1D9407-E4B2-403C-88CD-9CAC7A6914EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB1D9407-E4B2-403C-88CD-9CAC7A6914EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB1D9407-E4B2-403C-88CD-9CAC7A6914EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB1D9407-E4B2-403C-88CD-9CAC7A6914EF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
