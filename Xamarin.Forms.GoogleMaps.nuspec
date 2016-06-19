@@ -2,8 +2,8 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
 	<metadata minClientVersion="2.8.3">
 		<id>Xamarin.Forms.GoogleMaps</id>
-		<version>0.7.0</version>
-		<title>Yet another Maps library for Xamarin.Forms that optimized for Google maps</title>
+		<version>0.7.2</version>
+		<title>Xamarin.Forms.GoogleMaps</title>
 		<authors>@amay077</authors>
     <licenseUrl>https://github.com/amay077/Xamarin.Forms.GoogleMaps/blob/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/amay077/Xamarin.Forms.GoogleMaps</projectUrl>
@@ -13,15 +13,15 @@
 		<tags>xamarin forms maps xamarinforms xamarinformsmaps xamarin.forms.maps google googlemap</tags>
 	<dependencies>
       <group>
-        <dependency id="Xamarin.Forms" version="[2.1.0.6529]" />
+        <dependency id="Xamarin.Forms" version="2.1.0.6529" />
       </group>
       <group targetFramework="MonoAndroid10">
-        <dependency id="Xamarin.GooglePlayServices.Maps" version="[29.0.0.1]"/>
-        <dependency id="Xamarin.Android.Support.v7.MediaRouter" version="[23.3.0]"/>
-        <dependency id="Xamarin.Android.Support.v7.AppCompat" version="[23.3.0]"/>
+        <dependency id="Xamarin.GooglePlayServices.Maps" version="29.0.0.1"/>
+        <dependency id="Xamarin.Android.Support.v7.MediaRouter" version="23.3.0"/>
+        <dependency id="Xamarin.Android.Support.v7.AppCompat" version="23.3.0"/>
       </group>
       <group targetFramework="Xamarin.iOS10">
-        <dependency id="Xamarin.Google.iOS.Maps" version="[1.13.1]"/>
+        <dependency id="Xamarin.Google.iOS.Maps" version="1.13.1"/>
       </group>
 	</dependencies>
 	</metadata>
