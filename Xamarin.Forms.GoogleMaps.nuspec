@@ -75,7 +75,7 @@
 		<file src="Xamarin.Forms.GoogleMaps\MapExtensions.Forms.Plugin.Abstractions\bin\Release\MapExtensions.Forms.Plugin.Abstractions.pdb" target="lib\MonoAndroid10\MapExtensions.Forms.Plugin.Abstractions.pdb" />-->
 
 		<!--Xamarin.iOS-->
-		<file src="Xamarin.Forms.GoogleMaps.iOS\bin\iPhone\Release\Xamarin.Forms.GoogleMaps.iOS.dll" target="lib\Xamarin.iOS10\Xamarin.Forms.GoogleMaps.iOS.dll" />
+		<file src="Xamarin.Forms.GoogleMaps.iOS\bin\Release\Xamarin.Forms.GoogleMaps.iOS.dll" target="lib\Xamarin.iOS10\Xamarin.Forms.GoogleMaps.iOS.dll" />
 		<!--<file src="Xamarin.Forms.GoogleMaps\MapExtensions.Forms.Plugin.Abstractions\bin\Release\MapExtensions.Forms.Plugin.Abstractions.dll" target="lib\Xamarin.iOS10\MapExtensions.Forms.Plugin.Abstractions.dll" />
 		<file src="Xamarin.Forms.GoogleMaps\MapExtensions.Forms.Plugin.Abstractions\bin\Release\MapExtensions.Forms.Plugin.Abstractions.xml" target="lib\Xamarin.iOS10\MapExtensions.Forms.Plugin.Abstractions.xml" />-->
 
