@@ -19,7 +19,7 @@ Xamarin.Forms 用の Googleマップライブラリです。
 |Windows Phone Silverlight|No|
 |Windows Phone RT|No|
 |Windows Store RT|No|
-|Windows 10 UWP|No|
+|Windows 10 UWP|Yes (Bing map)|
 |Xamarin.Mac|No|
 
 ### 使い方
@@ -66,6 +66,9 @@ public partial class AppDelegate : global::Xamarin.Forms.Platform.iOS.FormsAppli
 * Pin のタップ＆ホールドによる移動
 * Polygon, Polyline, Circle の描画サポート
 * etc.. 
+
+Windows 10 UWP 対応は「とりあえず」残しました。
+が、基本的には Android/iOS での Google Maps に最適化するので、UWP では未対応の機能が増えると予想されます。  
 
 ### ライセンス
 
