@@ -13,7 +13,7 @@ Xamarin.Forms 用の Googleマップライブラリです。
 BingマップSDKはチープです。ベクトルタイルでもないし、マーカーの吹き出し(InfoWindow
 )も無いようです。モバイルアプリの市場のほとんどは Android と iOS なのに、Bingマップのサポートは必要ないように感じます。また、iOS でも Appleマップ よりも Googleマップ を使用した方が、 Android/iOS で共通化しやすいと感じます。
 
-異なる地図SDKで実現可能な最小限の機能しか持たない Xamarin.Forms.Maps に対して、 **同じ Google Maps で多くの共通機能ができるのがこの Xamarin.Forms.GoogleMaps です。**
+異なる地図SDKで実現可能な最小限の機能しか持たない Xamarin.Forms.Maps に対して、 **同じ Google Maps で多くの共通機能が実現できるのが Xamarin.Forms.GoogleMaps です。**
 
 ### セットアップ
 
