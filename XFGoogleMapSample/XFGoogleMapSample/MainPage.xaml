@@ -12,7 +12,6 @@
 			VerticalOptions="Fill"
 			Orientation="Vertical">
 			<maps:Map x:Name="map" 
-					BackgroundColor="Blue"
 					VerticalOptions="FillAndExpand"/>
 		</StackLayout>
 	</ContentPage.Content>
