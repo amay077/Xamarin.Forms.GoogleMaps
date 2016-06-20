@@ -68,7 +68,7 @@ Latest scheduled features as follows:
 * Adding Polygon, Polyline, Circle
 * etc.. 
 
-You can use in Windows 10 UWP but this support is negative.
+You can use in Windows 10 UWP but this support is reluctant.
 Because this library has been determined to optimized for Google Maps, New features will not support in UWP.
 
 ### License
