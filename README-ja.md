@@ -69,6 +69,6 @@ public partial class AppDelegate : global::Xamarin.Forms.Platform.iOS.FormsAppli
 
 ### ライセンス
 
-[LICENSE](LICENSE.md) をみて下さい
+[LICENSE](LICENSE) をみて下さい
 
 logo.png by [alecive](http://www.iconarchive.com/show/flatwoken-icons-by-alecive.html) - [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/deed)
