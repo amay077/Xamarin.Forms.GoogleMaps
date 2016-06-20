@@ -38,3 +38,7 @@ Thumbs.db
 
 #dotCover
 *.dotCover
+
+*.csproj.bak
+*.nupkg
+*.lock.json
