@@ -17,6 +17,8 @@ namespace Xamarin.Forms.GoogleMaps
 
         public static readonly BindableProperty HasZoomEnabledProperty = BindableProperty.Create("HasZoomEnabled", typeof(bool), typeof(Map), true);
 
+        public static readonly BindableProperty SelectedPinProperty = BindableProperty.Create("SelectedPin", typeof(Pin), typeof(Map), default(Pin));
+
         readonly ObservableCollection<Pin> _pins = new ObservableCollection<Pin>();
         MapSpan _visibleRegion;
 
@@ -56,6 +58,12 @@ namespace Xamarin.Forms.GoogleMaps
         {
             get { return (MapType)GetValue(MapTypeProperty); }
             set { SetValue(MapTypeProperty, value); }
+        }
+
+        public Pin SelectedPin
+        {
+            get { return (Pin)GetValue(SelectedPinProperty); }
+            set { SetValue(SelectedPinProperty, value); }
         }
 
         public IList<Pin> Pins

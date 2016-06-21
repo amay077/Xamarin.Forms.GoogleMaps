@@ -188,6 +188,8 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 gmap.UiSettings.ZoomControlsEnabled = Map.HasZoomEnabled;
                 gmap.UiSettings.ZoomGesturesEnabled = Map.HasZoomEnabled;
             }
+            else if (e.PropertyName == Map.SelectedPinProperty.PropertyName)
+                UpdateSelectedPin(Map.SelectedPin);
         }
 
         void SetMapType()
@@ -263,6 +265,35 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 pin.Id = marker.Id;
                 return marker;
             }));
+
+            UpdateSelectedPin(Map.SelectedPin);
+        }
+
+        void UpdateSelectedPin(Pin pin)
+        {
+            if (pin == null)
+            {
+                foreach (var marker in _markers)
+                {
+                    marker.HideInfoWindow();
+                }
+            }
+            else
+            {
+                // lookup pin
+                Marker targetMarker = null;
+                foreach (var marker in _markers)
+                {
+                    if ((string)pin.Id != marker.Id)
+                        continue;
+
+                    targetMarker = marker;
+                    break;
+                }
+
+                if (targetMarker != null)
+                    targetMarker.ShowInfoWindow();
+            }
         }
 
         void RemovePins(IList pins)
