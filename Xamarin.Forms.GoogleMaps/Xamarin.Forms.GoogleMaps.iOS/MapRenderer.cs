@@ -14,6 +14,8 @@ namespace Xamarin.Forms.GoogleMaps.iOS
     {
         bool _shouldUpdateRegion;
 
+        const string MoveMessageName = "MapMoveToRegion";
+
         public override SizeRequest GetDesiredSize(double widthConstraint, double heightConstraint)
         {
             return Control.GetSizeRequest(widthConstraint, heightConstraint);
@@ -26,7 +28,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                 if (Element != null)
                 {
                     var mapModel = (Map)Element;
-                    MessagingCenter.Unsubscribe<Map, MapSpan>(this, "MapMoveToRegion");
+                    MessagingCenter.Unsubscribe<Map, MapSpan>(this, MoveMessageName);
                     ((ObservableCollection<Pin>)mapModel.Pins).CollectionChanged -= OnCollectionChanged;
                 }
 
@@ -63,7 +65,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                     mkMapView.InfoTapped += InfoWindowTapped;
                 }
 
-                MessagingCenter.Subscribe<Map, MapSpan>(this, "MapMoveToRegion", (s, a) => MoveToRegion(a), mapModel);
+                MessagingCenter.Subscribe<Map, MapSpan>(this, MoveMessageName, (s, a) => MoveToRegion(a), mapModel);
                 if (mapModel.LastMoveToRegion != null)
                     MoveToRegion(mapModel.LastMoveToRegion, false);
 
@@ -102,9 +104,20 @@ namespace Xamarin.Forms.GoogleMaps.iOS
             targetPin?.SendTap();
         }
 
+        void UpdateSelectedPin(Pin pin)
+        {
+            var mapView = (MapView)Control;
+
+            if (pin != null)
+                mapView.SelectedMarker = (Marker)pin.Id;
+            else
+                mapView.SelectedMarker = null;
+        }
+
         protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             base.OnElementPropertyChanged(sender, e);
+            var mapModel = (Map)Element;
 
             if (e.PropertyName == Map.MapTypeProperty.PropertyName)
                 UpdateMapType();
@@ -116,6 +129,8 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                 UpdateHasZoomEnabled();
             else if (e.PropertyName == VisualElement.IsVisibleProperty.PropertyName && ((Map)Element).LastMoveToRegion != null)
                 _shouldUpdateRegion = true;
+            else if (e.PropertyName == Map.SelectedPinProperty.PropertyName)
+                UpdateSelectedPin(mapModel.SelectedPin);
         }
 
         public override void LayoutSubviews()

@@ -3,9 +3,9 @@
 	<metadata minClientVersion="2.8.3">
 		<id>Xamarin.Forms.GoogleMaps</id>
 		<title>Xamarin.Forms.GoogleMaps</title>
-		<version>0.7.6</version>
+		<version>1.0.0</version>
 		<releaseNotes>
-		Fix dependency files in UWP projects.
+		Add Map.SelectedPin property.
 		</releaseNotes>
 		<authors>amay077</authors>
 		<copyright>amay077</copyright>
