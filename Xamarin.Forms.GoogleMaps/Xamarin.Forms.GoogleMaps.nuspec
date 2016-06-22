@@ -3,9 +3,9 @@
 	<metadata minClientVersion="2.8.3">
 		<id>Xamarin.Forms.GoogleMaps</id>
 		<title>Xamarin.Forms.GoogleMaps</title>
-		<version>1.0.0</version>
+		<version>1.1.0-beta1</version>
 		<releaseNotes>
-		Add Map.SelectedPin property.
+		Add Polyline support (Android / iOS only)
 		</releaseNotes>
 		<authors>amay077</authors>
 		<copyright>amay077</copyright>
