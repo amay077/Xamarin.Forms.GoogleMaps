@@ -7,6 +7,7 @@ using Xamarin.Forms.Platform.iOS;
 using Google.Maps;
 using CoreLocation;
 using System.Drawing;
+using APolyline =  Google.Maps.Polyline;
 
 namespace Xamarin.Forms.GoogleMaps.iOS
 {
@@ -29,11 +30,13 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                 {
                     var mapModel = (Map)Element;
                     MessagingCenter.Unsubscribe<Map, MapSpan>(this, MoveMessageName);
-                    ((ObservableCollection<Pin>)mapModel.Pins).CollectionChanged -= OnCollectionChanged;
+                    ((ObservableCollection<Pin>)mapModel.Pins).CollectionChanged -= OnPinCollectionChanged;
+                    ((ObservableCollection<Pin>)mapModel.Polylines).CollectionChanged -= OnPolylineCollectionChanged;
                 }
 
                 var mkMapView = (MapView)Control;
                 mkMapView.InfoTapped -= InfoWindowTapped;
+                mkMapView.OverlayTapped -= OverlayTapped;
                 mkMapView.CameraPositionChanged -= CameraPositionChanged;
             }
 
@@ -48,7 +51,8 @@ namespace Xamarin.Forms.GoogleMaps.iOS
             {
                 var mapModel = (Map)e.OldElement;
                 MessagingCenter.Unsubscribe<Map, MapSpan>(this, "MapMoveToRegion");
-                ((ObservableCollection<Pin>)mapModel.Pins).CollectionChanged -= OnCollectionChanged;
+                ((ObservableCollection<Pin>)mapModel.Pins).CollectionChanged -= OnPinCollectionChanged;
+                ((ObservableCollection<Polyline>)mapModel.Pins).CollectionChanged -= OnPolylineCollectionChanged;
             }
 
             if (e.NewElement != null)
@@ -63,6 +67,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                     //mkMapView.GetViewForAnnotation = mapDelegate.GetViewForAnnotation;
                     mkMapView.CameraPositionChanged += CameraPositionChanged;
                     mkMapView.InfoTapped += InfoWindowTapped;
+                    mkMapView.OverlayTapped += OverlayTapped;
                 }
 
                 MessagingCenter.Subscribe<Map, MapSpan>(this, MoveMessageName, (s, a) => MoveToRegion(a), mapModel);
@@ -74,9 +79,11 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                 UpdateHasScrollEnabled();
                 UpdateHasZoomEnabled();
 
-                ((ObservableCollection<Pin>)mapModel.Pins).CollectionChanged += OnCollectionChanged;
+                ((ObservableCollection<Pin>)mapModel.Pins).CollectionChanged += OnPinCollectionChanged;
+                OnPinCollectionChanged(((Map)Element).Pins, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
 
-                OnCollectionChanged(((Map)Element).Pins, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+                ((ObservableCollection<Polyline>)mapModel.Polylines).CollectionChanged += OnPolylineCollectionChanged;
+                OnPolylineCollectionChanged(((Map)Element).Pins, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
             }
         }
 
@@ -102,6 +109,34 @@ namespace Xamarin.Forms.GoogleMaps.iOS
             // only consider event handled if a handler is present. 
             // Else allow default behavior of displaying an info window.
             targetPin?.SendTap();
+        }
+
+        void OverlayTapped(object sender, GMSOverlayEventEventArgs e)
+        {
+            var map = (Map)Element;
+
+            // clicked marker
+            var overlay = e.Overlay;
+
+            if (overlay is APolyline)
+            {
+                // lookup pin
+                Polyline targetPolyline = null;
+                for (var i = 0; i < map.Polylines.Count; i++)
+                {
+                    var line = map.Polylines[i];
+                    if (!Object.ReferenceEquals(line.Id, overlay))
+                        continue;
+
+                    targetPolyline = line;
+                    break;
+                }
+
+                // only consider event handled if a handler is present. 
+                // Else allow default behavior of displaying an info window.
+                targetPolyline?.SendTap();
+            }
+
         }
 
         void UpdateSelectedPin(Pin pin)
@@ -186,7 +221,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                 ((MapView)Control).MoveCamera(CameraUpdate.FitBounds(mapRegion));
         }
 
-        void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
+        void OnPinCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
         {
             switch (notifyCollectionChangedEventArgs.Action)
             {
@@ -211,11 +246,62 @@ namespace Xamarin.Forms.GoogleMaps.iOS
             }
         }
 
+
+        void OnPolylineCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
+        {
+            switch (notifyCollectionChangedEventArgs.Action)
+            {
+                case NotifyCollectionChangedAction.Add:
+                    AddPolylines(notifyCollectionChangedEventArgs.NewItems);
+                    break;
+                case NotifyCollectionChangedAction.Remove:
+                    RemovePolylines(notifyCollectionChangedEventArgs.OldItems);
+                    break;
+                case NotifyCollectionChangedAction.Replace:
+                    RemovePolylines(notifyCollectionChangedEventArgs.OldItems);
+                    AddPolylines(notifyCollectionChangedEventArgs.NewItems);
+                    break;
+                case NotifyCollectionChangedAction.Reset:
+                    var mapView = (MapView)Control;
+                    mapView.Clear();
+                    AddPolylines((IList)(Element as Map).Pins);
+                    break;
+                case NotifyCollectionChangedAction.Move:
+                    //do nothing
+                    break;
+            }
+        }
+
         void RemovePins(IList pins)
         {
             foreach (object pin in pins)
                 ((Marker)((Pin)pin).Id).Map = null;
         }
+
+        void AddPolylines(IList polylines)
+        {
+            foreach (Polyline polyline in polylines)
+            {
+                var path = new MutablePath();
+                foreach (var p in polyline.Positions)
+                    path.AddLatLon(p.Latitude, p.Longitude);
+
+                var nativePolyline = APolyline.FromPath(path);
+                nativePolyline.StrokeWidth = polyline.StrokeWidth;
+                nativePolyline.StrokeColor = polyline.StrokeColor.ToUIColor();
+                nativePolyline.Tappable = polyline.IsClickable;
+
+                polyline.Id = nativePolyline;
+                nativePolyline.Map = (MapView)Control;
+            }
+        }
+
+        void RemovePolylines(IList polylines)
+        {
+            foreach (object obj in polylines)
+                ((APolyline)((Polyline)obj).Id).Map = null;
+        }
+
 
         void UpdateHasScrollEnabled()
         {
