@@ -13,6 +13,8 @@ using Math = System.Math;
 using Android.Runtime;
 using System.Collections;
 using APolyline = Android.Gms.Maps.Model.Polyline;
+using Android.Util;
+using Android.App;
 
 namespace Xamarin.Forms.GoogleMaps.Android
 {
@@ -29,6 +31,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
 
         List<Marker> _markers;
         List<APolyline> _polylines;
+        float _scaledDensity = 1;
 
         const string MoveMessageName = "MapMoveToRegion";
 
@@ -53,6 +56,18 @@ namespace Xamarin.Forms.GoogleMaps.Android
             mapView.OnCreate(s_bundle);
             mapView.OnResume();
             SetNativeControl(mapView);
+
+            var activity = Context as Activity;
+            if (activity != null)
+            {
+                var metrics = new DisplayMetrics();
+                activity.WindowManager.DefaultDisplay.GetMetrics(metrics);
+                var realSize = new global::Android.Graphics.Point();
+                activity.WindowManager.DefaultDisplay.GetRealSize(realSize);
+                var size = new global::Android.Graphics.Point();
+                activity.WindowManager.DefaultDisplay.GetSize(size);
+                _scaledDensity = metrics.ScaledDensity;
+            }
 
             if (e.OldElement != null)
             {
@@ -386,7 +401,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 foreach (var p in polyline.Positions)
                     opts.Add(new LatLng(p.Latitude, p.Longitude));
 
-                opts.InvokeWidth(polyline.StrokeWidth);
+                opts.InvokeWidth(polyline.StrokeWidth * _scaledDensity); // TODO: convert from px to pt. Is this collect? (looks like same iOS Maps) 
                 opts.InvokeColor(polyline.StrokeColor.ToAndroid());
 
                 var nativePolyline = map.AddPolyline(opts);
