@@ -86,6 +86,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
                     oldMapView.Map.SetOnCameraChangeListener(null);
 #pragma warning restore 618
                     NativeMap.InfoWindowClick -= MapOnMarkerClick;
+                    NativeMap.PolylineClick -= MapOnPolylineClick;
                 }
 
                 oldMapView.Dispose();
@@ -96,6 +97,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
             {
                 map.SetOnCameraChangeListener(this);
                 NativeMap.InfoWindowClick += MapOnMarkerClick;
+                NativeMap.PolylineClick += MapOnPolylineClick;
 
                 map.UiSettings.ZoomControlsEnabled = Map.HasZoomEnabled;
                 map.UiSettings.ZoomGesturesEnabled = Map.HasZoomEnabled;
@@ -384,6 +386,27 @@ namespace Xamarin.Forms.GoogleMaps.Android
             targetPin?.SendTap();
         }
 
+        void MapOnPolylineClick(object sender, GoogleMap.PolylineClickEventArgs eventArgs)
+        {
+            // clicked marker
+            var polyline = eventArgs.Polyline;
+
+            // lookup pin
+            Polyline targetPolyline = null;
+            for (var i = 0; i < Map.Polylines.Count; i++)
+            {
+                var line = Map.Polylines[i];
+                if ((string)line.Id != polyline.Id)
+                    continue;
+
+                targetPolyline = line;
+                break;
+            }
+
+            // only consider event handled if a handler is present. 
+            // Else allow default behavior of displaying an info window.
+            targetPolyline?.SendTap();
+        }
         void AddPolylines(IList polylines)
         {
             var map = NativeMap;
@@ -403,6 +426,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
 
                 opts.InvokeWidth(polyline.StrokeWidth * _scaledDensity); // TODO: convert from px to pt. Is this collect? (looks like same iOS Maps) 
                 opts.InvokeColor(polyline.StrokeColor.ToAndroid());
+                opts.Clickable(polyline.IsClickable);
 
                 var nativePolyline = map.AddPolyline(opts);
 
@@ -450,6 +474,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
                     return;
                 gmap.MyLocationEnabled = false;
                 gmap.InfoWindowClick -= MapOnMarkerClick;
+                gmap.PolylineClick -= MapOnPolylineClick;
                 gmap.Dispose();
             }
 

@@ -36,6 +36,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
 
                 var mkMapView = (MapView)Control;
                 mkMapView.InfoTapped -= InfoWindowTapped;
+                mkMapView.OverlayTapped -= OverlayTapped;
                 mkMapView.CameraPositionChanged -= CameraPositionChanged;
             }
 
@@ -66,6 +67,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                     //mkMapView.GetViewForAnnotation = mapDelegate.GetViewForAnnotation;
                     mkMapView.CameraPositionChanged += CameraPositionChanged;
                     mkMapView.InfoTapped += InfoWindowTapped;
+                    mkMapView.OverlayTapped += OverlayTapped;
                 }
 
                 MessagingCenter.Subscribe<Map, MapSpan>(this, MoveMessageName, (s, a) => MoveToRegion(a), mapModel);
@@ -107,6 +109,34 @@ namespace Xamarin.Forms.GoogleMaps.iOS
             // only consider event handled if a handler is present. 
             // Else allow default behavior of displaying an info window.
             targetPin?.SendTap();
+        }
+
+        void OverlayTapped(object sender, GMSOverlayEventEventArgs e)
+        {
+            var map = (Map)Element;
+
+            // clicked marker
+            var overlay = e.Overlay;
+
+            if (overlay is APolyline)
+            {
+                // lookup pin
+                Polyline targetPolyline = null;
+                for (var i = 0; i < map.Polylines.Count; i++)
+                {
+                    var line = map.Polylines[i];
+                    if (!Object.ReferenceEquals(line.Id, overlay))
+                        continue;
+
+                    targetPolyline = line;
+                    break;
+                }
+
+                // only consider event handled if a handler is present. 
+                // Else allow default behavior of displaying an info window.
+                targetPolyline?.SendTap();
+            }
+
         }
 
         void UpdateSelectedPin(Pin pin)
@@ -259,6 +289,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                 var nativePolyline = APolyline.FromPath(path);
                 nativePolyline.StrokeWidth = polyline.StrokeWidth;
                 nativePolyline.StrokeColor = polyline.StrokeColor.ToUIColor();
+                nativePolyline.Tappable = polyline.IsClickable;
 
                 polyline.Id = nativePolyline;
                 nativePolyline.Map = (MapView)Control;
