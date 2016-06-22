@@ -12,6 +12,7 @@ using Xamarin.Forms.Platform.Android;
 using Math = System.Math;
 using Android.Runtime;
 using System.Collections;
+using APolyline = Android.Gms.Maps.Model.Polyline;
 
 namespace Xamarin.Forms.GoogleMaps.Android
 {
@@ -27,6 +28,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
         internal static Bundle Bundle { set { s_bundle = value; } }
 
         List<Marker> _markers;
+        List<APolyline> _polylines;
 
         const string MoveMessageName = "MapMoveToRegion";
 
@@ -55,7 +57,8 @@ namespace Xamarin.Forms.GoogleMaps.Android
             if (e.OldElement != null)
             {
                 var oldMapModel = (Map)e.OldElement;
-                ((ObservableCollection<Pin>)oldMapModel.Pins).CollectionChanged -= OnCollectionChanged;
+                ((ObservableCollection<Pin>)oldMapModel.Pins).CollectionChanged -= OnPinCollectionChanged;
+                ((ObservableCollection<Pin>)oldMapModel.Polylines).CollectionChanged -= OnPolylineCollectionChanged;
 
                 MessagingCenter.Unsubscribe<Map, MapSpan>(this, MoveMessageName);
 
@@ -88,12 +91,17 @@ namespace Xamarin.Forms.GoogleMaps.Android
 
             MessagingCenter.Subscribe<Map, MapSpan>(this, MoveMessageName, OnMoveToRegionMessage, Map);
 
-            var incc = Map.Pins as INotifyCollectionChanged;
-            if (incc != null)
-                incc.CollectionChanged += OnCollectionChanged;
+            var inccPin = Map.Pins as INotifyCollectionChanged;
+            if (inccPin != null)
+                inccPin.CollectionChanged += OnPinCollectionChanged;
+
+
+            var inccPolyline = Map.Polylines as INotifyCollectionChanged;
+            if (inccPolyline != null)
+                inccPolyline.CollectionChanged += OnPolylineCollectionChanged;
         }
 
-        void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
+        void OnPinCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
         {
             switch (notifyCollectionChangedEventArgs.Action)
             {
@@ -118,6 +126,30 @@ namespace Xamarin.Forms.GoogleMaps.Android
             }
         }
 
+        void OnPolylineCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
+        {
+            switch (notifyCollectionChangedEventArgs.Action)
+            {
+                case NotifyCollectionChangedAction.Add:
+                    AddPolylines(notifyCollectionChangedEventArgs.NewItems);
+                    break;
+                case NotifyCollectionChangedAction.Remove:
+                    RemovePolylines(notifyCollectionChangedEventArgs.OldItems);
+                    break;
+                case NotifyCollectionChangedAction.Replace:
+                    RemovePolylines(notifyCollectionChangedEventArgs.OldItems);
+                    AddPolylines(notifyCollectionChangedEventArgs.NewItems);
+                    break;
+                case NotifyCollectionChangedAction.Reset:
+                    _polylines?.ForEach(line => line.Remove());
+                    _polylines = null;
+                    AddPolylines((IList)(Element as Map).Polylines);
+                    break;
+                case NotifyCollectionChangedAction.Move:
+                    //do nothing
+                    break;
+            }
+        }
         void OnMoveToRegionMessage(Map s, MapSpan a)
         {
             MoveToRegion(a, true);
@@ -156,7 +188,8 @@ namespace Xamarin.Forms.GoogleMaps.Android
             if (_init)
             {
                 MoveToRegion(((Map)Element).LastMoveToRegion, false);
-                OnCollectionChanged(((Map)Element).Pins, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+                OnPinCollectionChanged(((Map)Element).Pins, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+                OnPolylineCollectionChanged(((Map)Element).Polylines, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
                 _init = false;
             }
             else if (changed)
@@ -336,6 +369,52 @@ namespace Xamarin.Forms.GoogleMaps.Android
             targetPin?.SendTap();
         }
 
+        void AddPolylines(IList polylines)
+        {
+            var map = NativeMap;
+            if (map == null)
+                return;
+
+            if (_polylines == null)
+                _polylines = new List<APolyline>();
+
+            _polylines.AddRange(polylines.Cast<Polyline>().Select(line =>
+            {
+                var polyline = (Polyline)line;
+                var opts = new PolylineOptions();
+
+                foreach (var p in polyline.Positions)
+                    opts.Add(new LatLng(p.Latitude, p.Longitude));
+
+                opts.InvokeWidth(polyline.StrokeWidth);
+                opts.InvokeColor(polyline.StrokeColor.ToAndroid());
+
+                var nativePolyline = map.AddPolyline(opts);
+
+                // associate pin with marker for later lookup in event handlers
+                polyline.Id = nativePolyline.Id;
+                return nativePolyline;
+            }));
+        }
+
+        void RemovePolylines(IList polylines)
+        {
+            var map = NativeMap;
+            if (map == null)
+                return;
+            if (_polylines == null)
+                return;
+
+            foreach (Polyline polyline in polylines)
+            {
+                var apolyline = _polylines.FirstOrDefault(m => (object)m.Id == polyline.Id);
+                if (apolyline == null)
+                    continue;
+                apolyline.Remove();
+                _polylines.Remove(apolyline);
+            }
+        }
+
         bool _disposed;
         protected override void Dispose(bool disposing)
         {
@@ -347,7 +426,8 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 if (mapModel != null)
                 {
                     MessagingCenter.Unsubscribe<Map, MapSpan>(this, MoveMessageName);
-                    ((ObservableCollection<Pin>)mapModel.Pins).CollectionChanged -= OnCollectionChanged;
+                    ((ObservableCollection<Pin>)mapModel.Pins).CollectionChanged -= OnPinCollectionChanged;
+                    ((ObservableCollection<Pin>)mapModel.Polylines).CollectionChanged -= OnPolylineCollectionChanged;
                 }
 
                 var gmap = NativeMap;

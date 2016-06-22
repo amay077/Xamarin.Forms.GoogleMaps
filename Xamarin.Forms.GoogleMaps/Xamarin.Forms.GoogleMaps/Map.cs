@@ -20,6 +20,7 @@ namespace Xamarin.Forms.GoogleMaps
         public static readonly BindableProperty SelectedPinProperty = BindableProperty.Create("SelectedPin", typeof(Pin), typeof(Map), default(Pin));
 
         readonly ObservableCollection<Pin> _pins = new ObservableCollection<Pin>();
+        readonly ObservableCollection<Polyline> _polylines = new ObservableCollection<Polyline>();
         MapSpan _visibleRegion;
 
         public Map(MapSpan region)
@@ -29,6 +30,7 @@ namespace Xamarin.Forms.GoogleMaps
             VerticalOptions = HorizontalOptions = LayoutOptions.FillAndExpand;
 
             _pins.CollectionChanged += PinsOnCollectionChanged;
+            _polylines.CollectionChanged += PolylinesOnCollectionChanged;
         }
 
         // center on Rome by default
@@ -71,6 +73,12 @@ namespace Xamarin.Forms.GoogleMaps
             get { return _pins; }
         }
 
+        public IList<Polyline> Polylines
+        {
+            get { return _polylines; }
+        }
+
+
         public MapSpan VisibleRegion
         {
             get { return _visibleRegion; }
@@ -111,5 +119,12 @@ namespace Xamarin.Forms.GoogleMaps
             if (e.NewItems != null && e.NewItems.Cast<Pin>().Any(pin => pin.Label == null))
                 throw new ArgumentException("Pin must have a Label to be added to a map");
         }
+
+        void PolylinesOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.NewItems != null && e.NewItems.Cast<Polyline>().Any(polyline => polyline.Positions.Count < 2))
+                throw new ArgumentException("Polyline must have a 2 positions to be added to a map");
+        }
+
     }
 }

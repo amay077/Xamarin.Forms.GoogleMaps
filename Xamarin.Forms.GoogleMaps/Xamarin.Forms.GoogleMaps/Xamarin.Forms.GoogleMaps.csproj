@@ -41,6 +41,7 @@
     <Compile Include="MapSpan.cs" />
     <Compile Include="Map.cs" />
     <Compile Include="Properties\GlobalAssemblyInfo.cs" />
+    <Compile Include="Polyline.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">
