@@ -20,7 +20,8 @@ namespace Xamarin.Forms.GoogleMaps
         public static readonly BindableProperty SelectedPinProperty = BindableProperty.Create("SelectedPin", typeof(Pin), typeof(Map), default(Pin));
 
         readonly ObservableCollection<Pin> _pins = new ObservableCollection<Pin>();
-        readonly ObservableCollection<Polyline> _polylines = new ObservableCollection<Polyline>();
+        readonly ObservableCollection<Polyline> _polylines = new ObservableCollection<Polyline> ();
+        readonly ObservableCollection<Polygon> _polygons = new ObservableCollection<Polygon> ();
         MapSpan _visibleRegion;
 
         public Map(MapSpan region)
@@ -31,6 +32,7 @@ namespace Xamarin.Forms.GoogleMaps
 
             _pins.CollectionChanged += PinsOnCollectionChanged;
             _polylines.CollectionChanged += PolylinesOnCollectionChanged;
+            _polygons.CollectionChanged += PolygonsOnCollectionChanged;
         }
 
         // center on Rome by default
@@ -73,10 +75,13 @@ namespace Xamarin.Forms.GoogleMaps
             get { return _pins; }
         }
 
-        public IList<Polyline> Polylines
-        {
+        public IList<Polyline> Polylines {
             get { return _polylines; }
         }
+        public IList<Polygon> Polygons {
+            get { return _polygons; }
+        }
+
 
 
         public MapSpan VisibleRegion
@@ -124,6 +129,12 @@ namespace Xamarin.Forms.GoogleMaps
         {
             if (e.NewItems != null && e.NewItems.Cast<Polyline>().Any(polyline => polyline.Positions.Count < 2))
                 throw new ArgumentException("Polyline must have a 2 positions to be added to a map");
+        }
+
+        void PolygonsOnCollectionChanged (object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.NewItems != null && e.NewItems.Cast<Polygon> ().Any (polygon => polygon.Positions.Count < 3))
+                throw new ArgumentException ("Polygon must have a 3 positions to be added to a map");
         }
 
     }

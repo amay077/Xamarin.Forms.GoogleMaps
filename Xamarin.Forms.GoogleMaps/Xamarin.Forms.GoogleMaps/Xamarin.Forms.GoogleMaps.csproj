@@ -42,6 +42,7 @@
     <Compile Include="Map.cs" />
     <Compile Include="Properties\GlobalAssemblyInfo.cs" />
     <Compile Include="Polyline.cs" />
+    <Compile Include="Polygon.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">
