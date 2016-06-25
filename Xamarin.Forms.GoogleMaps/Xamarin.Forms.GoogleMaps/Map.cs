@@ -21,7 +21,9 @@ namespace Xamarin.Forms.GoogleMaps
 
         readonly ObservableCollection<Pin> _pins = new ObservableCollection<Pin>();
         readonly ObservableCollection<Polyline> _polylines = new ObservableCollection<Polyline> ();
-        readonly ObservableCollection<Polygon> _polygons = new ObservableCollection<Polygon> ();
+        readonly ObservableCollection<Polygon> _polygons = new ObservableCollection<Polygon>();
+        readonly ObservableCollection<Circle> _circles = new ObservableCollection<Circle>();
+
         MapSpan _visibleRegion;
 
         public Map(MapSpan region)
@@ -33,6 +35,7 @@ namespace Xamarin.Forms.GoogleMaps
             _pins.CollectionChanged += PinsOnCollectionChanged;
             _polylines.CollectionChanged += PolylinesOnCollectionChanged;
             _polygons.CollectionChanged += PolygonsOnCollectionChanged;
+            _circles.CollectionChanged += CirclesOnCollectionChanged;
         }
 
         // center on Rome by default
@@ -78,11 +81,15 @@ namespace Xamarin.Forms.GoogleMaps
         public IList<Polyline> Polylines {
             get { return _polylines; }
         }
+
         public IList<Polygon> Polygons {
             get { return _polygons; }
         }
 
-
+        public IList<Circle> Circles
+        {
+            get { return _circles; }
+        }
 
         public MapSpan VisibleRegion
         {
@@ -131,11 +138,16 @@ namespace Xamarin.Forms.GoogleMaps
                 throw new ArgumentException("Polyline must have a 2 positions to be added to a map");
         }
 
-        void PolygonsOnCollectionChanged (object sender, NotifyCollectionChangedEventArgs e)
+        void PolygonsOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            if (e.NewItems != null && e.NewItems.Cast<Polygon> ().Any (polygon => polygon.Positions.Count < 3))
-                throw new ArgumentException ("Polygon must have a 3 positions to be added to a map");
+            if (e.NewItems != null && e.NewItems.Cast<Polygon>().Any(polygon => polygon.Positions.Count < 3))
+                throw new ArgumentException("Polygon must have a 3 positions to be added to a map");
         }
 
+        void CirclesOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.NewItems != null && e.NewItems.Cast<Circle>().Any(circle => (circle.Center == null || circle.Radius <= 0f)))
+                throw new ArgumentException("Circle must have a center and radius");
+        }
     }
 }
