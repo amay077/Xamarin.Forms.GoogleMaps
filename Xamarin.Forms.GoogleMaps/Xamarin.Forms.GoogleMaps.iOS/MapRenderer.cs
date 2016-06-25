@@ -358,7 +358,8 @@ namespace Xamarin.Forms.GoogleMaps.iOS
 
                 var nativePolygon = APolygon.FromPath (path);
                 nativePolygon.StrokeWidth = polygon.StrokeWidth;
-                nativePolygon.StrokeColor = polygon.StrokeColor.ToUIColor ();
+                nativePolygon.StrokeColor = polygon.StrokeColor.ToUIColor();
+                nativePolygon.FillColor = polygon.FillColor.ToUIColor();
                 nativePolygon.Tappable = polygon.IsClickable;
 
                 polygon.Id = nativePolygon;

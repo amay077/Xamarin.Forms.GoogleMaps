@@ -13,6 +13,7 @@ using Math = System.Math;
 using Android.Runtime;
 using System.Collections;
 using APolyline = Android.Gms.Maps.Model.Polyline;
+using APolygon = Android.Gms.Maps.Model.Polygon;
 using Android.Util;
 using Android.App;
 
@@ -31,6 +32,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
 
         List<Marker> _markers;
         List<APolyline> _polylines;
+        List<APolygon> _polygons;
         float _scaledDensity = 1;
 
         const string MoveMessageName = "MapMoveToRegion";
@@ -73,7 +75,8 @@ namespace Xamarin.Forms.GoogleMaps.Android
             {
                 var oldMapModel = (Map)e.OldElement;
                 ((ObservableCollection<Pin>)oldMapModel.Pins).CollectionChanged -= OnPinCollectionChanged;
-                ((ObservableCollection<Pin>)oldMapModel.Polylines).CollectionChanged -= OnPolylineCollectionChanged;
+                ((ObservableCollection<Polyline>)oldMapModel.Polylines).CollectionChanged -= OnPolylineCollectionChanged;
+                ((ObservableCollection<Polygon>)oldMapModel.Polygons).CollectionChanged -= OnPolygonCollectionChanged;
 
                 MessagingCenter.Unsubscribe<Map, MapSpan>(this, MoveMessageName);
 
@@ -87,6 +90,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
 #pragma warning restore 618
                     NativeMap.InfoWindowClick -= MapOnMarkerClick;
                     NativeMap.PolylineClick -= MapOnPolylineClick;
+                    NativeMap.PolygonClick -= MapOnPolygonClick;
                 }
 
                 oldMapView.Dispose();
@@ -98,6 +102,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 map.SetOnCameraChangeListener(this);
                 NativeMap.InfoWindowClick += MapOnMarkerClick;
                 NativeMap.PolylineClick += MapOnPolylineClick;
+                NativeMap.PolygonClick += MapOnPolygonClick;
 
                 map.UiSettings.ZoomControlsEnabled = Map.HasZoomEnabled;
                 map.UiSettings.ZoomGesturesEnabled = Map.HasZoomEnabled;
@@ -116,6 +121,10 @@ namespace Xamarin.Forms.GoogleMaps.Android
             var inccPolyline = Map.Polylines as INotifyCollectionChanged;
             if (inccPolyline != null)
                 inccPolyline.CollectionChanged += OnPolylineCollectionChanged;
+
+            var inccPolygon = Map.Polygons as INotifyCollectionChanged;
+            if (inccPolygon != null)
+                inccPolygon.CollectionChanged += OnPolygonCollectionChanged;
         }
 
         void OnPinCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
@@ -167,6 +176,31 @@ namespace Xamarin.Forms.GoogleMaps.Android
                     break;
             }
         }
+
+        void OnPolygonCollectionChanged (object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
+        {
+            switch (notifyCollectionChangedEventArgs.Action) {
+            case NotifyCollectionChangedAction.Add:
+                AddPolygons (notifyCollectionChangedEventArgs.NewItems);
+                break;
+            case NotifyCollectionChangedAction.Remove:
+                RemovePolygons (notifyCollectionChangedEventArgs.OldItems);
+                break;
+            case NotifyCollectionChangedAction.Replace:
+                RemovePolygons (notifyCollectionChangedEventArgs.OldItems);
+                AddPolygons (notifyCollectionChangedEventArgs.NewItems);
+                break;
+            case NotifyCollectionChangedAction.Reset:
+                _polygons?.ForEach (polygon => polygon.Remove());
+                _polygons = null;
+                AddPolygons ((IList)(Element as Map).Polygons);
+                break;
+            case NotifyCollectionChangedAction.Move:
+                //do nothing
+                break;
+            }
+        }
+
         void OnMoveToRegionMessage(Map s, MapSpan a)
         {
             MoveToRegion(a, true);
@@ -206,7 +240,8 @@ namespace Xamarin.Forms.GoogleMaps.Android
             {
                 MoveToRegion(((Map)Element).LastMoveToRegion, false);
                 OnPinCollectionChanged(((Map)Element).Pins, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
-                OnPolylineCollectionChanged(((Map)Element).Polylines, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+                OnPolylineCollectionChanged (((Map)Element).Polylines, new NotifyCollectionChangedEventArgs (NotifyCollectionChangedAction.Reset));
+                OnPolygonCollectionChanged (((Map)Element).Polygons, new NotifyCollectionChangedEventArgs (NotifyCollectionChangedAction.Reset));
                 _init = false;
             }
             else if (changed)
@@ -388,15 +423,15 @@ namespace Xamarin.Forms.GoogleMaps.Android
 
         void MapOnPolylineClick(object sender, GoogleMap.PolylineClickEventArgs eventArgs)
         {
-            // clicked marker
-            var polyline = eventArgs.Polyline;
+            // clicked polyline
+            var clickedPolyline = eventArgs.Polyline;
 
             // lookup pin
             Polyline targetPolyline = null;
             for (var i = 0; i < Map.Polylines.Count; i++)
             {
                 var line = Map.Polylines[i];
-                if ((string)line.Id != polyline.Id)
+                if ((string)line.Id != clickedPolyline.Id)
                     continue;
 
                 targetPolyline = line;
@@ -407,6 +442,28 @@ namespace Xamarin.Forms.GoogleMaps.Android
             // Else allow default behavior of displaying an info window.
             targetPolyline?.SendTap();
         }
+
+        void MapOnPolygonClick (object sender, GoogleMap.PolygonClickEventArgs eventArgs)
+        {
+            // clicked polygon
+            var clickedPolygon = eventArgs.Polygon;
+
+            // lookup pin
+            Polygon targetPolygon = null;
+            for (var i = 0; i < Map.Polygons.Count; i++) {
+                var polygon = Map.Polygons [i];
+                if ((string)polygon.Id != clickedPolygon.Id)
+                    continue;
+
+                targetPolygon = polygon;
+                break;
+            }
+
+            // only consider event handled if a handler is present. 
+            // Else allow default behavior of displaying an info window.
+            targetPolygon?.SendTap();
+        }
+
         void AddPolylines(IList polylines)
         {
             var map = NativeMap;
@@ -454,6 +511,51 @@ namespace Xamarin.Forms.GoogleMaps.Android
             }
         }
 
+        void AddPolygons (IList polygons)
+        {
+            var map = NativeMap;
+            if (map == null)
+                return;
+
+            if (_polygons == null)
+                _polygons = new List<APolygon> ();
+
+            _polygons.AddRange (polygons.Cast<Polygon> ().Select (polygon => {
+                var opts = new PolygonOptions ();
+
+                foreach (var p in polygon.Positions)
+                    opts.Add (new LatLng (p.Latitude, p.Longitude));
+
+                opts.InvokeStrokeWidth(polygon.StrokeWidth * _scaledDensity); // TODO: convert from px to pt. Is this collect? (looks like same iOS Maps) 
+                opts.InvokeStrokeColor(polygon.StrokeColor.ToAndroid());
+                opts.InvokeFillColor(polygon.FillColor.ToAndroid());
+                opts.Clickable (polygon.IsClickable);
+
+                var nativePolygon = map.AddPolygon(opts);
+
+                // associate pin with marker for later lookup in event handlers
+                polygon.Id = nativePolygon.Id;
+                return nativePolygon;
+            }));
+        }
+
+        void RemovePolygons (IList polygons)
+        {
+            var map = NativeMap;
+            if (map == null)
+                return;
+            if (_polygons == null)
+                return;
+
+            foreach (Polygon polygon in polygons) {
+                var apolygon = _polygons.FirstOrDefault (m => (object)m.Id == polygon.Id);
+                if (apolygon == null)
+                    continue;
+                apolygon.Remove();
+                _polygons.Remove(apolygon);
+            }
+        }
+
         bool _disposed;
         protected override void Dispose(bool disposing)
         {
@@ -466,7 +568,8 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 {
                     MessagingCenter.Unsubscribe<Map, MapSpan>(this, MoveMessageName);
                     ((ObservableCollection<Pin>)mapModel.Pins).CollectionChanged -= OnPinCollectionChanged;
-                    ((ObservableCollection<Pin>)mapModel.Polylines).CollectionChanged -= OnPolylineCollectionChanged;
+                    ((ObservableCollection<Polyline>)mapModel.Polylines).CollectionChanged -= OnPolylineCollectionChanged;
+                    ((ObservableCollection<Polygon>)mapModel.Polygons).CollectionChanged -= OnPolygonCollectionChanged;
                 }
 
                 var gmap = NativeMap;
@@ -475,6 +578,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 gmap.MyLocationEnabled = false;
                 gmap.InfoWindowClick -= MapOnMarkerClick;
                 gmap.PolylineClick -= MapOnPolylineClick;
+                gmap.PolygonClick -= MapOnPolygonClick;
                 gmap.Dispose();
             }
 
