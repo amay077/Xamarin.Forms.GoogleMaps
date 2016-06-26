@@ -17,6 +17,7 @@ using APolygon = Android.Gms.Maps.Model.Polygon;
 using ACircle = Android.Gms.Maps.Model.Circle;
 using Android.Util;
 using Android.App;
+using Xamarin.Forms.GoogleMaps.Internals;
 
 namespace Xamarin.Forms.GoogleMaps.Android
 {
@@ -81,7 +82,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 ((ObservableCollection<Polygon>)oldMapModel.Polygons).CollectionChanged -= OnPolygonCollectionChanged;
                 ((ObservableCollection<Circle>)oldMapModel.Circles).CollectionChanged -= OnCircleCollectionChanged;
 
-                MessagingCenter.Unsubscribe<Map, MapSpan>(this, MoveMessageName);
+                MessagingCenter.Unsubscribe<Map, MoveToRegionMessage>(this, MoveMessageName);
 
 #pragma warning disable 618
                 if (oldMapView.Map != null)
@@ -116,7 +117,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 SetMapType();
             }
 
-            MessagingCenter.Subscribe<Map, MapSpan>(this, MoveMessageName, OnMoveToRegionMessage, Map);
+            MessagingCenter.Subscribe<Map, MoveToRegionMessage>(this, MoveMessageName, OnMoveToRegionMessage, Map);
 
             var inccPin = Map.Pins as INotifyCollectionChanged;
             if (inccPin != null)
@@ -235,9 +236,9 @@ namespace Xamarin.Forms.GoogleMaps.Android
             }
         }
 
-        void OnMoveToRegionMessage(Map s, MapSpan a)
+        void OnMoveToRegionMessage(Map s, MoveToRegionMessage m)
         {
-            MoveToRegion(a, true);
+            MoveToRegion(m.Span, m.Animate);
         }
 
         void MoveToRegion(MapSpan span, bool animate)
@@ -669,7 +670,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 var mapModel = Element as Map;
                 if (mapModel != null)
                 {
-                    MessagingCenter.Unsubscribe<Map, MapSpan>(this, MoveMessageName);
+                    MessagingCenter.Unsubscribe<Map, MoveToRegionMessage>(this, MoveMessageName);
                     ((ObservableCollection<Pin>)mapModel.Pins).CollectionChanged -= OnPinCollectionChanged;
                     ((ObservableCollection<Polyline>)mapModel.Polylines).CollectionChanged -= OnPolylineCollectionChanged;
                     ((ObservableCollection<Polygon>)mapModel.Polygons).CollectionChanged -= OnPolygonCollectionChanged;

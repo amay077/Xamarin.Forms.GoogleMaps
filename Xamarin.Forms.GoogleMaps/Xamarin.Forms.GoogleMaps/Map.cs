@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
+using Xamarin.Forms.GoogleMaps.Internals;
 
 namespace Xamarin.Forms.GoogleMaps
 {
@@ -118,12 +119,12 @@ namespace Xamarin.Forms.GoogleMaps
             return _pins.GetEnumerator();
         }
 
-        public void MoveToRegion(MapSpan mapSpan)
+        public void MoveToRegion(MapSpan mapSpan, bool animate = true)
         {
             if (mapSpan == null)
                 throw new ArgumentNullException(nameof(mapSpan));
             LastMoveToRegion = mapSpan;
-            MessagingCenter.Send(this, "MapMoveToRegion", mapSpan);
+            MessagingCenter.Send(this, "MapMoveToRegion", new MoveToRegionMessage(mapSpan, animate));
         }
 
         void PinsOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)

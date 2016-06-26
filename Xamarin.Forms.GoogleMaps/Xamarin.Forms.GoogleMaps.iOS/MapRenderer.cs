@@ -10,6 +10,7 @@ using System.Drawing;
 using APolyline = Google.Maps.Polyline;
 using APolygon = Google.Maps.Polygon;
 using ACircle = Google.Maps.Circle;
+using Xamarin.Forms.GoogleMaps.Internals;
 
 namespace Xamarin.Forms.GoogleMaps.iOS
 {
@@ -31,7 +32,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                 if (Element != null)
                 {
                     var mapModel = (Map)Element;
-                    MessagingCenter.Unsubscribe<Map, MapSpan>(this, MoveMessageName);
+                    MessagingCenter.Unsubscribe<Map, MoveToRegionMessage>(this, MoveMessageName);
                     ((ObservableCollection<Pin>)mapModel.Pins).CollectionChanged -= OnPinCollectionChanged;
                     ((ObservableCollection<Polyline>)mapModel.Polylines).CollectionChanged -= OnPolylineCollectionChanged;
                     ((ObservableCollection<Polygon>)mapModel.Polygons).CollectionChanged -= OnPolygonCollectionChanged;
@@ -54,7 +55,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
             if (e.OldElement != null)
             {
                 var mapModel = (Map)e.OldElement;
-                MessagingCenter.Unsubscribe<Map, MapSpan>(this, "MapMoveToRegion");
+                MessagingCenter.Unsubscribe<Map, MoveToRegionMessage>(this, "MapMoveToRegion");
                 ((ObservableCollection<Pin>)mapModel.Pins).CollectionChanged -= OnPinCollectionChanged;
                 ((ObservableCollection<Polyline>)mapModel.Pins).CollectionChanged -= OnPolylineCollectionChanged;
             }
@@ -74,7 +75,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                     mkMapView.OverlayTapped += OverlayTapped;
                 }
 
-                MessagingCenter.Subscribe<Map, MapSpan>(this, MoveMessageName, (s, a) => MoveToRegion(a), mapModel);
+                MessagingCenter.Subscribe<Map, MoveToRegionMessage>(this, MoveMessageName, (s, a) => MoveToRegion(a.Span, a.Animate), mapModel);
                 if (mapModel.LastMoveToRegion != null)
                     MoveToRegion(mapModel.LastMoveToRegion, false);
 
