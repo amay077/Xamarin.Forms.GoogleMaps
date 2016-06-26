@@ -3,13 +3,14 @@
 	xmlns="http://xamarin.com/schemas/2014/forms"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 	xmlns:maps="clr-namespace:Xamarin.Forms.GoogleMaps;assembly=Xamarin.Forms.GoogleMaps"
-	x:Class="XFGoogleMapSample.BasicMapPage"
-	Title="BasicMap">
+	x:Class="XFGoogleMapSample.ShapesPage"
+	Title="Shapes">
 	<ContentPage.Content>
+
 		<StackLayout
-			HorizontalOptions="Fill"
 			VerticalOptions="Fill"
 			Orientation="Vertical">
+
 			<Grid>
 				<Grid.RowDefinitions>
 			        <RowDefinition Height="Auto" />
@@ -23,38 +24,37 @@
 			        <ColumnDefinition Width="*" />
 			    </Grid.ColumnDefinitions>
 				
-				<Label Text="MapType" 
-					Grid.Row="1"
-					Grid.Column="1"/>
-			    <Picker x:Name="pickerMapType"
-					Title="MapType"
-					Grid.Row="1"
-					Grid.Column="2" />
+				<Button x:Name="buttonAddPolyline"
+						Text="Add Polyline"
+						Grid.Row="1"
+						Grid.Column="1"/>
+				<Button x:Name="buttonRemovePolyline"
+						Text="Remove Polyline"
+						Grid.Row="1"
+						Grid.Column="2"/>
 
-				<Label Text="HasZoomEnabled" 
-					Grid.Row="2"
-					Grid.Column="1" />
-				<Switch x:Name="switchHasZoomEnabled" 
-					Grid.Row="2"
-					Grid.Column="2" />
+				<Button x:Name="buttonAddPolygon"
+						Text="Add Polygon"
+						Grid.Row="2"
+						Grid.Column="1"/>
+				<Button x:Name="buttonRemovePolygon"
+						Text="Remove Polygon"
+						Grid.Row="2"
+						Grid.Column="2"/>
 
-				<Label Text="HasScrollEnabled" 
-					Grid.Row="3"
-					Grid.Column="1" />
-				<Switch x:Name="switchHasScrollEnabled" 
-					Grid.Row="3"
-					Grid.Column="2" />
-
-				<Label Text="IsShowingUser" 
-					Grid.Row="4"
-					Grid.Column="1" />
-				<Switch x:Name="switchIsShowingUser" 
-					Grid.Row="4"
-					Grid.Column="2" />
-						
-			</Grid>
+				<Button x:Name="buttonAddCircle"
+						Text="Add Circle"
+						Grid.Row="3"
+						Grid.Column="1"/>
+				<Button x:Name="buttonRemoveCircle"
+						Text="Remove Circle"
+						Grid.Row="3"
+						Grid.Column="2"/>
+				
+			</Grid>			
 			<maps:Map x:Name="map" 
 					VerticalOptions="FillAndExpand"/>
+			
 		</StackLayout>
 	</ContentPage.Content>
 </ContentPage>

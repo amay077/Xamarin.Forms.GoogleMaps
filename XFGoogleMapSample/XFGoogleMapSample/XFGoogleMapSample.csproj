@@ -38,6 +38,9 @@
     <EmbeddedResource Include="PinsPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Include="ShapesPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -52,6 +55,9 @@
     </Compile>
     <Compile Include="PinsPage.xaml.cs">
       <DependentUpon>PinsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ShapesPage.xaml.cs">
+      <DependentUpon>ShapesPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

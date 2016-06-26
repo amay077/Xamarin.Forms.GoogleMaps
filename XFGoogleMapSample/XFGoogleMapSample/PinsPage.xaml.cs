@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 using Xamarin.Forms;
 using Xamarin.Forms.GoogleMaps;
@@ -14,7 +13,6 @@ namespace XFGoogleMapSample
 
             Pin pinTokyo = null;
             Pin pinNewYork = null;
-            Pin pinSAfr = null;
 
             // Tokyo pin
             buttonAddPinTokyo.Clicked += (sender, e) => 
@@ -74,34 +72,6 @@ namespace XFGoogleMapSample
             };
             buttonRemovePinNewYork.IsEnabled = false;
 
-            // South Africa pin
-            buttonAddPinSAfr.Clicked += (sender, e) =>
-            {
-                pinSAfr = new Pin()
-                {
-                    Type = PinType.Place,
-                    Label = "Cape of Good Hope",
-                    Address = "Cape Point Rd, Cape Town",
-                    Position = new Position(-34.36d, 18.47d)
-                };
-                pinSAfr.Clicked += Pin_Clicked;
-                map.Pins.Add(pinSAfr);
-                map.MoveToRegion(MapSpan.FromCenterAndRadius(pinSAfr.Position, Distance.FromMeters(5000)));
-
-                ((Button)sender).IsEnabled = false;
-                buttonRemovePinSAfr.IsEnabled = true;
-            };
-
-            buttonRemovePinSAfr.Clicked += (sender, e) =>
-            {
-                map.Pins.Remove(pinSAfr);
-                pinSAfr.Clicked -= Pin_Clicked;
-                pinSAfr = null;
-                ((Button)sender).IsEnabled = false;
-                buttonAddPinSAfr.IsEnabled = true;
-            };
-            buttonRemovePinSAfr.IsEnabled = false;
-
             // Clear Pins
             buttonClearPins.Clicked += (sender, e) => 
             {
@@ -109,17 +79,12 @@ namespace XFGoogleMapSample
 
                 pinTokyo.Clicked -= Pin_Clicked;
                 pinNewYork.Clicked -= Pin_Clicked;
-                pinSAfr.Clicked -= Pin_Clicked;
                 pinTokyo = null;
                 pinNewYork = null;
-                pinSAfr = null;
                 buttonAddPinTokyo.IsEnabled = true;
                 buttonAddPinNewYork.IsEnabled = true;
-                buttonAddPinSAfr.IsEnabled = true;
                 buttonRemovePinTokyo.IsEnabled = false;
                 buttonRemovePinNewYork.IsEnabled = false;
-                buttonRemovePinSAfr.IsEnabled = false;
-
             };
 
             // Select New York Pin

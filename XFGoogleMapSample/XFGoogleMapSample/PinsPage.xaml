@@ -17,11 +17,10 @@
 			        <RowDefinition Height="Auto" />
 			        <RowDefinition Height="Auto" />
 			        <RowDefinition Height="Auto" />
-			        <RowDefinition Height="Auto" />
 			    </Grid.RowDefinitions>
 			 
 			    <Grid.ColumnDefinitions>
-			        <ColumnDefinition Width="auto" />
+			        <ColumnDefinition Width="Auto" />
 			        <ColumnDefinition Width="*" />
 			    </Grid.ColumnDefinitions>
 				
@@ -42,30 +41,21 @@
 						Text="Remove pin to New York"
 						Grid.Row="2"
 						Grid.Column="2"/>
-				
-				<Button x:Name="buttonAddPinSAfr"
-						Text="Add pin to South Africa"
-						Grid.Row="3"
-						Grid.Column="1"/>
-				<Button x:Name="buttonRemovePinSAfr"
-						Text="Remove pin to South Africa"
-						Grid.Row="3"
-						Grid.Column="2"/>
 
 				<Button x:Name="buttonClearPins"
 						Text="Clear Pins"
-						Grid.Row="4"
+						Grid.Row="3"
 						Grid.Column="1"
 						Grid.ColumnSpan="2" />
 				
 				<Button x:Name="buttonSelectPinNewYork"
 						Text="Select New York"
-						Grid.Row="5"
+						Grid.Row="4"
 						Grid.Column="1" />
 				
 				<Button x:Name="buttonClearSelection"
 						Text="Clear Selection"
-						Grid.Row="5"
+						Grid.Row="4"
 						Grid.Column="2" />
 				
 			</Grid>			

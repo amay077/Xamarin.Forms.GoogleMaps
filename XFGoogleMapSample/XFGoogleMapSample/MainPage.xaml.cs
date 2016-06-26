@@ -13,6 +13,7 @@ namespace XFGoogleMapSample
 
             buttonBasicMap.Clicked += (sender, e) => Navigation.PushAsync(new BasicMapPage());
             buttonPins.Clicked += (sender, e) => Navigation.PushAsync(new PinsPage());
+            buttonShapes.Clicked += (sender, e) => Navigation.PushAsync(new ShapesPage());
         }
 
         protected override void OnAppearing()
