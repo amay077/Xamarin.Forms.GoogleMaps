@@ -416,7 +416,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
         void RemovePolygons(IList polygons)
         {
             foreach (object obj in polygons)
-                ((ACircle)((Circle)obj).Id).Map = null;
+                ((APolygon)((Polygon)obj).Id).Map = null;
         }
 
         void AddCircles(IList circles)
