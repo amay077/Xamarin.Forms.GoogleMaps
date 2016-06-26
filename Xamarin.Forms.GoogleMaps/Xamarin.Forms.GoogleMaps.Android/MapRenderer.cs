@@ -405,7 +405,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 Marker targetMarker = null;
                 foreach (var marker in _markers)
                 {
-                    if ((string)pin.Id != marker.Id)
+					if (((Marker)pin.Id).Id != marker.Id)
                         continue;
 
                     targetMarker = marker;
