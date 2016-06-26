@@ -18,8 +18,11 @@ Android and iOS monopolize most the mobile apps market. Thus I think no need Bin
 
 Furthermore, I am using Google Maps instead of MapKit because it is easy for define common API for Android and iOS.
 
-
 **Xamarin.Forms.GoogleMaps provides maximum Google maps features for Xamarin.Forms!!**
+
+## Comparison with Xamarin.Forms.Maps
+
+See [Comparison with Xamarin.Forms.Maps](https://github.com/amay077/Xamarin.Forms.GoogleMaps/wiki/Comparison-with-Xamarin.Forms.Maps).
 
 ### Setup
 
