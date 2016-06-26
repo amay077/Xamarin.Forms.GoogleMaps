@@ -21,7 +21,7 @@ Xamarin公式の地図ライブラリ [Xamarin.Forms.Maps](https://developer.xam
 
 ### Xamarin.Forms.Maps との比較
 
-[Xamarin.Forms.Maps との比較](COMPARISON_WITH_FORMSMAPS-ja.md) を見て下さい。
+[Xamarin.Forms.Maps との比較](https://github.com/amay077/Xamarin.Forms.GoogleMaps/wiki/COMPARISON_WITH_FORMSMAPS-ja) を見て下さい。
 
 ### セットアップ
 
