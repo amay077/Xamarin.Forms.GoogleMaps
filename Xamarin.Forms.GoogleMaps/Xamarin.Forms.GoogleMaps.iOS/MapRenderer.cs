@@ -429,7 +429,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                 nativeCircle.StrokeWidth = circle.StrokeWidth;
                 nativeCircle.StrokeColor = circle.StrokeColor.ToUIColor();
                 nativeCircle.FillColor = circle.FillColor.ToUIColor();
-                nativeCircle.Tappable = circle.IsClickable;
+                //nativeCircle.Tappable = circle.IsClickable;
 
                 circle.Id = nativeCircle;
                 nativeCircle.Map = (MapView)Control;
