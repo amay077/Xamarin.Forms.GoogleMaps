@@ -13,7 +13,7 @@ namespace XFGoogleMapSample.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             global::Xamarin.Forms.Forms.Init();
-            Xamarin.FormsGoogleMaps.Init("AIzaSyD81Hy29p5w17mYZ6tVeoedIXYJlRp1_Mg"); // initialize for Xamarin.Forms.GoogleMaps
+            Xamarin.FormsGoogleMaps.Init("your_api_key"); // initialize for Xamarin.Forms.GoogleMaps
             LoadApplication(new App());
 
             return base.FinishedLaunching(app, options);

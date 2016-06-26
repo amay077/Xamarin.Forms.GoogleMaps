@@ -92,11 +92,10 @@ namespace Xamarin.Forms.GoogleMaps.Android
 #pragma warning disable 618
                     oldMapView.Map.SetOnCameraChangeListener(null);
 #pragma warning restore 618
-                    NativeMap.InfoWindowClick -= MapOnInfoWindowClick;
+                    NativeMap.InfoWindowClick -= MapOnMarkerClick;
                     NativeMap.PolylineClick -= MapOnPolylineClick;
                     NativeMap.PolygonClick -= MapOnPolygonClick;
                     //NativeMap.CircleClick -= MapOnCircleClick; // Circle click is not supported.
-                    NativeMap.MarkerClick -= MapOnMakerClick;
                 }
 
                 oldMapView.Dispose();
@@ -106,11 +105,10 @@ namespace Xamarin.Forms.GoogleMaps.Android
             if (map != null)
             {
                 map.SetOnCameraChangeListener(this);
-                NativeMap.InfoWindowClick += MapOnInfoWindowClick;
+                NativeMap.InfoWindowClick += MapOnMarkerClick;
                 NativeMap.PolylineClick += MapOnPolylineClick;
                 NativeMap.PolygonClick += MapOnPolygonClick;
                 //NativeMap.CircleClick += MapOnCircleClick; // Circle click is not supported.
-                NativeMap.MarkerClick += MapOnMakerClick;
 
                 map.UiSettings.ZoomControlsEnabled = Map.HasZoomEnabled;
                 map.UiSettings.ZoomGesturesEnabled = Map.HasZoomEnabled;
@@ -156,7 +154,6 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 case NotifyCollectionChangedAction.Reset:
                     _markers?.ForEach(m => m.Remove());
                     _markers = null;
-                    ((Map)Element).SelectedPin = null;
                     AddPins((IList)(Element as Map).Pins);
                     break;
                 case NotifyCollectionChangedAction.Move:
@@ -397,9 +394,10 @@ namespace Xamarin.Forms.GoogleMaps.Android
         {
             if (pin == null)
             {
-                if (_markers != null)
-                    foreach (var marker in _markers)
-                        marker.HideInfoWindow();
+                foreach (var marker in _markers)
+                {
+                    marker.HideInfoWindow();
+                }
             }
             else
             {
@@ -407,7 +405,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 Marker targetMarker = null;
                 foreach (var marker in _markers)
                 {
-                    if (((Marker)pin.Id).Id != marker.Id)
+					if (((Marker)pin.Id).Id != marker.Id)
                         continue;
 
                     targetMarker = marker;
@@ -421,7 +419,6 @@ namespace Xamarin.Forms.GoogleMaps.Android
 
         void RemovePins(IList pins)
         {
-            var gmap = (Map)Element;
             var map = NativeMap;
             if (map == null)
                 return;
@@ -430,19 +427,15 @@ namespace Xamarin.Forms.GoogleMaps.Android
 
             foreach (Pin p in pins)
             {
-                var marker = _markers.FirstOrDefault(m => ((Marker)p.Id).Id == m.Id);
+                var marker = _markers.FirstOrDefault(m => object.ReferenceEquals(m, p.Id));
                 if (marker == null)
                     continue;
                 marker.Remove();
                 _markers.Remove(marker);
-
-                if (object.ReferenceEquals(gmap.SelectedPin,  p))
-                    gmap.SelectedPin = null;
-
             }
         }
 
-        void MapOnInfoWindowClick(object sender, GoogleMap.InfoWindowClickEventArgs eventArgs)
+        void MapOnMarkerClick(object sender, GoogleMap.InfoWindowClickEventArgs eventArgs)
         {
             // clicked marker
             var marker = eventArgs.Marker;
@@ -452,7 +445,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
             for (var i = 0; i < Map.Pins.Count; i++)
             {
                 var pin = Map.Pins[i];
-                if (((Marker)pin.Id).Id != marker.Id)
+                if ((string)pin.Id != marker.Id)
                     continue;
 
                 targetPin = pin;
@@ -462,36 +455,6 @@ namespace Xamarin.Forms.GoogleMaps.Android
             // only consider event handled if a handler is present. 
             // Else allow default behavior of displaying an info window.
             targetPin?.SendTap();
-        }
-
-        void MapOnMakerClick(object sender, GoogleMap.MarkerClickEventArgs eventArgs)
-        {
-            var map = (Map)Element;
-
-            // clicked marker
-            var marker = eventArgs.Marker;
-
-            // lookup pin
-            Pin targetPin = null;
-            for (var i = 0; i < Map.Pins.Count; i++)
-            {
-                var pin = Map.Pins[i];
-                if (((Marker)pin.Id).Id != marker.Id)
-                    continue;
-
-                targetPin = pin;
-                break;
-            }
-
-            if (targetPin != null)
-            {
-                if (targetPin.Equals(map.SelectedPin))
-                    map.SelectedPin = null;
-                else
-                    map.SelectedPin = targetPin;
-            }    
-
-            eventArgs.Handled = true;
         }
 
         void MapOnPolylineClick(object sender, GoogleMap.PolylineClickEventArgs eventArgs)
@@ -504,7 +467,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
             for (var i = 0; i < Map.Polylines.Count; i++)
             {
                 var line = Map.Polylines[i];
-                if (((APolyline)line.Id).Id != clickedPolyline.Id)
+                if ((string)line.Id != clickedPolyline.Id)
                     continue;
 
                 targetPolyline = line;
@@ -525,7 +488,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
             Polygon targetPolygon = null;
             for (var i = 0; i < Map.Polygons.Count; i++) {
                 var polygon = Map.Polygons [i];
-                if (((APolygon)polygon.Id).Id != clickedPolygon.Id)
+                if ((string)polygon.Id != clickedPolygon.Id)
                     continue;
 
                 targetPolygon = polygon;
@@ -536,6 +499,28 @@ namespace Xamarin.Forms.GoogleMaps.Android
             // Else allow default behavior of displaying an info window.
             targetPolygon?.SendTap();
         }
+
+        //void MapOnCircleClick(object sender, GoogleMap.CircleClickEventArgs eventArgs)
+        //{
+        //    // clicked polygon
+        //    var clickedCircle = eventArgs.Circle;
+
+        //    // lookup pin
+        //    Circle targetCircle = null;
+        //    for (var i = 0; i < Map.Circles.Count; i++)
+        //    {
+        //        var circle = Map.Circles[i];
+        //        if ((string)circle.Id != clickedCircle.Id)
+        //            continue;
+
+        //        targetCircle = circle;
+        //        break;
+        //    }
+
+        //    // only consider event handled if a handler is present. 
+        //    // Else allow default behavior of displaying an info window.
+        //    targetCircle?.SendTap();
+        //}
 
         void AddPolylines(IList polylines)
         {
@@ -576,7 +561,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
 
             foreach (Polyline polyline in polylines)
             {
-                var apolyline = _polylines.FirstOrDefault(m => ((APolyline)polyline.Id).Id == m.Id);
+                var apolyline = _polylines.FirstOrDefault(m => object.ReferenceEquals(m, polyline.Id));
                 if (apolyline == null)
                     continue;
                 apolyline.Remove();
@@ -621,7 +606,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 return;
 
             foreach (Polygon polygon in polygons) {
-                var apolygon = _polygons.FirstOrDefault (m => ((APolygon)polygon.Id).Id == m.Id);
+                var apolygon = _polygons.FirstOrDefault (m => object.ReferenceEquals(m, polygon.Id));
                 if (apolygon == null)
                     continue;
                 apolygon.Remove();
@@ -667,7 +652,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
 
             foreach (Circle circle in circles)
             {
-                var acircle = _circles.FirstOrDefault(m => ((ACircle)circle.Id).Id == m.Id);
+                var acircle = _circles.FirstOrDefault(m => object.ReferenceEquals(m, circle.Id));
                 if (acircle == null)
                     continue;
                 acircle.Remove();
@@ -696,7 +681,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 if (gmap == null)
                     return;
                 gmap.MyLocationEnabled = false;
-                gmap.InfoWindowClick -= MapOnInfoWindowClick;
+                gmap.InfoWindowClick -= MapOnMarkerClick;
                 gmap.PolylineClick -= MapOnPolylineClick;
                 gmap.PolygonClick -= MapOnPolygonClick;
                 //gmap.CircleClick -= MapOnCircleClick;
