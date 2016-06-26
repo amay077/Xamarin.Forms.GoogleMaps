@@ -627,7 +627,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 var opts = new CircleOptions();
 
                 opts.InvokeCenter(new LatLng(circle.Center.Latitude, circle.Center.Longitude));
-                opts.InvokeRadius(circle.Radius);
+                opts.InvokeRadius(circle.Radius.Meters);
                 opts.InvokeStrokeWidth(circle.StrokeWidth * _scaledDensity); // TODO: convert from px to pt. Is this collect? (looks like same iOS Maps) 
                 opts.InvokeStrokeColor(circle.StrokeColor.ToAndroid());
                 opts.InvokeFillColor(circle.FillColor.ToAndroid());

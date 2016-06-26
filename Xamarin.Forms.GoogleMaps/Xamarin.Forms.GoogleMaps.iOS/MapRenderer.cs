@@ -425,7 +425,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
             {
                 var nativeCircle = ACircle.FromPosition(
                     new CLLocationCoordinate2D(circle.Center.Latitude, circle.Center.Longitude), 
-                    circle.Radius);
+                    circle.Radius.Meters);
                 nativeCircle.StrokeWidth = circle.StrokeWidth;
                 nativeCircle.StrokeColor = circle.StrokeColor.ToUIColor();
                 nativeCircle.FillColor = circle.FillColor.ToUIColor();
