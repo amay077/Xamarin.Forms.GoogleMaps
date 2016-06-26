@@ -81,10 +81,10 @@ public partial class AppDelegate : global::Xamarin.Forms.Platform.iOS.FormsAppli
 機能要望は、 [@amay077](https://twitter.com/amay077) または、ISSUE やプルリクください！
 追加機能案は以下の通りです。
 
-* ~~Pin の InfoWindow の Visible プロパティ~~
+* ~~Pin の InfoWindow の Visible プロパティ~~ v1.0.0で対応
 * Pin のタップ＆ホールドによる移動
-* ~~Polygon, Polyline, Circle の描画サポート~~
-* etc.. 
+* ~~Polygon, Polyline, Circle の描画サポート~~ v1.1.0で対応
+* [その他の機能改善リスト](https://github.com/amay077/Xamarin.Forms.GoogleMaps/labels/enhancement)
 
 Windows 10 UWP 対応は「とりあえず」残しました。
 が、基本的には Android/iOS での Google Maps に最適化するので、UWP では未対応の機能が増えると予想されます。  
