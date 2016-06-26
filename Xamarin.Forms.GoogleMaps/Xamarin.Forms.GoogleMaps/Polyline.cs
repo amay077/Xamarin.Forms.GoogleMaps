@@ -35,6 +35,8 @@ namespace Xamarin.Forms.GoogleMaps
             get { return _positions; }
         }
 
+        public object Tag { get; set; }
+
         internal object Id { get; set; }
 
         public event EventHandler Clicked;

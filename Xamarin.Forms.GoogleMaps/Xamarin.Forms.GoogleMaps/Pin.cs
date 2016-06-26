@@ -44,6 +44,8 @@ namespace Xamarin.Forms.GoogleMaps
             set { SetValue(TypeProperty, value); }
         }
 
+        public object Tag { get; set; }
+
         internal object Id { get; set; }
 
         public event EventHandler Clicked;
