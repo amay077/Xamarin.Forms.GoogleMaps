@@ -3,8 +3,15 @@
 	<metadata minClientVersion="2.8.3">
 		<id>Xamarin.Forms.GoogleMaps</id>
 		<title>Xamarin.Forms.GoogleMaps</title>
-		<version>1.1.0</version>
+		<version>1.1.1-beta1</version>
 		<releaseNotes>
+# 1.1.1
+
+## Bug Fixes
+
+* #12 [Android]Selecting pin from logic causes error
+* #14 Some combinations of set Map.SelectedPin, tap pin and Map.Pins.Remove(Clear) causes strange behavior 
+
 # 1.1.0
 
 ## New Features
