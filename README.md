@@ -8,6 +8,19 @@ Usage is almost the same as [Xamarin.Forms.Maps](https://www.nuget.org/packages/
 
 ![screenshot](screenshot01.png)
 
+## Motivation
+
+The official [Xamarin.Forms.Map](https://developer.xamarin.com/guides/xamarin-forms/user-interface/map/)  has minumn functions only.
+
+Especially, Bing Maps SDK is very old-fashioned because it has not vector-tile, marker's infowindow.
+
+Android and iOS monopolize most the mobile apps market. Thus I think no need Bing maps support.
+
+Furthermore, I am using Google Maps instead of MapKit because it is easy for define common API for Android and iOS.
+
+
+**Xamarin.Forms.GoogleMaps provides maximum Google maps features for Xamarin.Forms!!**
+
 ### Setup
 
 * Available on NuGet: https://www.nuget.org/packages/Xamarin.Forms.GoogleMaps/ [![NuGet](https://img.shields.io/nuget/v/Xam.Plugin.Geolocator.svg?label=NuGet)](https://www.nuget.org/packages/Xamarin.Forms.GoogleMaps/)
