@@ -77,8 +77,8 @@ namespace XFGoogleMapSample
             {
                 map.Pins.Clear();
 
-                pinTokyo.Clicked -= Pin_Clicked;
-                pinNewYork.Clicked -= Pin_Clicked;
+                if (pinTokyo != null) pinTokyo.Clicked -= Pin_Clicked;
+                if (pinNewYork != null) pinNewYork.Clicked -= Pin_Clicked;
                 pinTokyo = null;
                 pinNewYork = null;
                 buttonAddPinTokyo.IsEnabled = true;
