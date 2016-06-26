@@ -43,6 +43,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                 mkMapView.InfoTapped -= InfoWindowTapped;
                 mkMapView.OverlayTapped -= OverlayTapped;
                 mkMapView.CameraPositionChanged -= CameraPositionChanged;
+                mkMapView.TappedMarker = null;
             }
 
             base.Dispose(disposing);
@@ -73,6 +74,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                     mkMapView.CameraPositionChanged += CameraPositionChanged;
                     mkMapView.InfoTapped += InfoWindowTapped;
                     mkMapView.OverlayTapped += OverlayTapped;
+                    mkMapView.TappedMarker = HandleGMSTappedMarker;
                 }
 
                 MessagingCenter.Subscribe<Map, MoveToRegionMessage>(this, MoveMessageName, (s, a) => MoveToRegion(a.Span, a.Animate), mapModel);
@@ -184,6 +186,30 @@ namespace Xamarin.Forms.GoogleMaps.iOS
             }
         }
 
+        bool HandleGMSTappedMarker(MapView mapView, Marker marker)
+        {
+            var map = (Map)Element;
+
+            // lookup pin
+            Pin targetPin = null;
+            for (var i = 0; i < map.Pins.Count; i++)
+            {
+                var pin = map.Pins[i];
+                if (!Object.ReferenceEquals(pin.Id, marker))
+                    continue;
+
+                targetPin = pin;
+                break;
+            }
+
+            if (object.ReferenceEquals(map.SelectedPin, targetPin))
+                map.SelectedPin = null;
+            else
+                map.SelectedPin = targetPin;
+            
+            return true;
+        }
+
         void UpdateSelectedPin(Pin pin)
         {
             var mapView = (MapView)Control;
@@ -283,6 +309,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                 case NotifyCollectionChangedAction.Reset:
                     var mapView = (MapView)Control;
                     mapView.Clear();
+                    (Element as Map).SelectedPin = null;
                     AddPins((IList)(Element as Map).Pins);
                     break;
                 case NotifyCollectionChangedAction.Move:
@@ -368,8 +395,14 @@ namespace Xamarin.Forms.GoogleMaps.iOS
 
         void RemovePins(IList pins)
         {
+            var map = (Map)Element;
             foreach (object pin in pins)
+            {
                 ((Marker)((Pin)pin).Id).Map = null;
+
+                if (object.ReferenceEquals(map.SelectedPin, pin))
+                    map.SelectedPin = null;
+            }
         }
 
         void AddPolylines(IList polylines)

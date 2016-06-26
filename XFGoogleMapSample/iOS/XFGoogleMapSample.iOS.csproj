@@ -120,6 +120,14 @@
       <Project>{E5FEBCA7-6127-4002-B7B3-3EE4CC362B25}</Project>
       <Name>XFGoogleMapSample</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Xamarin.Forms.GoogleMaps\Xamarin.Forms.GoogleMaps\Xamarin.Forms.GoogleMaps.csproj">
+      <Project>{F1C8F5A0-A55D-4C7D-9737-472F7AC222D4}</Project>
+      <Name>Xamarin.Forms.GoogleMaps</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Xamarin.Forms.GoogleMaps\Xamarin.Forms.GoogleMaps.iOS\Xamarin.Forms.GoogleMaps.iOS.csproj">
+      <Project>{AB1D9407-E4B2-403C-88CD-9CAC7A6914EF}</Project>
+      <Name>Xamarin.Forms.GoogleMaps.iOS</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Assets.xcassets\AppIcons.appiconset\Contents.json">
