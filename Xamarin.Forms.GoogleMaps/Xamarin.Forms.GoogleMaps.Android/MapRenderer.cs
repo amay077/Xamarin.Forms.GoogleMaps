@@ -382,7 +382,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 var marker = map.AddMarker(opts);
 
                 // associate pin with marker for later lookup in event handlers
-                pin.Id = marker.Id;
+                pin.Id = marker;
                 return marker;
             }));
 
@@ -426,7 +426,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
 
             foreach (Pin p in pins)
             {
-                var marker = _markers.FirstOrDefault(m => (object)m.Id == p.Id);
+                var marker = _markers.FirstOrDefault(m => object.ReferenceEquals(m, p.Id));
                 if (marker == null)
                     continue;
                 marker.Remove();
@@ -545,7 +545,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 var nativePolyline = map.AddPolyline(opts);
 
                 // associate pin with marker for later lookup in event handlers
-                polyline.Id = nativePolyline.Id;
+                polyline.Id = nativePolyline;
                 return nativePolyline;
             }));
         }
@@ -560,7 +560,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
 
             foreach (Polyline polyline in polylines)
             {
-                var apolyline = _polylines.FirstOrDefault(m => (object)m.Id == polyline.Id);
+                var apolyline = _polylines.FirstOrDefault(m => object.ReferenceEquals(m, polyline.Id));
                 if (apolyline == null)
                     continue;
                 apolyline.Remove();
@@ -591,7 +591,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 var nativePolygon = map.AddPolygon(opts);
 
                 // associate pin with marker for later lookup in event handlers
-                polygon.Id = nativePolygon.Id;
+                polygon.Id = nativePolygon;
                 return nativePolygon;
             }));
         }
@@ -605,7 +605,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 return;
 
             foreach (Polygon polygon in polygons) {
-                var apolygon = _polygons.FirstOrDefault (m => (object)m.Id == polygon.Id);
+                var apolygon = _polygons.FirstOrDefault (m => object.ReferenceEquals(m, polygon.Id));
                 if (apolygon == null)
                     continue;
                 apolygon.Remove();
@@ -636,7 +636,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 var nativeCircle = map.AddCircle(opts);
 
                 // associate pin with marker for later lookup in event handlers
-                circle.Id = nativeCircle.Id;
+                circle.Id = nativeCircle;
                 return nativeCircle;
             }));
         }
@@ -649,9 +649,9 @@ namespace Xamarin.Forms.GoogleMaps.Android
             if (_circles == null)
                 return;
 
-            foreach (Polygon circle in circles)
+            foreach (Circle circle in circles)
             {
-                var acircle = _circles.FirstOrDefault(m => (object)m.Id == circle.Id);
+                var acircle = _circles.FirstOrDefault(m => object.ReferenceEquals(m, circle.Id));
                 if (acircle == null)
                     continue;
                 acircle.Remove();
