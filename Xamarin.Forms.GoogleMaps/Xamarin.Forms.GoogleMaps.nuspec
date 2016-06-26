@@ -3,27 +3,18 @@
 	<metadata minClientVersion="2.8.3">
 		<id>Xamarin.Forms.GoogleMaps</id>
 		<title>Xamarin.Forms.GoogleMaps</title>
-		<version>1.1.0-beta2</version>
+		<version>1.1.0</version>
 		<releaseNotes>
-# 1.1.0-beta2
+# 1.1.0
 
 ## New Features
 
+* Add Polyline support (Android / iOS only)
 * Add Polygon support (Android / iOS only)
 * Add Circle support (Android / iOS only)
 * Add Tag property to Pin, Polyline, Polygon, Circle classses
 * Add MapSpan.FromPositions method
 * Add animate parameter to Map.MoveToRegion method
-
-## Bug Fixes
-
-* [Android]Fix Map.Pins.Remove does not worked
-
-#1.1.0-beta1
-
-## New Features
-
-* Add Polyline support (Android / iOS only)
 		</releaseNotes>
 		<authors>amay077</authors>
 		<copyright>amay077</copyright>
