@@ -9,6 +9,7 @@ using Windows.UI;
 using Windows.UI.Xaml.Controls.Maps;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Shapes;
+using Xamarin.Forms.GoogleMaps.Internals;
 #if WINDOWS_UWP
 using Xamarin.Forms.Platform.UWP;
 
