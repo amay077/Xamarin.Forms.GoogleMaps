@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
+using Xamarin.Forms.GoogleMaps.Internals;
 
 namespace Xamarin.Forms.GoogleMaps
 {
@@ -20,7 +21,10 @@ namespace Xamarin.Forms.GoogleMaps
         public static readonly BindableProperty SelectedPinProperty = BindableProperty.Create("SelectedPin", typeof(Pin), typeof(Map), default(Pin));
 
         readonly ObservableCollection<Pin> _pins = new ObservableCollection<Pin>();
-        readonly ObservableCollection<Polyline> _polylines = new ObservableCollection<Polyline>();
+        readonly ObservableCollection<Polyline> _polylines = new ObservableCollection<Polyline> ();
+        readonly ObservableCollection<Polygon> _polygons = new ObservableCollection<Polygon>();
+        readonly ObservableCollection<Circle> _circles = new ObservableCollection<Circle>();
+
         MapSpan _visibleRegion;
 
         public Map(MapSpan region)
@@ -31,6 +35,8 @@ namespace Xamarin.Forms.GoogleMaps
 
             _pins.CollectionChanged += PinsOnCollectionChanged;
             _polylines.CollectionChanged += PolylinesOnCollectionChanged;
+            _polygons.CollectionChanged += PolygonsOnCollectionChanged;
+            _circles.CollectionChanged += CirclesOnCollectionChanged;
         }
 
         // center on Rome by default
@@ -73,11 +79,18 @@ namespace Xamarin.Forms.GoogleMaps
             get { return _pins; }
         }
 
-        public IList<Polyline> Polylines
-        {
+        public IList<Polyline> Polylines {
             get { return _polylines; }
         }
 
+        public IList<Polygon> Polygons {
+            get { return _polygons; }
+        }
+
+        public IList<Circle> Circles
+        {
+            get { return _circles; }
+        }
 
         public MapSpan VisibleRegion
         {
@@ -106,12 +119,12 @@ namespace Xamarin.Forms.GoogleMaps
             return _pins.GetEnumerator();
         }
 
-        public void MoveToRegion(MapSpan mapSpan)
+        public void MoveToRegion(MapSpan mapSpan, bool animate = true)
         {
             if (mapSpan == null)
                 throw new ArgumentNullException(nameof(mapSpan));
             LastMoveToRegion = mapSpan;
-            MessagingCenter.Send(this, "MapMoveToRegion", mapSpan);
+            MessagingCenter.Send(this, "MapMoveToRegion", new MoveToRegionMessage(mapSpan, animate));
         }
 
         void PinsOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -126,5 +139,16 @@ namespace Xamarin.Forms.GoogleMaps
                 throw new ArgumentException("Polyline must have a 2 positions to be added to a map");
         }
 
+        void PolygonsOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.NewItems != null && e.NewItems.Cast<Polygon>().Any(polygon => polygon.Positions.Count < 3))
+                throw new ArgumentException("Polygon must have a 3 positions to be added to a map");
+        }
+
+        void CirclesOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.NewItems != null && e.NewItems.Cast<Circle>().Any(circle => (circle.Center == null || circle.Radius == null || circle.Radius.Meters <= 0f)))
+                throw new ArgumentException("Circle must have a center and radius");
+        }
     }
 }

@@ -13,8 +13,11 @@ using Math = System.Math;
 using Android.Runtime;
 using System.Collections;
 using APolyline = Android.Gms.Maps.Model.Polyline;
+using APolygon = Android.Gms.Maps.Model.Polygon;
+using ACircle = Android.Gms.Maps.Model.Circle;
 using Android.Util;
 using Android.App;
+using Xamarin.Forms.GoogleMaps.Internals;
 
 namespace Xamarin.Forms.GoogleMaps.Android
 {
@@ -31,6 +34,8 @@ namespace Xamarin.Forms.GoogleMaps.Android
 
         List<Marker> _markers;
         List<APolyline> _polylines;
+        List<APolygon> _polygons;
+        List<ACircle> _circles;
         float _scaledDensity = 1;
 
         const string MoveMessageName = "MapMoveToRegion";
@@ -73,9 +78,11 @@ namespace Xamarin.Forms.GoogleMaps.Android
             {
                 var oldMapModel = (Map)e.OldElement;
                 ((ObservableCollection<Pin>)oldMapModel.Pins).CollectionChanged -= OnPinCollectionChanged;
-                ((ObservableCollection<Pin>)oldMapModel.Polylines).CollectionChanged -= OnPolylineCollectionChanged;
+                ((ObservableCollection<Polyline>)oldMapModel.Polylines).CollectionChanged -= OnPolylineCollectionChanged;
+                ((ObservableCollection<Polygon>)oldMapModel.Polygons).CollectionChanged -= OnPolygonCollectionChanged;
+                ((ObservableCollection<Circle>)oldMapModel.Circles).CollectionChanged -= OnCircleCollectionChanged;
 
-                MessagingCenter.Unsubscribe<Map, MapSpan>(this, MoveMessageName);
+                MessagingCenter.Unsubscribe<Map, MoveToRegionMessage>(this, MoveMessageName);
 
 #pragma warning disable 618
                 if (oldMapView.Map != null)
@@ -87,6 +94,8 @@ namespace Xamarin.Forms.GoogleMaps.Android
 #pragma warning restore 618
                     NativeMap.InfoWindowClick -= MapOnMarkerClick;
                     NativeMap.PolylineClick -= MapOnPolylineClick;
+                    NativeMap.PolygonClick -= MapOnPolygonClick;
+                    //NativeMap.CircleClick -= MapOnCircleClick; // Circle click is not supported.
                 }
 
                 oldMapView.Dispose();
@@ -98,6 +107,8 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 map.SetOnCameraChangeListener(this);
                 NativeMap.InfoWindowClick += MapOnMarkerClick;
                 NativeMap.PolylineClick += MapOnPolylineClick;
+                NativeMap.PolygonClick += MapOnPolygonClick;
+                //NativeMap.CircleClick += MapOnCircleClick; // Circle click is not supported.
 
                 map.UiSettings.ZoomControlsEnabled = Map.HasZoomEnabled;
                 map.UiSettings.ZoomGesturesEnabled = Map.HasZoomEnabled;
@@ -106,7 +117,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 SetMapType();
             }
 
-            MessagingCenter.Subscribe<Map, MapSpan>(this, MoveMessageName, OnMoveToRegionMessage, Map);
+            MessagingCenter.Subscribe<Map, MoveToRegionMessage>(this, MoveMessageName, OnMoveToRegionMessage, Map);
 
             var inccPin = Map.Pins as INotifyCollectionChanged;
             if (inccPin != null)
@@ -116,6 +127,14 @@ namespace Xamarin.Forms.GoogleMaps.Android
             var inccPolyline = Map.Polylines as INotifyCollectionChanged;
             if (inccPolyline != null)
                 inccPolyline.CollectionChanged += OnPolylineCollectionChanged;
+
+            var inccPolygon = Map.Polygons as INotifyCollectionChanged;
+            if (inccPolygon != null)
+                inccPolygon.CollectionChanged += OnPolygonCollectionChanged;
+
+            var inccCircle = Map.Circles as INotifyCollectionChanged;
+            if (inccCircle != null)
+                inccCircle.CollectionChanged += OnCircleCollectionChanged;
         }
 
         void OnPinCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
@@ -167,9 +186,59 @@ namespace Xamarin.Forms.GoogleMaps.Android
                     break;
             }
         }
-        void OnMoveToRegionMessage(Map s, MapSpan a)
+
+        void OnPolygonCollectionChanged (object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
         {
-            MoveToRegion(a, true);
+            switch (notifyCollectionChangedEventArgs.Action) {
+            case NotifyCollectionChangedAction.Add:
+                AddPolygons (notifyCollectionChangedEventArgs.NewItems);
+                break;
+            case NotifyCollectionChangedAction.Remove:
+                RemovePolygons (notifyCollectionChangedEventArgs.OldItems);
+                break;
+            case NotifyCollectionChangedAction.Replace:
+                RemovePolygons (notifyCollectionChangedEventArgs.OldItems);
+                AddPolygons (notifyCollectionChangedEventArgs.NewItems);
+                break;
+            case NotifyCollectionChangedAction.Reset:
+                _polygons?.ForEach (polygon => polygon.Remove());
+                _polygons = null;
+                AddPolygons ((IList)(Element as Map).Polygons);
+                break;
+            case NotifyCollectionChangedAction.Move:
+                //do nothing
+                break;
+            }
+        }
+
+        void OnCircleCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
+        {
+            switch (notifyCollectionChangedEventArgs.Action)
+            {
+                case NotifyCollectionChangedAction.Add:
+                    AddCircles(notifyCollectionChangedEventArgs.NewItems);
+                    break;
+                case NotifyCollectionChangedAction.Remove:
+                    RemoveCircles(notifyCollectionChangedEventArgs.OldItems);
+                    break;
+                case NotifyCollectionChangedAction.Replace:
+                    RemoveCircles(notifyCollectionChangedEventArgs.OldItems);
+                    AddCircles(notifyCollectionChangedEventArgs.NewItems);
+                    break;
+                case NotifyCollectionChangedAction.Reset:
+                    _circles?.ForEach(circle => circle.Remove());
+                    _circles = null;
+                    AddCircles((IList)(Element as Map).Circles);
+                    break;
+                case NotifyCollectionChangedAction.Move:
+                    //do nothing
+                    break;
+            }
+        }
+
+        void OnMoveToRegionMessage(Map s, MoveToRegionMessage m)
+        {
+            MoveToRegion(m.Span, m.Animate);
         }
 
         void MoveToRegion(MapSpan span, bool animate)
@@ -206,7 +275,9 @@ namespace Xamarin.Forms.GoogleMaps.Android
             {
                 MoveToRegion(((Map)Element).LastMoveToRegion, false);
                 OnPinCollectionChanged(((Map)Element).Pins, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
-                OnPolylineCollectionChanged(((Map)Element).Polylines, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+                OnPolylineCollectionChanged (((Map)Element).Polylines, new NotifyCollectionChangedEventArgs (NotifyCollectionChangedAction.Reset));
+                OnPolygonCollectionChanged(((Map)Element).Polygons, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+                OnCircleCollectionChanged(((Map)Element).Circles, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
                 _init = false;
             }
             else if (changed)
@@ -312,7 +383,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 var marker = map.AddMarker(opts);
 
                 // associate pin with marker for later lookup in event handlers
-                pin.Id = marker.Id;
+                pin.Id = marker;
                 return marker;
             }));
 
@@ -356,7 +427,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
 
             foreach (Pin p in pins)
             {
-                var marker = _markers.FirstOrDefault(m => (object)m.Id == p.Id);
+                var marker = _markers.FirstOrDefault(m => object.ReferenceEquals(m, p.Id));
                 if (marker == null)
                     continue;
                 marker.Remove();
@@ -388,15 +459,15 @@ namespace Xamarin.Forms.GoogleMaps.Android
 
         void MapOnPolylineClick(object sender, GoogleMap.PolylineClickEventArgs eventArgs)
         {
-            // clicked marker
-            var polyline = eventArgs.Polyline;
+            // clicked polyline
+            var clickedPolyline = eventArgs.Polyline;
 
             // lookup pin
             Polyline targetPolyline = null;
             for (var i = 0; i < Map.Polylines.Count; i++)
             {
                 var line = Map.Polylines[i];
-                if ((string)line.Id != polyline.Id)
+                if ((string)line.Id != clickedPolyline.Id)
                     continue;
 
                 targetPolyline = line;
@@ -407,6 +478,50 @@ namespace Xamarin.Forms.GoogleMaps.Android
             // Else allow default behavior of displaying an info window.
             targetPolyline?.SendTap();
         }
+
+        void MapOnPolygonClick (object sender, GoogleMap.PolygonClickEventArgs eventArgs)
+        {
+            // clicked polygon
+            var clickedPolygon = eventArgs.Polygon;
+
+            // lookup pin
+            Polygon targetPolygon = null;
+            for (var i = 0; i < Map.Polygons.Count; i++) {
+                var polygon = Map.Polygons [i];
+                if ((string)polygon.Id != clickedPolygon.Id)
+                    continue;
+
+                targetPolygon = polygon;
+                break;
+            }
+
+            // only consider event handled if a handler is present. 
+            // Else allow default behavior of displaying an info window.
+            targetPolygon?.SendTap();
+        }
+
+        //void MapOnCircleClick(object sender, GoogleMap.CircleClickEventArgs eventArgs)
+        //{
+        //    // clicked polygon
+        //    var clickedCircle = eventArgs.Circle;
+
+        //    // lookup pin
+        //    Circle targetCircle = null;
+        //    for (var i = 0; i < Map.Circles.Count; i++)
+        //    {
+        //        var circle = Map.Circles[i];
+        //        if ((string)circle.Id != clickedCircle.Id)
+        //            continue;
+
+        //        targetCircle = circle;
+        //        break;
+        //    }
+
+        //    // only consider event handled if a handler is present. 
+        //    // Else allow default behavior of displaying an info window.
+        //    targetCircle?.SendTap();
+        //}
+
         void AddPolylines(IList polylines)
         {
             var map = NativeMap;
@@ -431,7 +546,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 var nativePolyline = map.AddPolyline(opts);
 
                 // associate pin with marker for later lookup in event handlers
-                polyline.Id = nativePolyline.Id;
+                polyline.Id = nativePolyline;
                 return nativePolyline;
             }));
         }
@@ -446,11 +561,102 @@ namespace Xamarin.Forms.GoogleMaps.Android
 
             foreach (Polyline polyline in polylines)
             {
-                var apolyline = _polylines.FirstOrDefault(m => (object)m.Id == polyline.Id);
+                var apolyline = _polylines.FirstOrDefault(m => object.ReferenceEquals(m, polyline.Id));
                 if (apolyline == null)
                     continue;
                 apolyline.Remove();
                 _polylines.Remove(apolyline);
+            }
+        }
+
+        void AddPolygons (IList polygons)
+        {
+            var map = NativeMap;
+            if (map == null)
+                return;
+
+            if (_polygons == null)
+                _polygons = new List<APolygon> ();
+
+            _polygons.AddRange (polygons.Cast<Polygon> ().Select (polygon => {
+                var opts = new PolygonOptions ();
+
+                foreach (var p in polygon.Positions)
+                    opts.Add (new LatLng (p.Latitude, p.Longitude));
+
+                opts.InvokeStrokeWidth(polygon.StrokeWidth * _scaledDensity); // TODO: convert from px to pt. Is this collect? (looks like same iOS Maps) 
+                opts.InvokeStrokeColor(polygon.StrokeColor.ToAndroid());
+                opts.InvokeFillColor(polygon.FillColor.ToAndroid());
+                opts.Clickable (polygon.IsClickable);
+
+                var nativePolygon = map.AddPolygon(opts);
+
+                // associate pin with marker for later lookup in event handlers
+                polygon.Id = nativePolygon;
+                return nativePolygon;
+            }));
+        }
+
+        void RemovePolygons (IList polygons)
+        {
+            var map = NativeMap;
+            if (map == null)
+                return;
+            if (_polygons == null)
+                return;
+
+            foreach (Polygon polygon in polygons) {
+                var apolygon = _polygons.FirstOrDefault (m => object.ReferenceEquals(m, polygon.Id));
+                if (apolygon == null)
+                    continue;
+                apolygon.Remove();
+                _polygons.Remove(apolygon);
+            }
+        }
+
+        void AddCircles(IList circles)
+        {
+            var map = NativeMap;
+            if (map == null)
+                return;
+
+            if (_circles == null)
+                _circles = new List<ACircle>();
+
+            _circles.AddRange(circles.Cast<Circle>().Select(circle =>
+            {
+                var opts = new CircleOptions();
+
+                opts.InvokeCenter(new LatLng(circle.Center.Latitude, circle.Center.Longitude));
+                opts.InvokeRadius(circle.Radius.Meters);
+                opts.InvokeStrokeWidth(circle.StrokeWidth * _scaledDensity); // TODO: convert from px to pt. Is this collect? (looks like same iOS Maps) 
+                opts.InvokeStrokeColor(circle.StrokeColor.ToAndroid());
+                opts.InvokeFillColor(circle.FillColor.ToAndroid());
+                //opts.Clickable(circle.IsClickable);
+
+                var nativeCircle = map.AddCircle(opts);
+
+                // associate pin with marker for later lookup in event handlers
+                circle.Id = nativeCircle;
+                return nativeCircle;
+            }));
+        }
+
+        void RemoveCircles(IList circles)
+        {
+            var map = NativeMap;
+            if (map == null)
+                return;
+            if (_circles == null)
+                return;
+
+            foreach (Circle circle in circles)
+            {
+                var acircle = _circles.FirstOrDefault(m => object.ReferenceEquals(m, circle.Id));
+                if (acircle == null)
+                    continue;
+                acircle.Remove();
+                _circles.Remove(acircle);
             }
         }
 
@@ -464,9 +670,11 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 var mapModel = Element as Map;
                 if (mapModel != null)
                 {
-                    MessagingCenter.Unsubscribe<Map, MapSpan>(this, MoveMessageName);
+                    MessagingCenter.Unsubscribe<Map, MoveToRegionMessage>(this, MoveMessageName);
                     ((ObservableCollection<Pin>)mapModel.Pins).CollectionChanged -= OnPinCollectionChanged;
-                    ((ObservableCollection<Pin>)mapModel.Polylines).CollectionChanged -= OnPolylineCollectionChanged;
+                    ((ObservableCollection<Polyline>)mapModel.Polylines).CollectionChanged -= OnPolylineCollectionChanged;
+                    ((ObservableCollection<Polygon>)mapModel.Polygons).CollectionChanged -= OnPolygonCollectionChanged;
+                    ((ObservableCollection<Circle>)mapModel.Circles).CollectionChanged -= OnCircleCollectionChanged;
                 }
 
                 var gmap = NativeMap;
@@ -475,6 +683,8 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 gmap.MyLocationEnabled = false;
                 gmap.InfoWindowClick -= MapOnMarkerClick;
                 gmap.PolylineClick -= MapOnPolylineClick;
+                gmap.PolygonClick -= MapOnPolygonClick;
+                //gmap.CircleClick -= MapOnCircleClick;
                 gmap.Dispose();
             }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Xamarin.Forms.GoogleMaps
 {
@@ -52,6 +53,24 @@ namespace Xamarin.Forms.GoogleMaps
         public static MapSpan FromCenterAndRadius(Position center, Distance radius)
         {
             return new MapSpan(center, 2 * DistanceToLatitudeDegrees(radius), 2 * DistanceToLongitudeDegrees(center, radius));
+        }
+
+        public static MapSpan FromPositions(IEnumerable<Position> positions)
+        {
+            double minLat = double.MaxValue;
+            double minLon = double.MaxValue;
+            double maxLat = double.MinValue;
+            double maxLon = double.MinValue;
+
+            foreach (var p in positions)
+            {
+                minLat = Math.Min(minLat, p.Latitude);
+                minLon = Math.Min(minLon, p.Longitude);
+                maxLat = Math.Max(maxLat, p.Latitude);
+                maxLon = Math.Max(maxLon, p.Longitude);
+            }
+
+            return new MapSpan(new Position((minLat + maxLat) / 2d, (minLon + maxLon) / 2d), maxLat - minLat, maxLon - minLon);
         }
 
         public override int GetHashCode()
