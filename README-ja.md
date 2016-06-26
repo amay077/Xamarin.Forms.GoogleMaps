@@ -19,6 +19,10 @@ Xamarin公式の地図ライブラリ [Xamarin.Forms.Maps](https://developer.xam
 
 異なる地図SDKで実現可能な最小限の機能しか持たない Xamarin.Forms.Maps に対して、 **同じ Google Maps で多くの共通機能を実現できるのが Xamarin.Forms.GoogleMaps です。**
 
+### Xamarin.Forms.Maps との比較
+
+[Xamarin.Forms.Maps との比較](COMPARISON_WITH_FORMSMAPS-ja.md) を見て下さい。
+
 ### セットアップ
 
 * Available on NuGet: https://www.nuget.org/packages/Xamarin.Forms.GoogleMaps/ [![NuGet](https://img.shields.io/nuget/v/Xam.Plugin.Geolocator.svg?label=NuGet)](https://www.nuget.org/packages/Xamarin.Forms.GoogleMaps/)
@@ -77,9 +81,9 @@ public partial class AppDelegate : global::Xamarin.Forms.Platform.iOS.FormsAppli
 機能要望は、 [@amay077](https://twitter.com/amay077) または、ISSUE やプルリクください！
 追加機能案は以下の通りです。
 
-* Pin の InfoWindow の Visible プロパティ
+* ~~Pin の InfoWindow の Visible プロパティ~~
 * Pin のタップ＆ホールドによる移動
-* Polygon, Polyline, Circle の描画サポート
+* ~~Polygon, Polyline, Circle の描画サポート~~
 * etc.. 
 
 Windows 10 UWP 対応は「とりあえず」残しました。
