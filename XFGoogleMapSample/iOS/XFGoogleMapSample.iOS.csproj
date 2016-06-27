@@ -90,12 +90,12 @@
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
-    <Reference Include="Xamarin.Forms.GoogleMaps, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Xamarin.Forms.GoogleMaps.1.1.0\lib\Xamarin.iOS10\Xamarin.Forms.GoogleMaps.dll</HintPath>
+    <Reference Include="Xamarin.Forms.GoogleMaps, Version=1.1.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xamarin.Forms.GoogleMaps.1.1.1\lib\Xamarin.iOS10\Xamarin.Forms.GoogleMaps.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Xamarin.Forms.GoogleMaps.iOS, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Xamarin.Forms.GoogleMaps.1.1.0\lib\Xamarin.iOS10\Xamarin.Forms.GoogleMaps.iOS.dll</HintPath>
+    <Reference Include="Xamarin.Forms.GoogleMaps.iOS, Version=1.1.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xamarin.Forms.GoogleMaps.1.1.1\lib\Xamarin.iOS10\Xamarin.Forms.GoogleMaps.iOS.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Xamarin.iOS" />
