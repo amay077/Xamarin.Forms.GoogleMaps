@@ -320,6 +320,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
             {
                 if (!_onMarkerEvent)
                     UpdateSelectedPin(Map.SelectedPin);
+                Map.SendSelectedPinChanged(Map.SelectedPin);
             }
         }
 

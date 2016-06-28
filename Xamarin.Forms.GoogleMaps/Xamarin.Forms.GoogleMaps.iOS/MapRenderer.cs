@@ -284,6 +284,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
             {
                 if (!_onMarkerEvent)
                     UpdateSelectedPin(mapModel.SelectedPin);
+                mapModel.SendSelectedPinChanged(mapModel.SelectedPin);
             }
         }
 

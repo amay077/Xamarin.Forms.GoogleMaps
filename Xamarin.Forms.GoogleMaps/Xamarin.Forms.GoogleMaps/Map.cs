@@ -25,6 +25,8 @@ namespace Xamarin.Forms.GoogleMaps
         readonly ObservableCollection<Polygon> _polygons = new ObservableCollection<Polygon>();
         readonly ObservableCollection<Circle> _circles = new ObservableCollection<Circle>();
 
+        public event EventHandler<SelectedPinChangedEventArgs> SelectedPinChanged;
+
         MapSpan _visibleRegion;
 
         public Map(MapSpan region)
@@ -150,5 +152,10 @@ namespace Xamarin.Forms.GoogleMaps
             if (e.NewItems != null && e.NewItems.Cast<Circle>().Any(circle => (circle.Center == null || circle.Radius == null || circle.Radius.Meters <= 0f)))
                 throw new ArgumentException("Circle must have a center and radius");
         }
-    }
+
+        internal void SendSelectedPinChanged(Pin selectedPin)
+        {
+            SelectedPinChanged?.Invoke(this, new SelectedPinChangedEventArgs(selectedPin));
+        }
+   }
 }
