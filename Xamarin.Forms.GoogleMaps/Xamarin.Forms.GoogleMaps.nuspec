@@ -3,8 +3,18 @@
 	<metadata minClientVersion="2.8.3">
 		<id>Xamarin.Forms.GoogleMaps</id>
 		<title>Xamarin.Forms.GoogleMaps</title>
-		<version>1.1.1</version>
+		<version>1.2.0-beta1</version>
 		<releaseNotes>
+# 1.2.0-beta1
+
+## New Features
+
+* Add Map.SelectedPinChanged event
+
+## Bug Fixes
+
+* #16 [Android]Map.SelectedPin does not clear when tap pin to hide info-window 
+
 # 1.1.1
 
 ## Bug Fixes
