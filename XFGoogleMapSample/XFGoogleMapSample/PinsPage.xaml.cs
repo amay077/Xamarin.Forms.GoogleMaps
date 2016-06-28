@@ -2,6 +2,7 @@
 
 using Xamarin.Forms;
 using Xamarin.Forms.GoogleMaps;
+using System.Diagnostics;
 
 namespace XFGoogleMapSample
 {
@@ -110,6 +111,14 @@ namespace XFGoogleMapSample
 
                 map.SelectedPin = null;
             };
+
+            // Selected Pin changed
+            map.SelectedPinChanged += SelectedPin_Changed;
+        }
+
+        void SelectedPin_Changed(object sender, SelectedPinChangedEventArgs e)
+        {
+            labelStatus.Text = $"SelectedPin changed - {e?.SelectedPin?.Label ?? "nothing"}";
         }
 
         void Pin_Clicked(object sender, EventArgs e)
