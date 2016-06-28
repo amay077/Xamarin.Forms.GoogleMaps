@@ -20,6 +20,8 @@ namespace Xamarin.Forms.GoogleMaps.iOS
 
         const string MoveMessageName = "MapMoveToRegion";
 
+        private volatile bool _onMarkerEvent = false;
+
         public override SizeRequest GetDesiredSize(double widthConstraint, double heightConstraint)
         {
             return Control.GetSizeRequest(widthConstraint, heightConstraint);
@@ -40,6 +42,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                 }
 
                 var mkMapView = (MapView)Control;
+                mkMapView.InfoClosed -= InfoWindowClosed;
                 mkMapView.InfoTapped -= InfoWindowTapped;
                 mkMapView.OverlayTapped -= OverlayTapped;
                 mkMapView.CameraPositionChanged -= CameraPositionChanged;
@@ -73,6 +76,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                     //mkMapView.GetViewForAnnotation = mapDelegate.GetViewForAnnotation;
                     mkMapView.CameraPositionChanged += CameraPositionChanged;
                     mkMapView.InfoTapped += InfoWindowTapped;
+                    mkMapView.InfoClosed += InfoWindowClosed;
                     mkMapView.OverlayTapped += OverlayTapped;
                     mkMapView.TappedMarker = HandleGMSTappedMarker;
                 }
@@ -202,12 +206,53 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                 break;
             }
 
-            if (object.ReferenceEquals(map.SelectedPin, targetPin))
-                map.SelectedPin = null;
-            else
-                map.SelectedPin = targetPin;
-            
-            return true;
+            try
+            {
+                _onMarkerEvent = true;
+
+                if (targetPin != null && !object.ReferenceEquals(map.SelectedPin, targetPin))
+                    map.SelectedPin = targetPin;
+            }
+            finally
+            {
+                _onMarkerEvent = false;
+            }
+
+            return false;
+        }
+
+        void InfoWindowClosed(object sender, GMSMarkerEventEventArgs e)
+        {
+            var map = (Map)Element;
+
+            var marker = e.Marker;
+
+            // lookup pin
+            Pin targetPin = null;
+            for (var i = 0; i < map.Pins.Count; i++)
+            {
+                var pin = map.Pins[i];
+                if (!Object.ReferenceEquals(pin.Id, marker))
+                    continue;
+
+                targetPin = pin;
+                break;
+            }
+
+            try
+            {
+                _onMarkerEvent = true;
+
+                if (targetPin != null)
+                    if (object.ReferenceEquals(map.SelectedPin, targetPin))
+                        map.SelectedPin = null;
+                    //else
+                    //    System.Diagnostics.Debug.WriteLine($"InfoWindowClosed - not match SelectedPin + {map?.SelectedPin?.Label ?? "null"}");
+            }
+            finally
+            {
+                _onMarkerEvent = false;
+            }
         }
 
         void UpdateSelectedPin(Pin pin)
@@ -236,7 +281,10 @@ namespace Xamarin.Forms.GoogleMaps.iOS
             else if (e.PropertyName == VisualElement.IsVisibleProperty.PropertyName && ((Map)Element).LastMoveToRegion != null)
                 _shouldUpdateRegion = true;
             else if (e.PropertyName == Map.SelectedPinProperty.PropertyName)
-                UpdateSelectedPin(mapModel.SelectedPin);
+            {
+                if (!_onMarkerEvent)
+                    UpdateSelectedPin(mapModel.SelectedPin);
+            }
         }
 
         public override void LayoutSubviews()
