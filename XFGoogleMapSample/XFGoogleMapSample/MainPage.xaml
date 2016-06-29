@@ -18,6 +18,8 @@
 					Text="Pins" />
 			<Button x:Name="buttonShapes"
 					Text="Shapes" />
+			<Button x:Name="buttonTiles"
+					Text="Tiles" />
 		</StackLayout>
 	</ContentPage.Content>
 </ContentPage>

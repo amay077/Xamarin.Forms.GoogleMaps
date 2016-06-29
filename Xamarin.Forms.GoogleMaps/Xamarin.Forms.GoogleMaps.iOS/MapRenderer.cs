@@ -10,7 +10,10 @@ using System.Drawing;
 using APolyline = Google.Maps.Polyline;
 using APolygon = Google.Maps.Polygon;
 using ACircle = Google.Maps.Circle;
+using ATileLayer = Google.Maps.TileLayer;
+using AUrlTileLayer = Google.Maps.UrlTileLayer;
 using Xamarin.Forms.GoogleMaps.Internals;
+using Foundation;
 
 namespace Xamarin.Forms.GoogleMaps.iOS
 {
@@ -39,6 +42,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                     ((ObservableCollection<Polyline>)mapModel.Polylines).CollectionChanged -= OnPolylineCollectionChanged;
                     ((ObservableCollection<Polygon>)mapModel.Polygons).CollectionChanged -= OnPolygonCollectionChanged;
                     ((ObservableCollection<Circle>)mapModel.Circles).CollectionChanged -= OnCircleCollectionChanged;
+					((ObservableCollection<ITileLayer>)mapModel.TileLayers).CollectionChanged -= OnTileLayerCollectionChanged;
                 }
 
                 var mkMapView = (MapView)Control;
@@ -101,7 +105,10 @@ namespace Xamarin.Forms.GoogleMaps.iOS
 
                 ((ObservableCollection<Circle>)mapModel.Circles).CollectionChanged += OnCircleCollectionChanged;
                 OnCircleCollectionChanged(((Map)Element).Circles, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
-            }
+
+				((ObservableCollection<TileLayer>)mapModel.TileLayers).CollectionChanged += OnTileLayerCollectionChanged;
+				OnTileLayerCollectionChanged(((Map)Element).TileLayers, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));			
+			}
         }
 
         void InfoWindowTapped(object sender, GMSMarkerEventEventArgs e)
@@ -442,7 +449,32 @@ namespace Xamarin.Forms.GoogleMaps.iOS
             }
         }
 
-        void RemovePins(IList pins)
+		void OnTileLayerCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
+		{
+			switch (notifyCollectionChangedEventArgs.Action)
+			{
+				case NotifyCollectionChangedAction.Add:
+					AddTileLayers(notifyCollectionChangedEventArgs.NewItems);
+					break;
+				case NotifyCollectionChangedAction.Remove:
+					RemoveTileLayers(notifyCollectionChangedEventArgs.OldItems);
+					break;
+				case NotifyCollectionChangedAction.Replace:
+					RemoveTileLayers(notifyCollectionChangedEventArgs.OldItems);
+					AddTileLayers(notifyCollectionChangedEventArgs.NewItems);
+					break;
+				case NotifyCollectionChangedAction.Reset:
+					var mapView = (MapView)Control;
+					mapView.Clear(); // TODO need?
+					AddTileLayers((IList)(Element as Map).TileLayers);
+					break;
+				case NotifyCollectionChangedAction.Move:
+					//do nothing
+					break;
+			}
+		}
+
+		void RemovePins(IList pins)
         {
             var map = (Map)Element;
             foreach (object pin in pins)
@@ -524,6 +556,40 @@ namespace Xamarin.Forms.GoogleMaps.iOS
             foreach (object obj in circles)
                 ((ACircle)((Circle)obj).Id).Map = null;
         }
+
+		void AddTileLayers(IList tileLayers)
+		{
+			foreach (ITileLayerInternal tileLayer in tileLayers)
+			{
+				ATileLayer nativeTileLayer;
+
+				if (tileLayer is UrlTileLayer)
+				{
+					nativeTileLayer = AUrlTileLayer.FromUrlConstructor((nuint x, nuint y, nuint zoom) => {
+						var uri = ((UrlTileLayer)tileLayer).MakeTileUri((int)x, (int)y, (int)zoom);
+						return new NSUrl(uri.AbsoluteUri);
+					});
+				}
+				else
+				{
+					// In future: For Non-UrlTileLayer. Now coding UrlTileLayer as dummy.  
+					nativeTileLayer = AUrlTileLayer.FromUrlConstructor((nuint x, nuint y, nuint zoom) =>
+					{
+						var uri = ((UrlTileLayer)tileLayer).MakeTileUri((int)x, (int)y, (int)zoom);
+						return new NSUrl(uri.AbsoluteUri);
+					});
+				}
+
+				tileLayer.Id = nativeTileLayer;
+				nativeTileLayer.Map = (MapView)Control;
+			}
+		}
+
+		void RemoveTileLayers(IList tileLayers)
+		{
+			foreach (object obj in tileLayers)
+				((ATileLayer)((ITileLayerInternal)obj).Id).Map = null;
+		}
 
         void UpdateHasScrollEnabled()
         {

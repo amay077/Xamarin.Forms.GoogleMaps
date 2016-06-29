@@ -213,8 +213,8 @@ namespace XFGoogleMapSample.Droid
 			// aapt resource value: 0x7f010116
 			public const int allowStacking = 2130772246;
 			
-			// aapt resource value: 0x7f010010
-			public const int ambientEnabled = 2130771984;
+			// aapt resource value: 0x7f010013
+			public const int ambientEnabled = 2130771987;
 			
 			// aapt resource value: 0x7f01011d
 			public const int arrowHeadLength = 2130772253;
@@ -282,8 +282,8 @@ namespace XFGoogleMapSample.Droid
 			// aapt resource value: 0x7f0100a1
 			public const int buttonPanelSideLayout = 2130772129;
 			
-			// aapt resource value: 0x7f010011
-			public const int buttonSize = 2130771985;
+			// aapt resource value: 0x7f010000
+			public const int buttonSize = 2130771968;
 			
 			// aapt resource value: 0x7f01010a
 			public const int buttonStyle = 2130772234;
@@ -297,20 +297,20 @@ namespace XFGoogleMapSample.Droid
 			// aapt resource value: 0x7f010118
 			public const int buttonTintMode = 2130772248;
 			
-			// aapt resource value: 0x7f010001
-			public const int cameraBearing = 2130771969;
-			
-			// aapt resource value: 0x7f010002
-			public const int cameraTargetLat = 2130771970;
-			
-			// aapt resource value: 0x7f010003
-			public const int cameraTargetLng = 2130771971;
-			
 			// aapt resource value: 0x7f010004
-			public const int cameraTilt = 2130771972;
+			public const int cameraBearing = 2130771972;
 			
 			// aapt resource value: 0x7f010005
-			public const int cameraZoom = 2130771973;
+			public const int cameraTargetLat = 2130771973;
+			
+			// aapt resource value: 0x7f010006
+			public const int cameraTargetLng = 2130771974;
+			
+			// aapt resource value: 0x7f010007
+			public const int cameraTilt = 2130771975;
+			
+			// aapt resource value: 0x7f010008
+			public const int cameraZoom = 2130771976;
 			
 			// aapt resource value: 0x7f01002e
 			public const int cardBackgroundColor = 2130772014;
@@ -381,8 +381,8 @@ namespace XFGoogleMapSample.Droid
 			// aapt resource value: 0x7f0100f9
 			public const int colorPrimaryDark = 2130772217;
 			
-			// aapt resource value: 0x7f010012
-			public const int colorScheme = 2130771986;
+			// aapt resource value: 0x7f010001
+			public const int colorScheme = 2130771969;
 			
 			// aapt resource value: 0x7f0100ff
 			public const int colorSwitchThumbNormal = 2130772223;
@@ -663,8 +663,8 @@ namespace XFGoogleMapSample.Droid
 			// aapt resource value: 0x7f0100ef
 			public const int listPreferredItemPaddingRight = 2130772207;
 			
-			// aapt resource value: 0x7f010006
-			public const int liteMode = 2130771974;
+			// aapt resource value: 0x7f010009
+			public const int liteMode = 2130771977;
 			
 			// aapt resource value: 0x7f01008c
 			public const int logo = 2130772108;
@@ -672,8 +672,8 @@ namespace XFGoogleMapSample.Droid
 			// aapt resource value: 0x7f01014b
 			public const int logoDescription = 2130772299;
 			
-			// aapt resource value: 0x7f010000
-			public const int mapType = 2130771968;
+			// aapt resource value: 0x7f010003
+			public const int mapType = 2130771971;
 			
 			// aapt resource value: 0x7f010064
 			public const int maxActionInlineWidth = 2130772068;
@@ -825,8 +825,8 @@ namespace XFGoogleMapSample.Droid
 			// aapt resource value: 0x7f010056
 			public const int rippleColor = 2130772054;
 			
-			// aapt resource value: 0x7f010013
-			public const int scopeUris = 2130771987;
+			// aapt resource value: 0x7f010002
+			public const int scopeUris = 2130771970;
 			
 			// aapt resource value: 0x7f010132
 			public const int searchHintIcon = 2130772274;
@@ -1047,32 +1047,32 @@ namespace XFGoogleMapSample.Droid
 			// aapt resource value: 0x7f010138
 			public const int track = 2130772280;
 			
-			// aapt resource value: 0x7f010007
-			public const int uiCompass = 2130771975;
-			
-			// aapt resource value: 0x7f01000f
-			public const int uiMapToolbar = 2130771983;
-			
-			// aapt resource value: 0x7f010008
-			public const int uiRotateGestures = 2130771976;
-			
-			// aapt resource value: 0x7f010009
-			public const int uiScrollGestures = 2130771977;
-			
 			// aapt resource value: 0x7f01000a
-			public const int uiTiltGestures = 2130771978;
+			public const int uiCompass = 2130771978;
+			
+			// aapt resource value: 0x7f010012
+			public const int uiMapToolbar = 2130771986;
 			
 			// aapt resource value: 0x7f01000b
-			public const int uiZoomControls = 2130771979;
+			public const int uiRotateGestures = 2130771979;
 			
 			// aapt resource value: 0x7f01000c
-			public const int uiZoomGestures = 2130771980;
+			public const int uiScrollGestures = 2130771980;
+			
+			// aapt resource value: 0x7f01000d
+			public const int uiTiltGestures = 2130771981;
+			
+			// aapt resource value: 0x7f01000e
+			public const int uiZoomControls = 2130771982;
+			
+			// aapt resource value: 0x7f01000f
+			public const int uiZoomGestures = 2130771983;
 			
 			// aapt resource value: 0x7f01005a
 			public const int useCompatPadding = 2130772058;
 			
-			// aapt resource value: 0x7f01000d
-			public const int useViewLifecycle = 2130771981;
+			// aapt resource value: 0x7f010010
+			public const int useViewLifecycle = 2130771984;
 			
 			// aapt resource value: 0x7f010133
 			public const int voiceIcon = 2130772275;
@@ -1107,8 +1107,8 @@ namespace XFGoogleMapSample.Droid
 			// aapt resource value: 0x7f0100a9
 			public const int windowNoTitle = 2130772137;
 			
-			// aapt resource value: 0x7f01000e
-			public const int zOrderOnTop = 2130771982;
+			// aapt resource value: 0x7f010011
+			public const int zOrderOnTop = 2130771985;
 			
 			static Attribute()
 			{
@@ -2534,8 +2534,8 @@ namespace XFGoogleMapSample.Droid
 			// aapt resource value: 0x7f0b0040
 			public const int always = 2131427392;
 			
-			// aapt resource value: 0x7f0b0013
-			public const int auto = 2131427347;
+			// aapt resource value: 0x7f0b000e
+			public const int auto = 2131427342;
 			
 			// aapt resource value: 0x7f0b003e
 			public const int beginning = 2131427390;
@@ -2582,8 +2582,8 @@ namespace XFGoogleMapSample.Droid
 			// aapt resource value: 0x7f0b005a
 			public const int customPanel = 2131427418;
 			
-			// aapt resource value: 0x7f0b0014
-			public const int dark = 2131427348;
+			// aapt resource value: 0x7f0b000f
+			public const int dark = 2131427343;
 			
 			// aapt resource value: 0x7f0b0063
 			public const int decor_content_parent = 2131427427;
@@ -2651,14 +2651,14 @@ namespace XFGoogleMapSample.Droid
 			// aapt resource value: 0x7f0b0033
 			public const int homeAsUp = 2131427379;
 			
-			// aapt resource value: 0x7f0b000b
-			public const int hybrid = 2131427339;
+			// aapt resource value: 0x7f0b0011
+			public const int hybrid = 2131427345;
 			
 			// aapt resource value: 0x7f0b004d
 			public const int icon = 2131427405;
 			
-			// aapt resource value: 0x7f0b0010
-			public const int icon_only = 2131427344;
+			// aapt resource value: 0x7f0b000b
+			public const int icon_only = 2131427339;
 			
 			// aapt resource value: 0x7f0b0042
 			public const int ifRoom = 2131427394;
@@ -2675,8 +2675,8 @@ namespace XFGoogleMapSample.Droid
 			// aapt resource value: 0x7f0b0025
 			public const int left = 2131427365;
 			
-			// aapt resource value: 0x7f0b0015
-			public const int light = 2131427349;
+			// aapt resource value: 0x7f0b0010
+			public const int light = 2131427344;
 			
 			// aapt resource value: 0x7f0b009b
 			public const int line1 = 2131427483;
@@ -2780,11 +2780,11 @@ namespace XFGoogleMapSample.Droid
 			// aapt resource value: 0x7f0b0043
 			public const int never = 2131427395;
 			
-			// aapt resource value: 0x7f0b000c
-			public const int none = 2131427340;
+			// aapt resource value: 0x7f0b0012
+			public const int none = 2131427346;
 			
-			// aapt resource value: 0x7f0b000d
-			public const int normal = 2131427341;
+			// aapt resource value: 0x7f0b0013
+			public const int normal = 2131427347;
 			
 			// aapt resource value: 0x7f0b001d
 			public const int parallax = 2131427357;
@@ -2807,8 +2807,8 @@ namespace XFGoogleMapSample.Droid
 			// aapt resource value: 0x7f0b0026
 			public const int right = 2131427366;
 			
-			// aapt resource value: 0x7f0b000e
-			public const int satellite = 2131427342;
+			// aapt resource value: 0x7f0b0014
+			public const int satellite = 2131427348;
 			
 			// aapt resource value: 0x7f0b003a
 			public const int screen = 2131427386;
@@ -2900,8 +2900,8 @@ namespace XFGoogleMapSample.Droid
 			// aapt resource value: 0x7f0b003d
 			public const int src_over = 2131427389;
 			
-			// aapt resource value: 0x7f0b0011
-			public const int standard = 2131427345;
+			// aapt resource value: 0x7f0b000c
+			public const int standard = 2131427340;
 			
 			// aapt resource value: 0x7f0b0027
 			public const int start = 2131427367;
@@ -2915,8 +2915,8 @@ namespace XFGoogleMapSample.Droid
 			// aapt resource value: 0x7f0b0031
 			public const int tabMode = 2131427377;
 			
-			// aapt resource value: 0x7f0b000f
-			public const int terrain = 2131427343;
+			// aapt resource value: 0x7f0b0015
+			public const int terrain = 2131427349;
 			
 			// aapt resource value: 0x7f0b00a0
 			public const int text = 2131427488;
@@ -2960,8 +2960,8 @@ namespace XFGoogleMapSample.Droid
 			// aapt resource value: 0x7f0b008e
 			public const int volume_item_container = 2131427470;
 			
-			// aapt resource value: 0x7f0b0012
-			public const int wide = 2131427346;
+			// aapt resource value: 0x7f0b000d
+			public const int wide = 2131427341;
 			
 			// aapt resource value: 0x7f0b0044
 			public const int withText = 2131427396;
@@ -5652,9 +5652,6 @@ namespace XFGoogleMapSample.Droid
 			
 			public static int[] MapAttrs = new int[]
 			{
-					2130771968,
-					2130771969,
-					2130771970,
 					2130771971,
 					2130771972,
 					2130771973,
@@ -5668,7 +5665,10 @@ namespace XFGoogleMapSample.Droid
 					2130771981,
 					2130771982,
 					2130771983,
-					2130771984};
+					2130771984,
+					2130771985,
+					2130771986,
+					2130771987};
 			
 			// aapt resource value: 16
 			public const int MapAttrs_ambientEnabled = 16;
@@ -6040,9 +6040,9 @@ namespace XFGoogleMapSample.Droid
 			
 			public static int[] SignInButton = new int[]
 			{
-					2130771985,
-					2130771986,
-					2130771987};
+					2130771968,
+					2130771969,
+					2130771970};
 			
 			// aapt resource value: 0
 			public const int SignInButton_buttonSize = 0;

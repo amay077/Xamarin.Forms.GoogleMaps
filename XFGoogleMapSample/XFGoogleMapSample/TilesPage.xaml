@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:maps="clr-namespace:Xamarin.Forms.GoogleMaps;assembly=Xamarin.Forms.GoogleMaps"
+	x:Class="XFGoogleMapSample.TilesPage"
+	Title="Tiles">
+	<ContentPage.Content>
+		<StackLayout
+			VerticalOptions="Fill"
+			Orientation="Vertical">
+
+			<Grid>
+				<Grid.RowDefinitions>
+			        <RowDefinition Height="Auto" />
+			        <RowDefinition Height="Auto" />
+			    </Grid.RowDefinitions>
+			 
+			    <Grid.ColumnDefinitions>
+			        <ColumnDefinition Width="Auto" />
+			        <ColumnDefinition Width="*" />
+			    </Grid.ColumnDefinitions>
+				
+				<Button x:Name="buttonAddOSMTile"
+						Text="Add OSM Tile"
+						Grid.Row="1"
+						Grid.Column="1"/>
+				<Button x:Name="buttonRemoveOSMTile"
+						Text="Remove OSM Tile"
+						Grid.Row="1"
+						Grid.Column="2"/>
+
+				<Button x:Name="buttonAddJGSITile"
+						Text="Add Japan GSI Tile"
+						Grid.Row="2"
+						Grid.Column="1"/>
+				<Button x:Name="buttonRemoveJGSITile"
+						Text="Remove Japan GSI Tile"
+						Grid.Row="2"
+						Grid.Column="2"/>
+				
+			</Grid>
+
+			<maps:Map x:Name="map" 
+					VerticalOptions="FillAndExpand"/>
+		</StackLayout>
+	</ContentPage.Content>
+</ContentPage>
