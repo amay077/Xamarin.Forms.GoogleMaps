@@ -106,7 +106,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                 ((ObservableCollection<Circle>)mapModel.Circles).CollectionChanged += OnCircleCollectionChanged;
                 OnCircleCollectionChanged(((Map)Element).Circles, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
 
-				((ObservableCollection<TileLayer>)mapModel.TileLayers).CollectionChanged += OnTileLayerCollectionChanged;
+				((ObservableCollection<ITileLayer>)mapModel.TileLayers).CollectionChanged += OnTileLayerCollectionChanged;
 				OnTileLayerCollectionChanged(((Map)Element).TileLayers, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));			
 			}
         }
