@@ -45,6 +45,7 @@
     <Compile Include="Polygon.cs" />
     <Compile Include="Circle.cs" />
     <Compile Include="Internals\MoveToRegionMessage.cs" />
+    <Compile Include="SelectedPinChangedEventArgs.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">

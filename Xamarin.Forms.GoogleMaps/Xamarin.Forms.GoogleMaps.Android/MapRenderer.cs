@@ -46,6 +46,8 @@ namespace Xamarin.Forms.GoogleMaps.Android
 
         protected Map Map => (Map)Element;
 
+        private volatile bool _onMarkerEvent = false;
+
         public override SizeRequest GetDesiredSize(int widthConstraint, int heightConstraint)
         {
             return new SizeRequest(new Size(Context.ToPixels(40), Context.ToPixels(40)));
@@ -97,6 +99,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
                     NativeMap.PolygonClick -= MapOnPolygonClick;
                     //NativeMap.CircleClick -= MapOnCircleClick; // Circle click is not supported.
                     NativeMap.MarkerClick -= MapOnMakerClick;
+                    NativeMap.InfoWindowClose -= MapOnInfoWindowClose;
                 }
 
                 oldMapView.Dispose();
@@ -111,6 +114,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 NativeMap.PolygonClick += MapOnPolygonClick;
                 //NativeMap.CircleClick += MapOnCircleClick; // Circle click is not supported.
                 NativeMap.MarkerClick += MapOnMakerClick;
+                NativeMap.InfoWindowClose += MapOnInfoWindowClose;
 
                 map.UiSettings.ZoomControlsEnabled = Map.HasZoomEnabled;
                 map.UiSettings.ZoomGesturesEnabled = Map.HasZoomEnabled;
@@ -313,7 +317,11 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 gmap.UiSettings.ZoomGesturesEnabled = Map.HasZoomEnabled;
             }
             else if (e.PropertyName == Map.SelectedPinProperty.PropertyName)
-                UpdateSelectedPin(Map.SelectedPin);
+            {
+                if (!_onMarkerEvent)
+                    UpdateSelectedPin(Map.SelectedPin);
+                Map.SendSelectedPinChanged(Map.SelectedPin);
+            }
         }
 
         void SetMapType()
@@ -483,15 +491,50 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 break;
             }
 
-            if (targetPin != null)
+            try
             {
-                if (targetPin.Equals(map.SelectedPin))
-                    map.SelectedPin = null;
-                else
+                _onMarkerEvent = true;
+                if (targetPin != null && !object.ReferenceEquals(targetPin, map.SelectedPin))
                     map.SelectedPin = targetPin;
-            }    
+            }
+            finally
+            {
+                _onMarkerEvent = false;
+            }
 
-            eventArgs.Handled = true;
+            eventArgs.Handled = false;
+        }
+
+        void MapOnInfoWindowClose(object sender, GoogleMap.InfoWindowCloseEventArgs eventArgs)
+        {
+            System.Diagnostics.Debug.WriteLine("MapOnInfoWindowClose");
+            var map = (Map)Element;
+
+            // clicked marker
+            var marker = eventArgs.Marker;
+
+            // lookup pin
+            Pin targetPin = null;
+            for (var i = 0; i < Map.Pins.Count; i++)
+            {
+                var pin = Map.Pins[i];
+                if (((Marker)pin.Id).Id != marker.Id)
+                    continue;
+
+                targetPin = pin;
+                break;
+            }
+
+            try
+            {
+                _onMarkerEvent = true;
+                if (targetPin != null && object.ReferenceEquals(targetPin, map.SelectedPin))
+                    map.SelectedPin = null;
+            }
+            finally
+            {
+                _onMarkerEvent = false;
+            }
         }
 
         void MapOnPolylineClick(object sender, GoogleMap.PolylineClickEventArgs eventArgs)

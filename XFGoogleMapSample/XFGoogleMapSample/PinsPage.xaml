@@ -17,6 +17,7 @@
 			        <RowDefinition Height="Auto" />
 			        <RowDefinition Height="Auto" />
 			        <RowDefinition Height="Auto" />
+			        <RowDefinition Height="Auto" />
 			    </Grid.RowDefinitions>
 			 
 			    <Grid.ColumnDefinitions>
@@ -57,6 +58,12 @@
 						Text="Clear Selection"
 						Grid.Row="4"
 						Grid.Column="2" />
+
+				<Label x:Name="labelStatus"
+						Text="Show status when Pin selected."
+						Grid.Row="5"
+						Grid.Column="1"
+						Grid.ColumnSpan="2" />
 				
 			</Grid>			
 			<maps:Map x:Name="map" 

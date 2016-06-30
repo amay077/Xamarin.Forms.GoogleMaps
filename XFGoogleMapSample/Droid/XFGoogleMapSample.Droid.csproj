@@ -66,12 +66,12 @@
     <Reference Include="Xamarin.Android.Support.v7.MediaRouter">
       <HintPath>..\packages\Xamarin.Android.Support.v7.MediaRouter.23.3.0\lib\MonoAndroid403\Xamarin.Android.Support.v7.MediaRouter.dll</HintPath>
     </Reference>
-    <Reference Include="Xamarin.Forms.GoogleMaps, Version=1.1.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Xamarin.Forms.GoogleMaps.1.1.1\lib\MonoAndroid10\Xamarin.Forms.GoogleMaps.dll</HintPath>
+    <Reference Include="Xamarin.Forms.GoogleMaps, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xamarin.Forms.GoogleMaps.1.2.0\lib\MonoAndroid10\Xamarin.Forms.GoogleMaps.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Xamarin.Forms.GoogleMaps.Android, Version=1.1.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Xamarin.Forms.GoogleMaps.1.1.1\lib\MonoAndroid10\Xamarin.Forms.GoogleMaps.Android.dll</HintPath>
+    <Reference Include="Xamarin.Forms.GoogleMaps.Android, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xamarin.Forms.GoogleMaps.1.2.0\lib\MonoAndroid10\Xamarin.Forms.GoogleMaps.Android.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Xamarin.Forms.Platform.Android">
