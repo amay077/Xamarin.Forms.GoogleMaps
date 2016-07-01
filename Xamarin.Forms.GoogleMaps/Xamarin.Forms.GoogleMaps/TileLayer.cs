@@ -6,31 +6,15 @@ namespace Xamarin.Forms.GoogleMaps
     public sealed class TileLayer
 	{
 		// For URI specific SyncTileLayer
-		private Func<int, int, int, Uri> _makeTileUri = null;
-		internal Func<int, int, int, Uri> MakeTileUri 
-		{
-			get { return _makeTileUri; }
-		}
+        internal Func<int, int, int, Uri> MakeTileUri { get; }
 
 		// For Image specific SyncTileLayer 
-		private Func<int, int, int, byte[]> _tileImageSync = null;
-		internal Func<int, int, int, byte[]> TileImageSync
-		{
-			get { return _tileImageSync; }
-		}
+        internal Func<int, int, int, byte[]> TileImageSync { get; }
 
 		// For Image specific AsyncTileLayer 
-		private Func<int, int, int, Task<byte[]>> _tileImageAsync = null;
-		internal Func<int, int, int, Task<byte[]>> TileImageAsync
-		{
-			get { return _tileImageAsync; }
-		}
+        internal Func<int, int, int, Task<byte[]>> TileImageAsync { get; }
 
-		private int _tileSize = 256;
-		public int TileSize
-		{ 
-			get { return _tileSize; }
-		}
+        public int TileSize { get; } = 256;
 
 		public object Tag { get; set; }
 
@@ -38,20 +22,20 @@ namespace Xamarin.Forms.GoogleMaps
 
 		private TileLayer(Func<int, int, int, Uri> makeTileUri, int tileSize = 256)
 		{
-			_makeTileUri = makeTileUri;
-			_tileSize = tileSize;
+			this.MakeTileUri = makeTileUri;
+			this.TileSize = tileSize;
 		}
 
 		private TileLayer(Func<int, int, int, byte[]> tileImageSync, int tileSize = 256)
 		{
-			_tileImageSync = tileImageSync;
-			_tileSize = tileSize;
+			this.TileImageSync = tileImageSync;
+			this.TileSize = tileSize;
 		}
 
 		private TileLayer(Func<int, int, int, Task<byte[]>> tileImageAsync, int tileSize = 256)
 		{
-			_tileImageAsync = tileImageAsync;
-			_tileSize = tileSize;
+			this.TileImageAsync = tileImageAsync;
+			this.TileSize = tileSize;
 		}
 
 		public static TileLayer FromTileUri(Func<int, int, int, Uri> makeTileUri, int tileSize = 256) {
