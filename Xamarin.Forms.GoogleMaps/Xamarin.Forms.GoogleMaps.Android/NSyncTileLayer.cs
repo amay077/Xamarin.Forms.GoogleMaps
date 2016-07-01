@@ -6,18 +6,18 @@ namespace Xamarin.Forms.GoogleMaps.Android
 {
 	internal class NSyncTileLayer : Java.Lang.Object, IATileProvider
 	{
-		private Func<int, int, int, byte[]> _tileImageSync;
+		private WeakReference _xformObject;
 		private int _tileSize;
 
-		public NSyncTileLayer(Func<int, int, int, byte[]> tileImageSync, int tileSize = 256) : base()
+		public NSyncTileLayer(SyncTileLayer xformObject, int tileSize = 256) : base()
 		{
-			_tileImageSync = tileImageSync;
+			_xformObject = new WeakReference(xformObject);
 			_tileSize = tileSize;
 		}
 
 		public Tile GetTile(int x, int y, int zoom)
 		{
-			var imgByte = _tileImageSync(x, y, zoom);
+			var imgByte = ((SyncTileLayer)_xformObject.Target).TileImage(x, y, zoom);
 			return new Tile(_tileSize, _tileSize, imgByte);
 		}
 	}

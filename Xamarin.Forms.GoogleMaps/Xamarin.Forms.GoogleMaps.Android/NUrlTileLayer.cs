@@ -5,16 +5,16 @@ namespace Xamarin.Forms.GoogleMaps.Android
 {
 	internal class NUrlTileLayer : UrlTileProvider
 	{
-		private Func<int, int, int, Uri> _makeTileUri;
+		private WeakReference _xformObject;
 
-		public NUrlTileLayer(Func<int, int, int, Uri> makeTileUri, int tileSize = 256) : base(tileSize, tileSize)
+		public NUrlTileLayer(UrlTileLayer xformObject, int tileSize = 256) : base(tileSize, tileSize)
 		{
-			_makeTileUri = makeTileUri;
+			_xformObject = new WeakReference(xformObject);
 		}
 
 		public override Java.Net.URL GetTileUrl(int x, int y, int zoom)
 		{
-			var uri = _makeTileUri(x,y,zoom);
+			var uri = ((UrlTileLayer)_xformObject.Target).TileUri(x,y,zoom);
 			return new Java.Net.URL(uri.AbsoluteUri);
 		}
 	}

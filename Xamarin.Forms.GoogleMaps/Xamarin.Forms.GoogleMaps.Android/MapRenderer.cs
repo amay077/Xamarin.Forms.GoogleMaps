@@ -766,22 +766,26 @@ namespace Xamarin.Forms.GoogleMaps.Android
 
 				ITileProvider nativeTileProvider;
 
-				if (tileLayer.MakeTileUri != null)
+				if (tileLayer is UrlTileLayer)
 				{
-					nativeTileProvider = new NUrlTileLayer(tileLayer.MakeTileUri, tileLayer.TileSize);
+					nativeTileProvider = new NUrlTileLayer((UrlTileLayer)tileLayer, tileLayer.TileSize);
 				}
-				else if (tileLayer.TileImageSync != null)
+				else if (tileLayer is SyncTileLayer)
 				{
-					nativeTileProvider = new NSyncTileLayer(tileLayer.TileImageSync, tileLayer.TileSize);
-				} 
-				else 
+					nativeTileProvider = new NSyncTileLayer((SyncTileLayer)tileLayer, tileLayer.TileSize);
+				}
+				else if (tileLayer is AsyncTileLayer)
+				{
+					nativeTileProvider = new NAsyncTileLayer((AsyncTileLayer)tileLayer, tileLayer.TileSize);
+				}
+				else
 				{ 
-					nativeTileProvider = new NAsyncTileLayer(tileLayer.TileImageAsync, tileLayer.TileSize);
+					throw new System.Exception("Unknown TileLayer type");
 				}
 				var nativeTileOverlay = map.AddTileOverlay(opts.InvokeTileProvider(nativeTileProvider));
 
 				// associate pin with marker for later lookup in event handlers
-				tileLayer.Id = nativeTileOverlay;
+                tileLayer.NativeObject = nativeTileOverlay;
 				return nativeTileOverlay;
 			}));
 		}
@@ -796,7 +800,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
 
 			foreach (TileLayer tileLayer in tileLayers)
 			{
-				var atileLayer = _tileLayers.FirstOrDefault(m => ((ATileOverlay)tileLayer.Id).Id == m.Id);
+                var atileLayer = _tileLayers.FirstOrDefault(m => ((ATileOverlay)tileLayer.NativeObject).Id == m.Id);
 				if (atileLayer == null)
 					continue;
 				atileLayer.Remove();

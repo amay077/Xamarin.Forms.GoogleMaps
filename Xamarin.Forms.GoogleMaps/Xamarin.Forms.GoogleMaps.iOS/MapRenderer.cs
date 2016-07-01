@@ -563,26 +563,29 @@ namespace Xamarin.Forms.GoogleMaps.iOS
 			{
 				ATileLayer nativeTileLayer;
 
-				if (tileLayer.MakeTileUri != null)
+				if (tileLayer is UrlTileLayer)
 				{
+					var _xformObject = new WeakReference(tileLayer);
 					nativeTileLayer = AUrlTileLayer.FromUrlConstructor((nuint x, nuint y, nuint zoom) => {
-						var uri = tileLayer.MakeTileUri((int)x, (int)y, (int)zoom);
+						var uri = ((UrlTileLayer)_xformObject.Target).TileUri((int)x, (int)y, (int)zoom);
 						return new NSUrl(uri.AbsoluteUri);
 					});
-					nativeTileLayer.TileSize = (nint)tileLayer.TileSize;
 				}
-				else if (tileLayer.TileImageSync != null)
-				{ 
-					nativeTileLayer = new NSyncTileLayer(tileLayer.TileImageSync);
-					nativeTileLayer.TileSize = (nint)tileLayer.TileSize;
+				else if (tileLayer is SyncTileLayer)
+				{
+					nativeTileLayer = new NSyncTileLayer((SyncTileLayer)tileLayer);
+				}
+				else if (tileLayer is AsyncTileLayer)
+				{
+					nativeTileLayer = new NAsyncTileLayer((AsyncTileLayer)tileLayer);
 				}
 				else
 				{
-					nativeTileLayer = new NAsyncTileLayer(tileLayer.TileImageAsync);
-					nativeTileLayer.TileSize = (nint)tileLayer.TileSize;
+					throw new System.Exception("Unknown TileLayer type");
 				}
+				nativeTileLayer.TileSize = tileLayer.TileSize;
 
-				tileLayer.Id = nativeTileLayer;
+                tileLayer.NativeObject = nativeTileLayer;
 				nativeTileLayer.Map = (MapView)Control;
 			}
 		}
@@ -590,7 +593,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
 		void RemoveTileLayers(IList tileLayers)
 		{
 			foreach (object obj in tileLayers)
-				((ATileLayer)((TileLayer)obj).Id).Map = null;
+				((ATileLayer)((TileLayer)obj).NativeObject).Map = null;
 		}
 
         void UpdateHasScrollEnabled()
