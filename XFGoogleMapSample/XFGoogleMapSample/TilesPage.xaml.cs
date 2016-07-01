@@ -32,7 +32,7 @@ namespace XFGoogleMapSample
 					var uriString = String.Format("http://{0}.tiles.openrailwaymap.org/standard/{1}/{2}/{3}.png", "abc".Substring(new Random().Next(3),1), zoom, x, y);
 					return new Uri(uriString);
 				},512);
-				objTile.Tag = "OSMTILE"; // Can set any object
+				objTile.Tag = "ORMTILE"; // Can set any object
 
 				map.TileLayers.Add(objTile);
 
@@ -89,7 +89,7 @@ namespace XFGoogleMapSample
 						return appImage;
 					});
 				});
-				objTile.Tag = "JGSITILE"; // Can set any object
+				objTile.Tag = "ASYNCTILE"; // Can set any object
 
 				map.TileLayers.Add(objTile);
 
