@@ -7,7 +7,7 @@ using ASyncTileLayer = Google.Maps.SyncTileLayer;
 
 namespace Xamarin.Forms.GoogleMaps.iOS
 {
-	public class NSyncTileLayer : ASyncTileLayer
+	internal class NSyncTileLayer : ASyncTileLayer
 	{
 		private Func<int, int, int, byte[]> _tileImageSync;
 

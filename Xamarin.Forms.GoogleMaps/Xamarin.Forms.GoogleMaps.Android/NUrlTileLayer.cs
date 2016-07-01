@@ -3,7 +3,7 @@ using Android.Gms.Maps.Model;
 
 namespace Xamarin.Forms.GoogleMaps.Android
 {
-	public class NUrlTileLayer : UrlTileProvider
+	internal class NUrlTileLayer : UrlTileProvider
 	{
 		private Func<int, int, int, Uri> _makeTileUri;
 

@@ -5,7 +5,7 @@ using IATileProvider = Android.Gms.Maps.Model.ITileProvider;
 
 namespace Xamarin.Forms.GoogleMaps.Android
 {
-	public class NAsyncTileLayer : Java.Lang.Object, IATileProvider
+    internal class NAsyncTileLayer : Java.Lang.Object, IATileProvider
 	{
 		private Func<int, int, int, Task<byte[]>> _tileImageAsync;
 		private int _tileSize;

@@ -4,7 +4,7 @@ using IATileProvider = Android.Gms.Maps.Model.ITileProvider;
 
 namespace Xamarin.Forms.GoogleMaps.Android
 {
-	public class NSyncTileLayer : Java.Lang.Object, IATileProvider
+	internal class NSyncTileLayer : Java.Lang.Object, IATileProvider
 	{
 		private Func<int, int, int, byte[]> _tileImageSync;
 		private int _tileSize;

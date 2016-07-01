@@ -7,7 +7,7 @@ using ATileLayer = Google.Maps.TileLayer;
 
 namespace Xamarin.Forms.GoogleMaps.iOS
 {
-	public class NAsyncTileLayer : ATileLayer
+	internal class NAsyncTileLayer : ATileLayer
 	{
 		private Func<int, int, int, Task<byte[]>> _tileImageAsync;
 
