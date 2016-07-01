@@ -63,7 +63,7 @@ namespace Xamarin.Forms.GoogleMaps
 			return new TileLayer(tileImageSync, tileSize);
 		}
 
-		public static TileLayer FromASyncImage(Func<int, int, int, Task<byte[]>> tileImageAsync, int tileSize = 256)
+		public static TileLayer FromAsyncImage(Func<int, int, int, Task<byte[]>> tileImageAsync, int tileSize = 256)
 		{
 			return new TileLayer(tileImageAsync, tileSize);
 		}

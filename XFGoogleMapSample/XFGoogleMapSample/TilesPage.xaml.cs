@@ -82,7 +82,7 @@ namespace XFGoogleMapSample
 			{
 				if (objTile != null) map.TileLayers.Remove(objTile);
 
-				objTile = TileLayer.FromASyncImage(async (int x, int y, int zoom) =>
+				objTile = TileLayer.FromAsyncImage(async (int x, int y, int zoom) =>
 				{
 					return await Task.Run(() =>
   					{
