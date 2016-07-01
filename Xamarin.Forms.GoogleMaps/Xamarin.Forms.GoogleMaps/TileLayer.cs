@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Xamarin.Forms.GoogleMaps
 {
-	public class TileLayer
+    public sealed class TileLayer
 	{
 		// For URI specific SyncTileLayer
 		private Func<int, int, int, Uri> _makeTileUri = null;
