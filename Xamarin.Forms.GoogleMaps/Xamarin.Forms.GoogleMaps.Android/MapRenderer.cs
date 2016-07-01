@@ -15,6 +15,7 @@ using System.Collections;
 using APolyline = Android.Gms.Maps.Model.Polyline;
 using APolygon = Android.Gms.Maps.Model.Polygon;
 using ACircle = Android.Gms.Maps.Model.Circle;
+using ATileOverlay = Android.Gms.Maps.Model.TileOverlay;
 using Android.Util;
 using Android.App;
 using Xamarin.Forms.GoogleMaps.Internals;
@@ -36,6 +37,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
         List<APolyline> _polylines;
         List<APolygon> _polygons;
         List<ACircle> _circles;
+		List<ATileOverlay> _tileLayers;
         float _scaledDensity = 1;
 
         const string MoveMessageName = "MapMoveToRegion";
@@ -83,6 +85,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 ((ObservableCollection<Polyline>)oldMapModel.Polylines).CollectionChanged -= OnPolylineCollectionChanged;
                 ((ObservableCollection<Polygon>)oldMapModel.Polygons).CollectionChanged -= OnPolygonCollectionChanged;
                 ((ObservableCollection<Circle>)oldMapModel.Circles).CollectionChanged -= OnCircleCollectionChanged;
+				((ObservableCollection<TileLayer>)oldMapModel.TileLayers).CollectionChanged -= OnTileLayerCollectionChanged;
 
                 MessagingCenter.Unsubscribe<Map, MoveToRegionMessage>(this, MoveMessageName);
 
@@ -141,6 +144,10 @@ namespace Xamarin.Forms.GoogleMaps.Android
             var inccCircle = Map.Circles as INotifyCollectionChanged;
             if (inccCircle != null)
                 inccCircle.CollectionChanged += OnCircleCollectionChanged;
+
+			var inccTileLayer = Map.TileLayers as INotifyCollectionChanged;
+			if (inccTileLayer != null)
+				inccTileLayer.CollectionChanged += OnTileLayerCollectionChanged;
         }
 
         void OnPinCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
@@ -243,6 +250,31 @@ namespace Xamarin.Forms.GoogleMaps.Android
             }
         }
 
+		void OnTileLayerCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
+		{
+			switch (notifyCollectionChangedEventArgs.Action)
+			{
+				case NotifyCollectionChangedAction.Add:
+					AddTileLayers(notifyCollectionChangedEventArgs.NewItems);
+					break;
+				case NotifyCollectionChangedAction.Remove:
+					RemoveTileLayers(notifyCollectionChangedEventArgs.OldItems);
+					break;
+				case NotifyCollectionChangedAction.Replace:
+					RemoveTileLayers(notifyCollectionChangedEventArgs.OldItems);
+					AddTileLayers(notifyCollectionChangedEventArgs.NewItems);
+					break;
+				case NotifyCollectionChangedAction.Reset:
+					_tileLayers?.ForEach(tileLayer => tileLayer.Remove());
+					_tileLayers = null;
+					AddTileLayers((IList)(Element as Map).TileLayers);
+					break;
+				case NotifyCollectionChangedAction.Move:
+					//do nothing
+					break;
+			}
+		}
+
         void OnMoveToRegionMessage(Map s, MoveToRegionMessage m)
         {
             MoveToRegion(m.Span, m.Animate);
@@ -285,6 +317,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 OnPolylineCollectionChanged (((Map)Element).Polylines, new NotifyCollectionChangedEventArgs (NotifyCollectionChangedAction.Reset));
                 OnPolygonCollectionChanged(((Map)Element).Polygons, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
                 OnCircleCollectionChanged(((Map)Element).Circles, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+				OnTileLayerCollectionChanged(((Map)Element).TileLayers, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
                 _init = false;
             }
             else if (changed)
@@ -718,6 +751,59 @@ namespace Xamarin.Forms.GoogleMaps.Android
             }
         }
 
+		void AddTileLayers(IList tileLayers)
+		{
+			var map = NativeMap;
+			if (map == null)
+				return;
+
+			if (_tileLayers == null)
+				_tileLayers = new List<ATileOverlay>();
+
+			_tileLayers.AddRange(tileLayers.Cast<TileLayer>().Select(tileLayer =>
+			{
+				var opts = new TileOverlayOptions();
+
+				ITileProvider nativeTileProvider;
+
+				if (tileLayer.MakeTileUri != null)
+				{
+					nativeTileProvider = new NUrlTileLayer(tileLayer.MakeTileUri, tileLayer.TileSize);
+				}
+				else if (tileLayer.TileImageSync != null)
+				{
+					nativeTileProvider = new NSyncTileLayer(tileLayer.TileImageSync, tileLayer.TileSize);
+				} 
+				else 
+				{ 
+					nativeTileProvider = new NAsyncTileLayer(tileLayer.TileImageAsync, tileLayer.TileSize);
+				}
+				var nativeTileOverlay = map.AddTileOverlay(opts.InvokeTileProvider(nativeTileProvider));
+
+				// associate pin with marker for later lookup in event handlers
+				tileLayer.Id = nativeTileOverlay;
+				return nativeTileOverlay;
+			}));
+		}
+
+		void RemoveTileLayers(IList tileLayers)
+		{
+			var map = NativeMap;
+			if (map == null)
+				return;
+			if (_tileLayers == null)
+				return;
+
+			foreach (TileLayer tileLayer in tileLayers)
+			{
+				var atileLayer = _tileLayers.FirstOrDefault(m => ((ATileOverlay)tileLayer.Id).Id == m.Id);
+				if (atileLayer == null)
+					continue;
+				atileLayer.Remove();
+				_tileLayers.Remove(atileLayer);
+			}
+		}
+
         bool _disposed;
         protected override void Dispose(bool disposing)
         {
@@ -733,6 +819,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
                     ((ObservableCollection<Polyline>)mapModel.Polylines).CollectionChanged -= OnPolylineCollectionChanged;
                     ((ObservableCollection<Polygon>)mapModel.Polygons).CollectionChanged -= OnPolygonCollectionChanged;
                     ((ObservableCollection<Circle>)mapModel.Circles).CollectionChanged -= OnCircleCollectionChanged;
+					((ObservableCollection<TileLayer>)mapModel.TileLayers).CollectionChanged -= OnCircleCollectionChanged;
                 }
 
                 var gmap = NativeMap;

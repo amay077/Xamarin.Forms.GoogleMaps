@@ -95,6 +95,9 @@
     <Compile Include="FormsGoogleMaps.cs" />
     <Compile Include="GeocoderBackend.cs" />
     <Compile Include="MapRenderer.cs" />
+    <Compile Include="NUrlTileLayer.cs" />
+    <Compile Include="NSyncTileLayer.cs" />
+    <Compile Include="NAsyncTileLayer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
