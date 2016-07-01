@@ -24,7 +24,7 @@ namespace Xamarin.Forms.GoogleMaps
         readonly ObservableCollection<Polyline> _polylines = new ObservableCollection<Polyline> ();
         readonly ObservableCollection<Polygon> _polygons = new ObservableCollection<Polygon>();
         readonly ObservableCollection<Circle> _circles = new ObservableCollection<Circle>();
-		readonly ObservableCollection<ITileLayer> _tileLayers = new ObservableCollection<ITileLayer>();
+		readonly ObservableCollection<TileLayer> _tileLayers = new ObservableCollection<TileLayer>();
 
         public event EventHandler<SelectedPinChangedEventArgs> SelectedPinChanged;
 
@@ -96,7 +96,7 @@ namespace Xamarin.Forms.GoogleMaps
             get { return _circles; }
         }
 
-		public IList<ITileLayer> TileLayers
+		public IList<TileLayer> TileLayers
 		{
 			get { return _tileLayers; }
 		}

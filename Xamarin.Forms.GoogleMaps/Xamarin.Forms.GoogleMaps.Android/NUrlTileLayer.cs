@@ -5,11 +5,9 @@ namespace Xamarin.Forms.GoogleMaps.Android
 {
 	public class NUrlTileLayer : UrlTileProvider
 	{
-		private static int tileWidth = 256;
-		private static int tileHeight = 256;
 		private Func<int, int, int, Uri> _makeTileUri;
 
-		public NUrlTileLayer(Func<int, int, int, Uri> makeTileUri) : base(tileWidth, tileHeight)
+		public NUrlTileLayer(Func<int, int, int, Uri> makeTileUri, int tileSize = 256) : base(tileSize, tileSize)
 		{
 			_makeTileUri = makeTileUri;
 		}

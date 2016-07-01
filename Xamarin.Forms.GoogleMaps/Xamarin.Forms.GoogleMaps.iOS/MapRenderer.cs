@@ -42,7 +42,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                     ((ObservableCollection<Polyline>)mapModel.Polylines).CollectionChanged -= OnPolylineCollectionChanged;
                     ((ObservableCollection<Polygon>)mapModel.Polygons).CollectionChanged -= OnPolygonCollectionChanged;
                     ((ObservableCollection<Circle>)mapModel.Circles).CollectionChanged -= OnCircleCollectionChanged;
-					((ObservableCollection<ITileLayer>)mapModel.TileLayers).CollectionChanged -= OnTileLayerCollectionChanged;
+					((ObservableCollection<TileLayer>)mapModel.TileLayers).CollectionChanged -= OnTileLayerCollectionChanged;
                 }
 
                 var mkMapView = (MapView)Control;
@@ -106,7 +106,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                 ((ObservableCollection<Circle>)mapModel.Circles).CollectionChanged += OnCircleCollectionChanged;
                 OnCircleCollectionChanged(((Map)Element).Circles, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
 
-				((ObservableCollection<ITileLayer>)mapModel.TileLayers).CollectionChanged += OnTileLayerCollectionChanged;
+				((ObservableCollection<TileLayer>)mapModel.TileLayers).CollectionChanged += OnTileLayerCollectionChanged;
 				OnTileLayerCollectionChanged(((Map)Element).TileLayers, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));			
 			}
         }
@@ -559,25 +559,27 @@ namespace Xamarin.Forms.GoogleMaps.iOS
 
 		void AddTileLayers(IList tileLayers)
 		{
-			foreach (ITileLayerInternal tileLayer in tileLayers)
+			foreach (TileLayer tileLayer in tileLayers)
 			{
 				ATileLayer nativeTileLayer;
 
-				if (tileLayer is UrlTileLayer)
+				if (tileLayer.MakeTileUri != null)
 				{
 					nativeTileLayer = AUrlTileLayer.FromUrlConstructor((nuint x, nuint y, nuint zoom) => {
-						var uri = ((UrlTileLayer)tileLayer).MakeTileUri((int)x, (int)y, (int)zoom);
+						var uri = tileLayer.MakeTileUri((int)x, (int)y, (int)zoom);
 						return new NSUrl(uri.AbsoluteUri);
 					});
+					nativeTileLayer.TileSize = (nint)tileLayer.TileSize;
+				}
+				else if (tileLayer.TileImageSync != null)
+				{ 
+					nativeTileLayer = new NSyncTileLayer(tileLayer.TileImageSync);
+					nativeTileLayer.TileSize = (nint)tileLayer.TileSize;
 				}
 				else
 				{
-					// In future: For Non-UrlTileLayer. Now coding UrlTileLayer as dummy.  
-					nativeTileLayer = AUrlTileLayer.FromUrlConstructor((nuint x, nuint y, nuint zoom) =>
-					{
-						var uri = ((UrlTileLayer)tileLayer).MakeTileUri((int)x, (int)y, (int)zoom);
-						return new NSUrl(uri.AbsoluteUri);
-					});
+					nativeTileLayer = new NAsyncTileLayer(tileLayer.TileImageAsync);
+					nativeTileLayer.TileSize = (nint)tileLayer.TileSize;
 				}
 
 				tileLayer.Id = nativeTileLayer;
@@ -588,7 +590,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
 		void RemoveTileLayers(IList tileLayers)
 		{
 			foreach (object obj in tileLayers)
-				((ATileLayer)((ITileLayerInternal)obj).Id).Map = null;
+				((ATileLayer)((TileLayer)obj).Id).Map = null;
 		}
 
         void UpdateHasScrollEnabled()

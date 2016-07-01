@@ -14,31 +14,37 @@
 				<Grid.RowDefinitions>
 			        <RowDefinition Height="Auto" />
 			        <RowDefinition Height="Auto" />
-			    </Grid.RowDefinitions>
+			        <RowDefinition Height="Auto" />
+				</Grid.RowDefinitions>
 			 
 			    <Grid.ColumnDefinitions>
 			        <ColumnDefinition Width="Auto" />
 			        <ColumnDefinition Width="*" />
 			    </Grid.ColumnDefinitions>
 				
-				<Button x:Name="buttonAddOSMTile"
-						Text="Add OSM Tile"
+				<Button x:Name="buttonORMTile"
+						Text="OpenRailwayMap (512px)"
 						Grid.Row="1"
 						Grid.Column="1"/>
-				<Button x:Name="buttonRemoveOSMTile"
-						Text="Remove OSM Tile"
+				<Button x:Name="buttonJGSITile"
+						Text="Japan GSI"
 						Grid.Row="1"
-						Grid.Column="2"/>
-
-				<Button x:Name="buttonAddJGSITile"
-						Text="Add Japan GSI Tile"
-						Grid.Row="2"
-						Grid.Column="1"/>
-				<Button x:Name="buttonRemoveJGSITile"
-						Text="Remove Japan GSI Tile"
-						Grid.Row="2"
 						Grid.Column="2"/>
 				
+				<Button x:Name="buttonSyncImage"
+						Text="Image (Sync)"
+						Grid.Row="2"
+						Grid.Column="1"/>
+				<Button x:Name="buttonAsyncImage"
+						Text="Image (Async)"
+						Grid.Row="2"
+						Grid.Column="2"/>
+
+				<Button x:Name="buttonRemove"
+						Text="Remove Tile"
+						Grid.Row="3"
+						Grid.Column="1"
+						Grid.ColumnSpan="2"/>				
 			</Grid>
 
 			<maps:Map x:Name="map" 

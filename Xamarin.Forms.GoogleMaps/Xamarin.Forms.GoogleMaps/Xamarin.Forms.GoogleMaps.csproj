@@ -46,8 +46,7 @@
     <Compile Include="Circle.cs" />
     <Compile Include="Internals\MoveToRegionMessage.cs" />
     <Compile Include="SelectedPinChangedEventArgs.cs" />
-    <Compile Include="ITileLayer.cs" />
-    <Compile Include="UrlTileLayer.cs" />
+    <Compile Include="TileLayer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">

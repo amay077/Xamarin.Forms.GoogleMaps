@@ -65,6 +65,8 @@
     <Compile Include="FormsGoogleMaps.cs" />
     <Compile Include="MapRenderer.cs" />
     <Compile Include="Properties\GlobalAssemblyInfo.cs" />
+    <Compile Include="NAsyncTileLayer.cs" />
+    <Compile Include="NSyncTileLayer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
