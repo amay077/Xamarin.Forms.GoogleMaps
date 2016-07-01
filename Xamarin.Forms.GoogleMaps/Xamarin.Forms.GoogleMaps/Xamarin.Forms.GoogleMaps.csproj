@@ -47,6 +47,9 @@
     <Compile Include="Internals\MoveToRegionMessage.cs" />
     <Compile Include="SelectedPinChangedEventArgs.cs" />
     <Compile Include="TileLayer.cs" />
+    <Compile Include="UrlTileLayer.cs" />
+    <Compile Include="SyncTileLayer.cs" />
+    <Compile Include="AsyncTileLayer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">

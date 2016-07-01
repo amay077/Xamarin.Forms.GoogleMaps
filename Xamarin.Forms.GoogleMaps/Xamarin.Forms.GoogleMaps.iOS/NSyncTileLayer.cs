@@ -1,7 +1,5 @@
 ﻿using System;
-using Google.Maps;
 using UIKit;
-using System.Drawing;
 using Foundation;
 using ASyncTileLayer = Google.Maps.SyncTileLayer;
 
@@ -9,16 +7,16 @@ namespace Xamarin.Forms.GoogleMaps.iOS
 {
 	internal class NSyncTileLayer : ASyncTileLayer
 	{
-		private Func<int, int, int, byte[]> _tileImageSync;
+		private WeakReference _xformObject;
 
-		public NSyncTileLayer(Func<int, int, int, byte[]> tileImageSync) : base()
+		public NSyncTileLayer(SyncTileLayer xformObject) : base()
 		{
-			_tileImageSync = tileImageSync;
+			_xformObject = new WeakReference(xformObject);
 		}
 
 		public override UIImage Tile(nuint x, nuint y, nuint zoom)
 		{
-			var imgByte = _tileImageSync((int)x, (int)y, (int)zoom);
+			var imgByte = ((SyncTileLayer)_xformObject.Target).TileImage((int)x, (int)y, (int)zoom);
 			return new UIImage(NSData.FromArray(imgByte));
 		}
 	}
