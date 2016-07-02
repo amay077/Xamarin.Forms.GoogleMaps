@@ -819,7 +819,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
                     ((ObservableCollection<Polyline>)mapModel.Polylines).CollectionChanged -= OnPolylineCollectionChanged;
                     ((ObservableCollection<Polygon>)mapModel.Polygons).CollectionChanged -= OnPolygonCollectionChanged;
                     ((ObservableCollection<Circle>)mapModel.Circles).CollectionChanged -= OnCircleCollectionChanged;
-					((ObservableCollection<TileLayer>)mapModel.TileLayers).CollectionChanged -= OnCircleCollectionChanged;
+					((ObservableCollection<TileLayer>)mapModel.TileLayers).CollectionChanged -= OnTileLayerCollectionChanged;
                 }
 
                 var gmap = NativeMap;
