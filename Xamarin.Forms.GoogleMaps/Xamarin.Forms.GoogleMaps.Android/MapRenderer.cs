@@ -22,22 +22,23 @@ namespace Xamarin.Forms.GoogleMaps.Android
     public class MapRenderer : ViewRenderer,
         GoogleMap.IOnCameraChangeListener
     {
+        readonly BaseLogic[] _logics;
+
         public MapRenderer()
         {
             AutoPackage = false;
+            _logics = new BaseLogic[]
+            {
+                new PolylineLogic(),
+                new PolygonLogic(),
+                new CircleLogic(),
+                new PinLogic(),
+                new TileLayerLogic()
+            };
         }
 
         static Bundle s_bundle;
         internal static Bundle Bundle { set { s_bundle = value; } }
-
-        //List<Marker> _markers;
-		List<ATileOverlay> _tileLayers;
-
-        PolylineLogic _polylineLogic = new PolylineLogic();
-        PolygonLogic _polygonLogic = new PolygonLogic();
-        CircleLogic _circleLogic = new CircleLogic();
-        PinLogic _pinLogic = new PinLogic();
-        float _scaledDensity = 1;
 
         const string MoveMessageName = "MapMoveToRegion";
 
@@ -69,20 +70,13 @@ namespace Xamarin.Forms.GoogleMaps.Android
             {
                 var metrics = new DisplayMetrics();
                 activity.WindowManager.DefaultDisplay.GetMetrics(metrics);
-                var realSize = new global::Android.Graphics.Point();
-                activity.WindowManager.DefaultDisplay.GetRealSize(realSize);
-                var size = new global::Android.Graphics.Point();
-                activity.WindowManager.DefaultDisplay.GetSize(size);
-                _polylineLogic.ScaledDensity = metrics.ScaledDensity;
-                _polygonLogic.ScaledDensity = metrics.ScaledDensity;
-                _circleLogic.ScaledDensity = metrics.ScaledDensity;
+                foreach (var logic in _logics)
+                    logic.ScaledDensity = metrics.ScaledDensity;
             }
 
             if (e.OldElement != null)
             {
                 var oldMapModel = (Map)e.OldElement;
-				((ObservableCollection<TileLayer>)oldMapModel.TileLayers).CollectionChanged -= OnTileLayerCollectionChanged;
-
                 MessagingCenter.Unsubscribe<Map, MoveToRegionMessage>(this, MoveMessageName);
 
 #pragma warning disable 618
@@ -122,17 +116,12 @@ namespace Xamarin.Forms.GoogleMaps.Android
             }
 
 #pragma warning disable 618
-            _polylineLogic.Register(oldMapView?.Map, (Map)e.OldElement, NativeMap, Map);
-            _polygonLogic.Register(oldMapView?.Map, (Map)e.OldElement, NativeMap, Map);
-            _circleLogic.Register(oldMapView?.Map, (Map)e.OldElement, NativeMap, Map);
-            _pinLogic.Register(oldMapView?.Map, (Map)e.OldElement, NativeMap, Map);
+            foreach (var logic in _logics)
+                logic.Register(oldMapView?.Map, (Map)e.OldElement, NativeMap, Map);
 #pragma warning restore 618
 
             MessagingCenter.Subscribe<Map, MoveToRegionMessage>(this, MoveMessageName, OnMoveToRegionMessage, Map);
 
-			var inccTileLayer = Map.TileLayers as INotifyCollectionChanged;
-			if (inccTileLayer != null)
-				inccTileLayer.CollectionChanged += OnTileLayerCollectionChanged;
         }
 
         //void OnPinCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
@@ -210,30 +199,30 @@ namespace Xamarin.Forms.GoogleMaps.Android
         //    }
         //}
 
-		void OnTileLayerCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
-		{
-			switch (notifyCollectionChangedEventArgs.Action)
-			{
-				case NotifyCollectionChangedAction.Add:
-					AddTileLayers(notifyCollectionChangedEventArgs.NewItems);
-					break;
-				case NotifyCollectionChangedAction.Remove:
-					RemoveTileLayers(notifyCollectionChangedEventArgs.OldItems);
-					break;
-				case NotifyCollectionChangedAction.Replace:
-					RemoveTileLayers(notifyCollectionChangedEventArgs.OldItems);
-					AddTileLayers(notifyCollectionChangedEventArgs.NewItems);
-					break;
-				case NotifyCollectionChangedAction.Reset:
-					_tileLayers?.ForEach(tileLayer => tileLayer.Remove());
-					_tileLayers = null;
-					AddTileLayers((IList)(Element as Map).TileLayers);
-					break;
-				case NotifyCollectionChangedAction.Move:
-					//do nothing
-					break;
-			}
-		}
+		//void OnTileLayerCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
+		//{
+		//	switch (notifyCollectionChangedEventArgs.Action)
+		//	{
+		//		case NotifyCollectionChangedAction.Add:
+		//			AddTileLayers(notifyCollectionChangedEventArgs.NewItems);
+		//			break;
+		//		case NotifyCollectionChangedAction.Remove:
+		//			RemoveTileLayers(notifyCollectionChangedEventArgs.OldItems);
+		//			break;
+		//		case NotifyCollectionChangedAction.Replace:
+		//			RemoveTileLayers(notifyCollectionChangedEventArgs.OldItems);
+		//			AddTileLayers(notifyCollectionChangedEventArgs.NewItems);
+		//			break;
+		//		case NotifyCollectionChangedAction.Reset:
+		//			_tileLayers?.ForEach(tileLayer => tileLayer.Remove());
+		//			_tileLayers = null;
+		//			AddTileLayers((IList)(Element as Map).TileLayers);
+		//			break;
+		//		case NotifyCollectionChangedAction.Move:
+		//			//do nothing
+		//			break;
+		//	}
+		//}
 
         void OnMoveToRegionMessage(Map s, MoveToRegionMessage m)
         {
@@ -273,11 +262,10 @@ namespace Xamarin.Forms.GoogleMaps.Android
             if (_init)
             {
                 MoveToRegion(((Map)Element).LastMoveToRegion, false);
-                _polylineLogic.NotifyReset();
-                _polygonLogic.NotifyReset();
-                _circleLogic.NotifyReset();
-                _pinLogic.NotifyReset();
-				OnTileLayerCollectionChanged(((Map)Element).TileLayers, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+
+                foreach (var logic in _logics)
+                    logic.NotifyReset();
+
                 _init = false;
             }
             else if (changed)
@@ -310,7 +298,8 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 gmap.UiSettings.ZoomGesturesEnabled = Map.HasZoomEnabled;
             }
 
-            _pinLogic.OnElementPropertyChanged(e);
+            foreach (var logic in _logics)
+                logic.OnElementPropertyChanged(e);
         }
 
         void SetMapType()
@@ -502,58 +491,58 @@ namespace Xamarin.Forms.GoogleMaps.Android
         //    }
         //}
 
-		void AddTileLayers(IList tileLayers)
-		{
-			var map = NativeMap;
-			if (map == null)
-				return;
+		//void AddTileLayers(IList tileLayers)
+		//{
+		//	var map = NativeMap;
+		//	if (map == null)
+		//		return;
 
-			if (_tileLayers == null)
-				_tileLayers = new List<ATileOverlay>();
+		//	if (_tileLayers == null)
+		//		_tileLayers = new List<ATileOverlay>();
 
-			_tileLayers.AddRange(tileLayers.Cast<TileLayer>().Select(tileLayer =>
-			{
-				var opts = new TileOverlayOptions();
+		//	_tileLayers.AddRange(tileLayers.Cast<TileLayer>().Select(tileLayer =>
+		//	{
+		//		var opts = new TileOverlayOptions();
 
-				ITileProvider nativeTileProvider;
+		//		ITileProvider nativeTileProvider;
 
-				if (tileLayer.MakeTileUri != null)
-				{
-					nativeTileProvider = new NUrlTileLayer(tileLayer.MakeTileUri, tileLayer.TileSize);
-				}
-				else if (tileLayer.TileImageSync != null)
-				{
-					nativeTileProvider = new NSyncTileLayer(tileLayer.TileImageSync, tileLayer.TileSize);
-				} 
-				else 
-				{ 
-					nativeTileProvider = new NAsyncTileLayer(tileLayer.TileImageAsync, tileLayer.TileSize);
-				}
-				var nativeTileOverlay = map.AddTileOverlay(opts.InvokeTileProvider(nativeTileProvider));
+		//		if (tileLayer.MakeTileUri != null)
+		//		{
+		//			nativeTileProvider = new NUrlTileLayer(tileLayer.MakeTileUri, tileLayer.TileSize);
+		//		}
+		//		else if (tileLayer.TileImageSync != null)
+		//		{
+		//			nativeTileProvider = new NSyncTileLayer(tileLayer.TileImageSync, tileLayer.TileSize);
+		//		} 
+		//		else 
+		//		{ 
+		//			nativeTileProvider = new NAsyncTileLayer(tileLayer.TileImageAsync, tileLayer.TileSize);
+		//		}
+		//		var nativeTileOverlay = map.AddTileOverlay(opts.InvokeTileProvider(nativeTileProvider));
 
-				// associate pin with marker for later lookup in event handlers
-				tileLayer.Id = nativeTileOverlay;
-				return nativeTileOverlay;
-			}));
-		}
+		//		// associate pin with marker for later lookup in event handlers
+		//		tileLayer.Id = nativeTileOverlay;
+		//		return nativeTileOverlay;
+		//	}));
+		//}
 
-		void RemoveTileLayers(IList tileLayers)
-		{
-			var map = NativeMap;
-			if (map == null)
-				return;
-			if (_tileLayers == null)
-				return;
+		//void RemoveTileLayers(IList tileLayers)
+		//{
+		//	var map = NativeMap;
+		//	if (map == null)
+		//		return;
+		//	if (_tileLayers == null)
+		//		return;
 
-			foreach (TileLayer tileLayer in tileLayers)
-			{
-				var atileLayer = _tileLayers.FirstOrDefault(m => ((ATileOverlay)tileLayer.Id).Id == m.Id);
-				if (atileLayer == null)
-					continue;
-				atileLayer.Remove();
-				_tileLayers.Remove(atileLayer);
-			}
-		}
+		//	foreach (TileLayer tileLayer in tileLayers)
+		//	{
+		//		var atileLayer = _tileLayers.FirstOrDefault(m => ((ATileOverlay)tileLayer.Id).Id == m.Id);
+		//		if (atileLayer == null)
+		//			continue;
+		//		atileLayer.Remove();
+		//		_tileLayers.Remove(atileLayer);
+		//	}
+		//}
 
         bool _disposed;
         protected override void Dispose(bool disposing)
@@ -569,14 +558,11 @@ namespace Xamarin.Forms.GoogleMaps.Android
                     //((ObservableCollection<Polyline>)Map.Polylines).CollectionChanged -= OnPolylineCollectionChanged;
                     //((ObservableCollection<Polygon>)Map.Polygons).CollectionChanged -= OnPolygonCollectionChanged;
                     //((ObservableCollection<Circle>)Map.Circles).CollectionChanged -= OnCircleCollectionChanged;
-					((ObservableCollection<TileLayer>)Map.TileLayers).CollectionChanged -= OnTileLayerCollectionChanged;
+					//((ObservableCollection<TileLayer>)Map.TileLayers).CollectionChanged -= OnTileLayerCollectionChanged;
                 }
 
-                _circleLogic.Unregister(NativeMap, Map);
-                _polylineLogic.Unregister(NativeMap, Map);
-                _polygonLogic.Unregister(NativeMap, Map);
-                _pinLogic.Unregister(NativeMap, Map);
-
+                foreach (var logic in _logics)
+                    logic.Unregister(NativeMap, Map);
 
                 if (NativeMap == null)
                     return;

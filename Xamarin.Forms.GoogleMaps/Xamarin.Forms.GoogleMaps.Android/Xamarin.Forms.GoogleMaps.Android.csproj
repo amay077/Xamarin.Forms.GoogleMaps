@@ -103,6 +103,8 @@
     <Compile Include="Logics\PolylineLogic.cs" />
     <Compile Include="Logics\CircleLogic.cs" />
     <Compile Include="Logics\PinLogic.cs" />
+    <Compile Include="Logics\TileLayerLogic.cs" />
+    <Compile Include="Logics\BaseLogic.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
