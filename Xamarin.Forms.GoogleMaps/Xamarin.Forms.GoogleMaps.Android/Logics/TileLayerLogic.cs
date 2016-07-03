@@ -22,15 +22,15 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
 
             if (outerItem.MakeTileUri != null)
             {
-                nativeTileProvider = new NUrlTileLayer(outerItem.MakeTileUri, outerItem.TileSize);
+                nativeTileProvider = new NativeUrlTileLayer(outerItem.MakeTileUri, outerItem.TileSize);
             }
             else if (outerItem.TileImageSync != null)
             {
-                nativeTileProvider = new NSyncTileLayer(outerItem.TileImageSync, outerItem.TileSize);
+                nativeTileProvider = new NativeSyncTileLayer(outerItem.TileImageSync, outerItem.TileSize);
             }
             else
             {
-                nativeTileProvider = new NAsyncTileLayer(outerItem.TileImageAsync, outerItem.TileSize);
+                nativeTileProvider = new NativeAsyncTileLayer(outerItem.TileImageAsync, outerItem.TileSize);
             }
             var nativeTileOverlay = NativeMap.AddTileOverlay(opts.InvokeTileProvider(nativeTileProvider));
 

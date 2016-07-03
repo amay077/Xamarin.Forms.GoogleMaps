@@ -5,12 +5,12 @@ using INativeTileProvider = Android.Gms.Maps.Model.ITileProvider;
 
 namespace Xamarin.Forms.GoogleMaps.Logics.Android
 {
-    internal class NAsyncTileLayer : Java.Lang.Object, INativeTileProvider
+    internal class NativeAsyncTileLayer : Java.Lang.Object, INativeTileProvider
 	{
 		private Func<int, int, int, Task<byte[]>> _tileImageAsync;
 		private int _tileSize;
 
-		public NAsyncTileLayer(Func<int, int, int, Task<byte[]>> tileImageAsync, int tileSize = 256) : base()
+		public NativeAsyncTileLayer(Func<int, int, int, Task<byte[]>> tileImageAsync, int tileSize = 256) : base()
 		{
 			_tileImageAsync = tileImageAsync;
 			_tileSize = tileSize;
