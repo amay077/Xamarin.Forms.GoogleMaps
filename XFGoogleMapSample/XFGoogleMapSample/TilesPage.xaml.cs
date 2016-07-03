@@ -28,10 +28,9 @@ namespace XFGoogleMapSample
 			{
 				if (objTile != null) map.TileLayers.Remove(objTile);
 
-				objTile = TileLayer.FromTileUri((int x, int y, int zoom) => {
-					var uriString = String.Format("http://{0}.tiles.openrailwaymap.org/standard/{1}/{2}/{3}.png", "abc".Substring(new Random().Next(3),1), zoom, x, y);
-					return new Uri(uriString);
-				},512);
+				objTile = TileLayer.FromTileUri((int x, int y, int zoom) => 
+                    new Uri($"http://{"abc".Substring(new Random().Next(3), 1)}.tiles.openrailwaymap.org/standard/{zoom}/{x}/{y}.png")
+				, 512);
 				objTile.Tag = "ORMTILE"; // Can set any object
 
 				map.TileLayers.Add(objTile);
@@ -46,10 +45,8 @@ namespace XFGoogleMapSample
 			{
 				if (objTile != null) map.TileLayers.Remove(objTile);
 
-				objTile = TileLayer.FromTileUri((int x, int y, int zoom) => {
-					var uriString = String.Format("https://cyberjapandata.gsi.go.jp/xyz/std/{0}/{1}/{2}.png", zoom, x, y);
-					return new Uri(uriString);
-				});
+				objTile = TileLayer.FromTileUri((int x, int y, int zoom) =>
+                    new Uri($"https://cyberjapandata.gsi.go.jp/xyz/std/{zoom}/{x}/{y}.png") );
 				objTile.Tag = "JGSITILE"; // Can set any object
 
 				map.TileLayers.Add(objTile);
@@ -64,10 +61,7 @@ namespace XFGoogleMapSample
 			{
 				if (objTile != null) map.TileLayers.Remove(objTile);
 
-				objTile = TileLayer.FromSyncImage((int x, int y, int zoom) =>
-				{
-					return andImage;
-				});
+				objTile = TileLayer.FromSyncImage((int x, int y, int zoom) =>  andImage);
 				objTile.Tag = "SYNCTILE"; // Can set any object
 
 				map.TileLayers.Add(objTile);
