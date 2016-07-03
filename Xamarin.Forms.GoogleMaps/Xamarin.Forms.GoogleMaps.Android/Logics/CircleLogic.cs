@@ -4,6 +4,7 @@ using System.ComponentModel;
 using Android.Gms.Maps.Model;
 using Xamarin.Forms.Platform.Android;
 using NativeCircle = Android.Gms.Maps.Model.Circle;
+using Xamarin.Forms.GoogleMaps.Android;
 
 namespace Xamarin.Forms.GoogleMaps.Logics.Android
 {
@@ -40,6 +41,37 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
 
         internal override void OnElementPropertyChanged(PropertyChangedEventArgs e)
         {
+        }
+
+        protected override void OnItemPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            base.OnItemPropertyChanged(sender, e);
+            var circle = sender as Circle;
+            var nativeCircle = circle?.Id as NativeCircle;
+
+            if (nativeCircle == null)
+                return;
+
+            if (e.PropertyName == Circle.StrokeWidthProperty.PropertyName)
+            {
+                nativeCircle.StrokeWidth = circle.StrokeWidth;
+            }
+            else if (e.PropertyName == Circle.StrokeColorProperty.PropertyName)
+            {
+                nativeCircle.StrokeColor = circle.StrokeColor.ToAndroid();
+            }
+            else if (e.PropertyName == Circle.FillColorProperty.PropertyName)
+            {
+                nativeCircle.FillColor = circle.FillColor.ToAndroid();
+            }
+            else if (e.PropertyName == Circle.CenterProperty.PropertyName)
+            {
+                nativeCircle.Center = circle.Center.ToLatLng();
+            }
+            else if (e.PropertyName == Circle.RadiusProperty.PropertyName)
+            {
+                nativeCircle.Radius = circle.Radius.Meters;
+            }
         }
     }
 }

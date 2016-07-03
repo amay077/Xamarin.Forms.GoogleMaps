@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using Android.Gms.Maps;
 using Android.Gms.Maps.Model;
+using Xamarin.Forms.GoogleMaps.Android;
 using Xamarin.Forms.Platform.Android;
 using NativePolygon = Android.Gms.Maps.Model.Polygon;
 
@@ -53,11 +54,19 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
 
             // associate pin with marker for later lookup in event handlers
             outerItem.NativeObject = nativePolygon;
+            outerItem.SetOnPositionsChanged((polygon, e) =>
+            {
+                var native = polygon.NativeObject as NativePolygon;
+                native.Points = polygon.Positions.ToLatLngs();
+            });
+
             return nativePolygon;
         }
 
         protected override NativePolygon DeleteNativeItem(Polygon outerItem)
         {
+            outerItem.SetOnPositionsChanged(null);
+
             var nativePolygon = outerItem.NativeObject as NativePolygon;
             if (nativePolygon == null)
                 return null;
@@ -83,6 +92,33 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
 
         internal override void OnElementPropertyChanged(PropertyChangedEventArgs e)
         {
+        }
+
+        protected override void OnItemPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            base.OnItemPropertyChanged(sender, e);
+            var polygon = sender as Polygon;
+            var nativePolygon = polygon?.NativeObject as NativePolygon;
+
+            if (nativePolygon == null)
+                return;
+
+            if (e.PropertyName == Polygon.StrokeWidthProperty.PropertyName)
+            {
+                nativePolygon.StrokeWidth = polygon.StrokeWidth;
+            }
+            else if (e.PropertyName == Polygon.StrokeColorProperty.PropertyName)
+            {
+                nativePolygon.StrokeColor = polygon.StrokeColor.ToAndroid();
+            }
+            else if (e.PropertyName == Polygon.FillColorProperty.PropertyName)
+            {
+                nativePolygon.FillColor = polygon.FillColor.ToAndroid();
+            }
+            else if (e.PropertyName == Polygon.IsClickableProperty.PropertyName)
+            {
+                nativePolygon.Clickable = polygon.IsClickable;
+            }
         }
     }
 }

@@ -153,13 +153,17 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
             base.OnItemPropertyChanged(sender, e);
 
             var pin = sender as Pin;
+            var marker = pin?.NativeObject as Marker;
+            if (marker == null)
+                return;
+
             if (e.PropertyName == Pin.LabelProperty.PropertyName)
             {
-                (pin.NativeObject as Marker).Title = pin.Label;
+                marker.Title = pin.Label;
             }
             else if (e.PropertyName == Pin.AddressProperty.PropertyName)
             {
-                (pin.NativeObject as Marker).Snippet = pin.Address;
+                marker.Snippet = pin.Address;
             }
             else if (e.PropertyName == Pin.TypeProperty.PropertyName)
             {
@@ -167,7 +171,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
             }
             else if (e.PropertyName == Pin.PositionProperty.PropertyName)
             {
-                (pin.NativeObject as Marker).Position = pin.Position.ToLatLng();
+                marker.Position = pin.Position.ToLatLng();
             }
         }
    }

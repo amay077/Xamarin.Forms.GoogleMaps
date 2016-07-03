@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 
 namespace Xamarin.Forms.GoogleMaps
 {
@@ -12,6 +13,8 @@ namespace Xamarin.Forms.GoogleMaps
         public static readonly BindableProperty IsClickableProperty = BindableProperty.Create ("IsClickable", typeof (bool), typeof (bool), false);
 
         private readonly ObservableCollection<Position> _positions = new ObservableCollection<Position> ();
+
+        private Action<Polygon, NotifyCollectionChangedEventArgs> _positionsChangedHandler = null;
 
         public float StrokeWidth {
             get { return (float)GetValue (StrokeWidthProperty); }
@@ -55,6 +58,20 @@ namespace Xamarin.Forms.GoogleMaps
 
             handler (this, EventArgs.Empty);
             return true;
+        }
+
+        internal void SetOnPositionsChanged(Action<Polygon, NotifyCollectionChangedEventArgs> handler)
+        {
+            _positionsChangedHandler = handler;
+            if (handler != null)
+                _positions.CollectionChanged += OnCollectionChanged;
+            else
+                _positions.CollectionChanged -= OnCollectionChanged;
+        }
+
+        void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            _positionsChangedHandler?.Invoke(this, e);
         }
     }
 }

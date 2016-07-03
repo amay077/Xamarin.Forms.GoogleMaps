@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using Android.Gms.Maps;
 using Android.Gms.Maps.Model;
+using Xamarin.Forms.GoogleMaps.Android;
 using Xamarin.Forms.Platform.Android;
 using NativePolyline = Android.Gms.Maps.Model.Polyline;
 
@@ -52,11 +54,19 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
 
             // associate pin with marker for later lookup in event handlers
             outerItem.NativeObject = nativePolyline;
+            outerItem.SetOnPositionsChanged((polyline, e) => 
+            {
+                var native = polyline.NativeObject as NativePolyline;
+                native.Points = polyline.Positions.ToLatLngs();
+            });
+
             return nativePolyline;
         }
 
         protected override NativePolyline DeleteNativeItem(Polyline outerItem)
         {
+            outerItem.SetOnPositionsChanged(null);
+
             var nativeShape = outerItem.NativeObject as NativePolyline;
             if (nativeShape == null)
                 return null;
@@ -82,6 +92,29 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
 
         internal override void OnElementPropertyChanged(PropertyChangedEventArgs e)
         {
+        }
+
+        protected override void OnItemPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            base.OnItemPropertyChanged(sender, e);
+            var polyline = sender as Polyline;
+            var nativePolyline = polyline?.NativeObject as NativePolyline;
+
+            if (nativePolyline == null)
+                return;
+
+            if (e.PropertyName == Polyline.StrokeWidthProperty.PropertyName)
+            {
+                nativePolyline.Width = polyline.StrokeWidth;
+            }
+            else if (e.PropertyName == Polyline.StrokeColorProperty.PropertyName)
+            {
+                nativePolyline.Color = polyline.StrokeColor.ToAndroid();
+            }
+            else if (e.PropertyName == Polyline.IsClickableProperty.PropertyName)
+            {
+                nativePolyline.Clickable = polyline.IsClickable;
+            }
         }
     }
 }
