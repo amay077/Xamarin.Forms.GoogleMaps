@@ -3,15 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Linq;
 using Android.Gms.Maps;
 using Android.Gms.Maps.Model;
 using Xamarin.Forms.Platform.Android;
 using NativePolygon = Android.Gms.Maps.Model.Polygon;
 
-namespace Xamarin.Forms.GoogleMaps.Android
+namespace Xamarin.Forms.GoogleMaps.Android.Logics
 {
-    public class PolygonLogic : ShapeLogic<Polygon, NativePolygon>
+    internal class PolygonLogic : ShapeLogic<Polygon, NativePolygon>
     {
         protected override IList<Polygon> GetItems(Map map)
         {
@@ -42,32 +43,33 @@ namespace Xamarin.Forms.GoogleMaps.Android
             base.Unregister(nativeMap, map);
         }
 
-        protected override NativePolygon CreateNativeItem(Polygon outerShape)
+        protected override NativePolygon CreateNativeItem(Polygon outerItem)
         {
             var opts = new PolygonOptions();
 
-            foreach (var p in outerShape.Positions)
+            foreach (var p in outerItem.Positions)
                 opts.Add(new LatLng(p.Latitude, p.Longitude));
 
-            opts.InvokeStrokeWidth(outerShape.StrokeWidth * this.ScaledDensity); // TODO: convert from px to pt. Is this collect? (looks like same iOS Maps) 
-            opts.InvokeStrokeColor(outerShape.StrokeColor.ToAndroid());
-            opts.InvokeFillColor(outerShape.FillColor.ToAndroid());
-            opts.Clickable(outerShape.IsClickable);
+            opts.InvokeStrokeWidth(outerItem.StrokeWidth * this.ScaledDensity); // TODO: convert from px to pt. Is this collect? (looks like same iOS Maps) 
+            opts.InvokeStrokeColor(outerItem.StrokeColor.ToAndroid());
+            opts.InvokeFillColor(outerItem.FillColor.ToAndroid());
+            opts.Clickable(outerItem.IsClickable);
 
             var nativePolygon = NativeMap.AddPolygon(opts);
 
             // associate pin with marker for later lookup in event handlers
-            outerShape.NativeObject = nativePolygon;
+            outerItem.NativeObject = nativePolygon;
             return nativePolygon;
         }
 
-        protected override NativePolygon DeleteNativeItem(Polygon outerShape)
+        protected override NativePolygon DeleteNativeItem(Polygon outerItem)
         {
-            var nativePolygon = outerShape.NativeObject as NativePolygon;
+            var nativePolygon = outerItem.NativeObject as NativePolygon;
             if (nativePolygon == null)
                 return null;
             
             nativePolygon.Remove();
+            outerItem.NativeObject = null;
             return nativePolygon;
         }
 
@@ -83,6 +85,10 @@ namespace Xamarin.Forms.GoogleMaps.Android
             // only consider event handled if a handler is present. 
             // Else allow default behavior of displaying an info window.
             targetOuterItem?.SendTap();
+        }
+
+        internal override void OnElementPropertyChanged(PropertyChangedEventArgs e)
+        {
         }
     }
 }

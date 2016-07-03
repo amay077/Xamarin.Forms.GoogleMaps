@@ -10,15 +10,12 @@ using Android.OS;
 using Java.Lang;
 using Xamarin.Forms.Platform.Android;
 using Math = System.Math;
-using Android.Runtime;
 using System.Collections;
-//using APolyline = Android.Gms.Maps.Model.Polyline;
-//using APolygon = Android.Gms.Maps.Model.Polygon;
-using ACircle = Android.Gms.Maps.Model.Circle;
 using ATileOverlay = Android.Gms.Maps.Model.TileOverlay;
 using Android.Util;
 using Android.App;
 using Xamarin.Forms.GoogleMaps.Internals;
+using Xamarin.Forms.GoogleMaps.Android.Logics;
 
 namespace Xamarin.Forms.GoogleMaps.Android
 {
@@ -33,12 +30,13 @@ namespace Xamarin.Forms.GoogleMaps.Android
         static Bundle s_bundle;
         internal static Bundle Bundle { set { s_bundle = value; } }
 
-        List<Marker> _markers;
-        List<ACircle> _circles;
+        //List<Marker> _markers;
 		List<ATileOverlay> _tileLayers;
 
         PolylineLogic _polylineLogic = new PolylineLogic();
         PolygonLogic _polygonLogic = new PolygonLogic();
+        CircleLogic _circleLogic = new CircleLogic();
+        PinLogic _pinLogic = new PinLogic();
         float _scaledDensity = 1;
 
         const string MoveMessageName = "MapMoveToRegion";
@@ -49,7 +47,6 @@ namespace Xamarin.Forms.GoogleMaps.Android
 
         protected Map Map => (Map)Element;
 
-        private volatile bool _onMarkerEvent = false;
 
         public override SizeRequest GetDesiredSize(int widthConstraint, int heightConstraint)
         {
@@ -78,13 +75,12 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 activity.WindowManager.DefaultDisplay.GetSize(size);
                 _polylineLogic.ScaledDensity = metrics.ScaledDensity;
                 _polygonLogic.ScaledDensity = metrics.ScaledDensity;
+                _circleLogic.ScaledDensity = metrics.ScaledDensity;
             }
 
             if (e.OldElement != null)
             {
                 var oldMapModel = (Map)e.OldElement;
-                ((ObservableCollection<Pin>)oldMapModel.Pins).CollectionChanged -= OnPinCollectionChanged;
-                ((ObservableCollection<Circle>)oldMapModel.Circles).CollectionChanged -= OnCircleCollectionChanged;
 				((ObservableCollection<TileLayer>)oldMapModel.TileLayers).CollectionChanged -= OnTileLayerCollectionChanged;
 
                 MessagingCenter.Unsubscribe<Map, MoveToRegionMessage>(this, MoveMessageName);
@@ -97,12 +93,12 @@ namespace Xamarin.Forms.GoogleMaps.Android
 #pragma warning disable 618
                     oldMapView.Map.SetOnCameraChangeListener(null);
 #pragma warning restore 618
-                    NativeMap.InfoWindowClick -= MapOnInfoWindowClick;
+                    //NativeMap.InfoWindowClick -= MapOnInfoWindowClick;
                     //NativeMap.PolylineClick -= MapOnPolylineClick;
                     //NativeMap.PolygonClick -= MapOnPolygonClick;
                     //NativeMap.CircleClick -= MapOnCircleClick; // Circle click is not supported.
-                    NativeMap.MarkerClick -= MapOnMakerClick;
-                    NativeMap.InfoWindowClose -= MapOnInfoWindowClose;
+                    //NativeMap.MarkerClick -= MapOnMakerClick;
+                    //NativeMap.InfoWindowClose -= MapOnInfoWindowClose;
                 }
 
                 oldMapView.Dispose();
@@ -112,11 +108,11 @@ namespace Xamarin.Forms.GoogleMaps.Android
             if (map != null)
             {
                 map.SetOnCameraChangeListener(this);
-                NativeMap.InfoWindowClick += MapOnInfoWindowClick;
+                //NativeMap.InfoWindowClick += MapOnInfoWindowClick;
                 //NativeMap.PolygonClick += MapOnPolygonClick;
                 //NativeMap.CircleClick += MapOnCircleClick; // Circle click is not supported.
-                NativeMap.MarkerClick += MapOnMakerClick;
-                NativeMap.InfoWindowClose += MapOnInfoWindowClose;
+                //NativeMap.MarkerClick += MapOnMakerClick;
+                //NativeMap.InfoWindowClose += MapOnInfoWindowClose;
 
                 map.UiSettings.ZoomControlsEnabled = Map.HasZoomEnabled;
                 map.UiSettings.ZoomGesturesEnabled = Map.HasZoomEnabled;
@@ -128,49 +124,42 @@ namespace Xamarin.Forms.GoogleMaps.Android
 #pragma warning disable 618
             _polylineLogic.Register(oldMapView?.Map, (Map)e.OldElement, NativeMap, Map);
             _polygonLogic.Register(oldMapView?.Map, (Map)e.OldElement, NativeMap, Map);
-
+            _circleLogic.Register(oldMapView?.Map, (Map)e.OldElement, NativeMap, Map);
+            _pinLogic.Register(oldMapView?.Map, (Map)e.OldElement, NativeMap, Map);
 #pragma warning restore 618
 
             MessagingCenter.Subscribe<Map, MoveToRegionMessage>(this, MoveMessageName, OnMoveToRegionMessage, Map);
-
-            var inccPin = Map.Pins as INotifyCollectionChanged;
-            if (inccPin != null)
-                inccPin.CollectionChanged += OnPinCollectionChanged;
-            
-            var inccCircle = Map.Circles as INotifyCollectionChanged;
-            if (inccCircle != null)
-                inccCircle.CollectionChanged += OnCircleCollectionChanged;
 
 			var inccTileLayer = Map.TileLayers as INotifyCollectionChanged;
 			if (inccTileLayer != null)
 				inccTileLayer.CollectionChanged += OnTileLayerCollectionChanged;
         }
 
-        void OnPinCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
-        {
-            switch (notifyCollectionChangedEventArgs.Action)
-            {
-                case NotifyCollectionChangedAction.Add:
-                    AddPins(notifyCollectionChangedEventArgs.NewItems);
-                    break;
-                case NotifyCollectionChangedAction.Remove:
-                    RemovePins(notifyCollectionChangedEventArgs.OldItems);
-                    break;
-                case NotifyCollectionChangedAction.Replace:
-                    RemovePins(notifyCollectionChangedEventArgs.OldItems);
-                    AddPins(notifyCollectionChangedEventArgs.NewItems);
-                    break;
-                case NotifyCollectionChangedAction.Reset:
-                    _markers?.ForEach(m => m.Remove());
-                    _markers = null;
-                    ((Map)Element).SelectedPin = null;
-                    AddPins((IList)(Element as Map).Pins);
-                    break;
-                case NotifyCollectionChangedAction.Move:
-                    //do nothing
-                    break;
-            }
-        }
+        //void OnPinCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
+        //{
+        //    switch (notifyCollectionChangedEventArgs.Action)
+        //    {
+        //        case NotifyCollectionChangedAction.Add:
+        //            AddPins(notifyCollectionChangedEventArgs.NewItems);
+        //            break;
+        //        case NotifyCollectionChangedAction.Remove:
+        //            RemovePins(notifyCollectionChangedEventArgs.OldItems);
+        //            break;
+        //        case NotifyCollectionChangedAction.Replace:
+        //            RemovePins(notifyCollectionChangedEventArgs.OldItems);
+        //            AddPins(notifyCollectionChangedEventArgs.NewItems);
+        //            break;
+        //        case NotifyCollectionChangedAction.Reset:
+        //            _markers?.ForEach(m => m.Remove());
+        //            _markers = null;
+        //            ((Map)Element).SelectedPin = null;
+        //            AddPins((IList)(Element as Map).Pins);
+        //            break;
+        //        case NotifyCollectionChangedAction.Move:
+        //            //do nothing
+        //            break;
+        //    }
+        //}
 
         //void OnPolygonCollectionChanged (object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
         //{
@@ -196,30 +185,30 @@ namespace Xamarin.Forms.GoogleMaps.Android
         //    }
         //}
 
-        void OnCircleCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
-        {
-            switch (notifyCollectionChangedEventArgs.Action)
-            {
-                case NotifyCollectionChangedAction.Add:
-                    AddCircles(notifyCollectionChangedEventArgs.NewItems);
-                    break;
-                case NotifyCollectionChangedAction.Remove:
-                    RemoveCircles(notifyCollectionChangedEventArgs.OldItems);
-                    break;
-                case NotifyCollectionChangedAction.Replace:
-                    RemoveCircles(notifyCollectionChangedEventArgs.OldItems);
-                    AddCircles(notifyCollectionChangedEventArgs.NewItems);
-                    break;
-                case NotifyCollectionChangedAction.Reset:
-                    _circles?.ForEach(circle => circle.Remove());
-                    _circles = null;
-                    AddCircles((IList)(Element as Map).Circles);
-                    break;
-                case NotifyCollectionChangedAction.Move:
-                    //do nothing
-                    break;
-            }
-        }
+        //void OnCircleCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
+        //{
+        //    switch (notifyCollectionChangedEventArgs.Action)
+        //    {
+        //        case NotifyCollectionChangedAction.Add:
+        //            AddCircles(notifyCollectionChangedEventArgs.NewItems);
+        //            break;
+        //        case NotifyCollectionChangedAction.Remove:
+        //            RemoveCircles(notifyCollectionChangedEventArgs.OldItems);
+        //            break;
+        //        case NotifyCollectionChangedAction.Replace:
+        //            RemoveCircles(notifyCollectionChangedEventArgs.OldItems);
+        //            AddCircles(notifyCollectionChangedEventArgs.NewItems);
+        //            break;
+        //        case NotifyCollectionChangedAction.Reset:
+        //            _circles?.ForEach(circle => circle.Remove());
+        //            _circles = null;
+        //            AddCircles((IList)(Element as Map).Circles);
+        //            break;
+        //        case NotifyCollectionChangedAction.Move:
+        //            //do nothing
+        //            break;
+        //    }
+        //}
 
 		void OnTileLayerCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
 		{
@@ -284,10 +273,10 @@ namespace Xamarin.Forms.GoogleMaps.Android
             if (_init)
             {
                 MoveToRegion(((Map)Element).LastMoveToRegion, false);
-                OnPinCollectionChanged(((Map)Element).Pins, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
                 _polylineLogic.NotifyReset();
                 _polygonLogic.NotifyReset();
-                OnCircleCollectionChanged(((Map)Element).Circles, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+                _circleLogic.NotifyReset();
+                _pinLogic.NotifyReset();
 				OnTileLayerCollectionChanged(((Map)Element).TileLayers, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
                 _init = false;
             }
@@ -320,12 +309,8 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 gmap.UiSettings.ZoomControlsEnabled = Map.HasZoomEnabled;
                 gmap.UiSettings.ZoomGesturesEnabled = Map.HasZoomEnabled;
             }
-            else if (e.PropertyName == Map.SelectedPinProperty.PropertyName)
-            {
-                if (!_onMarkerEvent)
-                    UpdateSelectedPin(Map.SelectedPin);
-                Map.SendSelectedPinChanged(Map.SelectedPin);
-            }
+
+            _pinLogic.OnElementPropertyChanged(e);
         }
 
         void SetMapType()
@@ -379,213 +364,143 @@ namespace Xamarin.Forms.GoogleMaps.Android
             );
         }
 
-        void AddPins(IList pins)
-        {
-            var map = NativeMap;
-            if (map == null)
-                return;
+        //void AddPins(IList pins)
+        //{
+        //    var map = NativeMap;
+        //    if (map == null)
+        //        return;
 
-            if (_markers == null)
-                _markers = new List<Marker>();
+        //    if (_markers == null)
+        //        _markers = new List<Marker>();
 
-            _markers.AddRange(pins.Cast<Pin>().Select(p =>
-            {
-                var pin = (Pin)p;
-                var opts = new MarkerOptions();
-                opts.SetPosition(new LatLng(pin.Position.Latitude, pin.Position.Longitude));
-                opts.SetTitle(pin.Label);
-                opts.SetSnippet(pin.Address);
-                var marker = map.AddMarker(opts);
+        //    _markers.AddRange(pins.Cast<Pin>().Select(p =>
+        //    {
+        //        var pin = (Pin)p;
+        //        var opts = new MarkerOptions();
+        //        opts.SetPosition(new LatLng(pin.Position.Latitude, pin.Position.Longitude));
+        //        opts.SetTitle(pin.Label);
+        //        opts.SetSnippet(pin.Address);
+        //        var marker = map.AddMarker(opts);
 
-                // associate pin with marker for later lookup in event handlers
-                pin.Id = marker;
-                return marker;
-            }));
+        //        // associate pin with marker for later lookup in event handlers
+        //        pin.Id = marker;
+        //        return marker;
+        //    }));
 
-            UpdateSelectedPin(Map.SelectedPin);
-        }
+        //    UpdateSelectedPin(Map.SelectedPin);
+        //}
 
-        void UpdateSelectedPin(Pin pin)
-        {
-            if (pin == null)
-            {
-                if (_markers != null)
-                    foreach (var marker in _markers)
-                        marker.HideInfoWindow();
-            }
-            else
-            {
-                // lookup pin
-                Marker targetMarker = null;
-                foreach (var marker in _markers)
-                {
-                    if (((Marker)pin.Id).Id != marker.Id)
-                        continue;
 
-                    targetMarker = marker;
-                    break;
-                }
 
-                if (targetMarker != null)
-                    targetMarker.ShowInfoWindow();
-            }
-        }
+        //void RemovePins(IList pins)
+        //{
+        //    var gmap = (Map)Element;
+        //    var map = NativeMap;
+        //    if (map == null)
+        //        return;
+        //    if (_markers == null)
+        //        return;
 
-        void RemovePins(IList pins)
-        {
-            var gmap = (Map)Element;
-            var map = NativeMap;
-            if (map == null)
-                return;
-            if (_markers == null)
-                return;
+        //    foreach (Pin p in pins)
+        //    {
+        //        var marker = _markers.FirstOrDefault(m => ((Marker)p.Id).Id == m.Id);
+        //        if (marker == null)
+        //            continue;
+        //        marker.Remove();
+        //        _markers.Remove(marker);
 
-            foreach (Pin p in pins)
-            {
-                var marker = _markers.FirstOrDefault(m => ((Marker)p.Id).Id == m.Id);
-                if (marker == null)
-                    continue;
-                marker.Remove();
-                _markers.Remove(marker);
+        //        if (object.ReferenceEquals(gmap.SelectedPin,  p))
+        //            gmap.SelectedPin = null;
 
-                if (object.ReferenceEquals(gmap.SelectedPin,  p))
-                    gmap.SelectedPin = null;
+        //    }
+        //}
 
-            }
-        }
+        //void MapOnInfoWindowClick(object sender, GoogleMap.InfoWindowClickEventArgs eventArgs)
+        //{
+        //    // clicked marker
+        //    var marker = eventArgs.Marker;
 
-        void MapOnInfoWindowClick(object sender, GoogleMap.InfoWindowClickEventArgs eventArgs)
-        {
-            // clicked marker
-            var marker = eventArgs.Marker;
+        //    // lookup pin
+        //    Pin targetPin = null;
+        //    for (var i = 0; i < Map.Pins.Count; i++)
+        //    {
+        //        var pin = Map.Pins[i];
+        //        if (((Marker)pin.Id).Id != marker.Id)
+        //            continue;
 
-            // lookup pin
-            Pin targetPin = null;
-            for (var i = 0; i < Map.Pins.Count; i++)
-            {
-                var pin = Map.Pins[i];
-                if (((Marker)pin.Id).Id != marker.Id)
-                    continue;
+        //        targetPin = pin;
+        //        break;
+        //    }
 
-                targetPin = pin;
-                break;
-            }
+        //    // only consider event handled if a handler is present. 
+        //    // Else allow default behavior of displaying an info window.
+        //    targetPin?.SendTap();
+        //}
 
-            // only consider event handled if a handler is present. 
-            // Else allow default behavior of displaying an info window.
-            targetPin?.SendTap();
-        }
+        //void MapOnMakerClick(object sender, GoogleMap.MarkerClickEventArgs eventArgs)
+        //{
+        //    var map = (Map)Element;
 
-        void MapOnMakerClick(object sender, GoogleMap.MarkerClickEventArgs eventArgs)
-        {
-            var map = (Map)Element;
+        //    // clicked marker
+        //    var marker = eventArgs.Marker;
 
-            // clicked marker
-            var marker = eventArgs.Marker;
+        //    // lookup pin
+        //    Pin targetPin = null;
+        //    for (var i = 0; i < Map.Pins.Count; i++)
+        //    {
+        //        var pin = Map.Pins[i];
+        //        if (((Marker)pin.Id).Id != marker.Id)
+        //            continue;
 
-            // lookup pin
-            Pin targetPin = null;
-            for (var i = 0; i < Map.Pins.Count; i++)
-            {
-                var pin = Map.Pins[i];
-                if (((Marker)pin.Id).Id != marker.Id)
-                    continue;
+        //        targetPin = pin;
+        //        break;
+        //    }
 
-                targetPin = pin;
-                break;
-            }
+        //    try
+        //    {
+        //        _onMarkerEvent = true;
+        //        if (targetPin != null && !object.ReferenceEquals(targetPin, map.SelectedPin))
+        //            map.SelectedPin = targetPin;
+        //    }
+        //    finally
+        //    {
+        //        _onMarkerEvent = false;
+        //    }
 
-            try
-            {
-                _onMarkerEvent = true;
-                if (targetPin != null && !object.ReferenceEquals(targetPin, map.SelectedPin))
-                    map.SelectedPin = targetPin;
-            }
-            finally
-            {
-                _onMarkerEvent = false;
-            }
+        //    eventArgs.Handled = false;
+        //}
 
-            eventArgs.Handled = false;
-        }
+        //void MapOnInfoWindowClose(object sender, GoogleMap.InfoWindowCloseEventArgs eventArgs)
+        //{
+        //    System.Diagnostics.Debug.WriteLine("MapOnInfoWindowClose");
+        //    var map = (Map)Element;
 
-        void MapOnInfoWindowClose(object sender, GoogleMap.InfoWindowCloseEventArgs eventArgs)
-        {
-            System.Diagnostics.Debug.WriteLine("MapOnInfoWindowClose");
-            var map = (Map)Element;
+        //    // clicked marker
+        //    var marker = eventArgs.Marker;
 
-            // clicked marker
-            var marker = eventArgs.Marker;
+        //    // lookup pin
+        //    Pin targetPin = null;
+        //    for (var i = 0; i < Map.Pins.Count; i++)
+        //    {
+        //        var pin = Map.Pins[i];
+        //        if (((Marker)pin.Id).Id != marker.Id)
+        //            continue;
 
-            // lookup pin
-            Pin targetPin = null;
-            for (var i = 0; i < Map.Pins.Count; i++)
-            {
-                var pin = Map.Pins[i];
-                if (((Marker)pin.Id).Id != marker.Id)
-                    continue;
+        //        targetPin = pin;
+        //        break;
+        //    }
 
-                targetPin = pin;
-                break;
-            }
-
-            try
-            {
-                _onMarkerEvent = true;
-                if (targetPin != null && object.ReferenceEquals(targetPin, map.SelectedPin))
-                    map.SelectedPin = null;
-            }
-            finally
-            {
-                _onMarkerEvent = false;
-            }
-        }
-
-        void AddCircles(IList circles)
-        {
-            var map = NativeMap;
-            if (map == null)
-                return;
-
-            if (_circles == null)
-                _circles = new List<ACircle>();
-
-            _circles.AddRange(circles.Cast<Circle>().Select(circle =>
-            {
-                var opts = new CircleOptions();
-
-                opts.InvokeCenter(new LatLng(circle.Center.Latitude, circle.Center.Longitude));
-                opts.InvokeRadius(circle.Radius.Meters);
-                opts.InvokeStrokeWidth(circle.StrokeWidth * _scaledDensity); // TODO: convert from px to pt. Is this collect? (looks like same iOS Maps) 
-                opts.InvokeStrokeColor(circle.StrokeColor.ToAndroid());
-                opts.InvokeFillColor(circle.FillColor.ToAndroid());
-                //opts.Clickable(circle.IsClickable);
-
-                var nativeCircle = map.AddCircle(opts);
-
-                // associate pin with marker for later lookup in event handlers
-                circle.Id = nativeCircle;
-                return nativeCircle;
-            }));
-        }
-
-        void RemoveCircles(IList circles)
-        {
-            var map = NativeMap;
-            if (map == null)
-                return;
-            if (_circles == null)
-                return;
-
-            foreach (Circle circle in circles)
-            {
-                var acircle = _circles.FirstOrDefault(m => ((ACircle)circle.Id).Id == m.Id);
-                if (acircle == null)
-                    continue;
-                acircle.Remove();
-                _circles.Remove(acircle);
-            }
-        }
+        //    try
+        //    {
+        //        _onMarkerEvent = true;
+        //        if (targetPin != null && object.ReferenceEquals(targetPin, map.SelectedPin))
+        //            map.SelectedPin = null;
+        //    }
+        //    finally
+        //    {
+        //        _onMarkerEvent = false;
+        //    }
+        //}
 
 		void AddTileLayers(IList tileLayers)
 		{
@@ -650,21 +565,23 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 if (this.Map != null)
                 {
                     MessagingCenter.Unsubscribe<Map, MoveToRegionMessage>(this, MoveMessageName);
-                    ((ObservableCollection<Pin>)Map.Pins).CollectionChanged -= OnPinCollectionChanged;
+                    //((ObservableCollection<Pin>)Map.Pins).CollectionChanged -= OnPinCollectionChanged;
                     //((ObservableCollection<Polyline>)Map.Polylines).CollectionChanged -= OnPolylineCollectionChanged;
                     //((ObservableCollection<Polygon>)Map.Polygons).CollectionChanged -= OnPolygonCollectionChanged;
-                    ((ObservableCollection<Circle>)Map.Circles).CollectionChanged -= OnCircleCollectionChanged;
+                    //((ObservableCollection<Circle>)Map.Circles).CollectionChanged -= OnCircleCollectionChanged;
 					((ObservableCollection<TileLayer>)Map.TileLayers).CollectionChanged -= OnTileLayerCollectionChanged;
                 }
 
+                _circleLogic.Unregister(NativeMap, Map);
                 _polylineLogic.Unregister(NativeMap, Map);
                 _polygonLogic.Unregister(NativeMap, Map);
+                _pinLogic.Unregister(NativeMap, Map);
 
 
                 if (NativeMap == null)
                     return;
                 NativeMap.MyLocationEnabled = false;
-                NativeMap.InfoWindowClick -= MapOnInfoWindowClick;
+                //NativeMap.InfoWindowClick -= MapOnInfoWindowClick;
                 //gmap.PolylineClick -= MapOnPolylineClick;
                 //NativeMap.PolygonClick -= MapOnPolygonClick;
                 //gmap.CircleClick -= MapOnCircleClick;

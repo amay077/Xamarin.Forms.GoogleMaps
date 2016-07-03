@@ -3,15 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Linq;
 using Android.Gms.Maps;
 using Android.Gms.Maps.Model;
 using Xamarin.Forms.Platform.Android;
 using NativePolyline = Android.Gms.Maps.Model.Polyline;
 
-namespace Xamarin.Forms.GoogleMaps.Android
+namespace Xamarin.Forms.GoogleMaps.Android.Logics
 {
-    public class PolylineLogic : ShapeLogic<Polyline, NativePolyline>
+    internal class PolylineLogic : ShapeLogic<Polyline, NativePolyline>
     {
         protected override IList<Polyline> GetItems(Map map) 
         {
@@ -42,31 +43,32 @@ namespace Xamarin.Forms.GoogleMaps.Android
             base.Unregister(nativeMap, map);
         }
 
-        protected override NativePolyline CreateNativeItem(Polyline outerShape)
+        protected override NativePolyline CreateNativeItem(Polyline outerItem)
         {
             var opts = new PolylineOptions();
 
-            foreach (var p in outerShape.Positions)
+            foreach (var p in outerItem.Positions)
                 opts.Add(new LatLng(p.Latitude, p.Longitude));
 
-            opts.InvokeWidth(outerShape.StrokeWidth * this.ScaledDensity); // TODO: convert from px to pt. Is this collect? (looks like same iOS Maps) 
-            opts.InvokeColor(outerShape.StrokeColor.ToAndroid());
-            opts.Clickable(outerShape.IsClickable);
+            opts.InvokeWidth(outerItem.StrokeWidth * this.ScaledDensity); // TODO: convert from px to pt. Is this collect? (looks like same iOS Maps) 
+            opts.InvokeColor(outerItem.StrokeColor.ToAndroid());
+            opts.Clickable(outerItem.IsClickable);
 
             var nativePolyline = NativeMap.AddPolyline(opts);
 
             // associate pin with marker for later lookup in event handlers
-            outerShape.NativeObject = nativePolyline;
+            outerItem.NativeObject = nativePolyline;
             return nativePolyline;
         }
 
-        protected override NativePolyline DeleteNativeItem(Polyline outerShape)
+        protected override NativePolyline DeleteNativeItem(Polyline outerItem)
         {
-            var nativeShape = outerShape.NativeObject as NativePolyline;
+            var nativeShape = outerItem.NativeObject as NativePolyline;
             if (nativeShape == null)
                 return null;
 
             nativeShape.Remove();
+            outerItem.NativeObject = null;
             return nativeShape;
         }
 
@@ -82,6 +84,10 @@ namespace Xamarin.Forms.GoogleMaps.Android
             // only consider event handled if a handler is present. 
             // Else allow default behavior of displaying an info window.
             targetOuterItem?.SendTap();
+        }
+
+        internal override void OnElementPropertyChanged(PropertyChangedEventArgs e)
+        {
         }
     }
 }
