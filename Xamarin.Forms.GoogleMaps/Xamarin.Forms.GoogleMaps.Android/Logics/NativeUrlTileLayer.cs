@@ -3,11 +3,11 @@ using Android.Gms.Maps.Model;
 
 namespace Xamarin.Forms.GoogleMaps.Logics.Android
 {
-	internal class NUrlTileLayer : UrlTileProvider
+	internal class NativeUrlTileLayer : UrlTileProvider
 	{
 		private Func<int, int, int, Uri> _makeTileUri;
 
-		public NUrlTileLayer(Func<int, int, int, Uri> makeTileUri, int tileSize = 256) : base(tileSize, tileSize)
+		public NativeUrlTileLayer(Func<int, int, int, Uri> makeTileUri, int tileSize = 256) : base(tileSize, tileSize)
 		{
 			_makeTileUri = makeTileUri;
 		}

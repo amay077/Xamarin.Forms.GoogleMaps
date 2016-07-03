@@ -104,7 +104,7 @@
     <Compile Include="Logics\BaseLogic.cs" />
     <Compile Include="Logics\NativeAsyncTileLayer.cs" />
     <Compile Include="Logics\NativeSyncTileLayer.cs" />
-    <Compile Include="Logics\NUrlTileLayer.cs" />
+    <Compile Include="Logics\NativeUrlTileLayer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
