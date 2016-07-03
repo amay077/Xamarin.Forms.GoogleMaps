@@ -10,10 +10,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
 {
     internal class CircleLogic : ShapeLogic<Circle, NativeCircle>
     {
-        protected override IList<Circle> GetItems(Map map)
-        {
-            return map.Circles;
-        }
+        protected override IList<Circle> GetItems(Map map) => map.Circles;
 
         protected override NativeCircle CreateNativeItem(Circle outerItem)
         {

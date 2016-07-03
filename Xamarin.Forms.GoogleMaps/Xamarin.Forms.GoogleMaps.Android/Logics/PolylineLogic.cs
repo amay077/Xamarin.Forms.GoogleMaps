@@ -14,14 +14,11 @@ namespace Xamarin.Forms.GoogleMaps.Android.Logics
 {
     internal class PolylineLogic : ShapeLogic<Polyline, NativePolyline>
     {
-        protected override IList<Polyline> GetItems(Map map) 
-        {
-            return map.Polylines; 
-        }
-
         public PolylineLogic()
         {
         }
+
+        protected override IList<Polyline> GetItems(Map map) => map.Polylines;
 
         internal override void Register(GoogleMap oldNativeMap, Map oldMap, GoogleMap newNativeMap, Map newMap)
         {

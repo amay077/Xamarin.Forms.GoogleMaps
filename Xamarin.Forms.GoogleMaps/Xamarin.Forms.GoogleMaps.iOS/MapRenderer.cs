@@ -123,7 +123,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
             for (var i = 0; i < map.Pins.Count; i++)
             {
                 var pin = map.Pins[i];
-                if (!Object.ReferenceEquals(pin.Id, marker))
+                if (!Object.ReferenceEquals(pin.NativeObject, marker))
                     continue;
 
                 targetPin = pin;
@@ -206,7 +206,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
             for (var i = 0; i < map.Pins.Count; i++)
             {
                 var pin = map.Pins[i];
-                if (!Object.ReferenceEquals(pin.Id, marker))
+                if (!Object.ReferenceEquals(pin.NativeObject, marker))
                     continue;
 
                 targetPin = pin;
@@ -239,7 +239,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
             for (var i = 0; i < map.Pins.Count; i++)
             {
                 var pin = map.Pins[i];
-                if (!Object.ReferenceEquals(pin.Id, marker))
+                if (!Object.ReferenceEquals(pin.NativeObject, marker))
                     continue;
 
                 targetPin = pin;
@@ -267,7 +267,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
             var mapView = (MapView)Control;
 
             if (pin != null)
-                mapView.SelectedMarker = (Marker)pin.Id;
+                mapView.SelectedMarker = (Marker)pin.NativeObject;
             else
                 mapView.SelectedMarker = null;
         }
@@ -313,7 +313,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                 var marker = Marker.FromPosition(new CLLocationCoordinate2D(pin.Position.Latitude, pin.Position.Longitude));
                 marker.Title = pin.Label;
                 marker.Snippet = pin.Address ?? string.Empty;
-                pin.Id = marker;
+                pin.NativeObject = marker;
                 marker.Map = (MapView)Control;
             }
         }
@@ -479,7 +479,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
             var map = (Map)Element;
             foreach (object pin in pins)
             {
-                ((Marker)((Pin)pin).Id).Map = null;
+                ((Marker)((Pin)pin).NativeObject).Map = null;
 
                 if (object.ReferenceEquals(map.SelectedPin, pin))
                     map.SelectedPin = null;
@@ -582,7 +582,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
 					nativeTileLayer.TileSize = (nint)tileLayer.TileSize;
 				}
 
-				tileLayer.Id = nativeTileLayer;
+				tileLayer.NativeObject = nativeTileLayer;
 				nativeTileLayer.Map = (MapView)Control;
 			}
 		}
@@ -590,7 +590,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
 		void RemoveTileLayers(IList tileLayers)
 		{
 			foreach (object obj in tileLayers)
-				((ATileLayer)((TileLayer)obj).Id).Map = null;
+				((ATileLayer)((TileLayer)obj).NativeObject).Map = null;
 		}
 
         void UpdateHasScrollEnabled()

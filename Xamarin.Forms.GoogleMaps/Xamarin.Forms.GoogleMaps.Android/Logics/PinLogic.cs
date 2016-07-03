@@ -17,10 +17,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
         {
         }
 
-        protected override IList<Pin> GetItems(Map map)
-        {
-            return map.Pins;
-        }
+        protected override IList<Pin> GetItems(Map map) => map.Pins;
 
         internal override void Register(GoogleMap oldNativeMap, Map oldMap, GoogleMap newNativeMap, Map newMap)
         {
@@ -56,17 +53,17 @@ namespace Xamarin.Forms.GoogleMaps.Android
             var marker = NativeMap.AddMarker(opts);
 
             // associate pin with marker for later lookup in event handlers
-            outerItem.Id = marker;
+            outerItem.NativeObject = marker;
             return marker;
         }
 
         protected override Marker DeleteNativeItem(Pin outerItem)
         {
-            var marker = outerItem.Id as Marker;
+            var marker = outerItem.NativeObject as Marker;
             if (marker == null)
                 return null;
             marker.Remove();
-            outerItem.Id = null;
+            outerItem.NativeObject = null;
 
             if (object.ReferenceEquals(Map.SelectedPin, outerItem))
                 Map.SelectedPin = null;
@@ -76,7 +73,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
 
         Pin LookupPin(Marker marker)
         {
-            return GetItems(Map).FirstOrDefault(outerItem => ((Marker)outerItem.Id).Id == marker.Id);
+            return GetItems(Map).FirstOrDefault(outerItem => ((Marker)outerItem.NativeObject).Id == marker.Id);
         }
 
         void MapOnInfoWindowClick(object sender, GoogleMap.InfoWindowClickEventArgs eventArgs)
@@ -141,14 +138,14 @@ namespace Xamarin.Forms.GoogleMaps.Android
             {
                 foreach (var outerItem in GetItems(Map))
                 {
-                    (outerItem.Id as Marker)?.HideInfoWindow();
+                    (outerItem.NativeObject as Marker)?.HideInfoWindow();
                 }
             }
             else
             {
                 // lookup pin
-                var targetPin = LookupPin(pin.Id as Marker);
-                (targetPin?.Id as Marker)?.ShowInfoWindow();
+                var targetPin = LookupPin(pin.NativeObject as Marker);
+                (targetPin?.NativeObject as Marker)?.ShowInfoWindow();
             }
         }
    }

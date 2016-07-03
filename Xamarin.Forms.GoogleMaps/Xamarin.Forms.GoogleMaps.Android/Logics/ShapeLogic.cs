@@ -21,10 +21,8 @@ namespace Xamarin.Forms.GoogleMaps.Android.Logics
 
         protected abstract IList<TOuter> GetItems(Map map);
 
-        protected override INotifyCollectionChanged GetItemAsNotifyCollectionChanged(Map map)
-        {
-            return GetItems(map) as INotifyCollectionChanged;
-        }
+        protected override INotifyCollectionChanged GetItemAsNotifyCollectionChanged(Map map) =>
+            GetItems(map) as INotifyCollectionChanged;
 
         protected abstract TNative CreateNativeItem(TOuter outerItem);
 
@@ -63,10 +61,8 @@ namespace Xamarin.Forms.GoogleMaps.Android.Logics
             _outerItems.Clear();
         }
 
-        internal override void NotifyReset()
-        {
+        internal override void NotifyReset() => 
             OnCollectionChanged(GetItems(Map), new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
-        }
 
     }
 }

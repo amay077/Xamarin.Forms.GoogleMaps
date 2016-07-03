@@ -13,10 +13,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
         {
         }
 
-        protected override IList<TileLayer> GetItems(Map map)
-        {
-            return map.TileLayers;
-        }
+        protected override IList<TileLayer> GetItems(Map map) => map.TileLayers;
 
         protected override NativeTileOverlay CreateNativeItem(TileLayer outerItem)
         {
@@ -39,13 +36,13 @@ namespace Xamarin.Forms.GoogleMaps.Android
             var nativeTileOverlay = NativeMap.AddTileOverlay(opts.InvokeTileProvider(nativeTileProvider));
 
             // associate pin with marker for later lookup in event handlers
-            outerItem.Id = nativeTileOverlay;
+            outerItem.NativeObject = nativeTileOverlay;
             return nativeTileOverlay;
         }
 
         protected override NativeTileOverlay DeleteNativeItem(TileLayer outerItem)
         {
-            var nativeTileOverlay = outerItem.Id as NativeTileOverlay;
+            var nativeTileOverlay = outerItem.NativeObject as NativeTileOverlay;
             if (nativeTileOverlay == null)
                 return null;
             nativeTileOverlay.Remove();
