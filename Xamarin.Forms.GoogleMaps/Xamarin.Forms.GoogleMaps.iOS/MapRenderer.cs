@@ -184,7 +184,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                 for (var i = 0; i < map.Circles.Count; i++)
                 {
                     var circle = map.Circles[i];
-                    if (!Object.ReferenceEquals(circle.Id, overlay))
+                    if (!Object.ReferenceEquals(circle.NativeObject, overlay))
                         continue;
 
                     targetCircle = circle;
@@ -546,7 +546,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                 nativeCircle.FillColor = circle.FillColor.ToUIColor();
                 //nativeCircle.Tappable = circle.IsClickable;
 
-                circle.Id = nativeCircle;
+                circle.NativeObject = nativeCircle;
                 nativeCircle.Map = (MapView)Control;
             }
         }
@@ -554,7 +554,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
         void RemoveCircles(IList circles)
         {
             foreach (object obj in circles)
-                ((ACircle)((Circle)obj).Id).Map = null;
+                ((ACircle)((Circle)obj).NativeObject).Map = null;
         }
 
 		void AddTileLayers(IList tileLayers)

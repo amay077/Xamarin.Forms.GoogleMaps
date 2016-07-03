@@ -26,13 +26,13 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
             var nativeCircle = NativeMap.AddCircle(opts);
 
             // associate pin with marker for later lookup in event handlers
-            outerItem.Id = nativeCircle;
+            outerItem.NativeObject = nativeCircle;
             return nativeCircle;
         }
 
         protected override NativeCircle DeleteNativeItem(Circle outerItem)
         {
-            var nativeCircle = outerItem.Id as NativeCircle;
+            var nativeCircle = outerItem.NativeObject as NativeCircle;
             if (nativeCircle == null)
                 return null;
             nativeCircle.Remove();
@@ -47,7 +47,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
         {
             base.OnItemPropertyChanged(sender, e);
             var circle = sender as Circle;
-            var nativeCircle = circle?.Id as NativeCircle;
+            var nativeCircle = circle?.NativeObject as NativeCircle;
 
             if (nativeCircle == null)
                 return;
