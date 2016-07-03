@@ -99,6 +99,8 @@
     <Compile Include="NSyncTileLayer.cs" />
     <Compile Include="NAsyncTileLayer.cs" />
     <Compile Include="PolylineLogic.cs" />
+    <Compile Include="PolygonLogic.cs" />
+    <Compile Include="ShapeLogic.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

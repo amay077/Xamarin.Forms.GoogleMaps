@@ -11,77 +11,40 @@ using NativePolyline = Android.Gms.Maps.Model.Polyline;
 
 namespace Xamarin.Forms.GoogleMaps.Android
 {
-    public class PolylineLogic
+    public class PolylineLogic : ShapeLogic<Polyline>
     {
         List<NativePolyline> _polylines;
 
-        public GoogleMap NativeMap { get; private set; }
-        public Map Map { get; private set; }
-
-        public float ScaledDensity { get; internal set; }
+        protected override IList<Polyline> GetItems(Map map) 
+        {
+            return map.Polylines; 
+        }
 
         public PolylineLogic()
         {
         }
 
-        internal void Register(GoogleMap oldNativeMap, Map oldMap, GoogleMap newNativeMap, Map newMap)
+        internal override void Register(GoogleMap oldNativeMap, Map oldMap, GoogleMap newNativeMap, Map newMap)
         {
-            this.NativeMap = newNativeMap;
-            this.Map = newMap;
-
-            Unregister(oldNativeMap, oldMap);
+            base.Register(oldNativeMap, oldMap, newNativeMap, newMap);
 
             if (newNativeMap != null)
             {
                 newNativeMap.PolylineClick += MapOnPolylineClick;
             }
-
-            var inccPolyline = newMap.Polylines as INotifyCollectionChanged;
-            if (inccPolyline != null)
-                inccPolyline.CollectionChanged += OnPolylineCollectionChanged;
         }
 
-        internal void Unregister(GoogleMap nativeMap, Map map)
+        internal override void Unregister(GoogleMap nativeMap, Map map)
         {
-            if (map != null)
-            {
-                ((ObservableCollection<Polyline>)map.Polylines).CollectionChanged -= OnPolylineCollectionChanged;
-            }
-
             if (nativeMap != null)
             {
                 nativeMap.PolylineClick -= MapOnPolylineClick;
             }
+
+            base.Unregister(nativeMap, map);
         }
 
-        internal void NotifyReset()
-        {
-            OnPolylineCollectionChanged(Map.Polylines, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
-        }
-
-        void OnPolylineCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
-        {
-            switch (notifyCollectionChangedEventArgs.Action)
-            {
-                case NotifyCollectionChangedAction.Add:
-                    AddItems(notifyCollectionChangedEventArgs.NewItems);
-                    break;
-                case NotifyCollectionChangedAction.Remove:
-                    RemoveItems(notifyCollectionChangedEventArgs.OldItems);
-                    break;
-                case NotifyCollectionChangedAction.Replace:
-                    ReplaceItems(notifyCollectionChangedEventArgs.OldItems, notifyCollectionChangedEventArgs.NewItems);
-                    break;
-                case NotifyCollectionChangedAction.Reset:
-                    ResetItems();
-                    break;
-                case NotifyCollectionChangedAction.Move:
-                    //do nothing
-                    break;
-            }
-        }
-
-        void AddItems(IList polylines)
+        protected override void AddItems(IList items)
         {
             var map = NativeMap;
             if (map == null)
@@ -90,9 +53,8 @@ namespace Xamarin.Forms.GoogleMaps.Android
             if (_polylines == null)
                 _polylines = new List<NativePolyline>();
 
-            _polylines.AddRange(polylines.Cast<Polyline>().Select(line =>
+            _polylines.AddRange(items.Cast<Polyline>().Select(polyline =>
             {
-                var polyline = (Polyline)line;
                 var opts = new PolylineOptions();
 
                 foreach (var p in polyline.Positions)
@@ -110,7 +72,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
             }));
         }
 
-        void RemoveItems(IList polylines)
+        protected override void RemoveItems(IList items)
         {
             var map = NativeMap;
             if (map == null)
@@ -118,27 +80,21 @@ namespace Xamarin.Forms.GoogleMaps.Android
             if (_polylines == null)
                 return;
 
-            foreach (Polyline polyline in polylines)
+            foreach (Polyline polyline in items)
             {
-                var apolyline = _polylines.FirstOrDefault(m => ((NativePolyline)polyline.Id).Id == m.Id);
-                if (apolyline == null)
+                var nativePolyline = _polylines.FirstOrDefault(m => ((NativePolyline)polyline.Id).Id == m.Id);
+                if (nativePolyline == null)
                     continue;
-                apolyline.Remove();
-                _polylines.Remove(apolyline);
+                nativePolyline.Remove();
+                _polylines.Remove(nativePolyline);
             }
         }
 
-        void ReplaceItems(IList oldItems, IList newItems)
-        {
-            RemoveItems(oldItems);
-            AddItems(newItems);
-        }
-
-        void ResetItems()
+        protected override void ResetItems()
         {
             _polylines?.ForEach(line => line.Remove());
             _polylines = null;
-            AddItems((IList)Map.Polylines);
+            AddItems((IList)GetItems(Map));
         }
 
         void MapOnPolylineClick(object sender, GoogleMap.PolylineClickEventArgs eventArgs)
@@ -148,9 +104,9 @@ namespace Xamarin.Forms.GoogleMaps.Android
 
             // lookup pin
             Polyline targetPolyline = null;
-            for (var i = 0; i < Map.Polylines.Count; i++)
+            for (var i = 0; i < GetItems(Map).Count; i++)
             {
-                var line = Map.Polylines[i];
+                var line = GetItems(Map)[i];
                 if (((NativePolyline)line.Id).Id != clickedPolyline.Id)
                     continue;
 
