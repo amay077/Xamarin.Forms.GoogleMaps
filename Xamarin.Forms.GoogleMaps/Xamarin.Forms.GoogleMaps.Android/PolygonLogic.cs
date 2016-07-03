@@ -11,10 +11,8 @@ using NativePolygon = Android.Gms.Maps.Model.Polygon;
 
 namespace Xamarin.Forms.GoogleMaps.Android
 {
-    public class PolygonLogic : ShapeLogic<Polygon>
+    public class PolygonLogic : ShapeLogic<Polygon, NativePolygon>
     {
-        List<NativePolygon> _nativePolygons;
-
         protected override IList<Polygon> GetItems(Map map)
         {
             return map.Polygons;
@@ -44,80 +42,47 @@ namespace Xamarin.Forms.GoogleMaps.Android
             base.Unregister(nativeMap, map);
         }
 
-        protected override void AddItems(IList items)
+        protected override NativePolygon CreateNativeItem(Polygon outerShape)
         {
-            var map = NativeMap;
-            if (map == null)
-                return;
+            var opts = new PolygonOptions();
 
-            if (_nativePolygons == null)
-                _nativePolygons = new List<NativePolygon>();
+            foreach (var p in outerShape.Positions)
+                opts.Add(new LatLng(p.Latitude, p.Longitude));
 
-            _nativePolygons.AddRange(items.Cast<Polygon>().Select(polygon =>
-            {
-                var opts = new PolygonOptions();
+            opts.InvokeStrokeWidth(outerShape.StrokeWidth * this.ScaledDensity); // TODO: convert from px to pt. Is this collect? (looks like same iOS Maps) 
+            opts.InvokeStrokeColor(outerShape.StrokeColor.ToAndroid());
+            opts.InvokeFillColor(outerShape.FillColor.ToAndroid());
+            opts.Clickable(outerShape.IsClickable);
 
-                foreach (var p in polygon.Positions)
-                    opts.Add(new LatLng(p.Latitude, p.Longitude));
+            var nativePolygon = NativeMap.AddPolygon(opts);
 
-                opts.InvokeStrokeWidth(polygon.StrokeWidth * this.ScaledDensity); // TODO: convert from px to pt. Is this collect? (looks like same iOS Maps) 
-                opts.InvokeStrokeColor(polygon.StrokeColor.ToAndroid());
-                opts.InvokeFillColor(polygon.FillColor.ToAndroid());
-                opts.Clickable(polygon.IsClickable);
-
-                var nativePolygon = map.AddPolygon(opts);
-
-                // associate pin with marker for later lookup in event handlers
-                polygon.NativeObject = nativePolygon;
-                return nativePolygon;
-            }));
+            // associate pin with marker for later lookup in event handlers
+            outerShape.NativeObject = nativePolygon;
+            return nativePolygon;
         }
 
-        protected override void RemoveItems(IList items)
+        protected override NativePolygon DeleteNativeItem(Polygon outerShape)
         {
-            var map = NativeMap;
-            if (map == null)
-                return;
-            if (_nativePolygons == null)
-                return;
-
-            foreach (Polygon polygon in items)
-            {
-                var nativePolygon = _nativePolygons.FirstOrDefault(m => ((NativePolygon)polygon.NativeObject).Id == m.Id);
-                if (nativePolygon == null)
-                    continue;
-                nativePolygon.Remove();
-                _nativePolygons.Remove(nativePolygon);
-            }
-        }
-
-        protected override void ResetItems()
-        {
-            _nativePolygons?.ForEach(polygon => polygon.Remove());
-            _nativePolygons = null;
-            AddItems((IList)Map.Polygons);
+            var nativePolygon = outerShape.NativeObject as NativePolygon;
+            if (nativePolygon == null)
+                return null;
+            
+            nativePolygon.Remove();
+            return nativePolygon;
         }
 
         void MapOnPolygonClick(object sender, GoogleMap.PolygonClickEventArgs eventArgs)
         {
-            // clicked Polygons
-            var clickedPolygon = eventArgs.Polygon;
+            // clicked polyline
+            var nativeItem = eventArgs.Polygon;
 
             // lookup pin
-            Polygon targetPolygon = null;
-            for (var i = 0; i < Map.Polygons.Count; i++)
-            {
-                var polygon = Map.Polygons[i];
-                if (((NativePolygon)polygon.NativeObject).Id != clickedPolygon.Id)
-                    continue;
-
-                targetPolygon = polygon;
-                break;
-            }
+            var targetOuterItem = GetItems(Map).FirstOrDefault(
+                outerItem => ((NativePolygon)outerItem.NativeObject).Id == nativeItem.Id);
 
             // only consider event handled if a handler is present. 
             // Else allow default behavior of displaying an info window.
-            targetPolygon?.SendTap();
+            targetOuterItem?.SendTap();
         }
     }
 }

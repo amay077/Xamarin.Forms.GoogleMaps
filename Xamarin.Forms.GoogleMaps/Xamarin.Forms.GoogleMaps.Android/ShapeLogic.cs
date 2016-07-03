@@ -3,20 +3,31 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Linq;
 using Android.Gms.Maps;
 
 namespace Xamarin.Forms.GoogleMaps.Android
 {
-    public abstract class ShapeLogic<T>
+    public abstract class ShapeLogic<TOuter, TNative> 
+        where TOuter : class 
+        where TNative : class
     {
         public float ScaledDensity { get; internal set; }
 
         public GoogleMap NativeMap { get; private set; }
         public Map Map { get; private set; }
 
+        private List<TNative> _nativeShapes;
+
         public ShapeLogic()
         {
         }
+
+        protected abstract IList<TOuter> GetItems(Map map);
+
+        protected abstract TNative CreateNativeItem(TOuter outerShape);
+
+        protected abstract TNative DeleteNativeItem(TOuter outerShape);
 
         internal virtual void Register(GoogleMap oldNativeMap, Map oldMap, GoogleMap newNativeMap, Map newMap)
         {
@@ -30,15 +41,15 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 inccItems.CollectionChanged += OnCollectionChanged;
         }
 
-        internal virtual void Unregister(GoogleMap oldNativeMap, Map oldMap)
+        internal virtual void Unregister(GoogleMap nativeMap, Map map)
         {
-            if (oldMap != null)
+            if (map != null)
             {
-                ((ObservableCollection<T>)GetItems(oldMap)).CollectionChanged -= OnCollectionChanged;
+                var inccItems = GetItems(map) as INotifyCollectionChanged;
+                if (inccItems != null)
+                    inccItems.CollectionChanged -= OnCollectionChanged;
             }
         }
-
-        protected abstract IList<T> GetItems(Map map);
 
         protected void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
         {
@@ -62,9 +73,35 @@ namespace Xamarin.Forms.GoogleMaps.Android
             }
         }
 
-        protected abstract void AddItems(IList newItems);
+        protected void AddItems(IList newItems)
+        {
+            if (NativeMap == null)
+                return;
 
-        protected abstract void RemoveItems(IList oldItems);
+            if (_nativeShapes == null)
+                _nativeShapes = new List<TNative>();
+
+            _nativeShapes.AddRange(newItems.Cast<TOuter>().Select(outerShape =>
+                CreateNativeItem(outerShape)));
+        }
+
+        protected void RemoveItems(IList oldItems)
+        {
+            var map = NativeMap;
+            if (map == null)
+                return;
+            if (_nativeShapes == null)
+                return;
+
+            foreach (TOuter outerShape in oldItems)
+            {
+                var deletedShape = DeleteNativeItem(outerShape);
+                if (deletedShape != null)
+                {
+                    _nativeShapes.Remove(deletedShape);
+                }
+            }
+        }
 
         protected virtual void ReplaceItems(IList oldItems, IList newItems)
         {
@@ -72,7 +109,16 @@ namespace Xamarin.Forms.GoogleMaps.Android
             AddItems(newItems);
         }
 
-        protected abstract void ResetItems();
+        protected void ResetItems()
+        {
+            foreach (var outerShape in GetItems(Map))
+            {
+                DeleteNativeItem(outerShape);
+            }
+
+            _nativeShapes = null;
+            AddItems((IList)GetItems(Map));
+        }
 
         internal void NotifyReset()
         {

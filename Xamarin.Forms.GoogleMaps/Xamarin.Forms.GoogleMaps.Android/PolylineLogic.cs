@@ -11,10 +11,8 @@ using NativePolyline = Android.Gms.Maps.Model.Polyline;
 
 namespace Xamarin.Forms.GoogleMaps.Android
 {
-    public class PolylineLogic : ShapeLogic<Polyline>
+    public class PolylineLogic : ShapeLogic<Polyline, NativePolyline>
     {
-        List<NativePolyline> _polylines;
-
         protected override IList<Polyline> GetItems(Map map) 
         {
             return map.Polylines; 
@@ -44,80 +42,47 @@ namespace Xamarin.Forms.GoogleMaps.Android
             base.Unregister(nativeMap, map);
         }
 
-        protected override void AddItems(IList items)
+        protected override NativePolyline CreateNativeItem(Polyline outerShape)
         {
-            var map = NativeMap;
-            if (map == null)
-                return;
+            var opts = new PolylineOptions();
 
-            if (_polylines == null)
-                _polylines = new List<NativePolyline>();
+            foreach (var p in outerShape.Positions)
+                opts.Add(new LatLng(p.Latitude, p.Longitude));
 
-            _polylines.AddRange(items.Cast<Polyline>().Select(polyline =>
-            {
-                var opts = new PolylineOptions();
+            opts.InvokeWidth(outerShape.StrokeWidth * this.ScaledDensity); // TODO: convert from px to pt. Is this collect? (looks like same iOS Maps) 
+            opts.InvokeColor(outerShape.StrokeColor.ToAndroid());
+            opts.Clickable(outerShape.IsClickable);
 
-                foreach (var p in polyline.Positions)
-                    opts.Add(new LatLng(p.Latitude, p.Longitude));
+            var nativePolyline = NativeMap.AddPolyline(opts);
 
-                opts.InvokeWidth(polyline.StrokeWidth * this.ScaledDensity); // TODO: convert from px to pt. Is this collect? (looks like same iOS Maps) 
-                opts.InvokeColor(polyline.StrokeColor.ToAndroid());
-                opts.Clickable(polyline.IsClickable);
-
-                var nativePolyline = map.AddPolyline(opts);
-
-                // associate pin with marker for later lookup in event handlers
-                polyline.NativeObject = nativePolyline;
-                return nativePolyline;
-            }));
+            // associate pin with marker for later lookup in event handlers
+            outerShape.NativeObject = nativePolyline;
+            return nativePolyline;
         }
 
-        protected override void RemoveItems(IList items)
+        protected override NativePolyline DeleteNativeItem(Polyline outerShape)
         {
-            var map = NativeMap;
-            if (map == null)
-                return;
-            if (_polylines == null)
-                return;
+            var nativeShape = outerShape.NativeObject as NativePolyline;
+            if (nativeShape == null)
+                return null;
 
-            foreach (Polyline polyline in items)
-            {
-                var nativePolyline = _polylines.FirstOrDefault(m => ((NativePolyline)polyline.NativeObject).Id == m.Id);
-                if (nativePolyline == null)
-                    continue;
-                nativePolyline.Remove();
-                _polylines.Remove(nativePolyline);
-            }
-        }
-
-        protected override void ResetItems()
-        {
-            _polylines?.ForEach(line => line.Remove());
-            _polylines = null;
-            AddItems((IList)GetItems(Map));
+            nativeShape.Remove();
+            return nativeShape;
         }
 
         void MapOnPolylineClick(object sender, GoogleMap.PolylineClickEventArgs eventArgs)
         {
             // clicked polyline
-            var clickedPolyline = eventArgs.Polyline;
+            var nativeItem = eventArgs.Polyline;
 
             // lookup pin
-            Polyline targetPolyline = null;
-            for (var i = 0; i < GetItems(Map).Count; i++)
-            {
-                var line = GetItems(Map)[i];
-                if (((NativePolyline)line.NativeObject).Id != clickedPolyline.Id)
-                    continue;
-
-                targetPolyline = line;
-                break;
-            }
+            var targetOuterItem = GetItems(Map).FirstOrDefault(
+                outerItem => ((NativePolyline)outerItem.NativeObject).Id == nativeItem.Id);
 
             // only consider event handled if a handler is present. 
             // Else allow default behavior of displaying an info window.
-            targetPolyline?.SendTap();
+            targetOuterItem?.SendTap();
         }
-   }
+    }
 }
 
