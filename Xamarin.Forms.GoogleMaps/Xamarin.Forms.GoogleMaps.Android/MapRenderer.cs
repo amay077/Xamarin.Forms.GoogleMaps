@@ -1,20 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Linq;
 using Android.Gms.Maps;
 using Android.Gms.Maps.Model;
 using Android.OS;
 using Java.Lang;
 using Xamarin.Forms.Platform.Android;
 using Math = System.Math;
-using System.Collections;
 using Android.Util;
 using Android.App;
 using Xamarin.Forms.GoogleMaps.Internals;
-using Xamarin.Forms.GoogleMaps.Android.Logics;
+using Xamarin.Forms.GoogleMaps.Logics.Android;
 
 namespace Xamarin.Forms.GoogleMaps.Android
 {

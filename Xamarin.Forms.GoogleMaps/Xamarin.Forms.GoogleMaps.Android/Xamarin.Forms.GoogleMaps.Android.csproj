@@ -95,9 +95,6 @@
     <Compile Include="FormsGoogleMaps.cs" />
     <Compile Include="GeocoderBackend.cs" />
     <Compile Include="MapRenderer.cs" />
-    <Compile Include="NUrlTileLayer.cs" />
-    <Compile Include="NSyncTileLayer.cs" />
-    <Compile Include="NAsyncTileLayer.cs" />
     <Compile Include="Logics\ShapeLogic.cs" />
     <Compile Include="Logics\PolygonLogic.cs" />
     <Compile Include="Logics\PolylineLogic.cs" />
@@ -105,6 +102,9 @@
     <Compile Include="Logics\PinLogic.cs" />
     <Compile Include="Logics\TileLayerLogic.cs" />
     <Compile Include="Logics\BaseLogic.cs" />
+    <Compile Include="Logics\NativeAsyncTileLayer.cs" />
+    <Compile Include="Logics\NativeSyncTileLayer.cs" />
+    <Compile Include="Logics\NUrlTileLayer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

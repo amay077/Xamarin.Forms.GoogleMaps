@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using Android.Gms.Maps.Model;
-using Xamarin.Forms.GoogleMaps.Android.Logics;
 using Xamarin.Forms.Platform.Android;
 using NativeCircle = Android.Gms.Maps.Model.Circle;
 
-namespace Xamarin.Forms.GoogleMaps.Android
+namespace Xamarin.Forms.GoogleMaps.Logics.Android
 {
     internal class CircleLogic : ShapeLogic<Circle, NativeCircle>
     {

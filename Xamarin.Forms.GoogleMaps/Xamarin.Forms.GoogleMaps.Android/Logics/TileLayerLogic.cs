@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using Android.Gms.Maps.Model;
-using Xamarin.Forms.GoogleMaps.Android.Logics;
 using NativeTileOverlay = Android.Gms.Maps.Model.TileOverlay;
 
-namespace Xamarin.Forms.GoogleMaps.Android
+namespace Xamarin.Forms.GoogleMaps.Logics.Android
 {
     internal class TileLayerLogic : ShapeLogic<TileLayer, NativeTileOverlay>
     {

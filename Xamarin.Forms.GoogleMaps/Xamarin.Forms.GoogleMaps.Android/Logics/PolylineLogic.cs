@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using Android.Gms.Maps;
@@ -10,7 +7,7 @@ using Android.Gms.Maps.Model;
 using Xamarin.Forms.Platform.Android;
 using NativePolyline = Android.Gms.Maps.Model.Polyline;
 
-namespace Xamarin.Forms.GoogleMaps.Android.Logics
+namespace Xamarin.Forms.GoogleMaps.Logics.Android
 {
     internal class PolylineLogic : ShapeLogic<Polyline, NativePolyline>
     {

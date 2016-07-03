@@ -1,13 +1,11 @@
 ﻿using System;
-using Xamarin.Forms.GoogleMaps.Android.Logics;
 using Android.Gms.Maps.Model;
 using System.Collections.Generic;
-using System.Threading;
 using Android.Gms.Maps;
 using System.Linq;
 using System.ComponentModel;
 
-namespace Xamarin.Forms.GoogleMaps.Android
+namespace Xamarin.Forms.GoogleMaps.Logics.Android
 {
     internal class PinLogic : ShapeLogic<Pin, Marker>
     {

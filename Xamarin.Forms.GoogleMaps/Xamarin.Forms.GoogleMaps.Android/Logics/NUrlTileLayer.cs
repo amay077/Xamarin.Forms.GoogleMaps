@@ -1,7 +1,7 @@
 ﻿using System;
 using Android.Gms.Maps.Model;
 
-namespace Xamarin.Forms.GoogleMaps.Android
+namespace Xamarin.Forms.GoogleMaps.Logics.Android
 {
 	internal class NUrlTileLayer : UrlTileProvider
 	{

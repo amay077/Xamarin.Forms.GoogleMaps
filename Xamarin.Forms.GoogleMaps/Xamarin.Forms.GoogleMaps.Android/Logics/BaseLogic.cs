@@ -4,7 +4,7 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using Android.Gms.Maps;
 
-namespace Xamarin.Forms.GoogleMaps.Android.Logics
+namespace Xamarin.Forms.GoogleMaps.Logics.Android
 {
     internal abstract class BaseLogic
     {

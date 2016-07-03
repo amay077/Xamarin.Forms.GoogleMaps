@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Linq;
-using Android.Gms.Maps;
 
-namespace Xamarin.Forms.GoogleMaps.Android.Logics
+namespace Xamarin.Forms.GoogleMaps.Logics.Android
 {
     internal abstract class ShapeLogic<TOuter, TNative> : BaseLogic
         where TOuter : class 
