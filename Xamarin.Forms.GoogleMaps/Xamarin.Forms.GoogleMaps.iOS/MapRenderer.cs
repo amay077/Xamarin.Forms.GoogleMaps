@@ -149,7 +149,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                 for (var i = 0; i < map.Polylines.Count; i++)
                 {
                     var line = map.Polylines[i];
-                    if (!Object.ReferenceEquals(line.Id, overlay))
+                    if (!Object.ReferenceEquals(line.NativeObject, overlay))
                         continue;
 
                     targetPolyline = line;
@@ -166,7 +166,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                 Polygon targetPolygon = null;
                 for (var i = 0; i < map.Polygons.Count; i++) {
                     var polygon = map.Polygons[i];
-                    if (!Object.ReferenceEquals (polygon.Id, overlay))
+                    if (!Object.ReferenceEquals (polygon.NativeObject, overlay))
                         continue;
 
                     targetPolygon = polygon;
@@ -499,7 +499,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                 nativePolyline.StrokeColor = polyline.StrokeColor.ToUIColor();
                 nativePolyline.Tappable = polyline.IsClickable;
 
-                polyline.Id = nativePolyline;
+                polyline.NativeObject = nativePolyline;
                 nativePolyline.Map = (MapView)Control;
             }
         }
@@ -507,7 +507,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
         void RemovePolylines(IList polylines)
         {
             foreach (object obj in polylines)
-                ((APolyline)((Polyline)obj).Id).Map = null;
+                ((APolyline)((Polyline)obj).NativeObject).Map = null;
         }
 
         void AddPolygons (IList polygons)
@@ -523,7 +523,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                 nativePolygon.FillColor = polygon.FillColor.ToUIColor();
                 nativePolygon.Tappable = polygon.IsClickable;
 
-                polygon.Id = nativePolygon;
+                polygon.NativeObject = nativePolygon;
                 nativePolygon.Map = (MapView)Control;
             }
         }
@@ -531,7 +531,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
         void RemovePolygons(IList polygons)
         {
             foreach (object obj in polygons)
-                ((APolygon)((Polygon)obj).Id).Map = null;
+                ((APolygon)((Polygon)obj).NativeObject).Map = null;
         }
 
         void AddCircles(IList circles)

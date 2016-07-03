@@ -39,7 +39,7 @@ namespace Xamarin.Forms.GoogleMaps
 
         public object Tag { get; set; }
 
-        internal object Id { get; set; }
+        public object NativeObject { get; internal set; }
 
         public event EventHandler Clicked;
 

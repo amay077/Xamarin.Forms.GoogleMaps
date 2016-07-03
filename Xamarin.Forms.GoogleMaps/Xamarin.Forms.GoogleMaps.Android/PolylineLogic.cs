@@ -67,7 +67,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 var nativePolyline = map.AddPolyline(opts);
 
                 // associate pin with marker for later lookup in event handlers
-                polyline.Id = nativePolyline;
+                polyline.NativeObject = nativePolyline;
                 return nativePolyline;
             }));
         }
@@ -82,7 +82,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
 
             foreach (Polyline polyline in items)
             {
-                var nativePolyline = _polylines.FirstOrDefault(m => ((NativePolyline)polyline.Id).Id == m.Id);
+                var nativePolyline = _polylines.FirstOrDefault(m => ((NativePolyline)polyline.NativeObject).Id == m.Id);
                 if (nativePolyline == null)
                     continue;
                 nativePolyline.Remove();
@@ -107,7 +107,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
             for (var i = 0; i < GetItems(Map).Count; i++)
             {
                 var line = GetItems(Map)[i];
-                if (((NativePolyline)line.Id).Id != clickedPolyline.Id)
+                if (((NativePolyline)line.NativeObject).Id != clickedPolyline.Id)
                     continue;
 
                 targetPolyline = line;

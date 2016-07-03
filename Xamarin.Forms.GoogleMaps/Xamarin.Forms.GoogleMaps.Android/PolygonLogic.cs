@@ -68,7 +68,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 var nativePolygon = map.AddPolygon(opts);
 
                 // associate pin with marker for later lookup in event handlers
-                polygon.Id = nativePolygon;
+                polygon.NativeObject = nativePolygon;
                 return nativePolygon;
             }));
         }
@@ -83,7 +83,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
 
             foreach (Polygon polygon in items)
             {
-                var nativePolygon = _nativePolygons.FirstOrDefault(m => ((NativePolygon)polygon.Id).Id == m.Id);
+                var nativePolygon = _nativePolygons.FirstOrDefault(m => ((NativePolygon)polygon.NativeObject).Id == m.Id);
                 if (nativePolygon == null)
                     continue;
                 nativePolygon.Remove();
@@ -108,7 +108,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
             for (var i = 0; i < Map.Polygons.Count; i++)
             {
                 var polygon = Map.Polygons[i];
-                if (((NativePolygon)polygon.Id).Id != clickedPolygon.Id)
+                if (((NativePolygon)polygon.NativeObject).Id != clickedPolygon.Id)
                     continue;
 
                 targetPolygon = polygon;
