@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Android.Gms.Maps;
 using System.Linq;
 using System.ComponentModel;
+using Xamarin.Forms.GoogleMaps.Android;
 
 namespace Xamarin.Forms.GoogleMaps.Logics.Android
 {
@@ -144,6 +145,29 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
                 // lookup pin
                 var targetPin = LookupPin(pin.NativeObject as Marker);
                 (targetPin?.NativeObject as Marker)?.ShowInfoWindow();
+            }
+        }
+
+        protected override void OnItemPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            base.OnItemPropertyChanged(sender, e);
+
+            var pin = sender as Pin;
+            if (e.PropertyName == Pin.LabelProperty.PropertyName)
+            {
+                (pin.NativeObject as Marker).Title = pin.Label;
+            }
+            else if (e.PropertyName == Pin.AddressProperty.PropertyName)
+            {
+                (pin.NativeObject as Marker).Snippet = pin.Address;
+            }
+            else if (e.PropertyName == Pin.TypeProperty.PropertyName)
+            {
+                /* no-op */
+            }
+            else if (e.PropertyName == Pin.PositionProperty.PropertyName)
+            {
+                (pin.NativeObject as Marker).Position = pin.Position.ToLatLng();
             }
         }
    }

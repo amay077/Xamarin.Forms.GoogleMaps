@@ -105,6 +105,7 @@
     <Compile Include="Logics\NativeAsyncTileLayer.cs" />
     <Compile Include="Logics\NativeSyncTileLayer.cs" />
     <Compile Include="Logics\NativeUrlTileLayer.cs" />
+    <Compile Include="Extensions\PositionExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -117,6 +118,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Logics\" />
+    <Folder Include="Extensions\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Android.Support.Vector.Drawable.23.3.0\build\Xamarin.Android.Support.Vector.Drawable.targets" Condition="Exists('..\packages\Xamarin.Android.Support.Vector.Drawable.23.3.0\build\Xamarin.Android.Support.Vector.Drawable.targets')" />

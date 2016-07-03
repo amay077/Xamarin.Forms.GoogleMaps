@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Xamarin.Forms.GoogleMaps
 {
-    public sealed class TileLayer
+    public sealed class TileLayer : BindableObject
 	{
 		// For URI specific SyncTileLayer
         internal Func<int, int, int, Uri> MakeTileUri { get; }

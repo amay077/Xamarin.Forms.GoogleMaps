@@ -6,7 +6,7 @@ using System.Collections.Specialized;
 namespace Xamarin.Forms.GoogleMaps.Logics.Android
 {
     internal abstract class ShapeLogic<TOuter, TNative> : BaseLogic
-        where TOuter : class 
+        where TOuter : BindableObject 
         where TNative : class
     {
         readonly IList<TOuter> _outerItems = new List<TOuter>(); // Only for ResetItems.
@@ -31,6 +31,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
 
             foreach (TOuter outerItem in newItems)
             {
+                outerItem.PropertyChanged += OnItemPropertyChanged;
                 if (CreateNativeItem(outerItem) != null)
                     _outerItems.Add(outerItem);
             }
@@ -45,7 +46,10 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
             foreach (TOuter outerShape in oldItems)
             {
                 if (DeleteNativeItem(outerShape) != null)
+                {
                     _outerItems.Remove(outerShape);
+                    outerShape.PropertyChanged -= OnItemPropertyChanged;
+                }
             }
         }
 
@@ -60,6 +64,9 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
         internal override void NotifyReset() => 
             OnCollectionChanged(GetItems(Map), new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
 
+        protected virtual void OnItemPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+        }
     }
 }
 
