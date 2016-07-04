@@ -1,17 +1,15 @@
 ﻿using System;
-using Google.Maps;
 using UIKit;
-using System.Drawing;
 using Foundation;
-using ASyncTileLayer = Google.Maps.SyncTileLayer;
+using NativeSyncTileLayer = Google.Maps.SyncTileLayer;
 
 namespace Xamarin.Forms.GoogleMaps.iOS
 {
-	internal class NSyncTileLayer : ASyncTileLayer
+	internal class TouchSyncTileLayer : NativeSyncTileLayer
 	{
-		private Func<int, int, int, byte[]> _tileImageSync;
+		private readonly Func<int, int, int, byte[]> _tileImageSync;
 
-		public NSyncTileLayer(Func<int, int, int, byte[]> tileImageSync) : base()
+		public TouchSyncTileLayer(Func<int, int, int, byte[]> tileImageSync) : base()
 		{
 			_tileImageSync = tileImageSync;
 		}
