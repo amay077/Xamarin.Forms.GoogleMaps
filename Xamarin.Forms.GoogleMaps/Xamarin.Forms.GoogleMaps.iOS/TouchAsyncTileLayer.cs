@@ -5,18 +5,18 @@ using System.Threading.Tasks;
 using Foundation;
 using ATileLayer = Google.Maps.TileLayer;
 
-namespace Xamarin.Forms.GoogleMaps.Logics.iOS
+namespace Xamarin.Forms.GoogleMaps.iOS
 {
-	internal class NativeAsyncTileLayer : ATileLayer
+	internal class TouchAsyncTileLayer : ATileLayer
 	{
 		private readonly Func<int, int, int, Task<byte[]>> _tileImageAsync;
 
-		public NativeAsyncTileLayer(Func<int, int, int, Task<byte[]>> tileImageAsync) : base()
+		public TouchAsyncTileLayer(Func<int, int, int, Task<byte[]>> tileImageAsync) : base()
 		{
 			_tileImageAsync = tileImageAsync;
 		}
 
-		public override void RequestTile(nuint x, nuint y, nuint zoom, ITileReceiver receiver)
+        public override void RequestTile(nuint x, nuint y, nuint zoom, ITileReceiver receiver)
 		{
 			_tileImageAsync((int)x, (int)y, (int)zoom).ContinueWith((Task<byte[]> task) => {
 				var imgByte = task.Result;

@@ -5,7 +5,7 @@ using System.Collections.Specialized;
 
 namespace Xamarin.Forms.GoogleMaps.Logics.iOS
 {
-    internal abstract class ShapeLogic<TOuter, TNative> : BaseLogic
+    internal abstract class DefaultLogic<TOuter, TNative> : BaseLogic
         where TOuter : BindableObject
         where TNative : class
     {

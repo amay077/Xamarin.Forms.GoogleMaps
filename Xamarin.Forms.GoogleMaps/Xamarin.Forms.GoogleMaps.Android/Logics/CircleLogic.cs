@@ -8,7 +8,7 @@ using Xamarin.Forms.GoogleMaps.Android;
 
 namespace Xamarin.Forms.GoogleMaps.Logics.Android
 {
-    internal class CircleLogic : ShapeLogic<Circle, NativeCircle>
+    internal class CircleLogic : DefaultLogic<Circle, NativeCircle>
     {
         protected override IList<Circle> GetItems(Map map) => map.Circles;
 

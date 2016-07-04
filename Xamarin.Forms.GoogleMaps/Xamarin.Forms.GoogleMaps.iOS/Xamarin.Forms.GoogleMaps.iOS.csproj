@@ -73,8 +73,8 @@
     <Compile Include="Logics\PolygonLogic.cs" />
     <Compile Include="Logics\TileLayerLogic.cs" />
     <Compile Include="Logics\PinLogic.cs" />
-    <Compile Include="Logics\NativeAsyncTileLayer.cs" />
-    <Compile Include="Logics\NativeSyncTileLayer.cs" />
+    <Compile Include="TouchAsyncTileLayer.cs" />
+    <Compile Include="TouchSyncTileLayer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

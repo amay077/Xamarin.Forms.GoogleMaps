@@ -102,10 +102,10 @@
     <Compile Include="Logics\PinLogic.cs" />
     <Compile Include="Logics\TileLayerLogic.cs" />
     <Compile Include="Logics\BaseLogic.cs" />
-    <Compile Include="Logics\NativeAsyncTileLayer.cs" />
-    <Compile Include="Logics\NativeSyncTileLayer.cs" />
-    <Compile Include="Logics\NativeUrlTileLayer.cs" />
     <Compile Include="Extensions\PositionExtensions.cs" />
+    <Compile Include="DroidAsyncTileLayer.cs" />
+    <Compile Include="DroidSyncTileLayer.cs" />
+    <Compile Include="DroidUrlTileLayer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

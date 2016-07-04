@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using Foundation;
-using Google.Maps;
 using Xamarin.Forms.GoogleMaps.Logics.iOS;
 using NativeTileLayer = Google.Maps.TileLayer;
 using NativeUrlTileLayer = Google.Maps.UrlTileLayer;
@@ -28,12 +27,12 @@ namespace Xamarin.Forms.GoogleMaps.iOS
             }
             else if (outerItem.TileImageSync != null)
             {
-                nativeTileLayer = new NativeSyncTileLayer(outerItem.TileImageSync);
+                nativeTileLayer = new TouchSyncTileLayer(outerItem.TileImageSync);
                 nativeTileLayer.TileSize = (nint)outerItem.TileSize;
             }
             else
             {
-                nativeTileLayer = new NativeAsyncTileLayer(outerItem.TileImageAsync);
+                nativeTileLayer = new TouchAsyncTileLayer(outerItem.TileImageAsync);
                 nativeTileLayer.TileSize = (nint)outerItem.TileSize;
             }
 

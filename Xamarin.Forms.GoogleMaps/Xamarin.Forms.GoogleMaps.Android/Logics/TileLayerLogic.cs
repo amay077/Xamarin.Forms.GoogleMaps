@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using Android.Gms.Maps.Model;
+using Xamarin.Forms.GoogleMaps.Android;
 using NativeTileOverlay = Android.Gms.Maps.Model.TileOverlay;
 
 namespace Xamarin.Forms.GoogleMaps.Logics.Android
@@ -18,15 +19,15 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
 
             if (outerItem.MakeTileUri != null)
             {
-                nativeTileProvider = new NativeUrlTileLayer(outerItem.MakeTileUri, outerItem.TileSize);
+                nativeTileProvider = new DroidUrlTileLayer(outerItem.MakeTileUri, outerItem.TileSize);
             }
             else if (outerItem.TileImageSync != null)
             {
-                nativeTileProvider = new NativeSyncTileLayer(outerItem.TileImageSync, outerItem.TileSize);
+                nativeTileProvider = new DroidSyncTileLayer(outerItem.TileImageSync, outerItem.TileSize);
             }
             else
             {
-                nativeTileProvider = new NativeAsyncTileLayer(outerItem.TileImageAsync, outerItem.TileSize);
+                nativeTileProvider = new DroidAsyncTileLayer(outerItem.TileImageAsync, outerItem.TileSize);
             }
             var nativeTileOverlay = NativeMap.AddTileOverlay(opts.InvokeTileProvider(nativeTileProvider));
 
