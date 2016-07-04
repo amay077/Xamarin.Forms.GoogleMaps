@@ -5,10 +5,11 @@ using Android.Gms.Maps.Model;
 using Xamarin.Forms.Platform.Android;
 using NativeCircle = Android.Gms.Maps.Model.Circle;
 using Xamarin.Forms.GoogleMaps.Android;
+using Android.Gms.Maps;
 
 namespace Xamarin.Forms.GoogleMaps.Logics.Android
 {
-    internal class CircleLogic : DefaultLogic<Circle, NativeCircle>
+    internal class CircleLogic : DefaultLogic<Circle, NativeCircle, GoogleMap>
     {
         protected override IList<Circle> GetItems(Map map) => map.Circles;
 

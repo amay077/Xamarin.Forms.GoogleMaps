@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using CoreLocation;
 using Google.Maps;
 using Xamarin.Forms.GoogleMaps.Extensions.iOS;
 using NativeCircle = Google.Maps.Circle;
@@ -10,7 +9,7 @@ using Xamarin.Forms.Platform.iOS;
 
 namespace Xamarin.Forms.GoogleMaps.Logics.iOS
 {
-    internal class CircleLogic : DefaultLogic<Circle, NativeCircle>
+    internal class CircleLogic : DefaultLogic<Circle, NativeCircle, MapView>
     {
         protected override IList<Circle> GetItems(Map map) => map.Circles;
 

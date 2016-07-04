@@ -6,6 +6,7 @@ using CoreLocation;
 using System.Drawing;
 using Xamarin.Forms.GoogleMaps.Internals;
 using Xamarin.Forms.GoogleMaps.Logics.iOS;
+using Xamarin.Forms.GoogleMaps.Logics;
 
 namespace Xamarin.Forms.GoogleMaps.iOS
 {
@@ -18,11 +19,11 @@ namespace Xamarin.Forms.GoogleMaps.iOS
         protected MapView NativeMap => (MapView)Control;
         protected Map Map => (Map)Element;
 
-        readonly BaseLogic[] _logics;
+        readonly BaseLogic<MapView>[] _logics;
 
         public MapRenderer()
         {
-            _logics = new BaseLogic[]
+            _logics = new BaseLogic<MapView>[]
             {
                 new PolylineLogic(),
                 new PolygonLogic(),

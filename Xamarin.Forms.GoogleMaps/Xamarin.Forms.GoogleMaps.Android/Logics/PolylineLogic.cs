@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using Android.Gms.Maps;
@@ -11,12 +10,8 @@ using NativePolyline = Android.Gms.Maps.Model.Polyline;
 
 namespace Xamarin.Forms.GoogleMaps.Logics.Android
 {
-    internal class PolylineLogic : DefaultLogic<Polyline, NativePolyline>
+    internal class PolylineLogic : DefaultLogic<Polyline, NativePolyline, GoogleMap>
     {
-        public PolylineLogic()
-        {
-        }
-
         protected override IList<Polyline> GetItems(Map map) => map.Polylines;
 
         internal override void Register(GoogleMap oldNativeMap, Map oldMap, GoogleMap newNativeMap, Map newMap)

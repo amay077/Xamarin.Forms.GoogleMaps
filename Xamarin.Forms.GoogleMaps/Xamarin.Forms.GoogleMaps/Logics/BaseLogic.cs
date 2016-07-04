@@ -2,18 +2,19 @@
 using System.Collections;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using Google.Maps;
 
-namespace Xamarin.Forms.GoogleMaps.Logics.iOS
+namespace Xamarin.Forms.GoogleMaps.Logics
 {
-    internal abstract class BaseLogic
+    internal abstract class BaseLogic<TNativeMap>
     {
-        public MapView NativeMap { get; private set; }
+        public float ScaledDensity { get; internal set; }
+
+        public TNativeMap NativeMap { get; private set; }
         public Map Map { get; private set; }
 
         protected abstract INotifyCollectionChanged GetItemAsNotifyCollectionChanged(Map map);
 
-        internal virtual void Register(MapView oldNativeMap, Map oldMap, MapView newNativeMap, Map newMap)
+        internal virtual void Register(TNativeMap oldNativeMap, Map oldMap, TNativeMap newNativeMap, Map newMap)
         {
             this.NativeMap = newNativeMap;
             this.Map = newMap;
@@ -25,7 +26,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
                 inccItems.CollectionChanged += OnCollectionChanged;
         }
 
-        internal virtual void Unregister(MapView nativeMap, Map map)
+        internal virtual void Unregister(TNativeMap nativeMap, Map map)
         {
             if (map != null)
             {

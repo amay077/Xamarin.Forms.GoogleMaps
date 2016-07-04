@@ -10,18 +10,19 @@ using Android.Util;
 using Android.App;
 using Xamarin.Forms.GoogleMaps.Internals;
 using Xamarin.Forms.GoogleMaps.Logics.Android;
+using Xamarin.Forms.GoogleMaps.Logics;
 
 namespace Xamarin.Forms.GoogleMaps.Android
 {
     public class MapRenderer : ViewRenderer,
         GoogleMap.IOnCameraChangeListener
     {
-        readonly BaseLogic[] _logics;
+        readonly BaseLogic<GoogleMap>[] _logics;
 
         public MapRenderer()
         {
             AutoPackage = false;
-            _logics = new BaseLogic[]
+            _logics = new BaseLogic<GoogleMap>[]
             {
                 new PolylineLogic(),
                 new PolygonLogic(),

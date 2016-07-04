@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using Foundation;
-using Xamarin.Forms.GoogleMaps.Logics.iOS;
+using Google.Maps;
+using Xamarin.Forms.GoogleMaps.iOS;
 using NativeTileLayer = Google.Maps.TileLayer;
 using NativeUrlTileLayer = Google.Maps.UrlTileLayer;
 
-namespace Xamarin.Forms.GoogleMaps.iOS
+namespace Xamarin.Forms.GoogleMaps.Logics.iOS
 {
-    internal class TileLayerLogic : DefaultLogic<TileLayer, NativeTileLayer>
+    internal class TileLayerLogic : DefaultLogic<TileLayer, NativeTileLayer, MapView>
     {
         protected override IList<TileLayer> GetItems(Map map) => map.TileLayers;
 

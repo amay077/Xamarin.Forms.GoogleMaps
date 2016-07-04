@@ -47,6 +47,8 @@
     <Compile Include="Internals\MoveToRegionMessage.cs" />
     <Compile Include="SelectedPinChangedEventArgs.cs" />
     <Compile Include="TileLayer.cs" />
+    <Compile Include="Logics\BaseLogic.cs" />
+    <Compile Include="Logics\DefaultLogic.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">
@@ -64,6 +66,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Internals\" />
+    <Folder Include="Logics\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Forms.2.3.0.49\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.2.3.0.49\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />

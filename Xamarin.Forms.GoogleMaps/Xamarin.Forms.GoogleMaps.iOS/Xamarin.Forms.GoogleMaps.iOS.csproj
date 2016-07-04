@@ -66,8 +66,6 @@
     <Compile Include="MapRenderer.cs" />
     <Compile Include="Properties\GlobalAssemblyInfo.cs" />
     <Compile Include="Logics\CircleLogic.cs" />
-    <Compile Include="Logics\BaseLogic.cs" />
-    <Compile Include="Logics\DefaultLogic.cs" />
     <Compile Include="Extensions\PositionExtensions.cs" />
     <Compile Include="Logics\PolylineLogic.cs" />
     <Compile Include="Logics\PolygonLogic.cs" />

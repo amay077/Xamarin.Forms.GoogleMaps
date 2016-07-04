@@ -95,13 +95,11 @@
     <Compile Include="FormsGoogleMaps.cs" />
     <Compile Include="GeocoderBackend.cs" />
     <Compile Include="MapRenderer.cs" />
-    <Compile Include="Logics\DefaultLogic.cs" />
     <Compile Include="Logics\PolygonLogic.cs" />
     <Compile Include="Logics\PolylineLogic.cs" />
     <Compile Include="Logics\CircleLogic.cs" />
     <Compile Include="Logics\PinLogic.cs" />
     <Compile Include="Logics\TileLayerLogic.cs" />
-    <Compile Include="Logics\BaseLogic.cs" />
     <Compile Include="Extensions\PositionExtensions.cs" />
     <Compile Include="DroidAsyncTileLayer.cs" />
     <Compile Include="DroidSyncTileLayer.cs" />

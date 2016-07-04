@@ -10,12 +10,8 @@ using NativePolygon = Android.Gms.Maps.Model.Polygon;
 
 namespace Xamarin.Forms.GoogleMaps.Logics.Android
 {
-    internal class PolygonLogic : DefaultLogic<Polygon, NativePolygon>
+    internal class PolygonLogic : DefaultLogic<Polygon, NativePolygon, GoogleMap>
     {
-        public PolygonLogic()
-        {
-        }
-
         protected override IList<Polygon> GetItems(Map map) => map.Polygons;
 
         internal override void Register(GoogleMap oldNativeMap, Map oldMap, GoogleMap newNativeMap, Map newMap)

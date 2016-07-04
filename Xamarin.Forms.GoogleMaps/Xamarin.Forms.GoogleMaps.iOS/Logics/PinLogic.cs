@@ -6,7 +6,7 @@ using Google.Maps;
 using Xamarin.Forms.GoogleMaps.Extensions.iOS;
 namespace Xamarin.Forms.GoogleMaps.Logics.iOS
 {
-    internal class PinLogic : DefaultLogic<Pin, Marker>
+    internal class PinLogic : DefaultLogic<Pin, Marker, MapView>
     {
         protected override IList<Pin> GetItems(Map map) => map.Pins;
 

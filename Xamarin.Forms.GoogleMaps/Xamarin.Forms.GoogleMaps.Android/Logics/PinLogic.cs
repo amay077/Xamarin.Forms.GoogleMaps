@@ -8,15 +8,11 @@ using Xamarin.Forms.GoogleMaps.Android;
 
 namespace Xamarin.Forms.GoogleMaps.Logics.Android
 {
-    internal class PinLogic : DefaultLogic<Pin, Marker>
+    internal class PinLogic : DefaultLogic<Pin, Marker, GoogleMap>
     {
-        private volatile bool _onMarkerEvent = false;
-
-        public PinLogic()
-        {
-        }
-
         protected override IList<Pin> GetItems(Map map) => map.Pins;
+
+        private volatile bool _onMarkerEvent = false;
 
         internal override void Register(GoogleMap oldNativeMap, Map oldMap, GoogleMap newNativeMap, Map newMap)
         {

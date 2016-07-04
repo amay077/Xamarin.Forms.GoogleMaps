@@ -4,10 +4,11 @@ using System.ComponentModel;
 using Android.Gms.Maps.Model;
 using Xamarin.Forms.GoogleMaps.Android;
 using NativeTileOverlay = Android.Gms.Maps.Model.TileOverlay;
+using Android.Gms.Maps;
 
 namespace Xamarin.Forms.GoogleMaps.Logics.Android
 {
-    internal class TileLayerLogic : DefaultLogic<TileLayer, NativeTileOverlay>
+    internal class TileLayerLogic : DefaultLogic<TileLayer, NativeTileOverlay, GoogleMap>
     {
         protected override IList<TileLayer> GetItems(Map map) => map.TileLayers;
 

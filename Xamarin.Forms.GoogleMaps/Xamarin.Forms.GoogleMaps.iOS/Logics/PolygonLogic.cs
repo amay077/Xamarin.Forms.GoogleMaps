@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using Google.Maps;
-using Xamarin.Forms.GoogleMaps.Logics.iOS;
 using Xamarin.Forms.Platform.iOS;
 using NativePolygon = Google.Maps.Polygon;
 
 namespace Xamarin.Forms.GoogleMaps.Logics.iOS
 {
-    internal class PolygonLogic : DefaultLogic<Polygon, NativePolygon>
+    internal class PolygonLogic : DefaultLogic<Polygon, NativePolygon, MapView>
     {
         protected override IList<Polygon> GetItems(Map map) => map.Polygons;
 
