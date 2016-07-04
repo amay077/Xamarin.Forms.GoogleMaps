@@ -6,12 +6,8 @@ using NativeTileOverlay = Android.Gms.Maps.Model.TileOverlay;
 
 namespace Xamarin.Forms.GoogleMaps.Logics.Android
 {
-    internal class TileLayerLogic : ShapeLogic<TileLayer, NativeTileOverlay>
+    internal class TileLayerLogic : DefaultLogic<TileLayer, NativeTileOverlay>
     {
-        public TileLayerLogic()
-        {
-        }
-
         protected override IList<TileLayer> GetItems(Map map) => map.TileLayers;
 
         protected override NativeTileOverlay CreateNativeItem(TileLayer outerItem)

@@ -8,7 +8,7 @@ using Xamarin.Forms.GoogleMaps.Android;
 
 namespace Xamarin.Forms.GoogleMaps.Logics.Android
 {
-    internal class PinLogic : ShapeLogic<Pin, Marker>
+    internal class PinLogic : DefaultLogic<Pin, Marker>
     {
         private volatile bool _onMarkerEvent = false;
 

@@ -6,8 +6,8 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
 {
 	internal class NativeSyncTileLayer : Java.Lang.Object, INativeTileProvider
 	{
-		private Func<int, int, int, byte[]> _tileImageSync;
-		private int _tileSize;
+		private readonly Func<int, int, int, byte[]> _tileImageSync;
+		private readonly int _tileSize;
 
 		public NativeSyncTileLayer(Func<int, int, int, byte[]> tileImageSync, int tileSize = 256) : base()
 		{

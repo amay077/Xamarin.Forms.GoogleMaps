@@ -11,7 +11,7 @@ using NativePolyline = Android.Gms.Maps.Model.Polyline;
 
 namespace Xamarin.Forms.GoogleMaps.Logics.Android
 {
-    internal class PolylineLogic : ShapeLogic<Polyline, NativePolyline>
+    internal class PolylineLogic : DefaultLogic<Polyline, NativePolyline>
     {
         public PolylineLogic()
         {

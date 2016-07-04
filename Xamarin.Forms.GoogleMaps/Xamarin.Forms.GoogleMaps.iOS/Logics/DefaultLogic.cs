@@ -3,17 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 
-namespace Xamarin.Forms.GoogleMaps.Logics.Android
+namespace Xamarin.Forms.GoogleMaps.Logics.iOS
 {
     internal abstract class ShapeLogic<TOuter, TNative> : BaseLogic
-        where TOuter : BindableObject 
+        where TOuter : BindableObject
         where TNative : class
     {
         readonly IList<TOuter> _outerItems = new List<TOuter>(); // Only for ResetItems.
-
-        public ShapeLogic()
-        {
-        }
 
         protected abstract IList<TOuter> GetItems(Map map);
 
@@ -61,7 +57,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
             _outerItems.Clear();
         }
 
-        internal override void NotifyReset() => 
+        internal override void NotifyReset() =>
             OnCollectionChanged(GetItems(Map), new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
 
         protected virtual void OnItemPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)

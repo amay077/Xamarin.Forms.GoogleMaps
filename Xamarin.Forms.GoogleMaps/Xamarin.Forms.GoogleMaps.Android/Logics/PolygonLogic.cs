@@ -10,7 +10,7 @@ using NativePolygon = Android.Gms.Maps.Model.Polygon;
 
 namespace Xamarin.Forms.GoogleMaps.Logics.Android
 {
-    internal class PolygonLogic : ShapeLogic<Polygon, NativePolygon>
+    internal class PolygonLogic : DefaultLogic<Polygon, NativePolygon>
     {
         public PolygonLogic()
         {

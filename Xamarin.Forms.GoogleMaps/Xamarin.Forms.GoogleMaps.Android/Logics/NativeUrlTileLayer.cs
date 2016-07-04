@@ -5,7 +5,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
 {
 	internal class NativeUrlTileLayer : UrlTileProvider
 	{
-		private Func<int, int, int, Uri> _makeTileUri;
+		private readonly Func<int, int, int, Uri> _makeTileUri;
 
 		public NativeUrlTileLayer(Func<int, int, int, Uri> makeTileUri, int tileSize = 256) : base(tileSize, tileSize)
 		{
