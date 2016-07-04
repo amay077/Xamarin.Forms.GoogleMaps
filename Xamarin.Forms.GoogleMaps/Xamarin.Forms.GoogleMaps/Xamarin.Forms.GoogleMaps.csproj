@@ -50,6 +50,7 @@
     <Compile Include="Logics\BaseLogic.cs" />
     <Compile Include="Logics\DefaultLogic.cs" />
     <Compile Include="Logics\DefaultCircleLogic.cs" />
+    <Compile Include="Logics\DefaultPinLogic.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">

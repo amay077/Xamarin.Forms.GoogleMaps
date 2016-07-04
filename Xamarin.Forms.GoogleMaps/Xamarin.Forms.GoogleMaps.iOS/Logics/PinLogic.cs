@@ -6,7 +6,7 @@ using Google.Maps;
 using Xamarin.Forms.GoogleMaps.Extensions.iOS;
 namespace Xamarin.Forms.GoogleMaps.Logics.iOS
 {
-    internal class PinLogic : DefaultLogic<Pin, Marker, MapView>
+    internal class PinLogic : DefaultPinLogic<Marker, MapView>
     {
         protected override IList<Pin> GetItems(Map map) => map.Pins;
 
@@ -125,6 +125,19 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
             {
                 _onMarkerEvent = false;
             }
+        }
+
+        protected override void OnUpdateAddress(Pin outerItem, Marker nativeItem)
+            => nativeItem.Snippet = outerItem.Address;
+
+        protected override void OnUpdateLabel(Pin outerItem, Marker nativeItem)
+            => nativeItem.Title = outerItem.Label;
+
+        protected override void OnUpdatePosition(Pin outerItem, Marker nativeItem)
+            => nativeItem.Position = outerItem.Position.ToCoord();
+
+        protected override void OnUpdateType(Pin outerItem, Marker nativeItem)
+        {
         }
     }
 }
