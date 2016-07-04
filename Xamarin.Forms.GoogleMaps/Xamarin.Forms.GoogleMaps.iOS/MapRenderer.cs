@@ -116,7 +116,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                 _shouldUpdateRegion = true;
 
             foreach (var logic in _logics)
-                logic.OnElementPropertyChanged(e);
+                logic.OnMapPropertyChanged(e);
         }
 
         public override void LayoutSubviews()

@@ -49,10 +49,6 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
             nativeTileLayer.Map = null;
             return nativeTileLayer;
         }
-
-        internal override void OnElementPropertyChanged(PropertyChangedEventArgs e)
-        {
-        }
     }
 }
 

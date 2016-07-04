@@ -9,7 +9,7 @@ using Xamarin.Forms.Platform.iOS;
 
 namespace Xamarin.Forms.GoogleMaps.Logics.iOS
 {
-    internal class CircleLogic : DefaultLogic<Circle, NativeCircle, MapView>
+    internal class CircleLogic : DefaultCircleLogic<NativeCircle, MapView>
     {
         protected override IList<Circle> GetItems(Map map) => map.Circles;
 
@@ -61,9 +61,20 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
             targetOuterItem?.SendTap();
         }
 
-        internal override void OnElementPropertyChanged(PropertyChangedEventArgs e)
-        {
-        }
+        protected override void OnUpdateStrokeWidth(Circle outerItem, NativeCircle nativeItem)
+            => nativeItem.StrokeWidth = outerItem.StrokeWidth;
+
+        protected override void OnUpdateStrokeColor(Circle outerItem, NativeCircle nativeItem)
+            => nativeItem.StrokeColor = outerItem.StrokeColor.ToUIColor();
+
+        protected override void OnUpdateFillColor(Circle outerItem, NativeCircle nativeItem)
+            => nativeItem.FillColor = outerItem.FillColor.ToUIColor();
+
+        protected override void OnUpdateCenter(Circle outerItem, NativeCircle nativeItem)
+            => nativeItem.Position = outerItem.Center.ToCoord();
+
+        protected override void OnUpdateRadius(Circle outerItem, NativeCircle nativeItem)
+            => nativeItem.Radius = outerItem.Radius.Meters;
     }
 }
 

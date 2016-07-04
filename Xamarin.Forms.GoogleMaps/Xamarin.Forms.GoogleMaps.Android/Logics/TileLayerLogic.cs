@@ -45,10 +45,6 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
             nativeTileOverlay.Remove();
             return nativeTileOverlay;
         }
-
-        internal override void OnElementPropertyChanged(PropertyChangedEventArgs e)
-        {
-        }
     }
 }
 

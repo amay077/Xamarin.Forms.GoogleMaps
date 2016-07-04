@@ -20,20 +20,19 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
 
             if (newNativeMap != null)
             {
-                newNativeMap.InfoWindowClick += MapOnInfoWindowClick;
-                newNativeMap.MarkerClick += MapOnMakerClick;
-                newNativeMap.InfoWindowClose += MapOnInfoWindowClose;
+                newNativeMap.InfoWindowClick += OnInfoWindowClick;
+                newNativeMap.MarkerClick += OnMakerClick;
+                newNativeMap.InfoWindowClose += OnInfoWindowClose;
             }
-
         }
 
         internal override void Unregister(GoogleMap nativeMap, Map map)
         {
             if (nativeMap != null)
             {
-                nativeMap.MarkerClick -= MapOnMakerClick;
-                nativeMap.InfoWindowClose -= MapOnInfoWindowClose;
-                nativeMap.InfoWindowClick -= MapOnInfoWindowClick;
+                nativeMap.MarkerClick -= OnMakerClick;
+                nativeMap.InfoWindowClose -= OnInfoWindowClose;
+                nativeMap.InfoWindowClick -= OnInfoWindowClick;
             }
 
             base.Unregister(nativeMap, map);
@@ -71,20 +70,20 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
             return GetItems(Map).FirstOrDefault(outerItem => ((Marker)outerItem.NativeObject).Id == marker.Id);
         }
 
-        void MapOnInfoWindowClick(object sender, GoogleMap.InfoWindowClickEventArgs eventArgs)
+        void OnInfoWindowClick(object sender, GoogleMap.InfoWindowClickEventArgs e)
         {
             // lookup pin
-            var targetPin = LookupPin(eventArgs.Marker);
+            var targetPin = LookupPin(e.Marker);
 
             // only consider event handled if a handler is present. 
             // Else allow default behavior of displaying an info window.
             targetPin?.SendTap();
         }
 
-        void MapOnMakerClick(object sender, GoogleMap.MarkerClickEventArgs eventArgs)
+        void OnMakerClick(object sender, GoogleMap.MarkerClickEventArgs e)
         {
             // lookup pin
-            var targetPin = LookupPin(eventArgs.Marker);
+            var targetPin = LookupPin(e.Marker);
 
             try
             {
@@ -97,13 +96,13 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
                 _onMarkerEvent = false;
             }
 
-            eventArgs.Handled = false;
+            e.Handled = false;
         }
 
-        void MapOnInfoWindowClose(object sender, GoogleMap.InfoWindowCloseEventArgs eventArgs)
+        void OnInfoWindowClose(object sender, GoogleMap.InfoWindowCloseEventArgs e)
         {
             // lookup pin
-            var targetPin = LookupPin(eventArgs.Marker);
+            var targetPin = LookupPin(e.Marker);
 
             try
             {
@@ -117,7 +116,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
             }
         }
 
-        internal override void OnElementPropertyChanged(PropertyChangedEventArgs e)
+        internal override void OnMapPropertyChanged(PropertyChangedEventArgs e)
         {
             if (e.PropertyName == Map.SelectedPinProperty.PropertyName)
             {

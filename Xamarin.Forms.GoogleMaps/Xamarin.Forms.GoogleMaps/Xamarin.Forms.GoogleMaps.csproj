@@ -49,6 +49,7 @@
     <Compile Include="TileLayer.cs" />
     <Compile Include="Logics\BaseLogic.cs" />
     <Compile Include="Logics\DefaultLogic.cs" />
+    <Compile Include="Logics\DefaultCircleLogic.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">

@@ -73,6 +73,8 @@ namespace Xamarin.Forms.GoogleMaps.Logics
 
         internal abstract void NotifyReset();
 
-        internal abstract void OnElementPropertyChanged(PropertyChangedEventArgs e);
+        internal virtual void OnMapPropertyChanged(PropertyChangedEventArgs e)
+        {
+        }
     }
 }

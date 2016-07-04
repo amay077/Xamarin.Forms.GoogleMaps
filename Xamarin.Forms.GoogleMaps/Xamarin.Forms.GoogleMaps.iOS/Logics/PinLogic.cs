@@ -58,7 +58,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
             return nativeMarker;
         }
 
-        internal override void OnElementPropertyChanged(PropertyChangedEventArgs e)
+        internal override void OnMapPropertyChanged(PropertyChangedEventArgs e)
         {
             if (e.PropertyName == Map.SelectedPinProperty.PropertyName)
             {

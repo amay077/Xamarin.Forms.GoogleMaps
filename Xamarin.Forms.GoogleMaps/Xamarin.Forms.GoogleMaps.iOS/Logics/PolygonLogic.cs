@@ -62,10 +62,6 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
                 outerItem => object.ReferenceEquals(outerItem.NativeObject, e.Overlay));
             targetOuterItem?.SendTap();
         }
-
-        internal override void OnElementPropertyChanged(PropertyChangedEventArgs e)
-        {
-        }
     }
 }
 

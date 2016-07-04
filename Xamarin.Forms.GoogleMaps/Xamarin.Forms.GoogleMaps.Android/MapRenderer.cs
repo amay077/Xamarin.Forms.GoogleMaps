@@ -181,7 +181,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
             }
 
             foreach (var logic in _logics)
-                logic.OnElementPropertyChanged(e);
+                logic.OnMapPropertyChanged(e);
         }
 
         void SetMapType()

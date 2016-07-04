@@ -9,7 +9,7 @@ using Android.Gms.Maps;
 
 namespace Xamarin.Forms.GoogleMaps.Logics.Android
 {
-    internal class CircleLogic : DefaultLogic<Circle, NativeCircle, GoogleMap>
+    internal class CircleLogic : DefaultCircleLogic<NativeCircle, GoogleMap>
     {
         protected override IList<Circle> GetItems(Map map) => map.Circles;
 
@@ -40,40 +40,20 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
             return nativeCircle;
         }
 
-        internal override void OnElementPropertyChanged(PropertyChangedEventArgs e)
-        {
-        }
+        protected override void OnUpdateStrokeWidth(Circle outerItem, NativeCircle nativeItem) 
+            => nativeItem.StrokeWidth = outerItem.StrokeWidth;
 
-        protected override void OnItemPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            base.OnItemPropertyChanged(sender, e);
-            var circle = sender as Circle;
-            var nativeCircle = circle?.NativeObject as NativeCircle;
+        protected override void OnUpdateStrokeColor(Circle outerItem, NativeCircle nativeItem)
+            => nativeItem.StrokeColor = outerItem.StrokeColor.ToAndroid();
 
-            if (nativeCircle == null)
-                return;
+        protected override void OnUpdateFillColor(Circle outerItem, NativeCircle nativeItem)
+            => nativeItem.FillColor = outerItem.FillColor.ToAndroid();
 
-            if (e.PropertyName == Circle.StrokeWidthProperty.PropertyName)
-            {
-                nativeCircle.StrokeWidth = circle.StrokeWidth;
-            }
-            else if (e.PropertyName == Circle.StrokeColorProperty.PropertyName)
-            {
-                nativeCircle.StrokeColor = circle.StrokeColor.ToAndroid();
-            }
-            else if (e.PropertyName == Circle.FillColorProperty.PropertyName)
-            {
-                nativeCircle.FillColor = circle.FillColor.ToAndroid();
-            }
-            else if (e.PropertyName == Circle.CenterProperty.PropertyName)
-            {
-                nativeCircle.Center = circle.Center.ToLatLng();
-            }
-            else if (e.PropertyName == Circle.RadiusProperty.PropertyName)
-            {
-                nativeCircle.Radius = circle.Radius.Meters;
-            }
-        }
+        protected override void OnUpdateCenter(Circle outerItem, NativeCircle nativeItem)
+            => nativeItem.Center = outerItem.Center.ToLatLng();
+
+        protected override void OnUpdateRadius(Circle outerItem, NativeCircle nativeItem)
+            => nativeItem.Radius = outerItem.Radius.Meters;
     }
 }
 

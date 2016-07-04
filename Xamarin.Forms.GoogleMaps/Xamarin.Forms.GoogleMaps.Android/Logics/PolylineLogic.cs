@@ -20,7 +20,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
 
             if (newNativeMap != null)
             {
-                newNativeMap.PolylineClick += MapOnPolylineClick;
+                newNativeMap.PolylineClick += OnPolylineClick;
             }
         }
 
@@ -28,7 +28,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
         {
             if (nativeMap != null)
             {
-                nativeMap.PolylineClick -= MapOnPolylineClick;
+                nativeMap.PolylineClick -= OnPolylineClick;
             }
 
             base.Unregister(nativeMap, map);
@@ -71,10 +71,10 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
             return nativeShape;
         }
 
-        void MapOnPolylineClick(object sender, GoogleMap.PolylineClickEventArgs eventArgs)
+        void OnPolylineClick(object sender, GoogleMap.PolylineClickEventArgs e)
         {
             // clicked polyline
-            var nativeItem = eventArgs.Polyline;
+            var nativeItem = e.Polyline;
 
             // lookup pin
             var targetOuterItem = GetItems(Map).FirstOrDefault(
@@ -83,10 +83,6 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
             // only consider event handled if a handler is present. 
             // Else allow default behavior of displaying an info window.
             targetOuterItem?.SendTap();
-        }
-
-        internal override void OnElementPropertyChanged(PropertyChangedEventArgs e)
-        {
         }
 
         protected override void OnItemPropertyChanged(object sender, PropertyChangedEventArgs e)
