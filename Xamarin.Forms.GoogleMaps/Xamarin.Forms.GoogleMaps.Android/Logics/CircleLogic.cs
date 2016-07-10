@@ -40,7 +40,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
             return nativeCircle;
         }
 
-        protected override void OnUpdateStrokeWidth(Circle outerItem, NativeCircle nativeItem) 
+        protected override void OnUpdateStrokeWidth(Circle outerItem, NativeCircle nativeItem)
             => nativeItem.StrokeWidth = outerItem.StrokeWidth;
 
         protected override void OnUpdateStrokeColor(Circle outerItem, NativeCircle nativeItem)

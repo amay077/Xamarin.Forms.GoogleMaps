@@ -4,21 +4,21 @@ using INativeTileProvider = Android.Gms.Maps.Model.ITileProvider;
 
 namespace Xamarin.Forms.GoogleMaps.Android
 {
-	internal class DroidSyncTileLayer : Java.Lang.Object, INativeTileProvider
-	{
-		private readonly Func<int, int, int, byte[]> _tileImageSync;
-		private readonly int _tileSize;
+    internal class DroidSyncTileLayer : Java.Lang.Object, INativeTileProvider
+    {
+        private readonly Func<int, int, int, byte[]> _tileImageSync;
+        private readonly int _tileSize;
 
-		public DroidSyncTileLayer(Func<int, int, int, byte[]> tileImageSync, int tileSize = 256) : base()
-		{
-			_tileImageSync = tileImageSync;
-			_tileSize = tileSize;
-		}
+        public DroidSyncTileLayer(Func<int, int, int, byte[]> tileImageSync, int tileSize = 256) : base()
+        {
+            _tileImageSync = tileImageSync;
+            _tileSize = tileSize;
+        }
 
-		public Tile GetTile(int x, int y, int zoom)
-		{
-			var imgByte = _tileImageSync(x, y, zoom);
-			return new Tile(_tileSize, _tileSize, imgByte);
-		}
-	}
+        public Tile GetTile(int x, int y, int zoom)
+        {
+            var imgByte = _tileImageSync(x, y, zoom);
+            return new Tile(_tileSize, _tileSize, imgByte);
+        }
+    }
 }

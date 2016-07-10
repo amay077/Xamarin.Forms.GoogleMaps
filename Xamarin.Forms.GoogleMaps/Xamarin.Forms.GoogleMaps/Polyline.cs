@@ -68,7 +68,7 @@ namespace Xamarin.Forms.GoogleMaps
             _positionsChangedHandler = handler;
             if (handler != null)
                 _positions.CollectionChanged += OnCollectionChanged;
-            else 
+            else
                 _positions.CollectionChanged -= OnCollectionChanged;
         }
 

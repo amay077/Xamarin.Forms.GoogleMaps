@@ -123,7 +123,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
                 if (!_onMarkerEvent)
                     UpdateSelectedPin(Map.SelectedPin);
                 Map.SendSelectedPinChanged(Map.SelectedPin);
-            }        
+            }
         }
 
         void UpdateSelectedPin(Pin pin)

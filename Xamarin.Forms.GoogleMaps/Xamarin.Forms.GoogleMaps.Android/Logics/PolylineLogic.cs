@@ -49,7 +49,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
 
             // associate pin with marker for later lookup in event handlers
             outerItem.NativeObject = nativePolyline;
-            outerItem.SetOnPositionsChanged((polyline, e) => 
+            outerItem.SetOnPositionsChanged((polyline, e) =>
             {
                 var native = polyline.NativeObject as NativePolyline;
                 native.Points = polyline.Positions.ToLatLngs();

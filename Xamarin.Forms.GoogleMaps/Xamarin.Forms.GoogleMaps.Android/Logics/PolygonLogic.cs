@@ -66,7 +66,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
             var nativePolygon = outerItem.NativeObject as NativePolygon;
             if (nativePolygon == null)
                 return null;
-            
+
             nativePolygon.Remove();
             outerItem.NativeObject = null;
             return nativePolygon;

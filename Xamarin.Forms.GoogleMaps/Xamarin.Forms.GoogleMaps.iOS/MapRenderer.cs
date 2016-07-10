@@ -151,7 +151,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
             Position center = mapSpan.Center;
             var halfLat = mapSpan.LatitudeDegrees / 2d;
             var halfLong = mapSpan.LongitudeDegrees / 2d;
-            var mapRegion = new CoordinateBounds(new CLLocationCoordinate2D(center.Latitude - halfLat, center.Longitude - halfLong), 
+            var mapRegion = new CoordinateBounds(new CLLocationCoordinate2D(center.Latitude - halfLat, center.Longitude - halfLong),
                                                 new CLLocationCoordinate2D(center.Latitude + halfLat, center.Longitude + halfLong));
 
             if (animated)

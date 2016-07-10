@@ -16,10 +16,10 @@ namespace Xamarin.Forms.GoogleMaps
             if (nativeItem == null)
                 return;
 
-            if (e.PropertyName == Pin.AddressProperty.PropertyName)       OnUpdateAddress(outerItem, nativeItem);
-            else if (e.PropertyName == Pin.LabelProperty.PropertyName)    OnUpdateLabel(outerItem, nativeItem);
+            if (e.PropertyName == Pin.AddressProperty.PropertyName) OnUpdateAddress(outerItem, nativeItem);
+            else if (e.PropertyName == Pin.LabelProperty.PropertyName) OnUpdateLabel(outerItem, nativeItem);
             else if (e.PropertyName == Pin.PositionProperty.PropertyName) OnUpdatePosition(outerItem, nativeItem);
-            else if (e.PropertyName == Pin.TypeProperty.PropertyName)     OnUpdateType(outerItem, nativeItem);
+            else if (e.PropertyName == Pin.TypeProperty.PropertyName) OnUpdateType(outerItem, nativeItem);
         }
 
         protected abstract void OnUpdateAddress(Pin outerItem, TNative nativeItem);
@@ -29,6 +29,6 @@ namespace Xamarin.Forms.GoogleMaps
         protected abstract void OnUpdatePosition(Pin outerItem, TNative nativeItem);
 
         protected abstract void OnUpdateType(Pin outerItem, TNative nativeItem);
-   }
+    }
 }
 
