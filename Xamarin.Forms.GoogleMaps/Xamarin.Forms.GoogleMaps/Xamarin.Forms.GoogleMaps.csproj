@@ -53,6 +53,7 @@
     <Compile Include="Logics\DefaultPinLogic.cs" />
     <Compile Include="BitmapDescriptor.cs" />
     <Compile Include="BitmapDescriptorFactory.cs" />
+    <Compile Include="BitmapDescriptorType.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">

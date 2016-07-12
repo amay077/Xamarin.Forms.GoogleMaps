@@ -3,17 +3,20 @@ namespace Xamarin.Forms.GoogleMaps
 {
     public sealed class BitmapDescriptor
     {
-        internal float Hue { get; }
-        internal ImageSource Source { get; }
+        internal BitmapDescriptorType Type { get; }
+        internal Color Color { get; }
+        internal string BundleName { get; }
 
-        internal BitmapDescriptor(float hue)
+        internal BitmapDescriptor(BitmapDescriptorType type, Color color)
         {
-            this.Hue = hue;
+            this.Type = type;
+            this.Color = color;
         }
 
-        internal BitmapDescriptor(ImageSource source)
+        internal BitmapDescriptor(BitmapDescriptorType type, string fileName)
         {
-            this.Source = source;
+            this.Type = type;
+            this.BundleName = fileName;
         }
     }
 }

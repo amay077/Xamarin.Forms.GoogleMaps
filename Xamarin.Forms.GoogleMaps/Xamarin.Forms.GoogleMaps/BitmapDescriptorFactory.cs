@@ -3,14 +3,14 @@ namespace Xamarin.Forms.GoogleMaps
 {
     public static class BitmapDescriptorFactory
     {
-        public static BitmapDescriptor DefaultMarker(float hue)
+        public static BitmapDescriptor DefaultMarker(Color color)
         {
-            return new BitmapDescriptor(hue);
+            return new BitmapDescriptor(BitmapDescriptorType.Default, color);
         }
 
-        public static BitmapDescriptor FromImage(ImageSource source)
+        public static BitmapDescriptor FromBundle(string bundleName)
         {
-            return new BitmapDescriptor(source);
+            return new BitmapDescriptor(BitmapDescriptorType.Bundle, bundleName);
         }
     }
 }
