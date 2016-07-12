@@ -44,6 +44,9 @@
     <EmbeddedResource Include="TilesPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Include="CustomPinsPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -64,6 +67,9 @@
     </Compile>
     <Compile Include="TilesPage.xaml.cs">
       <DependentUpon>TilesPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CustomPinsPage.xaml.cs">
+      <DependentUpon>CustomPinsPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

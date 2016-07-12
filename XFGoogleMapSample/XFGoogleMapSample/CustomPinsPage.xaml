@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:maps="clr-namespace:Xamarin.Forms.GoogleMaps;assembly=Xamarin.Forms.GoogleMaps"
+	x:Class="XFGoogleMapSample.CustomPinsPage"
+	Title="Custom Pin">
+	<ContentPage.Content>
+		<StackLayout
+			VerticalOptions="Fill"
+			Orientation="Vertical">
+
+			<Grid>
+				<Grid.RowDefinitions>
+			        <RowDefinition Height="Auto" />
+			        <RowDefinition Height="Auto" />
+			        <RowDefinition Height="Auto" />
+			        <RowDefinition Height="Auto" />
+			        <RowDefinition Height="Auto" />
+			    </Grid.RowDefinitions>
+			 
+			    <Grid.ColumnDefinitions>
+			        <ColumnDefinition Width="Auto" />
+			        <ColumnDefinition Width="Auto" />
+			        <ColumnDefinition Width="Auto" />
+			    </Grid.ColumnDefinitions>
+
+				
+				<Switch x:Name="switchPinColor" 
+						VerticalOptions="Center"
+						Grid.Row="1"
+						Grid.Column="1"/>
+
+				<Label  Text="Default:"
+						VerticalTextAlignment="Center"
+						HorizontalTextAlignment="End"
+						Grid.Row="1"
+						Grid.Column="2"/>
+
+				<Picker x:Name="buttonPinColor"
+						Grid.Row="1"
+						Grid.Column="3"/>
+
+				<Switch x:Name="switchPinBundle" 
+						VerticalOptions="Center"
+						Grid.Row="2"
+						Grid.Column="1"/>
+
+				<Label  Text="Bundle:"
+						VerticalTextAlignment="Center"
+						HorizontalTextAlignment="End"
+						Grid.Row="2"
+						Grid.Column="2"/>
+
+				<Picker x:Name="buttonPinBundle"
+						Grid.Row="2"
+						Grid.Column="3"/>
+
+				<Switch x:Name="switchPinPath" 
+						VerticalOptions="Center"
+						Grid.Row="3"
+						Grid.Column="1"/>
+
+				<Label  Text="Path:"
+						VerticalTextAlignment="Center"
+						HorizontalTextAlignment="End"
+						Grid.Row="3"
+						Grid.Column="2"/>
+
+				<Picker x:Name="buttonPinPath"
+						Grid.Row="3"
+						Grid.Column="3"/>
+				
+			</Grid>			
+			<maps:Map x:Name="map" 
+					VerticalOptions="FillAndExpand"/>		
+		</StackLayout>
+	</ContentPage.Content>
+</ContentPage>
