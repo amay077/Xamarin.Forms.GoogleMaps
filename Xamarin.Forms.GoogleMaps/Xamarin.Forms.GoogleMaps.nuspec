@@ -3,8 +3,19 @@
 	<metadata minClientVersion="2.8.3">
 		<id>Xamarin.Forms.GoogleMaps</id>
 		<title>Xamarin.Forms.GoogleMaps</title>
-		<version>1.3.0</version>
+		<version>1.4.0-beta1</version>
 		<releaseNotes>
+# 1.4.0-beta1
+
+## New Features
+
+* #33 Add custom marker support (Android / iOS only)
+* #9 Add Pin and Shapes BindableProperty support (Android / iOS only)
+
+## Bug Fixes
+
+* #38 [iOS] Exception: Specified cast is not valid
+
 # 1.3.0
 
 ## New Features
