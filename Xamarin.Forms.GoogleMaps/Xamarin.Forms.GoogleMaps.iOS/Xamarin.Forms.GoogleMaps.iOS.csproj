@@ -73,6 +73,7 @@
     <Compile Include="Logics\PinLogic.cs" />
     <Compile Include="TouchAsyncTileLayer.cs" />
     <Compile Include="TouchSyncTileLayer.cs" />
+    <Compile Include="Extensions\BitmapDescriptorExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

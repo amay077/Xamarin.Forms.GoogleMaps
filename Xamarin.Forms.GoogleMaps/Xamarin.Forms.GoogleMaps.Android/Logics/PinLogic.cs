@@ -5,6 +5,8 @@ using Android.Gms.Maps;
 using System.Linq;
 using System.ComponentModel;
 using Xamarin.Forms.GoogleMaps.Android;
+using Xamarin.Forms.GoogleMaps.Android.Extensions;
+using NativeBitmapDescriptorFactory = Android.Gms.Maps.Model.BitmapDescriptorFactory;
 
 namespace Xamarin.Forms.GoogleMaps.Logics.Android
 {
@@ -40,10 +42,17 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
 
         protected override Marker CreateNativeItem(Pin outerItem)
         {
-            var opts = new MarkerOptions();
-            opts.SetPosition(new LatLng(outerItem.Position.Latitude, outerItem.Position.Longitude));
-            opts.SetTitle(outerItem.Label);
-            opts.SetSnippet(outerItem.Address);
+            var opts = new MarkerOptions()
+                .SetPosition(new LatLng(outerItem.Position.Latitude, outerItem.Position.Longitude))
+                .SetTitle(outerItem.Label)
+                .SetSnippet(outerItem.Address)
+                .SetSnippet(outerItem.Address);
+
+            if (outerItem.Icon != null)
+            {
+                opts.SetIcon(outerItem.Icon.ToBitmapDescriptor());
+            }
+
             var marker = NativeMap.AddMarker(opts);
 
             // associate pin with marker for later lookup in event handlers
@@ -181,6 +190,13 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
 
         protected override void OnUpdateType(Pin outerItem, Marker nativeItem)
         {
+        }
+
+        protected override void OnUpdateIcon(Pin outerItem, Marker nativeItem)
+        {
+            nativeItem.SetIcon(outerItem?.Icon?.ToBitmapDescriptor() ?? NativeBitmapDescriptorFactory.DefaultMarker());
+            nativeItem.SetAnchor(0.5f, 1f);
+            nativeItem.SetInfoWindowAnchor(0.5f, 0f);
         }
     }
 }

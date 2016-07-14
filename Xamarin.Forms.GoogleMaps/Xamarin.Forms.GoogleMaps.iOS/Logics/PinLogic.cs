@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using Google.Maps;
 using Xamarin.Forms.GoogleMaps.Extensions.iOS;
+using Xamarin.Forms.GoogleMaps.iOS.Extensions;
 namespace Xamarin.Forms.GoogleMaps.Logics.iOS
 {
     internal class PinLogic : DefaultPinLogic<Marker, MapView>
@@ -42,6 +43,12 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
             var nativeMarker = Marker.FromPosition(outerItem.Position.ToCoord());
             nativeMarker.Title = outerItem.Label;
             nativeMarker.Snippet = outerItem.Address ?? string.Empty;
+
+            if (outerItem.Icon != null)
+            {
+                nativeMarker.Icon = outerItem.Icon.ToUIImage();
+            }
+
             outerItem.NativeObject = nativeMarker;
             nativeMarker.Map = NativeMap;
             return nativeMarker;
@@ -138,6 +145,11 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
 
         protected override void OnUpdateType(Pin outerItem, Marker nativeItem)
         {
+        }
+
+        protected override void OnUpdateIcon(Pin outerItem, Marker nativeItem)
+        {
+            nativeItem.Icon = outerItem?.Icon?.ToUIImage();
         }
     }
 }

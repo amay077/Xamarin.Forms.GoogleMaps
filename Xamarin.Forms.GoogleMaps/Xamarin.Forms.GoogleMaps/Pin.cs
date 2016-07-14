@@ -12,6 +12,8 @@ namespace Xamarin.Forms.GoogleMaps
 
         public static readonly BindableProperty AddressProperty = BindableProperty.Create("Address", typeof(string), typeof(Pin), default(string));
 
+        public static readonly BindableProperty IconProperty = BindableProperty.Create("Icon", typeof(BitmapDescriptor), typeof(Pin), default(BitmapDescriptor));
+
         // introduced to store the unique id for Android markers
 
         public string Label
@@ -36,6 +38,12 @@ namespace Xamarin.Forms.GoogleMaps
         {
             get { return (PinType)GetValue(TypeProperty); }
             set { SetValue(TypeProperty, value); }
+        }
+
+        public BitmapDescriptor Icon
+        {
+            get { return (BitmapDescriptor)GetValue(IconProperty); }
+            set { SetValue(IconProperty, value); }
         }
 
         public object Tag { get; set; }
