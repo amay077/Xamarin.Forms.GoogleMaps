@@ -21,7 +21,7 @@
 			<Button x:Name="buttonTiles"
 					Text="Tiles" />
 			<Button x:Name="buttonCustomPins"
-					Text="Custom Pins" />
+					Text="Custom Pin" />
 		</StackLayout>
 	</ContentPage.Content>
 </ContentPage>

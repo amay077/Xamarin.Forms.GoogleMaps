@@ -6,6 +6,7 @@ using System.Linq;
 using System.ComponentModel;
 using Xamarin.Forms.GoogleMaps.Android;
 using Xamarin.Forms.GoogleMaps.Android.Extensions;
+using NativeBitmapDescriptorFactory = Android.Gms.Maps.Model.BitmapDescriptorFactory;
 
 namespace Xamarin.Forms.GoogleMaps.Logics.Android
 {
@@ -193,12 +194,9 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
 
         protected override void OnUpdateIcon(Pin outerItem, Marker nativeItem)
         {
-            if (outerItem?.Icon != null)
-            {
-                nativeItem.SetIcon(outerItem?.Icon?.ToBitmapDescriptor());
-                nativeItem.SetAnchor(0.5f, 1f);
-                nativeItem.SetInfoWindowAnchor(0.5f, 0f);
-            }
+            nativeItem.SetIcon(outerItem?.Icon?.ToBitmapDescriptor() ?? NativeBitmapDescriptorFactory.DefaultMarker());
+            nativeItem.SetAnchor(0.5f, 1f);
+            nativeItem.SetInfoWindowAnchor(0.5f, 0f);
         }
     }
 }

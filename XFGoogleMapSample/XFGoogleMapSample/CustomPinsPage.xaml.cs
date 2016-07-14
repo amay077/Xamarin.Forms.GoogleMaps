@@ -11,6 +11,7 @@ namespace XFGoogleMapSample
     {
         bool _dirty;
 
+        // default marker colors
         readonly Tuple<string, Color>[] _colors = 
         {
             new Tuple<string, Color>("Green", Color.Green),
@@ -18,6 +19,7 @@ namespace XFGoogleMapSample
             new Tuple<string, Color>("Aqua", Color.Aqua)
         };
 
+        // bundle(Android:Asset, iOS:Bundle) images
         readonly string[] _bundles = 
         { 
             "image01.png", 
@@ -25,6 +27,7 @@ namespace XFGoogleMapSample
             "image03.png" 
         };
 
+        // PCL side embedded resources
         readonly string[] _streams =
         {
             "marker01.png",
@@ -32,6 +35,7 @@ namespace XFGoogleMapSample
             "marker03.png"
         };
 
+        // The pin
         readonly Pin _pinTokyo = new Pin()
         {
             Type = PinType.Place,
@@ -44,6 +48,7 @@ namespace XFGoogleMapSample
         {
             InitializeComponent();
 
+            // Switch contols as toggle
             var switches = new Switch[] { switchPinColor, switchPinBundle, switchPinStream };
             foreach (var sw in switches)
             {
@@ -64,6 +69,7 @@ namespace XFGoogleMapSample
                 };
             }
 
+            // Default colors
             foreach (var c in _colors)
             {
                 buttonPinColor.Items.Add(c.Item1);
@@ -76,6 +82,7 @@ namespace XFGoogleMapSample
             };
             buttonPinColor.SelectedIndex = 0;
 
+            // Bundle Images
             foreach (var bundle in _bundles)
             {
                 buttonPinBundle.Items.Add(bundle);
@@ -87,6 +94,7 @@ namespace XFGoogleMapSample
             };
             buttonPinBundle.SelectedIndex = 0;
 
+            // Stream Images
             foreach (var stream in _streams)
             {
                 buttonPinStream.Items.Add(stream);
@@ -97,6 +105,16 @@ namespace XFGoogleMapSample
                 UpdatePinIcon();
             };
             buttonPinStream.SelectedIndex = 0;
+
+            // Set to null
+            buttonPinSetToNull.Clicked += (sender, e) => 
+            {
+                _pinTokyo.Icon = null;
+                foreach (var sw in switches)
+                {
+                    sw.IsToggled = false;
+                }
+            };
 
         }
 

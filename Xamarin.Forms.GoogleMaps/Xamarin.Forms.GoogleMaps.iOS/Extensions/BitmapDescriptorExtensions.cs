@@ -1,7 +1,6 @@
 ﻿using System;
 using UIKit;
 using Xamarin.Forms.Platform.iOS;
-using CoreGraphics;
 using Foundation;
 namespace Xamarin.Forms.GoogleMaps.iOS.Extensions
 {

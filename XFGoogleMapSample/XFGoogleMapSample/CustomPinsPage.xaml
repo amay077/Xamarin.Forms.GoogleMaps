@@ -70,7 +70,12 @@
 				<Picker x:Name="buttonPinStream"
 						Grid.Row="3"
 						Grid.Column="3"/>
-				
+
+				<Button x:Name="buttonPinSetToNull" 
+						Text="Set to null"
+						Grid.Row="4"
+						Grid.Column="1"
+						Grid.ColumnSpan="3"/>
 			</Grid>			
 			<maps:Map x:Name="map" 
 					VerticalOptions="FillAndExpand"/>		
