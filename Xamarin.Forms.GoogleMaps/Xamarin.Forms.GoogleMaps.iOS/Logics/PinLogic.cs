@@ -148,7 +148,12 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
         }
 
         protected override void OnUpdateIcon(Pin outerItem, Marker nativeItem)
-            => nativeItem.Icon = outerItem?.Icon?.ToUIImage();
+        {
+            if (outerItem?.Icon != null)
+            {
+                nativeItem.Icon = outerItem?.Icon?.ToUIImage();
+            }
+        }
     }
 }
 

@@ -1,6 +1,8 @@
 ﻿using System;
 using UIKit;
 using Xamarin.Forms.Platform.iOS;
+using CoreGraphics;
+using Foundation;
 namespace Xamarin.Forms.GoogleMaps.iOS.Extensions
 {
     internal static class BitmapDescriptorExtensions
@@ -13,6 +15,10 @@ namespace Xamarin.Forms.GoogleMaps.iOS.Extensions
                     return Google.Maps.Marker.MarkerImage(self.Color.ToUIColor());
                 case BitmapDescriptorType.Bundle:
                     return UIImage.FromBundle(self.BundleName);
+                case BitmapDescriptorType.Stream:
+                    return UIImage.LoadFromData(NSData.FromStream(self.Stream));
+                case BitmapDescriptorType.AbsolutePath:
+                    return UIImage.FromFile(self.AbsolutePath);
                 default:
                     return Google.Maps.Marker.MarkerImage(UIColor.Red);
             }

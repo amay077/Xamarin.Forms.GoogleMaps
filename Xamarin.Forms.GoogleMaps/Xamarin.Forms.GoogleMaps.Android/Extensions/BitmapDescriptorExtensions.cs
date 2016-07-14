@@ -17,6 +17,10 @@ namespace Xamarin.Forms.GoogleMaps.Android.Extensions
                     return NativeBitmapDescriptorFactory.DefaultMarker((float)self.Color.Hue * 360f);
                 case BitmapDescriptorType.Bundle:
                     return NativeBitmapDescriptorFactory.FromAsset(self.BundleName);
+                case BitmapDescriptorType.Stream:
+                    return NativeBitmapDescriptorFactory.FromBitmap(BitmapFactory.DecodeStream(self.Stream));
+                case BitmapDescriptorType.AbsolutePath:
+                    return NativeBitmapDescriptorFactory.FromPath(self.AbsolutePath);
                 default:
                     return NativeBitmapDescriptorFactory.DefaultMarker();
             }

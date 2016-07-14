@@ -5,7 +5,8 @@ namespace Xamarin.Forms.GoogleMaps
     {
         Default,
         Bundle,
-
+        Stream,
+        AbsolutePath,
     }
 }
 

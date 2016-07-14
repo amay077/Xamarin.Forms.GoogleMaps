@@ -193,9 +193,12 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
 
         protected override void OnUpdateIcon(Pin outerItem, Marker nativeItem)
         {
-            nativeItem.SetIcon(outerItem?.Icon?.ToBitmapDescriptor());
-            nativeItem.SetAnchor(0.5f, 1f);
-            nativeItem.SetInfoWindowAnchor(0.5f, 0f);
+            if (outerItem?.Icon != null)
+            {
+                nativeItem.SetIcon(outerItem?.Icon?.ToBitmapDescriptor());
+                nativeItem.SetAnchor(0.5f, 1f);
+                nativeItem.SetInfoWindowAnchor(0.5f, 0f);
+            }
         }
     }
 }

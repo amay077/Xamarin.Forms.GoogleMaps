@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.GoogleMaps;
+using System.Reflection;
 
 namespace XFGoogleMapSample
 {
@@ -24,6 +25,13 @@ namespace XFGoogleMapSample
             "image03.png" 
         };
 
+        readonly string[] _streams =
+        {
+            "marker01.png",
+            "marker02.png",
+            "marker03.png"
+        };
+
         readonly Pin _pinTokyo = new Pin()
         {
             Type = PinType.Place,
@@ -36,7 +44,7 @@ namespace XFGoogleMapSample
         {
             InitializeComponent();
 
-            var switches = new Switch[] { switchPinColor, switchPinBundle, switchPinPath };
+            var switches = new Switch[] { switchPinColor, switchPinBundle, switchPinStream };
             foreach (var sw in switches)
             {
                 sw.Toggled += (sender, e) => 
@@ -78,6 +86,18 @@ namespace XFGoogleMapSample
                 UpdatePinIcon();
             };
             buttonPinBundle.SelectedIndex = 0;
+
+            foreach (var stream in _streams)
+            {
+                buttonPinStream.Items.Add(stream);
+            }
+
+            buttonPinStream.SelectedIndexChanged += (_, e) =>
+            {
+                UpdatePinIcon();
+            };
+            buttonPinStream.SelectedIndex = 0;
+
         }
 
         protected override async void OnAppearing()
@@ -102,6 +122,13 @@ namespace XFGoogleMapSample
             else if (switchPinBundle.IsToggled)
             {
                 _pinTokyo.Icon = BitmapDescriptorFactory.FromBundle(buttonPinBundle.Items[buttonPinBundle.SelectedIndex]);
+            }
+            else if (switchPinStream.IsToggled)
+            {
+                var assembly = typeof(CustomPinsPage).GetTypeInfo().Assembly;
+                var file = buttonPinStream.Items[buttonPinStream.SelectedIndex];
+                var stream = assembly.GetManifestResourceStream($"XFGoogleMapSample.{file}");
+                _pinTokyo.Icon = BitmapDescriptorFactory.FromStream(stream);
             }
         }
    }
