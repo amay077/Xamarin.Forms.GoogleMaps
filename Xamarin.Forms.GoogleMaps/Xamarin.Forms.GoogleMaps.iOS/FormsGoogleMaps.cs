@@ -6,7 +6,7 @@ namespace Xamarin
     {
         public static void Init(string apiKey)
         {
-            MapServices.ProvideAPIKey(apiKey); // AIzaSyBlLASUucq3QWUsTy58TdIFMnYb_gyb5Nc
+            MapServices.ProvideAPIKey(apiKey);
         }
     }
 }

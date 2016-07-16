@@ -8,28 +8,24 @@ namespace Xamarin.Forms.GoogleMaps
 
         public static readonly BindableProperty PositionProperty = BindableProperty.Create("Position", typeof(Position), typeof(Pin), default(Position));
 
+        public static readonly BindableProperty LabelProperty = BindableProperty.Create("Label", typeof(string), typeof(Pin), default(string));
+
         public static readonly BindableProperty AddressProperty = BindableProperty.Create("Address", typeof(string), typeof(Pin), default(string));
+
+        public static readonly BindableProperty IconProperty = BindableProperty.Create("Icon", typeof(BitmapDescriptor), typeof(Pin), default(BitmapDescriptor));
 
         // introduced to store the unique id for Android markers
 
-        string _label;
+        public string Label
+        {
+            get { return (string)GetValue(LabelProperty); }
+            set { SetValue(LabelProperty, value); }
+        }
 
         public string Address
         {
             get { return (string)GetValue(AddressProperty); }
             set { SetValue(AddressProperty, value); }
-        }
-
-        public string Label
-        {
-            get { return _label; }
-            set
-            {
-                if (_label == value)
-                    return;
-                _label = value;
-                OnPropertyChanged();
-            }
         }
 
         public Position Position
@@ -44,9 +40,15 @@ namespace Xamarin.Forms.GoogleMaps
             set { SetValue(TypeProperty, value); }
         }
 
+        public BitmapDescriptor Icon
+        {
+            get { return (BitmapDescriptor)GetValue(IconProperty); }
+            set { SetValue(IconProperty, value); }
+        }
+
         public object Tag { get; set; }
 
-        internal object Id { get; set; }
+        public object NativeObject { get; internal set; }
 
         public event EventHandler Clicked;
 

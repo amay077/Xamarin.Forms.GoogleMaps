@@ -1,16 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 
 namespace Xamarin.Forms.GoogleMaps
 {
     public class Polyline : BindableObject
     {
+        void HandleAction(GoogleMaps.Polygon arg1, NotifyCollectionChangedEventArgs arg2)
+        {
+
+        }
+
         public static readonly BindableProperty StrokeWidthProperty = BindableProperty.Create("StrokeWidth", typeof(float), typeof(float), 1f);
         public static readonly BindableProperty StrokeColorProperty = BindableProperty.Create("StrokeColor", typeof(Color), typeof(Color), Color.Blue);
         public static readonly BindableProperty IsClickableProperty = BindableProperty.Create("IsClickable", typeof(bool), typeof(bool), false);
 
         private readonly ObservableCollection<Position> _positions = new ObservableCollection<Position>();
+
+        private Action<Polyline, NotifyCollectionChangedEventArgs> _positionsChangedHandler = null;
 
         public float StrokeWidth
         {
@@ -37,7 +45,7 @@ namespace Xamarin.Forms.GoogleMaps
 
         public object Tag { get; set; }
 
-        internal object Id { get; set; }
+        public object NativeObject { get; internal set; }
 
         public event EventHandler Clicked;
 
@@ -53,6 +61,20 @@ namespace Xamarin.Forms.GoogleMaps
 
             handler(this, EventArgs.Empty);
             return true;
+        }
+
+        internal void SetOnPositionsChanged(Action<Polyline, NotifyCollectionChangedEventArgs> handler)
+        {
+            _positionsChangedHandler = handler;
+            if (handler != null)
+                _positions.CollectionChanged += OnCollectionChanged;
+            else
+                _positions.CollectionChanged -= OnCollectionChanged;
+        }
+
+        void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            _positionsChangedHandler?.Invoke(this, e);
         }
     }
 }

@@ -21,10 +21,10 @@ namespace Xamarin.Forms.GoogleMaps
         public static readonly BindableProperty SelectedPinProperty = BindableProperty.Create("SelectedPin", typeof(Pin), typeof(Map), default(Pin));
 
         readonly ObservableCollection<Pin> _pins = new ObservableCollection<Pin>();
-        readonly ObservableCollection<Polyline> _polylines = new ObservableCollection<Polyline> ();
+        readonly ObservableCollection<Polyline> _polylines = new ObservableCollection<Polyline>();
         readonly ObservableCollection<Polygon> _polygons = new ObservableCollection<Polygon>();
         readonly ObservableCollection<Circle> _circles = new ObservableCollection<Circle>();
-		readonly ObservableCollection<TileLayer> _tileLayers = new ObservableCollection<TileLayer>();
+        readonly ObservableCollection<TileLayer> _tileLayers = new ObservableCollection<TileLayer>();
 
         public event EventHandler<SelectedPinChangedEventArgs> SelectedPinChanged;
 
@@ -40,7 +40,7 @@ namespace Xamarin.Forms.GoogleMaps
             _polylines.CollectionChanged += PolylinesOnCollectionChanged;
             _polygons.CollectionChanged += PolygonsOnCollectionChanged;
             _circles.CollectionChanged += CirclesOnCollectionChanged;
-			_tileLayers.CollectionChanged += TileLayersOnCollectionChanged;
+            _tileLayers.CollectionChanged += TileLayersOnCollectionChanged;
         }
 
         // center on Rome by default
@@ -83,11 +83,13 @@ namespace Xamarin.Forms.GoogleMaps
             get { return _pins; }
         }
 
-        public IList<Polyline> Polylines {
+        public IList<Polyline> Polylines
+        {
             get { return _polylines; }
         }
 
-        public IList<Polygon> Polygons {
+        public IList<Polygon> Polygons
+        {
             get { return _polygons; }
         }
 
@@ -96,10 +98,10 @@ namespace Xamarin.Forms.GoogleMaps
             get { return _circles; }
         }
 
-		public IList<TileLayer> TileLayers
-		{
-			get { return _tileLayers; }
-		}
+        public IList<TileLayer> TileLayers
+        {
+            get { return _tileLayers; }
+        }
 
         public MapSpan VisibleRegion
         {
@@ -160,15 +162,15 @@ namespace Xamarin.Forms.GoogleMaps
                 throw new ArgumentException("Circle must have a center and radius");
         }
 
-		void TileLayersOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-		{
-			//if (e.NewItems != null && e.NewItems.Cast<ITileLayer>().Any(tileLayer => (circle.Center == null || circle.Radius == null || circle.Radius.Meters <= 0f)))
-			//	throw new ArgumentException("Circle must have a center and radius");
-		}	
+        void TileLayersOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            //if (e.NewItems != null && e.NewItems.Cast<ITileLayer>().Any(tileLayer => (circle.Center == null || circle.Radius == null || circle.Radius.Meters <= 0f)))
+            //	throw new ArgumentException("Circle must have a center and radius");
+        }
 
         internal void SendSelectedPinChanged(Pin selectedPin)
         {
             SelectedPinChanged?.Invoke(this, new SelectedPinChangedEventArgs(selectedPin));
         }
-   }
+    }
 }
