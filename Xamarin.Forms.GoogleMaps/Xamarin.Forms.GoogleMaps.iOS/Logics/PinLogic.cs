@@ -11,8 +11,9 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
     {
         protected override IList<Pin> GetItems(Map map) => map.Pins;
 
-        bool _onMarkerEvent;
-        Pin _draggingPin;
+        private bool _onMarkerEvent;
+        private Pin _draggingPin;
+        private volatile bool _withoutUpdateNative = false;
 
         internal override void Register(MapView oldNativeMap, Map oldMap, MapView newNativeMap, Map newMap)
         {
@@ -149,7 +150,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
 
             if (_draggingPin != null)
             {
-                _draggingPin.Position = e.Marker.Position.ToPosition();
+                UpdatePositionWithoutMove(_draggingPin, e.Marker.Position.ToPosition());
                 Map.SendPinDragStart(_draggingPin);
             }
         }
@@ -158,7 +159,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
         {
             if (_draggingPin != null)
             {
-                _draggingPin.Position = e.Marker.Position.ToPosition();
+                UpdatePositionWithoutMove(_draggingPin, e.Marker.Position.ToPosition());
                 Map.SendPinDragEnd(_draggingPin);
                 _draggingPin = null;
             }
@@ -168,8 +169,21 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
         {
             if (_draggingPin != null)
             {
-                _draggingPin.Position = e.Marker.Position.ToPosition();
+                UpdatePositionWithoutMove(_draggingPin, e.Marker.Position.ToPosition());
                 Map.SendPinDragging(_draggingPin);
+            }
+        }
+
+        void UpdatePositionWithoutMove(Pin pin, Position position)
+        {
+            try
+            {
+                _withoutUpdateNative = true;
+                pin.Position = position;
+            }
+            finally
+            {
+                _withoutUpdateNative = false;
             }
         }
 
@@ -180,7 +194,12 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
             => nativeItem.Title = outerItem.Label;
 
         protected override void OnUpdatePosition(Pin outerItem, Marker nativeItem)
-            => nativeItem.Position = outerItem.Position.ToCoord();
+        {
+            if (!_withoutUpdateNative)
+            {
+                nativeItem.Position = outerItem.Position.ToCoord();
+            }
+        }
 
         protected override void OnUpdateType(Pin outerItem, Marker nativeItem)
         {

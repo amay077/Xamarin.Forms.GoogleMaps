@@ -7,49 +7,16 @@ using System.ComponentModel;
 using Xamarin.Forms.GoogleMaps.Android;
 using Xamarin.Forms.GoogleMaps.Android.Extensions;
 using NativeBitmapDescriptorFactory = Android.Gms.Maps.Model.BitmapDescriptorFactory;
-using Android.AccessibilityServices;
-using System.Threading.Tasks;
 
 namespace Xamarin.Forms.GoogleMaps.Logics.Android
 {
-    internal class DelegateOnDragListener : Java.Lang.Object, global::Android.Gms.Maps.GoogleMap.IOnMarkerDragListener
-    {
-        Action<Marker> _onMarkerDragStart;
-        Action<Marker> _onMarkerDrag;
-        Action<Marker> _onMarkerDragEnd;
-
-        public DelegateOnDragListener(Action<Marker> onMarkerDragStart,
-                                      Action<Marker> onMarkerDrag,
-                                      Action<Marker> onMarkerDragEnd)
-        {
-            _onMarkerDragStart = onMarkerDragStart;
-            _onMarkerDrag = onMarkerDrag;
-            _onMarkerDragEnd = onMarkerDragEnd;
-        }
-
-        public void OnMarkerDragStart(Marker marker)
-        {
-            _onMarkerDragStart(marker);
-        }
-
-        public void OnMarkerDrag(Marker marker)
-        {
-            _onMarkerDrag(marker);
-        }
-
-        public void OnMarkerDragEnd(Marker marker)
-        {
-            _onMarkerDragEnd(marker);
-        }
-    }
-
     internal class PinLogic : DefaultPinLogic<Marker, GoogleMap>
     {
         protected override IList<Pin> GetItems(Map map) => map.Pins;
 
         private volatile bool _onMarkerEvent = false;
         private Pin _draggingPin;
-        private WeakReference<Pin> _draggingPinWeak;
+        private volatile bool _withoutUpdateNative = false;
 
 
         internal override void Register(GoogleMap oldNativeMap, Map oldMap, GoogleMap newNativeMap, Map newMap)
@@ -61,42 +28,9 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
                 newNativeMap.InfoWindowClick += OnInfoWindowClick;
                 newNativeMap.MarkerClick += OnMakerClick;
                 newNativeMap.InfoWindowClose += OnInfoWindowClose;
-                newNativeMap.SetOnMarkerDragListener(new DelegateOnDragListener(
-                    m => 
-                    {
-                        var id = m.Id;
-                        var items = GetItems(Map);
-                        var p = items.FirstOrDefault(outerItem => ((Marker)outerItem.NativeObject).Id == id);
-                        //_draggingPinWeak = new WeakReference<Pin>(p);
-                        //if (_draggingPinWeak != null)
-                        {
-                            var pos = m.Position.ToPosition();
-
-                            Map.SendPinDragStart(p);
-                        }
-                    }, 
-                    m => 
-                    {
-                        Pin pin = null;
-                        if (_draggingPinWeak?.TryGetTarget(out pin) ?? false)
-                        {
-                            pin.Position = m.Position.ToPosition();
-                            Map.SendPinDragging(pin);
-                        }
-                    }, 
-                    m => 
-                    {
-                        Pin pin = null;
-                        if (_draggingPinWeak?.TryGetTarget(out pin) ?? false)
-                        {
-                            pin.Position = m.Position.ToPosition();
-                            Map.SendPinDragEnd(pin);
-                            _draggingPinWeak = null;
-                        }
-                    }));
-                //newNativeMap.MarkerDragStart += OnMarkerDragStart;
-                //newNativeMap.MarkerDragEnd += OnMarkerDragEnd;
-                //newNativeMap.MarkerDrag += OnMarkerDrag;
+                newNativeMap.MarkerDragStart += OnMarkerDragStart;
+                newNativeMap.MarkerDragEnd += OnMarkerDragEnd;
+                newNativeMap.MarkerDrag += OnMarkerDrag;
             }
         }
 
@@ -104,9 +38,9 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
         {
             if (nativeMap != null)
             {
-                //nativeMap.MarkerDrag -= OnMarkerDrag;
-                //nativeMap.MarkerDragEnd -= OnMarkerDragEnd;
-                //nativeMap.MarkerDragStart -= OnMarkerDragStart;
+                nativeMap.MarkerDrag -= OnMarkerDrag;
+                nativeMap.MarkerDragEnd -= OnMarkerDragEnd;
+                nativeMap.MarkerDragStart -= OnMarkerDragStart;
                 nativeMap.MarkerClick -= OnMakerClick;
                 nativeMap.InfoWindowClose -= OnInfoWindowClose;
                 nativeMap.InfoWindowClick -= OnInfoWindowClick;
@@ -208,18 +142,8 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
 
             if (_draggingPin != null)
             {
-                _draggingPin.Position = e.Marker.Position.ToPosition();
+                UpdatePositionWithoutMove(_draggingPin, e.Marker.Position.ToPosition());
                 Map.SendPinDragStart(_draggingPin);
-            }
-        }
-
-        void OnMarkerDragEnd(object sender, GoogleMap.MarkerDragEndEventArgs e)
-        {
-            if (_draggingPin != null)
-            {
-                _draggingPin.Position = e.Marker.Position.ToPosition();
-                Map.SendPinDragEnd(_draggingPin);
-                _draggingPin = null;
             }
         }
 
@@ -227,9 +151,20 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
         {
             if (_draggingPin != null)
             {
-                _draggingPin.Position = e.Marker.Position.ToPosition();
+                UpdatePositionWithoutMove(_draggingPin, e.Marker.Position.ToPosition());
                 Map.SendPinDragging(_draggingPin);
             }
+        }
+
+        void OnMarkerDragEnd(object sender, GoogleMap.MarkerDragEndEventArgs e)
+        {
+            if (_draggingPin != null)
+            {
+                UpdatePositionWithoutMove(_draggingPin, e.Marker.Position.ToPosition());
+                Map.SendPinDragEnd(_draggingPin);
+                _draggingPin = null;
+            }
+            _withoutUpdateNative = false;
         }
 
         internal override void OnMapPropertyChanged(PropertyChangedEventArgs e)
@@ -259,30 +194,16 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
             }
         }
 
-        protected override void OnItemPropertyChanged(object sender, PropertyChangedEventArgs e)
+        void UpdatePositionWithoutMove(Pin pin, Position position)
         {
-            base.OnItemPropertyChanged(sender, e);
-
-            var pin = sender as Pin;
-            var marker = pin?.NativeObject as Marker;
-            if (marker == null)
-                return;
-
-            if (e.PropertyName == Pin.LabelProperty.PropertyName)
+            try
             {
-                marker.Title = pin.Label;
+                _withoutUpdateNative = true;
+                pin.Position = position;
             }
-            else if (e.PropertyName == Pin.AddressProperty.PropertyName)
+            finally
             {
-                marker.Snippet = pin.Address;
-            }
-            else if (e.PropertyName == Pin.TypeProperty.PropertyName)
-            {
-                /* no-op */
-            }
-            else if (e.PropertyName == Pin.PositionProperty.PropertyName)
-            {
-                marker.Position = pin.Position.ToLatLng();
+                _withoutUpdateNative = false;
             }
         }
 
@@ -293,7 +214,12 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
             => nativeItem.Title = outerItem.Label;
 
         protected override void OnUpdatePosition(Pin outerItem, Marker nativeItem)
-            => nativeItem.Position = outerItem.Position.ToLatLng();
+        {
+            if (!_withoutUpdateNative)
+            {
+                nativeItem.Position = outerItem.Position.ToLatLng();
+            }
+        }
 
         protected override void OnUpdateType(Pin outerItem, Marker nativeItem)
         {
