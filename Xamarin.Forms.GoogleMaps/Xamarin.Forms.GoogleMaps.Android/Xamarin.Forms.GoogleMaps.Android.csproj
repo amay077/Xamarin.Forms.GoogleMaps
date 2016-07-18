@@ -105,6 +105,7 @@
     <Compile Include="DroidSyncTileLayer.cs" />
     <Compile Include="DroidUrlTileLayer.cs" />
     <Compile Include="Extensions\BitmapDescriptorExtensions.cs" />
+    <Compile Include="Extensions\LatLngExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
