@@ -48,6 +48,22 @@ namespace XFGoogleMapSample
                 map.IsShowingUser = e.Value;
             };
             switchIsShowingUser.IsToggled = map.IsShowingUser;
+
+            // Geocode
+            buttonGeocode.Clicked += async (sender, e) => 
+            {
+                var geocoder = new Xamarin.Forms.GoogleMaps.Geocoder();
+                var positions = await geocoder.GetPositionsForAddressAsync(entryAddress.Text);
+                if (positions.Count() > 0)
+                {
+                    var pos = positions.First();
+                    map.MoveToRegion(MapSpan.FromCenterAndRadius(pos, Distance.FromMeters(5000)));
+                }
+                else
+                {
+                    await this.DisplayAlert("Not found", "Geocoder returns no results", "Close");
+                }
+            };
         }
     }
 }
