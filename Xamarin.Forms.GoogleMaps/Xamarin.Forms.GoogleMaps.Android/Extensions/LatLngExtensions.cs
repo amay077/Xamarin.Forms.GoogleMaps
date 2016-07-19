@@ -6,7 +6,7 @@ namespace Xamarin.Forms.GoogleMaps.Android.Extensions
     {
         public static Position ToPosition(this LatLng self)
         {
-            return new Position(self.Longitude, self.Longitude);
+            return new Position(self.Latitude, self.Longitude);
         }
     }
 }
