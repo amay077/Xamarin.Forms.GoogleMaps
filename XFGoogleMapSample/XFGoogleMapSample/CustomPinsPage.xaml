@@ -17,65 +17,84 @@
 			        <RowDefinition Height="Auto" />
 			        <RowDefinition Height="Auto" />
 			        <RowDefinition Height="Auto" />
+			        <RowDefinition Height="Auto" />
 			    </Grid.RowDefinitions>
 			 
 			    <Grid.ColumnDefinitions>
 			        <ColumnDefinition Width="Auto" />
 			        <ColumnDefinition Width="Auto" />
-			        <ColumnDefinition Width="Auto" />
+			        <ColumnDefinition Width="*" />
 			    </Grid.ColumnDefinitions>
 
 				
 				<Switch x:Name="switchPinColor" 
 						VerticalOptions="Center"
-						Grid.Row="1"
-						Grid.Column="1"/>
+						Grid.Row="0"
+						Grid.Column="0"/>
 
 				<Label  Text="Default:"
 						VerticalTextAlignment="Center"
 						HorizontalTextAlignment="End"
-						Grid.Row="1"
-						Grid.Column="2"/>
+						Grid.Row="0"
+						Grid.Column="1"/>
 
 				<Picker x:Name="buttonPinColor"
-						Grid.Row="1"
-						Grid.Column="3"/>
+						Grid.Row="0"
+						Grid.Column="2"/>
 
 				<Switch x:Name="switchPinBundle" 
 						VerticalOptions="Center"
-						Grid.Row="2"
-						Grid.Column="1"/>
+						Grid.Row="1"
+						Grid.Column="0"/>
 
 				<Label  Text="Bundle:"
 						VerticalTextAlignment="Center"
 						HorizontalTextAlignment="End"
-						Grid.Row="2"
-						Grid.Column="2"/>
+						Grid.Row="1"
+						Grid.Column="1"/>
 
 				<Picker x:Name="buttonPinBundle"
-						Grid.Row="2"
-						Grid.Column="3"/>
+						Grid.Row="1"
+						Grid.Column="2"/>
 
 				<Switch x:Name="switchPinStream" 
 						VerticalOptions="Center"
-						Grid.Row="3"
-						Grid.Column="1"/>
+						Grid.Row="2"
+						Grid.Column="0"/>
 
 				<Label  Text="Stream:"
 						VerticalTextAlignment="Center"
 						HorizontalTextAlignment="End"
-						Grid.Row="3"
-						Grid.Column="2"/>
+						Grid.Row="2"
+						Grid.Column="1"/>
 
 				<Picker x:Name="buttonPinStream"
-						Grid.Row="3"
-						Grid.Column="3"/>
+						Grid.Row="2"
+						Grid.Column="2"/>
 
 				<Button x:Name="buttonPinSetToNull" 
 						Text="Set to null"
+						Grid.Row="3"
+						Grid.Column="0"
+						Grid.ColumnSpan="2"/>
+
+				<StackLayout
+						Orientation="Horizontal"
+						Grid.Row="3"
+						Grid.Column="2">
+					<Switch x:Name="switchIsDraggable" 
+						VerticalOptions="Center"/>
+					<Label  Text="IsDraggable"
+						VerticalOptions="Center"
+						HorizontalTextAlignment="Start"/>
+				</StackLayout>
+
+				<Label  x:Name="labelDragStatus"
+						Text="Show status when Pin drag."
 						Grid.Row="4"
-						Grid.Column="1"
+						Grid.Column="0"
 						Grid.ColumnSpan="3"/>
+
 			</Grid>			
 			<maps:Map x:Name="map" 
 					VerticalOptions="FillAndExpand"/>		
