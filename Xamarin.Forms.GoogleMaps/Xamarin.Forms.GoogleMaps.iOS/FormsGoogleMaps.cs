@@ -1,5 +1,7 @@
 ﻿using System;
 using Google.Maps;
+using Xamarin.Forms.GoogleMaps.iOS;
+
 namespace Xamarin
 {
     public static class FormsGoogleMaps
@@ -7,6 +9,7 @@ namespace Xamarin
         public static void Init(string apiKey)
         {
             MapServices.ProvideAPIKey(apiKey);
+            GeocoderBackend.Register();
         }
     }
 }
