@@ -74,6 +74,7 @@
     <Compile Include="TouchAsyncTileLayer.cs" />
     <Compile Include="TouchSyncTileLayer.cs" />
     <Compile Include="Extensions\BitmapDescriptorExtensions.cs" />
+    <Compile Include="Extensions\CLLocationCoordinate2DExtensions.cs" />
     <Compile Include="GeocoderBackend.cs" />
   </ItemGroup>
   <ItemGroup>

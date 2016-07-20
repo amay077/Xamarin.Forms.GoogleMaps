@@ -11,7 +11,9 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
     {
         protected override IList<Pin> GetItems(Map map) => map.Pins;
 
-        bool _onMarkerEvent;
+        private bool _onMarkerEvent;
+        private Pin _draggingPin;
+        private volatile bool _withoutUpdateNative = false;
 
         internal override void Register(MapView oldNativeMap, Map oldMap, MapView newNativeMap, Map newMap)
         {
@@ -22,6 +24,9 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
                 newNativeMap.InfoTapped += OnInfoTapped;
                 newNativeMap.TappedMarker = HandleGMSTappedMarker;
                 newNativeMap.InfoClosed += InfoWindowClosed;
+                newNativeMap.DraggingMarkerStarted += DraggingMarkerStarted;
+                newNativeMap.DraggingMarkerEnded += DraggingMarkerEnded;
+                newNativeMap.DraggingMarker += DraggingMarker;
             }
 
         }
@@ -30,6 +35,9 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
         {
             if (nativeMap != null)
             {
+                nativeMap.DraggingMarker -= DraggingMarker;
+                nativeMap.DraggingMarkerEnded -= DraggingMarkerEnded;
+                nativeMap.DraggingMarkerStarted -= DraggingMarkerStarted;
                 nativeMap.InfoClosed -= InfoWindowClosed;
                 nativeMap.TappedMarker = null;
                 nativeMap.InfoTapped -= OnInfoTapped;
@@ -43,6 +51,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
             var nativeMarker = Marker.FromPosition(outerItem.Position.ToCoord());
             nativeMarker.Title = outerItem.Label;
             nativeMarker.Snippet = outerItem.Address ?? string.Empty;
+            nativeMarker.Draggable = outerItem.IsDraggable;
 
             if (outerItem.Icon != null)
             {
@@ -134,6 +143,50 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
             }
         }
 
+        void DraggingMarkerStarted(object sender, GMSMarkerEventEventArgs e)
+        {
+            // lookup pin
+            _draggingPin = LookupPin(e.Marker);
+
+            if (_draggingPin != null)
+            {
+                UpdatePositionWithoutMove(_draggingPin, e.Marker.Position.ToPosition());
+                Map.SendPinDragStart(_draggingPin);
+            }
+        }
+
+        void DraggingMarkerEnded(object sender, GMSMarkerEventEventArgs e)
+        {
+            if (_draggingPin != null)
+            {
+                UpdatePositionWithoutMove(_draggingPin, e.Marker.Position.ToPosition());
+                Map.SendPinDragEnd(_draggingPin);
+                _draggingPin = null;
+            }
+        }
+
+        void DraggingMarker(object sender, GMSMarkerEventEventArgs e)
+        {
+            if (_draggingPin != null)
+            {
+                UpdatePositionWithoutMove(_draggingPin, e.Marker.Position.ToPosition());
+                Map.SendPinDragging(_draggingPin);
+            }
+        }
+
+        void UpdatePositionWithoutMove(Pin pin, Position position)
+        {
+            try
+            {
+                _withoutUpdateNative = true;
+                pin.Position = position;
+            }
+            finally
+            {
+                _withoutUpdateNative = false;
+            }
+        }
+
         protected override void OnUpdateAddress(Pin outerItem, Marker nativeItem)
             => nativeItem.Snippet = outerItem.Address;
 
@@ -141,7 +194,12 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
             => nativeItem.Title = outerItem.Label;
 
         protected override void OnUpdatePosition(Pin outerItem, Marker nativeItem)
-            => nativeItem.Position = outerItem.Position.ToCoord();
+        {
+            if (!_withoutUpdateNative)
+            {
+                nativeItem.Position = outerItem.Position.ToCoord();
+            }
+        }
 
         protected override void OnUpdateType(Pin outerItem, Marker nativeItem)
         {
@@ -150,6 +208,11 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
         protected override void OnUpdateIcon(Pin outerItem, Marker nativeItem)
         {
             nativeItem.Icon = outerItem?.Icon?.ToUIImage();
+        }
+
+        protected override void OnUpdateIsDraggable(Pin outerItem, Marker nativeItem)
+        {
+            nativeItem.Draggable = outerItem?.IsDraggable ?? false;
         }
     }
 }

@@ -7,6 +7,7 @@ using System.Drawing;
 using Xamarin.Forms.GoogleMaps.Internals;
 using Xamarin.Forms.GoogleMaps.Logics.iOS;
 using Xamarin.Forms.GoogleMaps.Logics;
+using Xamarin.Forms.GoogleMaps.iOS.Extensions;
 
 namespace Xamarin.Forms.GoogleMaps.iOS
 {
@@ -53,6 +54,8 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                     logic.Unregister(NativeMap, Map);
 
                 var mkMapView = (MapView)Control;
+                mkMapView.CoordinateLongPressed -= CoordinateLongPressed;
+                mkMapView.CoordinateTapped -= CoordinateTapped;
                 mkMapView.CameraPositionChanged -= CameraPositionChanged;
             }
 
@@ -79,6 +82,8 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                     SetNativeControl(new MapView(RectangleF.Empty));
                     var mkMapView = (MapView)Control;
                     mkMapView.CameraPositionChanged += CameraPositionChanged;
+                    mkMapView.CoordinateTapped += CoordinateTapped;
+                    mkMapView.CoordinateLongPressed += CoordinateLongPressed;
                 }
 
                 MessagingCenter.Subscribe<Map, MoveToRegionMessage>(this, MoveMessageName, (s, a) => MoveToRegion(a.Span, a.Animate), mapModel);
@@ -144,6 +149,16 @@ namespace Xamarin.Forms.GoogleMaps.iOS
             var maxLat = Math.Max(Math.Max(Math.Max(region.NearLeft.Latitude, region.NearRight.Latitude), region.FarLeft.Latitude), region.FarRight.Latitude);
             var maxLon = Math.Max(Math.Max(Math.Max(region.NearLeft.Longitude, region.NearRight.Longitude), region.FarLeft.Longitude), region.FarRight.Longitude);
             mapModel.VisibleRegion = new MapSpan(new Position((minLat + maxLat) / 2d, (minLon + maxLon) / 2d), maxLat - minLat, maxLon - minLon);
+        }
+
+        void CoordinateTapped(object sender, GMSCoordEventArgs e)
+        {
+            Map.SendMapClicked(e.Coordinate.ToPosition());
+        }
+
+        void CoordinateLongPressed(object sender, GMSCoordEventArgs e)
+        {
+            Map.SendMapLongClicked(e.Coordinate.ToPosition());
         }
 
         void MoveToRegion(MapSpan mapSpan, bool animated = true)

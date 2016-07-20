@@ -28,6 +28,13 @@ namespace Xamarin.Forms.GoogleMaps
 
         public event EventHandler<SelectedPinChangedEventArgs> SelectedPinChanged;
 
+        public event EventHandler<PinDragEventArgs> PinDragStart;
+        public event EventHandler<PinDragEventArgs> PinDragEnd;
+        public event EventHandler<PinDragEventArgs> PinDragging;
+
+        public event EventHandler<MapClickedEventArgs> MapClicked;
+        public event EventHandler<MapLongClickedEventArgs> MapLongClicked;
+
         MapSpan _visibleRegion;
 
         public Map(MapSpan region)
@@ -171,6 +178,31 @@ namespace Xamarin.Forms.GoogleMaps
         internal void SendSelectedPinChanged(Pin selectedPin)
         {
             SelectedPinChanged?.Invoke(this, new SelectedPinChangedEventArgs(selectedPin));
+        }
+
+        internal void SendPinDragStart(Pin pin)
+        {
+            PinDragStart?.Invoke(this, new PinDragEventArgs(pin));
+        }
+
+        internal void SendPinDragEnd(Pin pin)
+        {
+            PinDragEnd?.Invoke(this, new PinDragEventArgs(pin));
+        }
+
+        internal void SendPinDragging(Pin pin)
+        {
+            PinDragging?.Invoke(this, new PinDragEventArgs(pin));
+        }
+
+        internal void SendMapClicked(Position point)
+        {
+            MapClicked?.Invoke(this, new MapClickedEventArgs(point));
+        }
+
+        internal void SendMapLongClicked(Position point)
+        {
+            MapLongClicked?.Invoke(this, new MapLongClickedEventArgs(point));
         }
     }
 }
