@@ -55,6 +55,8 @@
     <Compile Include="BitmapDescriptorFactory.cs" />
     <Compile Include="BitmapDescriptorType.cs" />
     <Compile Include="PinDragEventArgs.cs" />
+    <Compile Include="MapClickedEventArgs.cs" />
+    <Compile Include="MapLongClickedEventArgs.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">
