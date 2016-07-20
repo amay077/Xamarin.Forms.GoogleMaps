@@ -3,8 +3,14 @@
 	<metadata minClientVersion="2.8.3">
 		<id>Xamarin.Forms.GoogleMaps</id>
 		<title>Xamarin.Forms.GoogleMaps</title>
-		<version>1.4.0</version>
+		<version>1.4.1</version>
 		<releaseNotes>
+# 1.4.1
+
+## Bug Fixes
+
+* #42 [iOS]Geocoder not supoort
+
 # 1.4.0
 
 ## New Features

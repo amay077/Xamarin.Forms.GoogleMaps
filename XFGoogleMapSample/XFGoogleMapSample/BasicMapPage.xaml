@@ -16,41 +16,66 @@
 			        <RowDefinition Height="Auto" />
 			        <RowDefinition Height="Auto" />
 			        <RowDefinition Height="Auto" />
+			        <RowDefinition Height="Auto" />
 			    </Grid.RowDefinitions>
 			 
 			    <Grid.ColumnDefinitions>
-			        <ColumnDefinition Width="Auto" />
 			        <ColumnDefinition Width="*" />
+			        <ColumnDefinition Width="Auto" />
 			    </Grid.ColumnDefinitions>
 				
 				<Label Text="MapType" 
-					Grid.Row="1"
-					Grid.Column="1"/>
+					VerticalOptions="Center"
+					Grid.Row="0"
+					Grid.Column="0"/>
 			    <Picker x:Name="pickerMapType"
+					VerticalOptions="Center"
 					Title="MapType"
-					Grid.Row="1"
-					Grid.Column="2" />
+					Grid.Row="0"
+					Grid.Column="1" />
 
 				<Label Text="HasZoomEnabled" 
-					Grid.Row="2"
-					Grid.Column="1" />
+					VerticalOptions="Center"
+					Grid.Row="1"
+					Grid.Column="0" />
 				<Switch x:Name="switchHasZoomEnabled" 
-					Grid.Row="2"
-					Grid.Column="2" />
+					VerticalOptions="Center"
+					HorizontalOptions="Start"
+					Grid.Row="1"
+					Grid.Column="1" />
 
 				<Label Text="HasScrollEnabled" 
-					Grid.Row="3"
-					Grid.Column="1" />
+					VerticalOptions="Center"
+					Grid.Row="2"
+					Grid.Column="0" />
 				<Switch x:Name="switchHasScrollEnabled" 
-					Grid.Row="3"
-					Grid.Column="2" />
+					VerticalOptions="Center"
+					HorizontalOptions="Start"
+					Grid.Row="2"
+					Grid.Column="1" />
 
 				<Label Text="IsShowingUser" 
+					VerticalOptions="Center"
+					Grid.Row="3"
+					Grid.Column="0" />
+				<Switch x:Name="switchIsShowingUser" 
+					VerticalOptions="Center"
+					HorizontalOptions="Start"
+					Grid.Row="3"
+					Grid.Column="1" />
+
+				<Entry 
+					x:Name="entryAddress"
+					VerticalOptions="Center"
+					Text="new york"
+					Grid.Row="4"
+					Grid.Column="0" />
+				<Button
+					x:Name="buttonGeocode"
+					VerticalOptions="Center"
+					Text="GEOCODE"
 					Grid.Row="4"
 					Grid.Column="1" />
-				<Switch x:Name="switchIsShowingUser" 
-					Grid.Row="4"
-					Grid.Column="2" />
 						
 			</Grid>
 			<maps:Map x:Name="map" 

@@ -64,6 +64,22 @@ namespace XFGoogleMapSample
                 var lng = e.Point.Longitude.ToString("0.000");
                 this.DisplayAlert("MapLongClicked", $"{lat}/{lng}", "CLOSE");
             };
+
+            // Geocode
+            buttonGeocode.Clicked += async (sender, e) => 
+            {
+                var geocoder = new Xamarin.Forms.GoogleMaps.Geocoder();
+                var positions = await geocoder.GetPositionsForAddressAsync(entryAddress.Text);
+                if (positions.Count() > 0)
+                {
+                    var pos = positions.First();
+                    map.MoveToRegion(MapSpan.FromCenterAndRadius(pos, Distance.FromMeters(5000)));
+                }
+                else
+                {
+                    await this.DisplayAlert("Not found", "Geocoder returns no results", "Close");
+                }
+            };
         }
     }
 }
