@@ -21,6 +21,7 @@ namespace Xamarin.Forms.GoogleMaps
             else if (e.PropertyName == Pin.PositionProperty.PropertyName) OnUpdatePosition(outerItem, nativeItem);
             else if (e.PropertyName == Pin.TypeProperty.PropertyName) OnUpdateType(outerItem, nativeItem);
             else if (e.PropertyName == Pin.IconProperty.PropertyName) OnUpdateIcon(outerItem, nativeItem);
+            else if (e.PropertyName == Pin.IsDraggableProperty.PropertyName) OnUpdateIsDraggable(outerItem, nativeItem);
         }
 
         protected abstract void OnUpdateAddress(Pin outerItem, TNative nativeItem);
@@ -32,6 +33,8 @@ namespace Xamarin.Forms.GoogleMaps
         protected abstract void OnUpdateType(Pin outerItem, TNative nativeItem);
 
         protected abstract void OnUpdateIcon(Pin outerItem, TNative nativeItem);
+
+        protected abstract void OnUpdateIsDraggable(Pin outerItem, TNative nativeItem);
     }
 }
 

@@ -52,7 +52,7 @@ namespace XFGoogleMapSample
             var switches = new Switch[] { switchPinColor, switchPinBundle, switchPinStream };
             foreach (var sw in switches)
             {
-                sw.Toggled += (sender, e) => 
+                sw.Toggled += (sender, e) =>
                 {
                     if (!e.Value || _dirty)
                         return;
@@ -75,7 +75,7 @@ namespace XFGoogleMapSample
                 buttonPinColor.Items.Add(c.Item1);
             }
 
-            buttonPinColor.SelectedIndexChanged += (_, e) => 
+            buttonPinColor.SelectedIndexChanged += (_, e) =>
             {
                 buttonPinColor.BackgroundColor = _colors[buttonPinColor.SelectedIndex].Item2;
                 UpdatePinIcon();
@@ -107,7 +107,7 @@ namespace XFGoogleMapSample
             buttonPinStream.SelectedIndex = 0;
 
             // Set to null
-            buttonPinSetToNull.Clicked += (sender, e) => 
+            buttonPinSetToNull.Clicked += (sender, e) =>
             {
                 _pinTokyo.Icon = null;
                 foreach (var sw in switches)
@@ -116,6 +116,23 @@ namespace XFGoogleMapSample
                 }
             };
 
+            // Pin Draggable
+            switchIsDraggable.Toggled += (sender, e) => 
+            {
+                _pinTokyo.IsDraggable = switchIsDraggable.IsToggled;
+            };
+
+            map.PinDragStart += (_, e) => labelDragStatus.Text = $"DragStart - {PrintPin(e.Pin)}";
+            map.PinDragging += (_, e) => labelDragStatus.Text = $"Dragging - {PrintPin(e.Pin)}";
+            map.PinDragEnd += (_, e) => labelDragStatus.Text = $"DragEnd - {PrintPin(e.Pin)}";
+
+            switchIsDraggable.IsToggled = true;
+
+        }
+
+        private string PrintPin(Pin pin)
+        {
+            return $"{pin.Label}({pin.Position.Latitude.ToString("0.000")},{pin.Position.Longitude.ToString("0.000")})";
         }
 
         protected override async void OnAppearing()
@@ -126,9 +143,9 @@ namespace XFGoogleMapSample
 
             await Task.Delay(1000); // workaround for #30 [Android]Map.Pins.Add doesn't work when page OnAppearing
 
+            _pinTokyo.IsDraggable = true;
             map.Pins.Add(_pinTokyo);
             map.MoveToRegion(MapSpan.FromCenterAndRadius(_pinTokyo.Position, Distance.FromMeters(5000)));
-
         }
 
         void UpdatePinIcon()

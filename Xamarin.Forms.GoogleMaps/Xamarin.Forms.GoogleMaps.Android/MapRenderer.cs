@@ -11,11 +11,14 @@ using Android.App;
 using Xamarin.Forms.GoogleMaps.Internals;
 using Xamarin.Forms.GoogleMaps.Logics.Android;
 using Xamarin.Forms.GoogleMaps.Logics;
+using Xamarin.Forms.GoogleMaps.Android.Extensions;
 
 namespace Xamarin.Forms.GoogleMaps.Android
 {
     public class MapRenderer : ViewRenderer,
-        GoogleMap.IOnCameraChangeListener
+        GoogleMap.IOnCameraChangeListener,
+        GoogleMap.IOnMapClickListener,
+        GoogleMap.IOnMapLongClickListener
     {
         readonly BaseLogic<GoogleMap>[] _logics;
 
@@ -81,6 +84,8 @@ namespace Xamarin.Forms.GoogleMaps.Android
 
 #pragma warning disable 618
                     oldMapView.Map.SetOnCameraChangeListener(null);
+                    oldMapView.Map.SetOnMapClickListener(null);
+                    oldMapView.Map.SetOnMapLongClickListener(null);
 #pragma warning restore 618
                 }
 
@@ -91,6 +96,8 @@ namespace Xamarin.Forms.GoogleMaps.Android
             if (map != null)
             {
                 map.SetOnCameraChangeListener(this);
+                map.SetOnMapClickListener(this);
+                map.SetOnMapLongClickListener(this);
                 map.UiSettings.ZoomControlsEnabled = Map.HasZoomEnabled;
                 map.UiSettings.ZoomGesturesEnabled = Map.HasZoomEnabled;
                 map.UiSettings.ScrollGesturesEnabled = Map.HasScrollEnabled;
@@ -209,6 +216,16 @@ namespace Xamarin.Forms.GoogleMaps.Android
         public void OnCameraChange(CameraPosition pos)
         {
             UpdateVisibleRegion(pos.Target);
+        }
+
+        public void OnMapClick(LatLng point)
+        {
+            Map.SendMapClicked(point.ToPosition());
+        }
+
+        public void OnMapLongClick(LatLng point)
+        {
+            Map.SendMapLongClicked(point.ToPosition());
         }
 
         void UpdateVisibleRegion(LatLng pos)
