@@ -21,7 +21,22 @@ Xamarin公式の地図ライブラリ [Xamarin.Forms.Maps](https://developer.xam
 
 ### Xamarin.Forms.Maps との比較
 
-[Xamarin.Forms.Maps との比較](https://github.com/amay077/Xamarin.Forms.GoogleMaps/wiki/Xamarin.Forms.Maps との比較) を見て下さい。
+|機能|X.F.Maps|X.F.GoogleMaps|
+| ------------------- | :-----------: | :-----------: |
+|地図の種類|Yes|Yes|
+|地図イベント|-|Yes|
+|地図の移動(アニメーション付き)|Yes|Yes|
+|地図の移動(アニメーション無し)|-|Yes|
+|ピン|Yes|Yes|
+|カスタムピン|-|Yes|
+|ピンのドラッグ&ドロップ|-|Yes|
+|ポリゴン|-|Yes|
+|ライン|-|Yes|
+|円|-|Yes|
+|カスタム地図タイル|-|Yes|
+
+
+詳しくは、[Xamarin.Forms.Maps との比較](https://github.com/amay077/Xamarin.Forms.GoogleMaps/wiki/Xamarin.Forms.Maps との比較) を見て下さい。
 
 ### セットアップ
 
@@ -32,14 +47,10 @@ Xamarin公式の地図ライブラリ [Xamarin.Forms.Maps](https://developer.xam
 
 |Platform|Supported|
 | ------------------- | :-----------: |
-|iOS Classic|No|
 |iOS Unified|Yes|
 |Android|Yes|
-|Windows Phone Silverlight|No|
-|Windows Phone RT|No|
-|Windows Store RT|No|
 |Windows 10 UWP|Yes (Bing map)|
-|Xamarin.Mac|No|
+|その他|No|
 
 ### 使い方
 
@@ -82,7 +93,7 @@ public partial class AppDelegate : global::Xamarin.Forms.Platform.iOS.FormsAppli
 追加機能案は以下の通りです。
 
 * ~~Pin の InfoWindow の Visible プロパティ~~ v1.0.0で対応
-* Pin のタップ＆ホールドによる移動
+* ~~Pin のタップ＆ホールドによる移動~~ v1.5.0で対応
 * ~~Polygon, Polyline, Circle の描画サポート~~ v1.1.0で対応
 * [その他の機能改善リスト](https://github.com/amay077/Xamarin.Forms.GoogleMaps/labels/enhancement)
 
