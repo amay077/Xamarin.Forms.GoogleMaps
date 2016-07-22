@@ -22,7 +22,21 @@ Furthermore, I am using Google Maps instead of MapKit because it is easy for def
 
 ## Comparison with Xamarin.Forms.Maps
 
-See [Comparison with Xamarin.Forms.Maps](https://github.com/amay077/Xamarin.Forms.GoogleMaps/wiki/Comparison-with-Xamarin.Forms.Maps).
+|Feature|X.F.Maps|X.F.GoogleMaps|
+| ------------------- | :-----------: | :-----------: |
+|Map types|Yes|Yes|
+|Map events|-|Yes|
+|Pannning with animation|Yes|Yes|
+|Pannning directly|-|Yes|
+|Pins|Yes|Yes|
+|Custom Pins|-|Yes|
+|Pin drag & drop|-|Yes|
+|Polygons|-|Yes|
+|Lines|-|Yes|
+|Circles|-|Yes|
+|Custom map tiles|-|Yes|
+
+For more information, see [Comparison with Xamarin.Forms.Maps](https://github.com/amay077/Xamarin.Forms.GoogleMaps/wiki/Comparison-with-Xamarin.Forms.Maps).
 
 ### Setup
 
@@ -33,14 +47,10 @@ See [Comparison with Xamarin.Forms.Maps](https://github.com/amay077/Xamarin.Form
 
 |Platform|Supported|
 | ------------------- | :-----------: |
-|iOS Classic|No|
 |iOS Unified|Yes|
 |Android|Yes|
-|Windows Phone Silverlight|No|
-|Windows Phone RT|No|
-|Windows Store RT|No|
 |Windows 10 UWP|Yes (Bing map)|
-|Xamarin.Mac|No|
+|Others|No|
 
 ### Usage
 
@@ -80,7 +90,7 @@ If you have proposals then send to [@amay077](https://twitter.com/amay077) or su
 Latest scheduled features as follows:
 
 * ~~Pin.ShowInfoWindow/HideInfoWindow method(or IsVisibleInfoWindow property)~~ add in v1.0.0
-* Moving pin by tap and hold
+* ~~Moving pin by tap and hold~~ add in v1.5.0
 * ~~Adding Polygon, Polyline, Circle~~ add in v1.1.0
 * and more [enhancements](https://github.com/amay077/Xamarin.Forms.GoogleMaps/labels/enhancement)!
 
