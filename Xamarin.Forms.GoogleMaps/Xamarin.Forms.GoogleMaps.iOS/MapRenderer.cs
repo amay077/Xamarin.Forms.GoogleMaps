@@ -13,7 +13,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
 {
     public class MapRenderer : ViewRenderer
     {
-        bool _shouldUpdateRegion;
+        bool _shouldUpdateRegion = true;
 
         const string MoveMessageName = "MapMoveToRegion";
 
@@ -98,7 +98,8 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                 foreach (var logic in _logics)
                 {
                     logic.Register(oldMapView, (Map)e.OldElement, NativeMap, Map);
-                    logic.NotifyReset();
+                    logic.RestoreItems();
+                    logic.OnMapPropertyChanged(new PropertyChangedEventArgs(Map.SelectedPinProperty.PropertyName));
                 }
 
             }
