@@ -18,7 +18,8 @@ namespace Xamarin.Forms.GoogleMaps.Android
     public class MapRenderer : ViewRenderer,
         GoogleMap.IOnCameraChangeListener,
         GoogleMap.IOnMapClickListener,
-        GoogleMap.IOnMapLongClickListener
+        GoogleMap.IOnMapLongClickListener,
+        IOnMapReadyCallback
     {
         readonly BaseLogic<GoogleMap>[] _logics;
 
@@ -40,12 +41,19 @@ namespace Xamarin.Forms.GoogleMaps.Android
 
         const string MoveMessageName = "MapMoveToRegion";
 
-#pragma warning disable 618
-        protected GoogleMap NativeMap => ((MapView)Control).Map;
-#pragma warning restore 618
+//#pragma warning disable 618
+//        protected GoogleMap NativeMap => ((MapView)Control).Map;
+//#pragma warning restore 618
+
+        protected GoogleMap NativeMap { get; private set; }
 
         protected Map Map => (Map)Element;
 
+        private GoogleMap _oldNativeMap;
+        private Map _oldMap;
+
+        bool _init = true;
+        bool _ready = false;
 
         public override SizeRequest GetDesiredSize(int widthConstraint, int heightConstraint)
         {
@@ -92,7 +100,20 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 oldMapView.Dispose();
             }
 
-            var map = NativeMap;
+#pragma warning disable 618
+            _oldNativeMap = oldMapView?.Map;
+            _oldMap = (Map)e.OldElement;
+#pragma warning restore 618
+
+            MessagingCenter.Subscribe<Map, MoveToRegionMessage>(this, MoveMessageName, OnMoveToRegionMessage, Map);
+
+            ((MapView)Control).GetMapAsync(this);
+        }
+
+        void IOnMapReadyCallback.OnMapReady(GoogleMap googleMap)
+        {
+            NativeMap = googleMap;
+            var map = googleMap;
             if (map != null)
             {
                 map.SetOnCameraChangeListener(this);
@@ -105,13 +126,27 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 SetMapType();
             }
 
-#pragma warning disable 618
             foreach (var logic in _logics)
-                logic.Register(oldMapView?.Map, (Map)e.OldElement, NativeMap, Map);
-#pragma warning restore 618
+            {
+                logic.Register(_oldNativeMap, _oldMap, NativeMap, Map);
+            }
 
-            MessagingCenter.Subscribe<Map, MoveToRegionMessage>(this, MoveMessageName, OnMoveToRegionMessage, Map);
+            if (_init)
+            {
+                MoveToRegion(((Map)Element).LastMoveToRegion, false);
 
+                foreach (var logic in _logics)
+                {
+                    if (logic.Map != null)
+                    {
+                        logic.RestoreItems();
+                        logic.OnMapPropertyChanged(new PropertyChangedEventArgs(Map.SelectedPinProperty.PropertyName));
+                    }
+                }
+                _init = false;
+            }
+
+            _ready = true;
         }
 
         void OnMoveToRegionMessage(Map s, MoveToRegionMessage m)
@@ -143,18 +178,20 @@ namespace Xamarin.Forms.GoogleMaps.Android
             }
         }
 
-        bool _init = true;
-
         protected override void OnLayout(bool changed, int l, int t, int r, int b)
         {
             base.OnLayout(changed, l, t, r, b);
+
+            if (!_ready)
+                return;
 
             if (_init)
             {
                 MoveToRegion(((Map)Element).LastMoveToRegion, false);
 
                 foreach (var logic in _logics)
-                    logic.NotifyReset();
+                    if (logic.Map != null)
+                        logic.NotifyReset();
 
                 _init = false;
             }
