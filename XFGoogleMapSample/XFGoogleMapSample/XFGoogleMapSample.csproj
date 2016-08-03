@@ -50,6 +50,9 @@
     <EmbeddedResource Include="marker01.png" />
     <EmbeddedResource Include="marker02.png" />
     <EmbeddedResource Include="marker03.png" />
+    <EmbeddedResource Include="ShapesWithInitializePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -73,6 +76,9 @@
     </Compile>
     <Compile Include="CustomPinsPage.xaml.cs">
       <DependentUpon>CustomPinsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ShapesWithInitializePage.xaml.cs">
+      <DependentUpon>ShapesWithInitializePage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -99,7 +105,7 @@
       <Properties>
         <Policies>
           <DotNetNamingPolicy DirectoryNamespaceAssociation="PrefixedHierarchical" ResourceNamePolicy="FileFormatDefault" />
-          <TextStylePolicy TabsToSpaces="True" inheritsSet="Mono" inheritsScope="text/plain" scope="application/xaml+xml" />
+          <TextStylePolicy inheritsSet="VisualStudio" inheritsScope="text/plain" scope="application/xaml+xml" />
           <XmlFormattingPolicy inheritsSet="Mono" inheritsScope="application/xml" scope="application/xaml+xml">
             <DefaultFormat AttributesInNewLine="True" />
           </XmlFormattingPolicy>

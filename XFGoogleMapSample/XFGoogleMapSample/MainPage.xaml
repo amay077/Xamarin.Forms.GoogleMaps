@@ -20,8 +20,10 @@
 					Text="Shapes" />
 			<Button x:Name="buttonTiles"
 					Text="Tiles" />
-			<Button x:Name="buttonCustomPins"
-					Text="Custom Pin" />
+            <Button x:Name="buttonCustomPins"
+                    Text="Custom Pin" />
+            <Button x:Name="buttonShapesWithInitialize"
+                    Text="Shapes with initialize" />
 		</StackLayout>
 	</ContentPage.Content>
 </ContentPage>
