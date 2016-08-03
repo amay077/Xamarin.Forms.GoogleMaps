@@ -177,7 +177,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
             {
                 InitializeLogic();
             }
-            else if (changed)
+            else if (changed && NativeMap != null)
             {
                 UpdateVisibleRegion(NativeMap.CameraPosition.Target);
             }
