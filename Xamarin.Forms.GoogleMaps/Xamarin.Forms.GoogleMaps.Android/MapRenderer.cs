@@ -52,8 +52,8 @@ namespace Xamarin.Forms.GoogleMaps.Android
         private GoogleMap _oldNativeMap;
         private Map _oldMap;
 
-        bool _init = true;
         bool _ready = false;
+        bool _onLayout = false;
 
         public override SizeRequest GetDesiredSize(int widthConstraint, int heightConstraint)
         {
@@ -131,22 +131,11 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 logic.Register(_oldNativeMap, _oldMap, NativeMap, Map);
             }
 
-            if (_init)
-            {
-                MoveToRegion(((Map)Element).LastMoveToRegion, false);
-
-                foreach (var logic in _logics)
-                {
-                    if (logic.Map != null)
-                    {
-                        logic.RestoreItems();
-                        logic.OnMapPropertyChanged(new PropertyChangedEventArgs(Map.SelectedPinProperty.PropertyName));
-                    }
-                }
-                _init = false;
-            }
-
             _ready = true;
+            if (_ready && _onLayout)
+            {
+                InitializeLogic();
+            }
         }
 
         void OnMoveToRegionMessage(Map s, MoveToRegionMessage m)
@@ -182,23 +171,33 @@ namespace Xamarin.Forms.GoogleMaps.Android
         {
             base.OnLayout(changed, l, t, r, b);
 
-            if (!_ready)
-                return;
+            _onLayout = true;
 
-            if (_init)
+            if (_ready && _onLayout)
             {
-                MoveToRegion(((Map)Element).LastMoveToRegion, false);
-
-                foreach (var logic in _logics)
-                    if (logic.Map != null)
-                        logic.NotifyReset();
-
-                _init = false;
+                InitializeLogic();
             }
             else if (changed)
             {
                 UpdateVisibleRegion(NativeMap.CameraPosition.Target);
             }
+        }
+
+        void InitializeLogic()
+        {
+            MoveToRegion(((Map)Element).LastMoveToRegion, false);
+
+            foreach (var logic in _logics)
+            {
+                if (logic.Map != null)
+                {
+                    logic.RestoreItems();
+                    logic.OnMapPropertyChanged(new PropertyChangedEventArgs(Map.SelectedPinProperty.PropertyName));
+                }
+            }
+
+            _ready = false;
+            _onLayout = false;
         }
 
         protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
