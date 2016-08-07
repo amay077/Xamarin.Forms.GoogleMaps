@@ -58,6 +58,7 @@
     <Compile Include="MapClickedEventArgs.cs" />
     <Compile Include="MapLongClickedEventArgs.cs" />
     <Compile Include="GroundOverlay.cs" />
+    <Compile Include="Bounds.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">
