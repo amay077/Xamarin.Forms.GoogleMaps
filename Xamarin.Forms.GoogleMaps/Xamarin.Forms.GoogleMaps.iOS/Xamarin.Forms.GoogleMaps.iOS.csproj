@@ -76,6 +76,8 @@
     <Compile Include="Extensions\BitmapDescriptorExtensions.cs" />
     <Compile Include="Extensions\CLLocationCoordinate2DExtensions.cs" />
     <Compile Include="GeocoderBackend.cs" />
+    <Compile Include="Logics\GroundOverlayLogic.cs" />
+    <Compile Include="Extensions\BoundsExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

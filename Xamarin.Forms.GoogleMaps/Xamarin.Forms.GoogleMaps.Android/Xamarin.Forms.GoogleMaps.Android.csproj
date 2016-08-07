@@ -106,6 +106,8 @@
     <Compile Include="DroidUrlTileLayer.cs" />
     <Compile Include="Extensions\BitmapDescriptorExtensions.cs" />
     <Compile Include="Extensions\LatLngExtensions.cs" />
+    <Compile Include="Logics\GroundOverlayLogic.cs" />
+    <Compile Include="Extensions\BoundsExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
