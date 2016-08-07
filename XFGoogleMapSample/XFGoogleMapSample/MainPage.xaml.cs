@@ -13,6 +13,7 @@ namespace XFGoogleMapSample
             buttonShapes.Clicked += (_, e) => Navigation.PushAsync(new ShapesPage());
 			buttonTiles.Clicked += (_, e) => Navigation.PushAsync(new TilesPage());
             buttonCustomPins.Clicked += (_, e) => Navigation.PushAsync(new CustomPinsPage());
+            buttonShapesWithInitialize.Clicked += (_, e) => Navigation.PushAsync(new ShapesWithInitializePage());
         }
     }
 }

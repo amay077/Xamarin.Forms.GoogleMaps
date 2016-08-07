@@ -128,6 +128,12 @@ namespace XFGoogleMapSample
 
             switchIsDraggable.IsToggled = true;
 
+            switchPinColor.IsToggled = true;
+
+            _pinTokyo.IsDraggable = true;
+            map.Pins.Add(_pinTokyo);
+            map.SelectedPin = _pinTokyo;
+            map.MoveToRegion(MapSpan.FromCenterAndRadius(_pinTokyo.Position, Distance.FromMeters(5000)), true);
         }
 
         private string PrintPin(Pin pin)
@@ -135,17 +141,9 @@ namespace XFGoogleMapSample
             return $"{pin.Label}({pin.Position.Latitude.ToString("0.000")},{pin.Position.Longitude.ToString("0.000")})";
         }
 
-        protected override async void OnAppearing()
+        protected override void OnAppearing()
         {
             base.OnAppearing();
-
-            switchPinColor.IsToggled = true;
-
-            await Task.Delay(1000); // workaround for #30 [Android]Map.Pins.Add doesn't work when page OnAppearing
-
-            _pinTokyo.IsDraggable = true;
-            map.Pins.Add(_pinTokyo);
-            map.MoveToRegion(MapSpan.FromCenterAndRadius(_pinTokyo.Position, Distance.FromMeters(5000)));
         }
 
         void UpdatePinIcon()

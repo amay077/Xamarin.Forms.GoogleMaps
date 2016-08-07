@@ -58,6 +58,12 @@ namespace Xamarin.Forms.GoogleMaps.Logics
             _outerItems.Clear();
         }
 
+        internal override void RestoreItems()
+        {
+            var items = GetItems(Map);
+            AddItems((IList)items);
+        }
+
         internal override void NotifyReset() =>
             OnCollectionChanged(GetItems(Map), new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
 
