@@ -5,6 +5,7 @@ using Xamarin.Forms.GoogleMaps.Logics;
 using NativeGroundOverlay = Android.Gms.Maps.Model.GroundOverlay;
 using Android.Gms.Maps.Model;
 using Xamarin.Forms.GoogleMaps.Android.Extensions;
+using Xamarin.Forms.GoogleMaps.Android;
 
 namespace Xamarin.Forms.GoogleMaps.Logics.Android
 {

@@ -24,6 +24,8 @@
                     Text="Custom Pin" />
             <Button x:Name="buttonShapesWithInitialize"
                     Text="Shapes with initialize" />
+            <Button x:Name="buttonGroundOverlays"
+                    Text="GroundOverlays" />
 		</StackLayout>
 	</ContentPage.Content>
 </ContentPage>
