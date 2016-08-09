@@ -40,6 +40,42 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
 
             return nativeOverlay;
         }
+
+        protected override void OnItemPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            base.OnItemPropertyChanged(sender, e);
+
+            var overlay = sender as GroundOverlay;
+            var nativeOverlay = overlay?.NativeObject as NativeGroundOverlay;
+
+            if (nativeOverlay == null)
+                return;
+
+            if (e.PropertyName == GroundOverlay.AnchorProperty.PropertyName)
+            {
+                /* noop */
+            }
+            else if (e.PropertyName == GroundOverlay.BearingProperty.PropertyName)
+            {
+                nativeOverlay.Bearing = overlay.Bearing;
+            }
+            else if (e.PropertyName == GroundOverlay.BoundsProperty.PropertyName)
+            {
+                nativeOverlay.SetPositionFromBounds(overlay.Bounds.ToLatLngBounds());
+            }
+            else if (e.PropertyName == GroundOverlay.IconProperty.PropertyName)
+            {
+                nativeOverlay.SetImage(overlay.Icon.ToBitmapDescriptor());
+            }
+            else if (e.PropertyName == GroundOverlay.IsClickableProperty.PropertyName)
+            {
+                nativeOverlay.Clickable = overlay.IsClickable;
+            }
+            else if (e.PropertyName == GroundOverlay.TransparencyProperty.PropertyName)
+            {
+                nativeOverlay.Transparency = overlay.Transparency;
+            }
+        }
     }
 }
 

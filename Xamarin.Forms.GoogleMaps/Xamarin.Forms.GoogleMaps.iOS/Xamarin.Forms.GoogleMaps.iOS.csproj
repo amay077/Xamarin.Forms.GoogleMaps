@@ -78,6 +78,7 @@
     <Compile Include="GeocoderBackend.cs" />
     <Compile Include="Logics\GroundOverlayLogic.cs" />
     <Compile Include="Extensions\BoundsExtensions.cs" />
+    <Compile Include="Extensions\PointExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
