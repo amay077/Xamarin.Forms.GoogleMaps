@@ -16,9 +16,7 @@ namespace XFGoogleMapSample
             {
                 Bounds = new Bounds(new Position(37.797496, -122.402054), new Position(37.798573, -122.401065)),
                 Icon = BitmapDescriptorFactory.FromBundle("image02.png"),
-                Bearing = 45f,
-                Transparency = .5f,
-                Anchor = new Point(1, 1)
+                Transparency = .5f
             };
             map.GroundOverlays.Add(overlay);
 
@@ -36,7 +34,7 @@ namespace XFGoogleMapSample
 
             map.Polygons.Add(polygon);
 
-            map.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(37.797496, -122.402054), Distance.FromMeters(1000)), false);
+            map.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(37.797496, -122.402054), Distance.FromMeters(200)), false);
         }
 
         protected override void OnAppearing()
