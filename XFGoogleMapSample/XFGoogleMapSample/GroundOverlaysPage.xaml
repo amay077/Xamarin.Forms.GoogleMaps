@@ -11,7 +11,8 @@
 			VerticalOptions="Fill"
 			Orientation="Vertical">
 
-			<Grid>
+			<Grid 			
+				Padding="10">
 				<Grid.RowDefinitions>
 			        <RowDefinition Height="Auto" />
 			        <RowDefinition Height="Auto" />
@@ -23,33 +24,41 @@
 			        <ColumnDefinition Width="Auto" />
 			        <ColumnDefinition Width="*" />
 			    </Grid.ColumnDefinitions>
+
+				<Label
+					Grid.Row="0"
+					Grid.Column="0"
+					VerticalTextAlignment="Center"
+					HorizontalTextAlignment="End"
+					Text="Icon:" />
 				
-				<Button x:Name="buttonAddPolyline"
-						Text="Add Polyline"
-						Grid.Row="1"
+				<Picker x:Name="pickerIcon"
+						Grid.Row="0"
 						Grid.Column="1"/>
-				<Button x:Name="buttonRemovePolyline"
-						Text="Remove Polyline"
-						Grid.Row="1"
-						Grid.Column="2"/>
 
-				<Button x:Name="buttonAddPolygon"
-						Text="Add Polygon"
-						Grid.Row="2"
-						Grid.Column="1"/>
-				<Button x:Name="buttonRemovePolygon"
-						Text="Remove Polygon"
-						Grid.Row="2"
-						Grid.Column="2"/>
+				<Label
+					Grid.Row="1"
+					Grid.Column="0"
+					VerticalTextAlignment="Center"
+					HorizontalTextAlignment="End"
+					Text="Transparency:" />
 
-				<Button x:Name="buttonAddCircle"
-						Text="Add Circle"
-						Grid.Row="3"
-						Grid.Column="1"/>
-				<Button x:Name="buttonRemoveCircle"
-						Text="Remove Circle"
-						Grid.Row="3"
-						Grid.Column="2"/>
+				<Entry 
+					x:Name="entryTransparency"
+					Grid.Row="1"
+					Grid.Column="1" />
+
+				<Label
+					Grid.Row="2"
+					Grid.Column="0"
+					VerticalTextAlignment="Center"
+					HorizontalTextAlignment="End"
+					Text="Bearing:" />
+				
+				<Entry 
+					x:Name="entryBearing"
+					Grid.Row="2"
+					Grid.Column="1" />
 				
 			</Grid>			
 			<maps:Map x:Name="map" 
