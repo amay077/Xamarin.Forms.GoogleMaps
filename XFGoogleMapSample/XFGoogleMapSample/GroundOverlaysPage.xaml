@@ -31,7 +31,6 @@
 					VerticalTextAlignment="Center"
 					HorizontalTextAlignment="End"
 					Text="Icon:" />
-				
 				<Picker x:Name="pickerIcon"
 						Grid.Row="0"
 						Grid.Column="1"/>
@@ -42,7 +41,6 @@
 					VerticalTextAlignment="Center"
 					HorizontalTextAlignment="End"
 					Text="Transparency:" />
-
 				<Entry 
 					x:Name="entryTransparency"
 					Grid.Row="1"
@@ -54,11 +52,45 @@
 					VerticalTextAlignment="Center"
 					HorizontalTextAlignment="End"
 					Text="Bearing:" />
-				
 				<Entry 
 					x:Name="entryBearing"
 					Grid.Row="2"
 					Grid.Column="1" />
+
+				<Label
+					Grid.Row="3"
+					Grid.Column="0"
+					VerticalTextAlignment="Center"
+					HorizontalTextAlignment="End"
+					Text="Anchor:" />
+
+				<StackLayout
+					Orientation="Horizontal"
+					HorizontalOptions="FillAndExpand"
+					Grid.Row="3"
+					Grid.Column="1">
+					<Entry 
+						HorizontalOptions="FillAndExpand"
+						x:Name="entryAnchorX" 
+						Placeholder="X"/>
+					<Entry 
+						HorizontalOptions="FillAndExpand"
+						x:Name="entryAnchorY"
+						Placeholder="Y"/>
+				</StackLayout>
+
+				<Label
+					Grid.Row="4"
+					Grid.Column="0"
+					VerticalTextAlignment="Center"
+					HorizontalTextAlignment="End"
+					Text="IsClickable:" />
+				<Switch
+					x:Name="switchIsClickable"
+					Grid.Row="4"
+					Grid.Column="1" />
+
+
 				
 			</Grid>			
 			<maps:Map x:Name="map" 
