@@ -51,28 +51,6 @@ namespace XFGoogleMapSample
                 }
             };
 
-            // AnchorX
-            entryAnchorX.TextChanged += (sender, e) =>
-            {
-                var anchorX = 0f;
-                if (float.TryParse(e.NewTextValue, out anchorX))
-                {
-                    var anchor = _overlay.Anchor;
-                    _overlay.Anchor = new Point(anchorX, anchor.Y);
-                }
-            };
-
-            // AnchorY
-            entryAnchorY.TextChanged += (sender, e) =>
-            {
-                var anchorY = 0f;
-                if (float.TryParse(e.NewTextValue, out anchorY))
-                {
-                    var anchor = _overlay.Anchor;
-                    _overlay.Anchor = new Point(anchor.X, anchorY);
-                }
-            };
-
             // IsClickable
             switchIsClickable.IsToggled = false;
             switchIsClickable.Toggled += (sender, e) => 

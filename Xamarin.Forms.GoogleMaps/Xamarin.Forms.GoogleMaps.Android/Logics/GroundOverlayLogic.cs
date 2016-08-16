@@ -41,8 +41,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
                 .Clickable(outerItem.IsClickable)
                 .InvokeBearing(outerItem.Bearing)
                 .InvokeImage(outerItem.Icon.ToBitmapDescriptor())
-                .InvokeTransparency(outerItem.Transparency)
-                .Anchor((float)outerItem.Anchor.X, (float)outerItem.Anchor.Y);
+                .InvokeTransparency(outerItem.Transparency);
 
             var overlay = NativeMap.AddGroundOverlay(opts);
 
@@ -86,11 +85,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
             if (nativeOverlay == null)
                 return;
 
-            if (e.PropertyName == GroundOverlay.AnchorProperty.PropertyName)
-            {
-                /* noop */
-            }
-            else if (e.PropertyName == GroundOverlay.BearingProperty.PropertyName)
+            if (e.PropertyName == GroundOverlay.BearingProperty.PropertyName)
             {
                 nativeOverlay.Bearing = overlay.Bearing;
             }

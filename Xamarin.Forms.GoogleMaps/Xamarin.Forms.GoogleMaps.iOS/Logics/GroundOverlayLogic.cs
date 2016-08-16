@@ -37,7 +37,6 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
         {
             var nativeOverlay = NativeGroundOverlay.GetGroundOverlay(
                 outerItem.Bounds.ToCoordinateBounds(), outerItem.Icon.ToUIImage());
-            nativeOverlay.Anchor = outerItem.Anchor.ToCGPoint();
             nativeOverlay.Bearing = outerItem.Bearing;
             nativeOverlay.Opacity = outerItem.Transparency;
             nativeOverlay.Tappable = outerItem.IsClickable;
@@ -72,11 +71,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
             if (nativeOverlay == null)
                 return;
 
-            if (e.PropertyName == GroundOverlay.AnchorProperty.PropertyName)
-            {
-                nativeOverlay.Anchor = overlay.Anchor.ToCGPoint();
-            }
-            else if (e.PropertyName == GroundOverlay.BearingProperty.PropertyName)
+            if (e.PropertyName == GroundOverlay.BearingProperty.PropertyName)
             {
                 nativeOverlay.Bearing = overlay.Bearing;
             }
