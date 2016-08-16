@@ -5,12 +5,33 @@ using Xamarin.Forms.GoogleMaps.Logics;
 using NativeGroundOverlay = Google.Maps.GroundOverlay;
 using Xamarin.Forms.GoogleMaps.iOS.Extensions;
 using CoreGraphics;
+using System.Linq;
 
 namespace Xamarin.Forms.GoogleMaps.Logics.iOS
 {
     internal class GroundOverlayLogic : DefaultLogic<GroundOverlay, NativeGroundOverlay, MapView>
     {
         protected override IList<GroundOverlay> GetItems(Map map) => map.GroundOverlays;
+
+        internal override void Register(MapView oldNativeMap, Map oldMap, MapView newNativeMap, Map newMap)
+        {
+            base.Register(oldNativeMap, oldMap, newNativeMap, newMap);
+
+            if (newNativeMap != null)
+            {
+                newNativeMap.OverlayTapped += OnOverlayTapped;
+            }
+        }
+
+        internal override void Unregister(MapView nativeMap, Map map)
+        {
+            if (nativeMap != null)
+            {
+                nativeMap.OverlayTapped -= OnOverlayTapped;
+            }
+
+            base.Unregister(nativeMap, map);
+        }
 
         protected override NativeGroundOverlay CreateNativeItem(GroundOverlay outerItem)
         {
@@ -32,6 +53,13 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
             nativeOverlay.Map = null;
 
             return nativeOverlay;
+        }
+
+        void OnOverlayTapped(object sender, GMSOverlayEventEventArgs e)
+        {
+            var targetOuterItem = GetItems(Map).FirstOrDefault(
+                outerItem => object.ReferenceEquals(outerItem.NativeObject, e.Overlay));
+            targetOuterItem?.SendTap();
         }
 
         protected override void OnItemPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)

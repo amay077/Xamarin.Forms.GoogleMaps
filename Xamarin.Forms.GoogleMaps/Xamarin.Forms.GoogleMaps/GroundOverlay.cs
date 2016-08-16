@@ -1,4 +1,6 @@
 ﻿
+using System;
+
 namespace Xamarin.Forms.GoogleMaps
 {
     public sealed class GroundOverlay : BindableObject
@@ -49,5 +51,17 @@ namespace Xamarin.Forms.GoogleMaps
         public object Tag { get; set; }
 
         public object NativeObject { get; internal set; }
+
+        public event EventHandler Clicked;
+
+        internal bool SendTap()
+        {
+            EventHandler handler = Clicked;
+            if (handler == null)
+                return false;
+
+            handler(this, EventArgs.Empty);
+            return true;
+        }
     }
 }
