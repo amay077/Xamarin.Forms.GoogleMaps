@@ -1,8 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using CoreGraphics;
 using Google.Maps;
+using UIKit;
 using Xamarin.Forms.GoogleMaps.Extensions.iOS;
 using Xamarin.Forms.GoogleMaps.iOS.Extensions;
 namespace Xamarin.Forms.GoogleMaps.Logics.iOS
@@ -60,6 +61,9 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
 
             outerItem.NativeObject = nativeMarker;
             nativeMarker.Map = NativeMap;
+
+            OnUpdateIconView(outerItem, nativeMarker);
+
             return nativeMarker;
         }
 
@@ -68,7 +72,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
             var nativeMarker = outerItem.NativeObject as Marker;
             nativeMarker.Map = null;
 
-            if (object.ReferenceEquals(Map.SelectedPin, outerItem))
+            if (ReferenceEquals(Map.SelectedPin, outerItem))
                 Map.SelectedPin = null;
 
             return nativeMarker;
@@ -94,7 +98,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
 
         Pin LookupPin(Marker marker)
         {
-            return GetItems(Map).FirstOrDefault(outerItem => object.ReferenceEquals(outerItem.NativeObject, marker));
+            return GetItems(Map).FirstOrDefault(outerItem => ReferenceEquals(outerItem.NativeObject, marker));
         }
 
         void OnInfoTapped(object sender, GMSMarkerEventEventArgs e)
@@ -115,7 +119,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
             try
             {
                 _onMarkerEvent = true;
-                if (targetPin != null && !object.ReferenceEquals(targetPin, Map.SelectedPin))
+                if (targetPin != null && !ReferenceEquals(targetPin, Map.SelectedPin))
                     Map.SelectedPin = targetPin;
             }
             finally
@@ -134,7 +138,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
             try
             {
                 _onMarkerEvent = true;
-                if (targetPin != null && object.ReferenceEquals(targetPin, Map.SelectedPin))
+                if (targetPin != null && ReferenceEquals(targetPin, Map.SelectedPin))
                     Map.SelectedPin = null;
             }
             finally
@@ -214,6 +218,23 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
         {
             nativeItem.Draggable = outerItem?.IsDraggable ?? false;
         }
-    }
+
+        protected override void OnUpdateIconView(Pin outerItem, Marker nativeItem)
+        {
+            if (outerItem.IconView != null)
+            {
+                NativeMap.InvokeOnMainThread(() =>
+                {
+                    var nativeView = Utils.ConvertFormsToNative(outerItem.IconView, new CGRect(0, 0, outerItem.IconView.WidthRequest, outerItem.IconView.HeightRequest));
+                    nativeView.BackgroundColor = UIColor.Clear;
+                    nativeItem.GroundAnchor = new CGPoint(outerItem.IconView.AnchorX, outerItem.IconView.AnchorY);
+                    nativeItem.Icon = Utils.ConvertViewToImage(nativeView);
+
+                    // Would have been way cooler to do this instead, but surprisingly, we can't do this on Android:
+                    // nativeItem.IconView = nativeView;
+                });
+            }
+        }
+   }
 }
 

@@ -22,6 +22,8 @@
 					Text="Tiles" />
 			<Button x:Name="buttonCustomPins"
 					Text="Custom Pin" />
+			<Button x:Name="buttonBindingPin"
+					Text="Binding Pin" />
 		</StackLayout>
 	</ContentPage.Content>
 </ContentPage>

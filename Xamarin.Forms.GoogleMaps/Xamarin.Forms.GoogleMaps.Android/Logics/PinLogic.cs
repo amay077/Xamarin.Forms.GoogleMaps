@@ -1,5 +1,4 @@
-﻿using System;
-using Android.Gms.Maps.Model;
+﻿using Android.Gms.Maps.Model;
 using System.Collections.Generic;
 using Android.Gms.Maps;
 using System.Linq;
@@ -7,6 +6,7 @@ using System.ComponentModel;
 using Xamarin.Forms.GoogleMaps.Android;
 using Xamarin.Forms.GoogleMaps.Android.Extensions;
 using NativeBitmapDescriptorFactory = Android.Gms.Maps.Model.BitmapDescriptorFactory;
+using Android.Widget;
 
 namespace Xamarin.Forms.GoogleMaps.Logics.Android
 {
@@ -65,6 +65,8 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
 
             var marker = NativeMap.AddMarker(opts);
 
+            OnUpdateIconView(outerItem, marker);
+
             // associate pin with marker for later lookup in event handlers
             outerItem.NativeObject = marker;
             return marker;
@@ -78,7 +80,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
             marker.Remove();
             outerItem.NativeObject = null;
 
-            if (object.ReferenceEquals(Map.SelectedPin, outerItem))
+            if (ReferenceEquals(Map.SelectedPin, outerItem))
                 Map.SelectedPin = null;
 
             return marker;
@@ -107,7 +109,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
             try
             {
                 _onMarkerEvent = true;
-                if (targetPin != null && !object.ReferenceEquals(targetPin, Map.SelectedPin))
+                if (targetPin != null && !ReferenceEquals(targetPin, Map.SelectedPin))
                     Map.SelectedPin = targetPin;
             }
             finally
@@ -126,7 +128,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
             try
             {
                 _onMarkerEvent = true;
-                if (targetPin != null && object.ReferenceEquals(targetPin, Map.SelectedPin))
+                if (targetPin != null && ReferenceEquals(targetPin, Map.SelectedPin))
                     Map.SelectedPin = null;
             }
             finally
@@ -230,6 +232,24 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
             nativeItem.SetIcon(outerItem?.Icon?.ToBitmapDescriptor() ?? NativeBitmapDescriptorFactory.DefaultMarker());
             nativeItem.SetAnchor(0.5f, 1f);
             nativeItem.SetInfoWindowAnchor(0.5f, 0f);
+        }
+
+        protected override void OnUpdateIconView(Pin outerItem, Marker nativeItem)
+        {
+            if (outerItem.IconView != null)
+            {
+                global::Android.App.Application.SynchronizationContext.Post(_ =>
+                {
+                    var nativeView = MapAuxiliarRenderer.LiveMapRenderer.GetNativeView(outerItem.IconView);
+                    Utils.FixImageSourceOfImageViews(nativeView as global::Android.Views.ViewGroup);
+                    var otherView = new FrameLayout(nativeView.Context); //this.Context?
+                    nativeView.LayoutParameters = new FrameLayout.LayoutParams(Utils.DpToPx((float)outerItem.IconView.WidthRequest), Utils.DpToPx((float)outerItem.IconView.HeightRequest));
+                    otherView.AddView(nativeView);
+
+                    nativeItem.SetIcon(Utils.ConvertViewToBitmapDescriptor(otherView));
+                    nativeItem.SetAnchor((float)outerItem.IconView.AnchorX, (float)outerItem.IconView.AnchorY);
+                }, null);
+            }
         }
 
         protected override void OnUpdateIsDraggable(Pin outerItem, Marker nativeItem)
