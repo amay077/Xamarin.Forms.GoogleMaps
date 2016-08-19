@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Original code from https://github.com/javiholcman/Wapps.Forms.Map/
+// Cacheing implemented by Gadzair
+
+using System;
 using Android.Graphics.Drawables;
 using Android.Graphics;
 using Android.Views;
@@ -7,6 +10,7 @@ using System.Collections.Generic;
 using Java.Nio;
 using System.Security.Cryptography;
 using Android.Runtime;
+using System.Threading.Tasks;
 
 namespace Xamarin.Forms.GoogleMaps.Android
 {
@@ -99,37 +103,40 @@ namespace Xamarin.Forms.GoogleMaps.Android
 
         public static global::Android.Gms.Maps.Model.BitmapDescriptor ConvertViewToBitmapDescriptor(global::Android.Views.View v)
         {
-            var bmp = ConvertViewToBitmap(v);
-            var buffer = ByteBuffer.Allocate(bmp.ByteCount);
-            bmp.CopyPixelsToBuffer(buffer);
-            buffer.Rewind();
+            //return Task.Run(() =>
+            //{
+                var bmp = ConvertViewToBitmap(v);
+                var buffer = ByteBuffer.Allocate(bmp.ByteCount);
+                bmp.CopyPixelsToBuffer(buffer);
+                buffer.Rewind();
 
-            // https://forums.xamarin.com/discussion/5950/how-to-convert-from-bitmap-to-byte-without-bitmap-compress
-            IntPtr classHandle = JNIEnv.FindClass("java/nio/ByteBuffer");
-            IntPtr methodId = JNIEnv.GetMethodID(classHandle, "array", "()[B");
-            IntPtr resultHandle = JNIEnv.CallObjectMethod(buffer.Handle, methodId);
-            byte[] bytes = JNIEnv.GetArray<byte>(resultHandle);
-            JNIEnv.DeleteLocalRef(resultHandle);
+                // https://forums.xamarin.com/discussion/5950/how-to-convert-from-bitmap-to-byte-without-bitmap-compress
+                IntPtr classHandle = JNIEnv.FindClass("java/nio/ByteBuffer");
+                IntPtr methodId = JNIEnv.GetMethodID(classHandle, "array", "()[B");
+                IntPtr resultHandle = JNIEnv.CallObjectMethod(buffer.Handle, methodId);
+                byte[] bytes = JNIEnv.GetArray<byte>(resultHandle);
+                JNIEnv.DeleteLocalRef(resultHandle);
 
-            var sha = new SHA1CryptoServiceProvider();
-            var hash = Convert.ToBase64String(sha.ComputeHash(bytes));
+                var sha = new SHA1CryptoServiceProvider();
+                var hash = Convert.ToBase64String(sha.ComputeHash(bytes));
 
-            var img = global::Android.Gms.Maps.Model.BitmapDescriptorFactory.FromBitmap(bmp);
-            var existing = lruTracker.Find(hash);
-            if (existing != null)
-            {
-                lruTracker.Remove(existing);
-                lruTracker.AddLast(existing);
-                return cache[existing.Value];
-            }
-            if (lruTracker.Count > 10) // O(1)
-            {
-                cache.Remove(lruTracker.First.Value);
-                lruTracker.RemoveFirst();
-            }
-            cache.Add(hash, img);
-            lruTracker.AddLast(hash);
-            return img;
+                var img = global::Android.Gms.Maps.Model.BitmapDescriptorFactory.FromBitmap(bmp);
+                var existing = lruTracker.Find(hash);
+                if (existing != null)
+                {
+                    lruTracker.Remove(existing);
+                    lruTracker.AddLast(existing);
+                    return cache[existing.Value];
+                }
+                if (lruTracker.Count > 10) // O(1)
+                {
+                    cache.Remove(lruTracker.First.Value);
+                    lruTracker.RemoveFirst();
+                }
+                cache.Add(hash, img);
+                lruTracker.AddLast(hash);
+                return img;
+            //});
         }
 
         public static global::Android.Widget.FrameLayout AddViewOnFrameLayout(global::Android.Views.View view, int width, int height)
@@ -143,7 +150,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
 
         public static void FixImageSourceOfImageViews(ViewGroup parent)
         {
-            //try
+            if (parent != null)
             {
                 for (var i = 0; i < parent.ChildCount; i++)
                 {
@@ -167,10 +174,6 @@ namespace Xamarin.Forms.GoogleMaps.Android
                     }
                 }
             }
-            //catch (Exception ex)
-            //{
-            //    int a = 5;
-            //}
         }
 
     }

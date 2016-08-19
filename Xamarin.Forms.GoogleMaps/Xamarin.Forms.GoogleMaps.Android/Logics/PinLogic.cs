@@ -7,6 +7,7 @@ using Xamarin.Forms.GoogleMaps.Android;
 using Xamarin.Forms.GoogleMaps.Android.Extensions;
 using NativeBitmapDescriptorFactory = Android.Gms.Maps.Model.BitmapDescriptorFactory;
 using Android.Widget;
+using Android.OS;
 
 namespace Xamarin.Forms.GoogleMaps.Logics.Android
 {
@@ -56,7 +57,8 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
                 .SetTitle(outerItem.Label)
                 .SetSnippet(outerItem.Address)
                 .SetSnippet(outerItem.Address)
-                .Draggable(outerItem.IsDraggable);
+                .Draggable(outerItem.IsDraggable)
+                ;
 
             if (outerItem.Icon != null)
             {
@@ -64,8 +66,12 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
             }
 
             var marker = NativeMap.AddMarker(opts);
-
-            OnUpdateIconView(outerItem, marker);
+            // If the pin has an IconView set this method will convert it into an icon for the marker
+            if (outerItem.IconView != null)
+            {
+                marker.Visible = false; // Will become visible once the iconview is ready.
+                OnUpdateIconView(outerItem, marker);
+            }
 
             // associate pin with marker for later lookup in event handlers
             outerItem.NativeObject = marker;
@@ -234,22 +240,20 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
             nativeItem.SetInfoWindowAnchor(0.5f, 0f);
         }
 
+        // If the pin has an IconView set this method will convert it into an icon for the marker
         protected override void OnUpdateIconView(Pin outerItem, Marker nativeItem)
         {
-            if (outerItem.IconView != null)
-            {
-                global::Android.App.Application.SynchronizationContext.Post(_ =>
-                {
-                    var nativeView = MapAuxiliarRenderer.LiveMapRenderer.GetNativeView(outerItem.IconView);
-                    Utils.FixImageSourceOfImageViews(nativeView as global::Android.Views.ViewGroup);
-                    var otherView = new FrameLayout(nativeView.Context); //this.Context?
-                    nativeView.LayoutParameters = new FrameLayout.LayoutParams(Utils.DpToPx((float)outerItem.IconView.WidthRequest), Utils.DpToPx((float)outerItem.IconView.HeightRequest));
-                    otherView.AddView(nativeView);
+            var nativeView = MapAuxiliarRenderer.LiveMapRenderer.GetNativeView(outerItem.IconView);
+            if (nativeView == null)
+                return;
+            Utils.FixImageSourceOfImageViews(nativeView as global::Android.Views.ViewGroup);
+            var otherView = new FrameLayout(nativeView.Context); //this.Context?
+            nativeView.LayoutParameters = new FrameLayout.LayoutParams(Utils.DpToPx((float)outerItem.IconView.WidthRequest), Utils.DpToPx((float)outerItem.IconView.HeightRequest));
+            otherView.AddView(nativeView);
 
-                    nativeItem.SetIcon(Utils.ConvertViewToBitmapDescriptor(otherView));
-                    nativeItem.SetAnchor((float)outerItem.IconView.AnchorX, (float)outerItem.IconView.AnchorY);
-                }, null);
-            }
+            nativeItem.SetIcon(Utils.ConvertViewToBitmapDescriptor(otherView));
+            nativeItem.SetAnchor((float)outerItem.IconView.AnchorX, (float)outerItem.IconView.AnchorY);
+            nativeItem.Visible = true;
         }
 
         protected override void OnUpdateIsDraggable(Pin outerItem, Marker nativeItem)
