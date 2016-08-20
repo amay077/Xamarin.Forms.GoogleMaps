@@ -247,11 +247,8 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
 
         private async void TransformXamarinViewToAndroidBitmap(Pin outerItem, Marker nativeItem)
         {
-            var nativeView = MapAuxiliarRenderer.LiveMapRenderer.GetNativeView(outerItem.IconView); // TODO: Make this call async as well
-            if (nativeView == null)
-                return;
-            await Utils.FixImageSourceOfImageViews(nativeView as global::Android.Views.ViewGroup);
-            var otherView = new FrameLayout(nativeView.Context); //this.Context?
+            var nativeView = await Utils.ConvertFormsToNative (outerItem.IconView, new Rectangle (0, 0, (double)Utils.DpToPx ((float)outerItem.IconView.WidthRequest), (double)Utils.DpToPx ((float)outerItem.IconView.HeightRequest)), Platform.Android.Platform.CreateRenderer(outerItem.IconView));
+            var otherView = new FrameLayout(nativeView.Context);
             nativeView.LayoutParameters = new FrameLayout.LayoutParams(Utils.DpToPx((float)outerItem.IconView.WidthRequest), Utils.DpToPx((float)outerItem.IconView.HeightRequest));
             otherView.AddView(nativeView);
             nativeItem.SetIcon(await Utils.ConvertViewToBitmapDescriptor(otherView));

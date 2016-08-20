@@ -2,7 +2,6 @@
 // Cacheing implemented by Gadzair
 
 using System;
-using Android.Graphics.Drawables;
 using Android.Graphics;
 using Android.Views;
 using Xamarin.Forms.Platform.Android;
@@ -11,7 +10,7 @@ using Java.Nio;
 using System.Security.Cryptography;
 using Android.Runtime;
 using System.Threading.Tasks;
-using System.Threading;
+using System.Collections.Concurrent;
 
 namespace Xamarin.Forms.GoogleMaps.Android
 {
@@ -37,65 +36,48 @@ namespace Xamarin.Forms.GoogleMaps.Android
             return px / metrics.Density;
         }
 
-        public static Bitmap DrawableToBitmap(Drawable drawable)
+        public static Task<ViewGroup> ConvertFormsToNative(View view, Rectangle size, IVisualElementRenderer vRenderer)
         {
-            if (drawable is BitmapDrawable)
-            {
-                return ((BitmapDrawable)drawable).Bitmap;
-            }
-
-            int width = drawable.IntrinsicWidth;
-            width = width > 0 ? width : 1;
-            int height = drawable.IntrinsicHeight;
-            height = height > 0 ? height : 1;
-
-            Bitmap bitmap = Bitmap.CreateBitmap(width, height, Bitmap.Config.Argb8888);
-            Canvas canvas = new Canvas(bitmap);
-            drawable.SetBounds(0, 0, canvas.Width, canvas.Height);
-            drawable.Draw(canvas);
-
-            return bitmap;
+            return Task.Run(() => {
+                var viewGroup = vRenderer.ViewGroup;
+                vRenderer.Tracker.UpdateLayout();
+                var layoutParams = new ViewGroup.LayoutParams((int)size.Width, (int)size.Height);
+                viewGroup.LayoutParameters = layoutParams;
+                view.Layout(size);
+                viewGroup.Layout(0, 0, (int)view.WidthRequest, (int)view.HeightRequest);
+                //await FixImageSourceOfImageViews(viewGroup as ViewGroup); // Not sure why this was being done in original
+                return viewGroup;
+            });
         }
 
-        public static int GetImageResource(string imageName)
-        {
-            if (imageName.Contains("."))
-            {
-                imageName = imageName.Substring(0, imageName.IndexOf('.'));
-            }
-
-            if (AppResources.DrawableType == null)
-            {
-                throw new NullReferenceException("You must set Xamarin.Forms.GoogleMaps.Android.AppResources.DrawableType in your Application initialization!");
-            }
-            return (int)AppResources.DrawableType.GetField(imageName).GetValue(null);
-        }
-
-        public static Bitmap ConvertViewToBitmap(global::Android.Views.View v)
-        {
-            v.SetLayerType(LayerType.Software, null);
-            v.DrawingCacheEnabled = true;
-
-            v.Measure(global::Android.Views.View.MeasureSpec.MakeMeasureSpec(0, MeasureSpecMode.Unspecified),
-                global::Android.Views.View.MeasureSpec.MakeMeasureSpec(0, MeasureSpecMode.Unspecified));
-            v.Layout(0, 0, v.MeasuredWidth, v.MeasuredHeight);
-
-            v.BuildDrawingCache(true);
-            Bitmap b = Bitmap.CreateBitmap(v.GetDrawingCache(true));
-            v.DrawingCacheEnabled = false; // clear drawing cache
-            return b;
-        }
-
-        private static LinkedList<string> lruTracker = new LinkedList<string>();
-        private static Dictionary<string, global::Android.Gms.Maps.Model.BitmapDescriptor> cache = new Dictionary<string, global::Android.Gms.Maps.Model.BitmapDescriptor>();
-        private static Mutex bitmanConversionMutex = new Mutex();
-
-        public static Task<global::Android.Gms.Maps.Model.BitmapDescriptor> ConvertViewToBitmapDescriptor(global::Android.Views.View v)
+        public static Task<Bitmap> ConvertViewToBitmap(global::Android.Views.View v)
         {
             return Task.Run(() =>
             {
-                bitmanConversionMutex.WaitOne();
-                var bmp = ConvertViewToBitmap(v);
+                v.SetLayerType(LayerType.Hardware, null);
+                v.DrawingCacheEnabled = true;
+
+                v.Measure(global::Android.Views.View.MeasureSpec.MakeMeasureSpec(0, MeasureSpecMode.Unspecified),
+                    global::Android.Views.View.MeasureSpec.MakeMeasureSpec(0, MeasureSpecMode.Unspecified));
+                v.Layout(0, 0, v.MeasuredWidth, v.MeasuredHeight);
+
+                v.BuildDrawingCache(true);
+                Bitmap b = Bitmap.CreateBitmap(v.GetDrawingCache(true));
+                v.DrawingCacheEnabled = false; // clear drawing cache
+                return b;
+            });
+        }
+
+        private static LinkedList<string> lruTracker = new LinkedList<string>();
+        private static ConcurrentDictionary<string, global::Android.Gms.Maps.Model.BitmapDescriptor> cache = new ConcurrentDictionary<string, global::Android.Gms.Maps.Model.BitmapDescriptor>();
+
+        public static Task<global::Android.Gms.Maps.Model.BitmapDescriptor> ConvertViewToBitmapDescriptor(global::Android.Views.View v)
+        {
+            return Task.Run(async () => {
+
+                var bmp = await ConvertViewToBitmap(v);
+                var img = global::Android.Gms.Maps.Model.BitmapDescriptorFactory.FromBitmap(bmp);
+
                 var buffer = ByteBuffer.Allocate(bmp.ByteCount);
                 bmp.CopyPixelsToBuffer(buffer);
                 buffer.Rewind();
@@ -110,23 +92,22 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 var sha = new SHA1CryptoServiceProvider();
                 var hash = Convert.ToBase64String(sha.ComputeHash(bytes));
 
-                var img = global::Android.Gms.Maps.Model.BitmapDescriptorFactory.FromBitmap(bmp);
-                var existing = lruTracker.Find(hash);
-                if (existing != null)
+                var exists = cache.ContainsKey(hash);
+                if (exists)
                 {
-                    lruTracker.Remove(existing);
-                    lruTracker.AddLast(existing);
-                    bitmanConversionMutex.ReleaseMutex();
-                    return cache[existing.Value];
+                    lruTracker.Remove(hash);
+                    lruTracker.AddLast(hash);
+                    return cache[hash];
                 }
                 if (lruTracker.Count > 10) // O(1)
                 {
-                    cache.Remove(lruTracker.First.Value);
+                    global::Android.Gms.Maps.Model.BitmapDescriptor tmp;
+                    cache.TryRemove(lruTracker.First.Value, out tmp);
                     lruTracker.RemoveFirst();
                 }
-                cache.Add(hash, img);
+                cache.GetOrAdd(hash, img);
                 lruTracker.AddLast(hash);
-                bitmanConversionMutex.ReleaseMutex();
+
                 return img;
             });
         }
@@ -138,34 +119,6 @@ namespace Xamarin.Forms.GoogleMaps.Android
             view.LayoutParameters = new global::Android.Widget.FrameLayout.LayoutParams(width, height);
             layout.AddView(view);
             return layout;
-        }
-
-        public static async Task FixImageSourceOfImageViews(ViewGroup parent)
-        {
-            if (parent != null)
-            {
-                for (var i = 0; i < parent.ChildCount; i++)
-                {
-                    var view = parent.GetChildAt(i);
-                    if (view is global::Android.Widget.ImageView)
-                    {
-
-                        var imageView = view as global::Android.Widget.ImageView;
-                        var imageViewRenderer = imageView.OnFocusChangeListener as ImageRenderer;
-
-                        if (imageViewRenderer.Element.Source is FileImageSource)
-                        {
-                            var source = imageViewRenderer.Element.Source as FileImageSource;
-                            var resId = GetImageResource(source.File);
-                            imageView.SetImageResource(resId);
-                        }
-                    }
-                    if (view is ViewGroup)
-                    {
-                        await FixImageSourceOfImageViews(view as ViewGroup);
-                    }
-                }
-            }
         }
 
     }

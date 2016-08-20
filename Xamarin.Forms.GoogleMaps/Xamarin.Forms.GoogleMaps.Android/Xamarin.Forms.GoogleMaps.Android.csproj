@@ -108,7 +108,6 @@
     <Compile Include="Extensions\LatLngExtensions.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="AppResources.cs" />
-    <Compile Include="MapAuxiliarRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

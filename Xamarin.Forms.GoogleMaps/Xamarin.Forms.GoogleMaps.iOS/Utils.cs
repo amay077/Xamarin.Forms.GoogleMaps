@@ -7,6 +7,8 @@ using Xamarin.Forms.Platform.iOS;
 using System.Security.Cryptography;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Collections.Concurrent;
 
 namespace Xamarin.Forms.GoogleMaps
 {
@@ -31,7 +33,7 @@ namespace Xamarin.Forms.GoogleMaps
         }
 
         private static LinkedList<string> lruTracker = new LinkedList<string>();
-        private static Dictionary<string, UIImage> cache = new Dictionary<string, UIImage>();
+        private static ConcurrentDictionary<string, UIImage> cache = new ConcurrentDictionary<string, UIImage>();
 
         public static UIImage ConvertViewToImage(UIView view)
         {
@@ -45,19 +47,20 @@ namespace Xamarin.Forms.GoogleMaps
             var sha = new SHA1CryptoServiceProvider();
             var hash = Convert.ToBase64String(sha.ComputeHash(bytes));
 
-            var existing = lruTracker.Find(hash);
-            if (existing != null)
+            var exists = cache.ContainsKey(hash);
+            if (exists)
             {
-                lruTracker.Remove(existing);
-                lruTracker.AddLast(existing);
-                return cache[existing.Value];
+                lruTracker.Remove(hash);
+                lruTracker.AddLast(hash);
+                return cache[hash];
             }
             if (lruTracker.Count > 10) // O(1)
             {
-                cache.Remove(lruTracker.First.Value);
+                UIImage tmp;
+                cache.TryRemove(lruTracker.First.Value, out tmp);
                 lruTracker.RemoveFirst();
             }
-            cache.Add(hash, img);
+            cache.GetOrAdd(hash, img);
             lruTracker.AddLast(hash);
             return img;
         }

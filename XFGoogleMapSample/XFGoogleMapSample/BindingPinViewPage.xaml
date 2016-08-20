@@ -14,7 +14,6 @@
 					VerticalOptions="Center"
 					Text="$25" />
 			<maps:Map x:Name="map"/>
-			<maps:MapAuxiliar />
 		</StackLayout>
 	</ContentPage.Content>
 </ContentPage>
