@@ -11,6 +11,7 @@ using Java.Nio;
 using System.Security.Cryptography;
 using Android.Runtime;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace Xamarin.Forms.GoogleMaps.Android
 {
@@ -87,11 +88,13 @@ namespace Xamarin.Forms.GoogleMaps.Android
 
         private static LinkedList<string> lruTracker = new LinkedList<string>();
         private static Dictionary<string, global::Android.Gms.Maps.Model.BitmapDescriptor> cache = new Dictionary<string, global::Android.Gms.Maps.Model.BitmapDescriptor>();
+        private static Mutex bitmanConversionMutex = new Mutex();
 
         public static Task<global::Android.Gms.Maps.Model.BitmapDescriptor> ConvertViewToBitmapDescriptor(global::Android.Views.View v)
         {
             return Task.Run(() =>
             {
+                bitmanConversionMutex.WaitOne();
                 var bmp = ConvertViewToBitmap(v);
                 var buffer = ByteBuffer.Allocate(bmp.ByteCount);
                 bmp.CopyPixelsToBuffer(buffer);
@@ -113,6 +116,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 {
                     lruTracker.Remove(existing);
                     lruTracker.AddLast(existing);
+                    bitmanConversionMutex.ReleaseMutex();
                     return cache[existing.Value];
                 }
                 if (lruTracker.Count > 10) // O(1)
@@ -122,6 +126,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 }
                 cache.Add(hash, img);
                 lruTracker.AddLast(hash);
+                bitmanConversionMutex.ReleaseMutex();
                 return img;
             });
         }
