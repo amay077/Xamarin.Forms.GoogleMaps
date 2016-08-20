@@ -70,19 +70,6 @@ namespace Xamarin.Forms.GoogleMaps.Android
             return (int)AppResources.DrawableType.GetField(imageName).GetValue(null);
         }
 
-        public static ViewGroup ConvertFormsToNative(Xamarin.Forms.View view, Rectangle size)
-        {
-            var vRenderer = Platform.Android.Platform.CreateRenderer(view);
-            var viewGroup = vRenderer.ViewGroup;
-            vRenderer.Tracker.UpdateLayout();
-            var layoutParams = new ViewGroup.LayoutParams((int)size.Width, (int)size.Height);
-            viewGroup.LayoutParameters = layoutParams;
-            view.Layout(size);
-            viewGroup.Layout(0, 0, (int)view.WidthRequest, (int)view.HeightRequest);
-            FixImageSourceOfImageViews(viewGroup as ViewGroup);
-            return viewGroup;
-        }
-
         public static Bitmap ConvertViewToBitmap(global::Android.Views.View v)
         {
             v.SetLayerType(LayerType.Software, null);
@@ -101,10 +88,10 @@ namespace Xamarin.Forms.GoogleMaps.Android
         private static LinkedList<string> lruTracker = new LinkedList<string>();
         private static Dictionary<string, global::Android.Gms.Maps.Model.BitmapDescriptor> cache = new Dictionary<string, global::Android.Gms.Maps.Model.BitmapDescriptor>();
 
-        public static global::Android.Gms.Maps.Model.BitmapDescriptor ConvertViewToBitmapDescriptor(global::Android.Views.View v)
+        public static Task<global::Android.Gms.Maps.Model.BitmapDescriptor> ConvertViewToBitmapDescriptor(global::Android.Views.View v)
         {
-            //return Task.Run(() =>
-            //{
+            return Task.Run(() =>
+            {
                 var bmp = ConvertViewToBitmap(v);
                 var buffer = ByteBuffer.Allocate(bmp.ByteCount);
                 bmp.CopyPixelsToBuffer(buffer);
@@ -136,7 +123,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 cache.Add(hash, img);
                 lruTracker.AddLast(hash);
                 return img;
-            //});
+            });
         }
 
         public static global::Android.Widget.FrameLayout AddViewOnFrameLayout(global::Android.Views.View view, int width, int height)
@@ -148,7 +135,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
             return layout;
         }
 
-        public static void FixImageSourceOfImageViews(ViewGroup parent)
+        public static async Task FixImageSourceOfImageViews(ViewGroup parent)
         {
             if (parent != null)
             {
@@ -170,7 +157,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
                     }
                     if (view is ViewGroup)
                     {
-                        FixImageSourceOfImageViews(view as ViewGroup);
+                        await FixImageSourceOfImageViews(view as ViewGroup);
                     }
                 }
             }

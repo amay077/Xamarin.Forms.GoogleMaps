@@ -4,6 +4,8 @@ using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 using Xamarin.Forms.GoogleMaps.Android;
 using System.Threading;
+using System.Threading.Tasks;
+using Android.Widget;
 
 [assembly: ExportRenderer(typeof(Xamarin.Forms.GoogleMaps.MapAuxiliar), typeof(Xamarin.Forms.GoogleMaps.MapAuxiliarRenderer))]
 
@@ -20,10 +22,10 @@ namespace Xamarin.Forms.GoogleMaps
             LiveMapRenderer = this;
         }
 
-        public global::Android.Views.View GetNativeView(View element)
+        public FrameLayout GetNativeView(View element)
         {
             mut.WaitOne();
-            this.Element.Children.Add(element);
+            Element.Children.Add(element);
 
             global::Android.Views.View targetView = null;
 
@@ -50,9 +52,9 @@ namespace Xamarin.Forms.GoogleMaps
 
             ((global::Android.Views.ViewGroup)targetView.Parent).RemoveView(targetView);
 
-            var container = new global::Android.Widget.FrameLayout(this.Context);
+            var container = new FrameLayout(Context);
             container.LayoutParameters = new LayoutParams(LayoutParams.WrapContent, LayoutParams.WrapContent);
-            targetView.LayoutParameters = new global::Android.Widget.FrameLayout.LayoutParams(Utils.DpToPx((float)element.WidthRequest), Utils.DpToPx((float)element.HeightRequest));
+            targetView.LayoutParameters = new FrameLayout.LayoutParams(Utils.DpToPx((float)element.WidthRequest), Utils.DpToPx((float)element.HeightRequest));
             container.AddView(targetView);
 
             mut.ReleaseMutex();
