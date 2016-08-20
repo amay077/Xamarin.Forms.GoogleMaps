@@ -107,7 +107,6 @@
     <Compile Include="Extensions\BitmapDescriptorExtensions.cs" />
     <Compile Include="Extensions\LatLngExtensions.cs" />
     <Compile Include="Utils.cs" />
-    <Compile Include="AppResources.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

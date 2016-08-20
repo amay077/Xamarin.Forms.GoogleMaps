@@ -20,7 +20,6 @@ namespace XFGoogleMapSample.Droid
 
             base.OnCreate(bundle);
 
-			Xamarin.Forms.GoogleMaps.Android.AppResources.DrawableType = typeof(XFGoogleMapSample.Droid.Resource.Drawable);
             global::Xamarin.Forms.Forms.Init(this, bundle);
             Xamarin.FormsGoogleMaps.Init(this, bundle); // initialize for Xamarin.Forms.GoogleMaps
             LoadApplication(new App());
