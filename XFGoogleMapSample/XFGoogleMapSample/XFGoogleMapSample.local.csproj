@@ -54,6 +54,8 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Include="BindingPinView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Include="ShapesWithInitializePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
@@ -86,6 +88,7 @@
     </Compile>
     <Compile Include="BindingPinView.cs">
       <DependentUpon>BindingPinView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ShapesWithInitializePage.xaml.cs">
       <DependentUpon>ShapesWithInitializePage.xaml</DependentUpon>
     </Compile>
