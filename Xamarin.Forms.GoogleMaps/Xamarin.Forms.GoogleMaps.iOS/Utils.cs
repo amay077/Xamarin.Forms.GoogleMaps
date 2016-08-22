@@ -44,8 +44,8 @@ namespace Xamarin.Forms.GoogleMaps
 
             // Optimization: Let's try to reuse any of the last 10 images we generated
             var bytes = img.AsPNG().ToArray();
-            var sha = new SHA1CryptoServiceProvider();
-            var hash = Convert.ToBase64String(sha.ComputeHash(bytes));
+            var md5 = MD5.Create();
+            var hash = Convert.ToBase64String(md5.ComputeHash(bytes));
 
             var exists = cache.ContainsKey(hash);
             if (exists)

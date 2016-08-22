@@ -50,22 +50,19 @@ namespace Xamarin.Forms.GoogleMaps.Android
             });
         }
 
-        public static Task<Bitmap> ConvertViewToBitmap(global::Android.Views.View v)
+        public static Bitmap ConvertViewToBitmap(global::Android.Views.View v)
         {
-            return Task.Run(() =>
-            {
-                v.SetLayerType(LayerType.Hardware, null);
-                v.DrawingCacheEnabled = true;
+            v.SetLayerType(LayerType.Hardware, null);
+            v.DrawingCacheEnabled = true;
 
-                v.Measure(global::Android.Views.View.MeasureSpec.MakeMeasureSpec(0, MeasureSpecMode.Unspecified),
-                    global::Android.Views.View.MeasureSpec.MakeMeasureSpec(0, MeasureSpecMode.Unspecified));
-                v.Layout(0, 0, v.MeasuredWidth, v.MeasuredHeight);
+            v.Measure(global::Android.Views.View.MeasureSpec.MakeMeasureSpec(0, MeasureSpecMode.Unspecified),
+                global::Android.Views.View.MeasureSpec.MakeMeasureSpec(0, MeasureSpecMode.Unspecified));
+            v.Layout(0, 0, v.MeasuredWidth, v.MeasuredHeight);
 
-                v.BuildDrawingCache(true);
-                Bitmap b = Bitmap.CreateBitmap(v.GetDrawingCache(true));
-                v.DrawingCacheEnabled = false; // clear drawing cache
-                return b;
-            });
+            v.BuildDrawingCache(true);
+            Bitmap b = Bitmap.CreateBitmap(v.GetDrawingCache(true));
+            v.DrawingCacheEnabled = false; // clear drawing cache
+            return b;
         }
 
         private static LinkedList<string> lruTracker = new LinkedList<string>();
@@ -73,9 +70,9 @@ namespace Xamarin.Forms.GoogleMaps.Android
 
         public static Task<global::Android.Gms.Maps.Model.BitmapDescriptor> ConvertViewToBitmapDescriptor(global::Android.Views.View v)
         {
-            return Task.Run(async () => {
+            return Task.Run(() => {
 
-                var bmp = await ConvertViewToBitmap(v);
+                var bmp = ConvertViewToBitmap(v);
                 var img = global::Android.Gms.Maps.Model.BitmapDescriptorFactory.FromBitmap(bmp);
 
                 var buffer = ByteBuffer.Allocate(bmp.ByteCount);
@@ -89,7 +86,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 byte[] bytes = JNIEnv.GetArray<byte>(resultHandle);
                 JNIEnv.DeleteLocalRef(resultHandle);
 
-                var sha = new SHA1CryptoServiceProvider();
+                var sha = MD5.Create();
                 var hash = Convert.ToBase64String(sha.ComputeHash(bytes));
 
                 var exists = cache.ContainsKey(hash);
