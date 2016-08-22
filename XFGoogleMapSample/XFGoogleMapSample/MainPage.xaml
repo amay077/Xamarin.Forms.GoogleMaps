@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <ContentPage
 	xmlns="http://xamarin.com/schemas/2014/forms"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -20,10 +20,12 @@
 					Text="Shapes" />
 			<Button x:Name="buttonTiles"
 					Text="Tiles" />
-			<Button x:Name="buttonCustomPins"
-					Text="Custom Pin" />
-			<Button x:Name="buttonBindingPin"
-					Text="Binding Pin" />
+            <Button x:Name="buttonCustomPins"
+                    Text="Custom Pin" />
+            <Button x:Name="buttonShapesWithInitialize"
+                    Text="Shapes with initialize" />
+            <Button x:Name="buttonBindingPin"
+                    Text="Binding Pin" />
 		</StackLayout>
 	</ContentPage.Content>
 </ContentPage>

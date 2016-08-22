@@ -1,4 +1,4 @@
-﻿using Xamarin.Forms;
+using Xamarin.Forms;
 
 namespace XFGoogleMapSample
 {
@@ -13,7 +13,8 @@ namespace XFGoogleMapSample
             buttonShapes.Clicked += (_, e) => Navigation.PushAsync(new ShapesPage());
 			buttonTiles.Clicked += (_, e) => Navigation.PushAsync(new TilesPage());
             buttonCustomPins.Clicked += (_, e) => Navigation.PushAsync(new CustomPinsPage());
-			buttonBindingPin.Clicked += (_, e) => Navigation.PushAsync(new BindingPinViewPage());
+            buttonShapesWithInitialize.Clicked += (_, e) => Navigation.PushAsync(new ShapesWithInitializePage());
+            buttonBindingPin.Clicked += (_, e) => Navigation.PushAsync(new BindingPinViewPage())
         }
     }
 }

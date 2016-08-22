@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	x:Class="XFGoogleMapSample.ShapesWithInitializePage"
+    xmlns:maps="clr-namespace:Xamarin.Forms.GoogleMaps;assembly=Xamarin.Forms.GoogleMaps"
+    Title="Shapes with initialize">
+	<ContentPage.Content>
+		<StackLayout
+			Orientation="Vertical">
+			
+            <maps:Map x:Name="map" 
+                    VerticalOptions="FillAndExpand"/>
+		</StackLayout>
+	</ContentPage.Content>
+</ContentPage>
