@@ -247,13 +247,16 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
 
         private async void TransformXamarinViewToAndroidBitmap(Pin outerItem, Marker nativeItem)
         {
-            var nativeView = await Utils.ConvertFormsToNative (outerItem.IconView, new Rectangle (0, 0, (double)Utils.DpToPx ((float)outerItem.IconView.WidthRequest), (double)Utils.DpToPx ((float)outerItem.IconView.HeightRequest)), Platform.Android.Platform.CreateRenderer(outerItem.IconView));
-            var otherView = new FrameLayout(nativeView.Context);
-            nativeView.LayoutParameters = new FrameLayout.LayoutParams(Utils.DpToPx((float)outerItem.IconView.WidthRequest), Utils.DpToPx((float)outerItem.IconView.HeightRequest));
-            otherView.AddView(nativeView);
-            nativeItem.SetIcon(await Utils.ConvertViewToBitmapDescriptor(otherView));
-            nativeItem.SetAnchor((float)outerItem.IconView.AnchorX, (float)outerItem.IconView.AnchorY);
-            nativeItem.Visible = true;
+            if (outerItem.IconView != null)
+            {
+                var nativeView = await Utils.ConvertFormsToNative(outerItem.IconView, new Rectangle(0, 0, (double)Utils.DpToPx((float)outerItem.IconView.WidthRequest), (double)Utils.DpToPx((float)outerItem.IconView.HeightRequest)), Platform.Android.Platform.CreateRenderer(outerItem.IconView));
+                var otherView = new FrameLayout(nativeView.Context);
+                nativeView.LayoutParameters = new FrameLayout.LayoutParams(Utils.DpToPx((float)outerItem.IconView.WidthRequest), Utils.DpToPx((float)outerItem.IconView.HeightRequest));
+                otherView.AddView(nativeView);
+                nativeItem.SetIcon(await Utils.ConvertViewToBitmapDescriptor(otherView));
+                nativeItem.SetAnchor((float)outerItem.IconView.AnchorX, (float)outerItem.IconView.AnchorY);
+                nativeItem.Visible = true;
+            }
         }
 
         protected override void OnUpdateIsDraggable(Pin outerItem, Marker nativeItem)
