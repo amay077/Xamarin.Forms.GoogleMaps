@@ -62,9 +62,17 @@ namespace XFGoogleMapSample
             {
                 Bounds = new Bounds(new Position(37.797496, -122.402054), new Position(37.798573, -122.401065)),
                 Icon = BitmapDescriptorFactory.FromBundle("image01.png"),
-                Transparency = 0.5f
+                Transparency = 0.5f,
+                Tag = "THE GROUNDOVERLAY"
             };
             map.GroundOverlays.Add(_overlay);
+
+            _overlay.Clicked += (sender, e) => 
+            {
+                var overlay = sender as GroundOverlay;
+                this.DisplayAlert("Clicked", overlay.Tag as string, "CLOSE");
+            };
+
 
             var polygon = new Polygon()
             {
