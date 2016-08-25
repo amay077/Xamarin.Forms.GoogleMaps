@@ -23,13 +23,13 @@ namespace XFGoogleMapSample
 				Label = "Tokyo SKYTREE",
 				Address = "Sumida-ku, Tokyo, Japan",
 				Position = new Position(35.71d, 139.81d),
-				IconView = new BindingPinView(pinDisplay.Text)
+                Icon = BitmapDescriptorFactory.FromView(new BindingPinView(pinDisplay.Text))
 			};
 			map.Pins.Add(pin);
 			map.MoveToRegion(MapSpan.FromCenterAndRadius(pin.Position, Distance.FromMeters(5000)));
 			pinDisplay.TextChanged += (sender, e) =>
 			{
-				pin.IconView = new BindingPinView(e.NewTextValue);
+                pin.Icon = BitmapDescriptorFactory.FromView(new BindingPinView(e.NewTextValue));
 			};
 		}
 	}

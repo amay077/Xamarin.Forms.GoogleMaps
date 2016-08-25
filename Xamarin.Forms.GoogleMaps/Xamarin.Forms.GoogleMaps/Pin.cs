@@ -16,8 +16,6 @@ namespace Xamarin.Forms.GoogleMaps
 
         public static readonly BindableProperty IsDraggableProperty = BindableProperty.Create("IsDraggable", typeof(bool), typeof(Pin), false);
 
-        public static readonly BindableProperty IconViewProperty = BindableProperty.Create("IconView", typeof(View), typeof(Pin), default(object));
-
         public string Label
         {
             get { return (string)GetValue(LabelProperty); }
@@ -52,12 +50,6 @@ namespace Xamarin.Forms.GoogleMaps
         {
             get { return (bool)GetValue(IsDraggableProperty); }
             set { SetValue(IsDraggableProperty, value); }
-        }
-
-        public View IconView
-        {
-            get { return (View)GetValue(IconViewProperty); }
-            set { SetValue(IconViewProperty, value); }
         }
 
         public object Tag { get; set; }

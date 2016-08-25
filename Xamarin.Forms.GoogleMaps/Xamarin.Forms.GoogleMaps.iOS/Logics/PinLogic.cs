@@ -211,7 +211,14 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
 
         protected override void OnUpdateIcon(Pin outerItem, Marker nativeItem)
         {
-            nativeItem.Icon = outerItem?.Icon?.ToUIImage();
+            if (outerItem.Icon.Type == BitmapDescriptorType.View)
+            {
+                OnUpdateIconView(outerItem, nativeItem);
+            }
+            else
+            {
+                nativeItem.Icon = outerItem?.Icon?.ToUIImage();
+            }
         }
 
         protected override void OnUpdateIsDraggable(Pin outerItem, Marker nativeItem)
@@ -219,15 +226,16 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
             nativeItem.Draggable = outerItem?.IsDraggable ?? false;
         }
 
-        protected override void OnUpdateIconView(Pin outerItem, Marker nativeItem)
+        protected void OnUpdateIconView(Pin outerItem, Marker nativeItem)
         {
-            if (outerItem.IconView != null)
+            if (outerItem?.Icon?.Type == BitmapDescriptorType.View && outerItem?.Icon?.View != null)
             {
                 NativeMap.InvokeOnMainThread(() =>
                 {
-                    var nativeView = Utils.ConvertFormsToNative(outerItem.IconView, new CGRect(0, 0, outerItem.IconView.WidthRequest, outerItem.IconView.HeightRequest));
+                    var iconView = outerItem.Icon.View;
+                    var nativeView = Utils.ConvertFormsToNative(iconView, new CGRect(0, 0, iconView.WidthRequest, iconView.HeightRequest));
                     nativeView.BackgroundColor = UIColor.Clear;
-                    nativeItem.GroundAnchor = new CGPoint(outerItem.IconView.AnchorX, outerItem.IconView.AnchorY);
+                    nativeItem.GroundAnchor = new CGPoint(iconView.AnchorX, iconView.AnchorY);
                     nativeItem.Icon = Utils.ConvertViewToImage(nativeView);
 
                     // Would have been way cooler to do this instead, but surprisingly, we can't do this on Android:

@@ -66,10 +66,10 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
 
             var marker = NativeMap.AddMarker(opts);
             // If the pin has an IconView set this method will convert it into an icon for the marker
-            if (outerItem.IconView != null)
+            if (outerItem?.Icon?.Type == BitmapDescriptorType.View)
             {
                 marker.Visible = false; // Will become visible once the iconview is ready.
-                OnUpdateIconView(outerItem, marker);
+                TransformXamarinViewToAndroidBitmap(outerItem, marker);
             }
 
             // associate pin with marker for later lookup in event handlers
@@ -234,27 +234,30 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
 
         protected override void OnUpdateIcon(Pin outerItem, Marker nativeItem)
         {
-            nativeItem.SetIcon(outerItem?.Icon?.ToBitmapDescriptor() ?? NativeBitmapDescriptorFactory.DefaultMarker());
-            nativeItem.SetAnchor(0.5f, 1f);
-            nativeItem.SetInfoWindowAnchor(0.5f, 0f);
-        }
-
-        // If the pin has an IconView set this method will convert it into an icon for the marker
-        protected override void OnUpdateIconView(Pin outerItem, Marker nativeItem)
-        {
-            TransformXamarinViewToAndroidBitmap(outerItem, nativeItem);
+            if (outerItem.Icon.Type == BitmapDescriptorType.View) 
+            {
+                // If the pin has an IconView set this method will convert it into an icon for the marker
+                TransformXamarinViewToAndroidBitmap(outerItem, nativeItem);       
+            }
+            else
+            {
+                nativeItem.SetIcon(outerItem?.Icon?.ToBitmapDescriptor() ?? NativeBitmapDescriptorFactory.DefaultMarker());
+                nativeItem.SetAnchor(0.5f, 1f);
+                nativeItem.SetInfoWindowAnchor(0.5f, 0f);
+            }
         }
 
         private async void TransformXamarinViewToAndroidBitmap(Pin outerItem, Marker nativeItem)
         {
-            if (outerItem.IconView != null)
+            if (outerItem?.Icon?.Type == BitmapDescriptorType.View && outerItem?.Icon?.View != null)
             {
-                var nativeView = await Utils.ConvertFormsToNative(outerItem.IconView, new Rectangle(0, 0, (double)Utils.DpToPx((float)outerItem.IconView.WidthRequest), (double)Utils.DpToPx((float)outerItem.IconView.HeightRequest)), Platform.Android.Platform.CreateRenderer(outerItem.IconView));
+                var iconView = outerItem.Icon.View;
+                var nativeView = await Utils.ConvertFormsToNative(iconView, new Rectangle(0, 0, (double)Utils.DpToPx((float)iconView.WidthRequest), (double)Utils.DpToPx((float)iconView.HeightRequest)), Platform.Android.Platform.CreateRenderer(iconView));
                 var otherView = new FrameLayout(nativeView.Context);
-                nativeView.LayoutParameters = new FrameLayout.LayoutParams(Utils.DpToPx((float)outerItem.IconView.WidthRequest), Utils.DpToPx((float)outerItem.IconView.HeightRequest));
+                nativeView.LayoutParameters = new FrameLayout.LayoutParams(Utils.DpToPx((float)iconView.WidthRequest), Utils.DpToPx((float)iconView.HeightRequest));
                 otherView.AddView(nativeView);
                 nativeItem.SetIcon(await Utils.ConvertViewToBitmapDescriptor(otherView));
-                nativeItem.SetAnchor((float)outerItem.IconView.AnchorX, (float)outerItem.IconView.AnchorY);
+                nativeItem.SetAnchor((float)iconView.AnchorX, (float)iconView.AnchorY);
                 nativeItem.Visible = true;
             }
         }
