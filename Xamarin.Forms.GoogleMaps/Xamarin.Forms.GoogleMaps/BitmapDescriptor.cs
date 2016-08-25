@@ -10,6 +10,7 @@ namespace Xamarin.Forms.GoogleMaps
         internal string BundleName { get; private set; }
         internal Stream Stream { get; private set; }
         internal string AbsolutePath { get; private set; }
+        internal View View { get; private set; }
 
         private BitmapDescriptor()
         {
@@ -51,6 +52,14 @@ namespace Xamarin.Forms.GoogleMaps
             };
         }
 
+        internal static BitmapDescriptor FromView(View view)
+        {
+            return new BitmapDescriptor()
+            {
+                Type = BitmapDescriptorType.View,
+                View = view
+            };
+        }
     }
 }
 

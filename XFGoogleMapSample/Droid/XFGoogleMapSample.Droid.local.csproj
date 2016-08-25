@@ -16,6 +16,7 @@
     <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
     <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
     <AndroidUseLatestPlatformSdk>true</AndroidUseLatestPlatformSdk>
+    <JavaMaximumHeapSize>1G</JavaMaximumHeapSize>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -96,6 +97,10 @@
       <Project>{E5FEBCA7-6127-4002-B7B3-3EE4CC362B25}</Project>
       <Name>XFGoogleMapSample.local</Name>
     </ProjectReference>
+    <ProjectReference Include="..\XFGoogleMapSample\XFGoogleMapSample.local.csproj">
+      <Project>{E5FEBCA7-6127-4002-B7B3-3EE4CC362B25}</Project>
+      <Name>XFGoogleMapSample.local</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Xamarin.Forms.GoogleMaps\Xamarin.Forms.GoogleMaps\Xamarin.Forms.GoogleMaps.csproj">
       <Project>{F1C8F5A0-A55D-4C7D-9737-472F7AC222D4}</Project>
       <Name>Xamarin.Forms.GoogleMaps</Name>
@@ -103,10 +108,6 @@
     <ProjectReference Include="..\..\Xamarin.Forms.GoogleMaps\Xamarin.Forms.GoogleMaps.Android\Xamarin.Forms.GoogleMaps.Android.csproj">
       <Project>{D12EADE4-1457-4126-8EA7-9BEDF5393409}</Project>
       <Name>Xamarin.Forms.GoogleMaps.Android</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\XFGoogleMapSample\XFGoogleMapSample.local.csproj">
-      <Project>{E5FEBCA7-6127-4002-B7B3-3EE4CC362B25}</Project>
-      <Name>XFGoogleMapSample.local</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -129,6 +130,7 @@
     <AndroidResource Include="Resources\drawable-hdpi\icon.png" />
     <AndroidResource Include="Resources\drawable-xhdpi\icon.png" />
     <AndroidResource Include="Resources\drawable-xxhdpi\icon.png" />
+    <AndroidResource Include="Resources\drawable\pin_red.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="Assets\image01.png" />
