@@ -3,8 +3,14 @@
 	<metadata minClientVersion="2.8.3">
 		<id>Xamarin.Forms.GoogleMaps</id>
 		<title>Xamarin.Forms.GoogleMaps</title>
-		<version>1.5.1-beta1</version>
+		<version>1.5.1-beta2</version>
 		<releaseNotes>
+# 1.5.1-beta2
+
+## New Features
+
+* PR#62 Generation of Pin Icon from Xamarin Views
+
 # 1.5.1-beta1
 
 ## Bug Fixes

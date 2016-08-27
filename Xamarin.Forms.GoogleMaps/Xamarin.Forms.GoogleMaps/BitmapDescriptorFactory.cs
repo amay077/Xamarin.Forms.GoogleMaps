@@ -20,6 +20,11 @@ namespace Xamarin.Forms.GoogleMaps
             return BitmapDescriptor.FromStream(stream);
         }
 
+        public static BitmapDescriptor FromView(View view)
+        {
+            return BitmapDescriptor.FromView(view);
+        }
+
         //public static BitmapDescriptor FromPath(string absolutePath)
         //{
         //    return BitmapDescriptor.FromPath(absolutePath);

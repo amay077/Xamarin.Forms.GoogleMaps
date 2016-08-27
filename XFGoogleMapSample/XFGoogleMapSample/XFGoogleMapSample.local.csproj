@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -50,10 +50,13 @@
     <EmbeddedResource Include="marker01.png" />
     <EmbeddedResource Include="marker02.png" />
     <EmbeddedResource Include="marker03.png" />
-    <EmbeddedResource Include="ShapesWithInitializePage.xaml">
+    <EmbeddedResource Include="BindingPinViewPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Include="GroundOverlaysPage.xaml">
+    <EmbeddedResource Include="BindingPinView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ShapesWithInitializePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>
@@ -80,13 +83,15 @@
     <Compile Include="CustomPinsPage.xaml.cs">
       <DependentUpon>CustomPinsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="BindingPinViewPage.cs">
+      <DependentUpon>BindingPinViewPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BindingPinView.cs">
+      <DependentUpon>BindingPinView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ShapesWithInitializePage.xaml.cs">
       <DependentUpon>ShapesWithInitializePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GroundOverlaysPage.xaml.cs">
-      <DependentUpon>GroundOverlaysPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Extensions\ListExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">
@@ -107,9 +112,6 @@
       <Project>{F1C8F5A0-A55D-4C7D-9737-472F7AC222D4}</Project>
       <Name>Xamarin.Forms.GoogleMaps</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Extensions\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Forms.2.3.0.49\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.2.3.0.49\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
