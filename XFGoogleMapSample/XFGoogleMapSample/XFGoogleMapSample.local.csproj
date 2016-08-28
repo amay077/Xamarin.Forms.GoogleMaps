@@ -83,10 +83,10 @@
     <Compile Include="CustomPinsPage.xaml.cs">
       <DependentUpon>CustomPinsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="BindingPinViewPage.cs">
+    <Compile Include="BindingPinViewPage.xaml.cs">
       <DependentUpon>BindingPinViewPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="BindingPinView.cs">
+    <Compile Include="BindingPinView.xaml.cs">
       <DependentUpon>BindingPinView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ShapesWithInitializePage.xaml.cs">
