@@ -57,6 +57,8 @@
     <Compile Include="PinDragEventArgs.cs" />
     <Compile Include="MapClickedEventArgs.cs" />
     <Compile Include="MapLongClickedEventArgs.cs" />
+    <Compile Include="GroundOverlay.cs" />
+    <Compile Include="Bounds.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Internals\" />

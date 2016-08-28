@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:maps="clr-namespace:Xamarin.Forms.GoogleMaps;assembly=Xamarin.Forms.GoogleMaps"
+	x:Class="XFGoogleMapSample.GroundOverlaysPage"
+	Title="GroundOverlays">
+	<ContentPage.Content>
+
+		<StackLayout
+			VerticalOptions="Fill"
+			Orientation="Vertical">
+
+			<Grid 			
+				Padding="10">
+				<Grid.RowDefinitions>
+			        <RowDefinition Height="Auto" />
+			        <RowDefinition Height="Auto" />
+			        <RowDefinition Height="Auto" />
+			        <RowDefinition Height="Auto" />
+			    </Grid.RowDefinitions>
+			 
+			    <Grid.ColumnDefinitions>
+			        <ColumnDefinition Width="Auto" />
+			        <ColumnDefinition Width="*" />
+			    </Grid.ColumnDefinitions>
+
+				<Label
+					Grid.Row="0"
+					Grid.Column="0"
+					VerticalTextAlignment="Center"
+					HorizontalTextAlignment="End"
+					Text="Icon:" />
+				<Picker x:Name="pickerIcon"
+						Grid.Row="0"
+						Grid.Column="1"/>
+
+				<Label
+					Grid.Row="1"
+					Grid.Column="0"
+					VerticalTextAlignment="Center"
+					HorizontalTextAlignment="End"
+					Text="Transparency:" />
+				<Entry 
+					x:Name="entryTransparency"
+					Grid.Row="1"
+					Grid.Column="1" />
+
+				<Label
+					Grid.Row="2"
+					Grid.Column="0"
+					VerticalTextAlignment="Center"
+					HorizontalTextAlignment="End"
+					Text="Bearing:" />
+				<Entry 
+					x:Name="entryBearing"
+					Grid.Row="2"
+					Grid.Column="1" />
+
+				<Label
+					Grid.Row="3"
+					Grid.Column="0"
+					VerticalTextAlignment="Center"
+					HorizontalTextAlignment="End"
+					Text="IsClickable:" />
+				<Switch
+					x:Name="switchIsClickable"
+					Grid.Row="3"
+					Grid.Column="1" />
+				
+			</Grid>			
+			<maps:Map x:Name="map" 
+					VerticalOptions="FillAndExpand"/>
+			
+		</StackLayout>
+	</ContentPage.Content>
+</ContentPage>

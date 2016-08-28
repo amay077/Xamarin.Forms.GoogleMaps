@@ -3,8 +3,19 @@
 	<metadata minClientVersion="2.8.3">
 		<id>Xamarin.Forms.GoogleMaps</id>
 		<title>Xamarin.Forms.GoogleMaps</title>
-		<version>1.5.1-beta2</version>
+		<version>1.6.0-beta1</version>
 		<releaseNotes>
+
+# 1.6.0-beta1
+
+## New Features
+
+* #52 Support for Ground Overlays
+
+## Bug Fixes
+
+* #68 [Android]Duplicate Pin when Pins.Add in OnAppearing 
+
 # 1.5.1-beta2
 
 ## New Features

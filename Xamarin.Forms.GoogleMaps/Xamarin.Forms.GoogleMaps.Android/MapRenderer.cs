@@ -32,7 +32,8 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 new PolygonLogic(),
                 new CircleLogic(),
                 new PinLogic(),
-                new TileLayerLogic()
+                new TileLayerLogic(),
+                new GroundOverlayLogic()
             };
         }
 

@@ -59,6 +59,9 @@
     <EmbeddedResource Include="ShapesWithInitializePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Include="GroundOverlaysPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -92,6 +95,10 @@
     <Compile Include="ShapesWithInitializePage.xaml.cs">
       <DependentUpon>ShapesWithInitializePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GroundOverlaysPage.xaml.cs">
+      <DependentUpon>GroundOverlaysPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions\ListExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">

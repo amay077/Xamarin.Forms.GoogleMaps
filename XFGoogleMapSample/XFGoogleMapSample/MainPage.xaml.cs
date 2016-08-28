@@ -15,6 +15,7 @@ namespace XFGoogleMapSample
             buttonCustomPins.Clicked += (_, e) => Navigation.PushAsync(new CustomPinsPage());
             buttonShapesWithInitialize.Clicked += (_, e) => Navigation.PushAsync(new ShapesWithInitializePage());
 			buttonBindingPin.Clicked += (_, e) => Navigation.PushAsync(new BindingPinViewPage());
+            buttonGroundOverlays.Clicked += (_, e) => Navigation.PushAsync(new GroundOverlaysPage());
         }
     }
 }
