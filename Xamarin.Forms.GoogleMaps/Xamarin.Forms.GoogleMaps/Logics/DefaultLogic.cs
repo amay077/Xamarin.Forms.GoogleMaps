@@ -61,6 +61,20 @@ namespace Xamarin.Forms.GoogleMaps.Logics
         internal override void RestoreItems()
         {
             var items = GetItems(Map);
+
+            // Delete native items if exists
+            foreach (var item in items ?? new List<TOuter>())
+            {
+                try
+                {
+                    DeleteNativeItem(item);
+                }
+                catch (Exception)
+                {
+                    // TODO printf in DebugMode
+                }
+            }
+
             AddItems((IList)items);
         }
 
