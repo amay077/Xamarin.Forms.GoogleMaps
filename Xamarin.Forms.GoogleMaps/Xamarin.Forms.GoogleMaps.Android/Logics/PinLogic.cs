@@ -234,7 +234,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
 
         protected override void OnUpdateIcon(Pin outerItem, Marker nativeItem)
         {
-            if (outerItem.Icon.Type == BitmapDescriptorType.View) 
+            if (outerItem.Icon != null && outerItem.Icon.Type == BitmapDescriptorType.View) 
             {
                 // If the pin has an IconView set this method will convert it into an icon for the marker
                 TransformXamarinViewToAndroidBitmap(outerItem, nativeItem);       
