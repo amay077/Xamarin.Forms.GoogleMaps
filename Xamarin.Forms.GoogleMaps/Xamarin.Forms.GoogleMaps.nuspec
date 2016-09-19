@@ -3,8 +3,15 @@
 	<metadata minClientVersion="2.8.3">
 		<id>Xamarin.Forms.GoogleMaps</id>
 		<title>Xamarin.Forms.GoogleMaps</title>
-		<version>1.6.0</version>
+		<version>1.6.1-beta1</version>
 		<releaseNotes>
+
+# 1.6.1-beta1
+
+## Bug Fixes
+
+* #73 [Android]get_Map returns NULL POINTER EXCEPTION(Support Google Play-services ver.32)
+* [Android]Set null to Pin.Icon is does not work
 
 # 1.6.0
 
