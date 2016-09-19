@@ -18,8 +18,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
     public class MapRenderer : ViewRenderer,
         GoogleMap.IOnCameraChangeListener,
         GoogleMap.IOnMapClickListener,
-        GoogleMap.IOnMapLongClickListener,
-        IOnMapReadyCallback
+        GoogleMap.IOnMapLongClickListener
     {
         readonly BaseLogic<GoogleMap>[] _logics;
 
@@ -42,10 +41,6 @@ namespace Xamarin.Forms.GoogleMaps.Android
 
         const string MoveMessageName = "MapMoveToRegion";
 
-//#pragma warning disable 618
-//        protected GoogleMap NativeMap => ((MapView)Control).Map;
-//#pragma warning restore 618
-
         protected GoogleMap NativeMap { get; private set; }
 
         protected Map Map => (Map)Element;
@@ -61,7 +56,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
             return new SizeRequest(new Size(Context.ToPixels(40), Context.ToPixels(40)));
         }
 
-        protected override void OnElementChanged(ElementChangedEventArgs<View> e)
+        protected async override void OnElementChanged(ElementChangedEventArgs<View> e)
         {
             base.OnElementChanged(e);
 
@@ -86,35 +81,32 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 var oldMapModel = (Map)e.OldElement;
                 MessagingCenter.Unsubscribe<Map, MoveToRegionMessage>(this, MoveMessageName);
 
-#pragma warning disable 618
-                if (oldMapView.Map != null)
+                var oldGoogleMap = await oldMapView.GetGoogleMapAsync();
+                if (oldGoogleMap != null)
                 {
-#pragma warning restore 618
 
-#pragma warning disable 618
-                    oldMapView.Map.SetOnCameraChangeListener(null);
-                    oldMapView.Map.SetOnMapClickListener(null);
-                    oldMapView.Map.SetOnMapLongClickListener(null);
-#pragma warning restore 618
+                    oldGoogleMap.SetOnCameraChangeListener(null);
+                    oldGoogleMap.SetOnMapClickListener(null);
+                    oldGoogleMap.SetOnMapLongClickListener(null);
                 }
 
                 oldMapView.Dispose();
             }
 
-#pragma warning disable 618
-            _oldNativeMap = oldMapView?.Map;
-            _oldMap = (Map)e.OldElement;
-#pragma warning restore 618
+            if (oldMapView != null)
+            {
+                _oldNativeMap = await oldMapView.GetGoogleMapAsync();
+                _oldMap = (Map)e.OldElement;
+            }
 
             MessagingCenter.Subscribe<Map, MoveToRegionMessage>(this, MoveMessageName, OnMoveToRegionMessage, Map);
 
-            ((MapView)Control).GetMapAsync(this);
+            NativeMap = await ((MapView)Control).GetGoogleMapAsync();
+            OnMapReady(NativeMap);
         }
 
-        void IOnMapReadyCallback.OnMapReady(GoogleMap googleMap)
+        void OnMapReady(GoogleMap map)
         {
-            NativeMap = googleMap;
-            var map = googleMap;
             if (map != null)
             {
                 map.SetOnCameraChangeListener(this);
