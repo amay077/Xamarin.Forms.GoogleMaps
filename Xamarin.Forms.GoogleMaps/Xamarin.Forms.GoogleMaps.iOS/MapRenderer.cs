@@ -206,6 +206,11 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                 case MapType.Hybrid:
                     ((MapView)Control).MapType = MapViewType.Hybrid;
                     break;
+                case MapType.None:
+                    ((MapView)Control).MapType = MapViewType.None;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
     }
