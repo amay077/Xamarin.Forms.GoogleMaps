@@ -4,6 +4,7 @@
     {
         Street,
         Satellite,
-        Hybrid
+        Hybrid,
+        None
     }
 }
