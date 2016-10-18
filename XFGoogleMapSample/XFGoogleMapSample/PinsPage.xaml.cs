@@ -114,6 +114,7 @@ namespace XFGoogleMapSample
 
             // Selected Pin changed
             map.SelectedPinChanged += SelectedPin_Changed;
+            map.HandlePinClicked = false;
         }
 
         void SelectedPin_Changed(object sender, SelectedPinChangedEventArgs e)

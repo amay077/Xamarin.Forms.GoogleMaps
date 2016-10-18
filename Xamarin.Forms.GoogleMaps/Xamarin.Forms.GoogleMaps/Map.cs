@@ -132,6 +132,12 @@ namespace Xamarin.Forms.GoogleMaps
             }
         }
 
+        public bool HandlePinClicked
+        {
+            get;
+            set;
+        } = false;
+
         internal MapSpan LastMoveToRegion { get; private set; }
 
         IEnumerator IEnumerable.GetEnumerator()

@@ -122,7 +122,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
                 _onMarkerEvent = false;
             }
 
-            e.Handled = false;
+            e.Handled = Map.HandlePinClicked;
         }
 
         void OnInfoWindowClose(object sender, GoogleMap.InfoWindowCloseEventArgs e)

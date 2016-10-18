@@ -127,7 +127,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
                 _onMarkerEvent = false;
             }
 
-            return false;
+            return Map.HandlePinClicked;
         }
 
         void InfoWindowClosed(object sender, GMSMarkerEventEventArgs e)
