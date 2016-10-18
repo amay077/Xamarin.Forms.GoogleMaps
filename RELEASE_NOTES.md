@@ -1,17 +1,11 @@
 Xamarin.Forms.GoogleMaps Release Notes
 ----
 
-# 1.6.1-beta3
+# 1.6.1
 
 ## New Features
 
 * #82 Add MapType.None that displays empty map
-
-# 1.6.1-beta2
-
-mistaken.
-
-# 1.6.1-beta1
 
 ## Bug Fixes
 
