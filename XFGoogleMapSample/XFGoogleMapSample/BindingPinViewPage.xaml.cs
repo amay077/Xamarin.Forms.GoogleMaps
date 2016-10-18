@@ -19,7 +19,8 @@ namespace XFGoogleMapSample
 
 			var pin = new Pin()
 			{
-				Type = PinType.Place,
+                //ID = "123", // optional, client app pin id for reference of this pin
+                Type = PinType.Place,
 				Label = "Tokyo SKYTREE",
 				Address = "Sumida-ku, Tokyo, Japan",
 				Position = new Position(35.71d, 139.81d),

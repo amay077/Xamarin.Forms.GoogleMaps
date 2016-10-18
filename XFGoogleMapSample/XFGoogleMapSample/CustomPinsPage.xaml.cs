@@ -38,6 +38,7 @@ namespace XFGoogleMapSample
         // The pin
         readonly Pin _pinTokyo = new Pin()
         {
+            //ID = "123", // optional, client app pin id for reference of this pin
             Type = PinType.Place,
             Label = "Tokyo SKYTREE",
             Address = "Sumida-ku, Tokyo, Japan",
