@@ -4,6 +4,8 @@ namespace Xamarin.Forms.GoogleMaps
 {
     public sealed class Pin : BindableObject
     {
+        public static readonly BindableProperty IDProperty = BindableProperty.Create("ID", typeof(string), typeof(Pin), default(string));
+
         public static readonly BindableProperty TypeProperty = BindableProperty.Create("Type", typeof(PinType), typeof(Pin), default(PinType));
 
         public static readonly BindableProperty PositionProperty = BindableProperty.Create("Position", typeof(Position), typeof(Pin), default(Position));
@@ -15,6 +17,12 @@ namespace Xamarin.Forms.GoogleMaps
         public static readonly BindableProperty IconProperty = BindableProperty.Create("Icon", typeof(BitmapDescriptor), typeof(Pin), default(BitmapDescriptor));
 
         public static readonly BindableProperty IsDraggableProperty = BindableProperty.Create("IsDraggable", typeof(bool), typeof(Pin), false);
+
+        public string ID
+        {
+            get { return (string)GetValue(IDProperty); }
+            set { SetValue(IDProperty, value); }
+        }
 
         public string Label
         {
@@ -74,6 +82,7 @@ namespace Xamarin.Forms.GoogleMaps
             unchecked
             {
                 int hashCode = Label?.GetHashCode() ?? 0;
+                hashCode = (hashCode * 397) ^ (ID?.GetHashCode() ?? 0);
                 hashCode = (hashCode * 397) ^ Position.GetHashCode();
                 hashCode = (hashCode * 397) ^ (int)Type;
                 hashCode = (hashCode * 397) ^ (Address?.GetHashCode() ?? 0);
@@ -103,7 +112,7 @@ namespace Xamarin.Forms.GoogleMaps
 
         bool Equals(Pin other)
         {
-            return string.Equals(Label, other.Label) && Equals(Position, other.Position) && Type == other.Type && string.Equals(Address, other.Address);
+            return string.Equals(ID, other.ID) && string.Equals(Label, other.Label) && Equals(Position, other.Position) && Type == other.Type && string.Equals(Address, other.Address);
         }
     }
 }

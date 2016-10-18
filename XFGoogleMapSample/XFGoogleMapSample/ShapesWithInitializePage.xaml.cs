@@ -42,6 +42,7 @@ namespace XFGoogleMapSample
 
             var pinNewYork = new Pin()
             {
+                //ID = "123", // optional, client app pin id for reference of this pin
                 Type = PinType.Place,
                 Label = "Central Park NYC",
                 Address = "New York City, NY 10022",
