@@ -59,6 +59,11 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
                 nativeMarker.Icon = outerItem.Icon.ToUIImage();
             }
 
+            outerItem.OnShowInfoWindow = () =>
+            {
+                UpdateSelectedPin(outerItem);
+            };
+
             outerItem.NativeObject = nativeMarker;
             nativeMarker.Map = NativeMap;
 

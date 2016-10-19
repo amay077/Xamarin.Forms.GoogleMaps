@@ -114,12 +114,13 @@ namespace XFGoogleMapSample
 
             // Selected Pin changed
             map.SelectedPinChanged += SelectedPin_Changed;
-            map.HandlePinClicked = false;
+            map.HandlePinClicked = true;
         }
 
         void SelectedPin_Changed(object sender, SelectedPinChangedEventArgs e)
         {
             labelStatus.Text = $"SelectedPin changed - {e?.SelectedPin?.Label ?? "nothing"}";
+            e?.SelectedPin?.ShowInfoWindow();
         }
 
         void Pin_Clicked(object sender, EventArgs e)

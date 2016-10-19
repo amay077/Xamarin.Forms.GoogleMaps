@@ -58,6 +58,8 @@ namespace Xamarin.Forms.GoogleMaps
 
         public event EventHandler Clicked;
 
+        internal Action OnShowInfoWindow { get; set; }
+
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj))
@@ -104,6 +106,11 @@ namespace Xamarin.Forms.GoogleMaps
         bool Equals(Pin other)
         {
             return string.Equals(Label, other.Label) && Equals(Position, other.Position) && Type == other.Type && string.Equals(Address, other.Address);
+        }
+
+        public void ShowInfoWindow()
+        {
+            this?.OnShowInfoWindow?.Invoke();
         }
     }
 }
