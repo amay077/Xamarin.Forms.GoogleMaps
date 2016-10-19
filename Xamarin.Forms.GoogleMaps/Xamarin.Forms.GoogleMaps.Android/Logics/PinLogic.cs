@@ -72,6 +72,11 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
                 TransformXamarinViewToAndroidBitmap(outerItem, marker);
             }
 
+            outerItem.OnShowInfoWindow = () =>
+            {
+                UpdateSelectedPin(outerItem);
+            };
+
             // associate pin with marker for later lookup in event handlers
             outerItem.NativeObject = marker;
             return marker;
