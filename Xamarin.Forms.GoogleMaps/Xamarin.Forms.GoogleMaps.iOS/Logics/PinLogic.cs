@@ -64,6 +64,11 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
                 UpdateSelectedPin(outerItem);
             };
 
+            outerItem.OnHideInfoWindow = () =>
+            {
+                UpdateSelectedPin(null);
+            };
+
             outerItem.NativeObject = nativeMarker;
             nativeMarker.Map = NativeMap;
 

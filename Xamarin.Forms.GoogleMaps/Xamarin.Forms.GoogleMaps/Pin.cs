@@ -60,6 +60,8 @@ namespace Xamarin.Forms.GoogleMaps
 
         internal Action OnShowInfoWindow { get; set; }
 
+        internal Action OnHideInfoWindow { get; set; }
+
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj))
@@ -111,6 +113,11 @@ namespace Xamarin.Forms.GoogleMaps
         public void ShowInfoWindow()
         {
             this?.OnShowInfoWindow?.Invoke();
+        }
+
+        public void HideInfoWindow()
+        {
+            this?.OnHideInfoWindow?.Invoke();
         }
     }
 }

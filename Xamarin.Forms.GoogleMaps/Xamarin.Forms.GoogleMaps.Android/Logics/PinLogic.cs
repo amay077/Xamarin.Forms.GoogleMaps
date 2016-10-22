@@ -77,6 +77,11 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
                 UpdateSelectedPin(outerItem);
             };
 
+            outerItem.OnHideInfoWindow = () =>
+            {
+                UpdateSelectedPin(null);
+            };
+
             // associate pin with marker for later lookup in event handlers
             outerItem.NativeObject = marker;
             return marker;
