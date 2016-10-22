@@ -128,11 +128,11 @@ namespace XFGoogleMapSample
             // then Pin selection doesn't work automatically.
             // All pin selection operations are delegated to you.
             // Sample codes are below.
-            if (switchHandlePinClicked.IsToggled)
-            {
-                map.SelectedPin = e.Pin;
-                map.MoveToRegion(MapSpan.FromCenterAndRadius(e.Pin.Position, Distance.FromMeters(500)), true);
-            }
+            //if (switchHandlePinClicked.IsToggled)
+            //{
+            //    map.SelectedPin = e.Pin;
+            //    map.MoveToRegion(MapSpan.FromCenterAndRadius(e.Pin.Position, Distance.FromMeters(500)), true);
+            //}
         }
     }
 }
