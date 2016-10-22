@@ -1,10 +1,11 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage
 	xmlns="http://xamarin.com/schemas/2014/forms"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 	xmlns:maps="clr-namespace:Xamarin.Forms.GoogleMaps;assembly=Xamarin.Forms.GoogleMaps"
 	x:Class="XFGoogleMapSample.PinsPage"
 	Title="Pins">
+
 	<ContentPage.Content>
 
 		<StackLayout
@@ -13,6 +14,7 @@
 
 			<Grid>
 				<Grid.RowDefinitions>
+			        <RowDefinition Height="Auto" />
 			        <RowDefinition Height="Auto" />
 			        <RowDefinition Height="Auto" />
 			        <RowDefinition Height="Auto" />
@@ -27,37 +29,49 @@
 				
 				<Button x:Name="buttonAddPinTokyo"
 						Text="Add pin to Tokyo"
-						Grid.Row="1"
+						Grid.Row="0"
 						Grid.Column="1"/>
 				<Button x:Name="buttonRemovePinTokyo"
 						Text="Remove pin to Tokyo"
-						Grid.Row="1"
+						Grid.Row="0"
 						Grid.Column="2"/>
 
 				<Button x:Name="buttonAddPinNewYork"
 						Text="Add pin to New York"
-						Grid.Row="2"
+						Grid.Row="1"
 						Grid.Column="1"/>
 				<Button x:Name="buttonRemovePinNewYork"
 						Text="Remove pin to New York"
-						Grid.Row="2"
+						Grid.Row="1"
 						Grid.Column="2"/>
 
 				<Button x:Name="buttonClearPins"
 						Text="Clear Pins"
-						Grid.Row="3"
+						Grid.Row="2"
 						Grid.Column="1"
 						Grid.ColumnSpan="2" />
 				
 				<Button x:Name="buttonSelectPinNewYork"
 						Text="Select New York"
-						Grid.Row="4"
+						Grid.Row="3"
 						Grid.Column="1" />
 				
 				<Button x:Name="buttonClearSelection"
 						Text="Clear Selection"
-						Grid.Row="4"
+						Grid.Row="3"
 						Grid.Column="2" />
+
+				<StackLayout Orientation="Horizontal"
+							Grid.Row="4"
+							Grid.Column="1"
+							Grid.ColumnSpan="2" >
+					<Switch x:Name="switchHandlePinClicked"
+							IsToggled="false"
+							VerticalOptions="Center"
+							HorizontalOptions="Start"/>
+					<Label Text="Handle Pin Clicked"
+							VerticalOptions="Center"/>
+				</StackLayout>
 
 				<Label x:Name="labelStatus"
 						Text="Show status when Pin selected."

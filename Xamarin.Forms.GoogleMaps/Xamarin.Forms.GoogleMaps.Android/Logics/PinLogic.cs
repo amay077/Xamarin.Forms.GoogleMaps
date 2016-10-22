@@ -111,6 +111,14 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
             // lookup pin
             var targetPin = LookupPin(e.Marker);
 
+            // If set to PinClickedEventArgs.Handled = true in app codes,
+            // then all pin selection controlling by app.
+            if (Map.SendPinClicked(targetPin))
+            {
+                e.Handled = true;
+                return;
+            }
+
             try
             {
                 _onMarkerEvent = true;

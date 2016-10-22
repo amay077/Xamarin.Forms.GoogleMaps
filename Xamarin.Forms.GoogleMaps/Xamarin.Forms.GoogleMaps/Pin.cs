@@ -56,6 +56,7 @@ namespace Xamarin.Forms.GoogleMaps
 
         public object NativeObject { get; internal set; }
 
+        [Obsolete("Please use Map.PinClicked instead of this")]
         public event EventHandler Clicked;
 
         public override bool Equals(object obj)

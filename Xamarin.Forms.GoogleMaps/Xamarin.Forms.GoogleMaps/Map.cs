@@ -27,6 +27,7 @@ namespace Xamarin.Forms.GoogleMaps
         readonly ObservableCollection<TileLayer> _tileLayers = new ObservableCollection<TileLayer>();
         readonly ObservableCollection<GroundOverlay> _groundOverlays = new ObservableCollection<GroundOverlay>();
 
+        public event EventHandler<PinClickedEventArgs> PinClicked;
         public event EventHandler<SelectedPinChangedEventArgs> SelectedPinChanged;
 
         public event EventHandler<PinDragEventArgs> PinDragStart;
@@ -190,6 +191,13 @@ namespace Xamarin.Forms.GoogleMaps
         internal void SendSelectedPinChanged(Pin selectedPin)
         {
             SelectedPinChanged?.Invoke(this, new SelectedPinChangedEventArgs(selectedPin));
+        }
+
+        internal bool SendPinClicked(Pin pin)
+        {
+            var args = new PinClickedEventArgs(pin);
+            PinClicked?.Invoke(this, args);
+            return args.Handled;
         }
 
         internal void SendPinDragStart(Pin pin)
