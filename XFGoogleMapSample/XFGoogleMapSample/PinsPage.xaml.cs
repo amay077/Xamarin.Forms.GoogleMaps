@@ -8,6 +8,8 @@ namespace XFGoogleMapSample
 {
     public partial class PinsPage : ContentPage
     {
+        Pin _selectedPin;
+
         public PinsPage()
         {
             InitializeComponent();
@@ -112,15 +114,30 @@ namespace XFGoogleMapSample
                 map.SelectedPin = null;
             };
 
+            // Handle Marker clicked
+            switchHandlePinClicked.Toggled += (sender, e) =>
+            {
+                map.HandlePinClicked = e.Value;
+            };
+
+            // Pin Show/Hide InfoWindow
+            buttonShowInfoWindow.Clicked += (sender, e) => 
+            {
+                _selectedPin?.ShowInfoWindow();
+            };
+            buttonHideInfoWindow.Clicked += (sender, e) =>
+            {
+                _selectedPin?.HideInfoWindow();
+            };
+
             // Selected Pin changed
             map.SelectedPinChanged += SelectedPin_Changed;
-            map.HandlePinClicked = true;
         }
 
         void SelectedPin_Changed(object sender, SelectedPinChangedEventArgs e)
         {
             labelStatus.Text = $"SelectedPin changed - {e?.SelectedPin?.Label ?? "nothing"}";
-            e?.SelectedPin?.ShowInfoWindow();
+            _selectedPin = e.SelectedPin;
         }
 
         void Pin_Clicked(object sender, EventArgs e)

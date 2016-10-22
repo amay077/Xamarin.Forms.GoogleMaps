@@ -99,6 +99,7 @@
       <DependentUpon>GroundOverlaysPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Extensions\ListExtensions.cs" />
+    <Compile Include="ValueConverters\BoolInverseConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">
@@ -119,6 +120,9 @@
       <Project>{F1C8F5A0-A55D-4C7D-9737-472F7AC222D4}</Project>
       <Name>Xamarin.Forms.GoogleMaps</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ValueConverters\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Forms.2.3.0.49\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.2.3.0.49\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
