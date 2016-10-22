@@ -1,6 +1,16 @@
 Xamarin.Forms.GoogleMaps Release Notes
 ----
 
+# 1.7.0-beta1
+
+## New Features
+
+* #78 Add Map.PinClicked event and can handling pin selection yourself. 
+
+## **Notice**
+
+* Pin.Clicked event is not obsolete. Please use Map.PinClicked instead of this.
+
 # 1.6.1
 
 ## New Features
