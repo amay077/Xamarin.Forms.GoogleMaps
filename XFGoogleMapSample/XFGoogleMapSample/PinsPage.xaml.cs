@@ -8,8 +8,6 @@ namespace XFGoogleMapSample
 {
     public partial class PinsPage : ContentPage
     {
-        Pin _selectedPin;
-
         public PinsPage()
         {
             InitializeComponent();
@@ -27,7 +25,6 @@ namespace XFGoogleMapSample
                     Address = "Sumida-ku, Tokyo, Japan",
                     Position = new Position(35.71d, 139.81d)
                 };
-                pinTokyo.Clicked += Pin_Clicked;
 
                 map.Pins.Add(pinTokyo);
                 map.MoveToRegion(MapSpan.FromCenterAndRadius(pinTokyo.Position, Distance.FromMeters(5000)));
@@ -39,7 +36,6 @@ namespace XFGoogleMapSample
             buttonRemovePinTokyo.Clicked += (sender, e) => 
             {
                 map.Pins.Remove(pinTokyo);
-                pinTokyo.Clicked -= Pin_Clicked;
                 pinTokyo = null;
                 ((Button)sender).IsEnabled = false;
                 buttonAddPinTokyo.IsEnabled = true;
@@ -56,7 +52,6 @@ namespace XFGoogleMapSample
                     Address = "New York City, NY 10022",
                     Position = new Position(40.78d, -73.96d)
                 };
-                pinNewYork.Clicked += Pin_Clicked;
 
                 map.Pins.Add(pinNewYork);
                 map.MoveToRegion(MapSpan.FromCenterAndRadius(pinNewYork.Position, Distance.FromMeters(5000)));
@@ -68,7 +63,6 @@ namespace XFGoogleMapSample
             buttonRemovePinNewYork.Clicked += (sender, e) =>
             {
                 map.Pins.Remove(pinNewYork);
-                pinNewYork.Clicked -= Pin_Clicked;
                 pinNewYork = null;
                 ((Button)sender).IsEnabled = false;
                 buttonAddPinNewYork.IsEnabled = true;
@@ -80,8 +74,6 @@ namespace XFGoogleMapSample
             {
                 map.Pins.Clear();
 
-                if (pinTokyo != null) pinTokyo.Clicked -= Pin_Clicked;
-                if (pinNewYork != null) pinNewYork.Clicked -= Pin_Clicked;
                 pinTokyo = null;
                 pinNewYork = null;
                 buttonAddPinTokyo.IsEnabled = true;
@@ -124,11 +116,12 @@ namespace XFGoogleMapSample
         {
             var time = DateTime.Now.ToString("hh:mm:ss");
             labelStatus.Text = $"[{time}]SelectedPin changed - {e?.SelectedPin?.Label ?? "nothing"}";
-            _selectedPin = e.SelectedPin;
         }
 
         void Map_PinClicked(object sender, PinClickedEventArgs e)
         {
+            DisplayAlert("Pin Clicked", $"{e.Pin.Label} Clicked.", "Close");
+            
             e.Handled = switchHandlePinClicked.IsToggled;
 
             // If you set e.Handled = true,
@@ -140,12 +133,6 @@ namespace XFGoogleMapSample
                 map.SelectedPin = e.Pin;
                 map.MoveToRegion(MapSpan.FromCenterAndRadius(e.Pin.Position, Distance.FromMeters(500)), true);
             }
-        }
-
-        void Pin_Clicked(object sender, EventArgs e)
-        {
-            var pin = (Pin)sender;
-            DisplayAlert("Pin Clicked", $"{pin.Label} Clicked.", "Close");
         }
     }
 }
