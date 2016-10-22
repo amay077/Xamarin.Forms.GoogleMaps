@@ -59,16 +59,6 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
                 nativeMarker.Icon = outerItem.Icon.ToUIImage();
             }
 
-            outerItem.OnShowInfoWindow = () =>
-            {
-                UpdateSelectedPin(outerItem);
-            };
-
-            outerItem.OnHideInfoWindow = () =>
-            {
-                UpdateSelectedPin(null);
-            };
-
             outerItem.NativeObject = nativeMarker;
             nativeMarker.Map = NativeMap;
 
@@ -126,6 +116,13 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
             // lookup pin
             var targetPin = LookupPin(marker);
 
+            // If set to PinClickedEventArgs.Handled = true in app codes,
+            // then all pin selection controlling by app.
+            if (Map.SendPinClicked(targetPin))
+            {
+                return true;
+            }
+
             try
             {
                 _onMarkerEvent = true;
@@ -137,7 +134,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
                 _onMarkerEvent = false;
             }
 
-            return Map.HandlePinClicked;
+            return false;
         }
 
         void InfoWindowClosed(object sender, GMSMarkerEventEventArgs e)

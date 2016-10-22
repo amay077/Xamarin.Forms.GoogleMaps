@@ -3,16 +3,9 @@
 	xmlns="http://xamarin.com/schemas/2014/forms"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 	xmlns:maps="clr-namespace:Xamarin.Forms.GoogleMaps;assembly=Xamarin.Forms.GoogleMaps"
-	xmlns:cv="clr-namespace:XFGoogleMapSample.ValueConverters"
 	x:Class="XFGoogleMapSample.PinsPage"
 	Title="Pins">
 
-	<ContentPage.Resources>
-		<ResourceDictionary>
-			<cv:BoolInverseConverter x:Key="boolInverseConverter" />
-		</ResourceDictionary>
-	</ContentPage.Resources>
-	
 	<ContentPage.Content>
 
 		<StackLayout
@@ -21,7 +14,6 @@
 
 			<Grid>
 				<Grid.RowDefinitions>
-			        <RowDefinition Height="Auto" />
 			        <RowDefinition Height="Auto" />
 			        <RowDefinition Height="Auto" />
 			        <RowDefinition Height="Auto" />
@@ -74,32 +66,16 @@
 							Grid.Column="1"
 							Grid.ColumnSpan="2" >
 					<Switch x:Name="switchHandlePinClicked"
-							IsToggled="true"
+							IsToggled="false"
 							VerticalOptions="Center"
 							HorizontalOptions="Start"/>
 					<Label Text="Handle Pin Clicked"
 							VerticalOptions="Center"/>
 				</StackLayout>
 
-				<Button x:Name="buttonShowInfoWindow"
-						IsEnabled="{Binding IsToggled,
-							Source={x:Reference switchHandlePinClicked}, 
-							Converter={StaticResource boolInverseConverter}}"
-						Text="Show InfoWindow"
-						Grid.Row="5"
-						Grid.Column="1" />
-				
-				<Button x:Name="buttonHideInfoWindow"
-						IsEnabled="{Binding IsToggled,
-							Source={x:Reference switchHandlePinClicked}, 
-							Converter={StaticResource boolInverseConverter}}"
-						Text="Hide InfoWindow"
-						Grid.Row="5"
-						Grid.Column="2" />
-
 				<Label x:Name="labelStatus"
 						Text="Show status when Pin selected."
-						Grid.Row="6"
+						Grid.Row="5"
 						Grid.Column="1"
 						Grid.ColumnSpan="2" />
 				

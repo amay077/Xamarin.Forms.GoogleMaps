@@ -56,11 +56,8 @@ namespace Xamarin.Forms.GoogleMaps
 
         public object NativeObject { get; internal set; }
 
+        [Obsolete("Please use Map.PinClicked instead of this")]
         public event EventHandler Clicked;
-
-        internal Action OnShowInfoWindow { get; set; }
-
-        internal Action OnHideInfoWindow { get; set; }
 
         public override bool Equals(object obj)
         {
@@ -108,16 +105,6 @@ namespace Xamarin.Forms.GoogleMaps
         bool Equals(Pin other)
         {
             return string.Equals(Label, other.Label) && Equals(Position, other.Position) && Type == other.Type && string.Equals(Address, other.Address);
-        }
-
-        public void ShowInfoWindow()
-        {
-            this?.OnShowInfoWindow?.Invoke();
-        }
-
-        public void HideInfoWindow()
-        {
-            this?.OnHideInfoWindow?.Invoke();
         }
     }
 }

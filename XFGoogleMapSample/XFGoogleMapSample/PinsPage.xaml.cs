@@ -114,21 +114,7 @@ namespace XFGoogleMapSample
                 map.SelectedPin = null;
             };
 
-            // Handle Marker clicked
-            switchHandlePinClicked.Toggled += (sender, e) =>
-            {
-                map.HandlePinClicked = e.Value;
-            };
-
-            // Pin Show/Hide InfoWindow
-            buttonShowInfoWindow.Clicked += (sender, e) => 
-            {
-                _selectedPin?.ShowInfoWindow();
-            };
-            buttonHideInfoWindow.Clicked += (sender, e) =>
-            {
-                _selectedPin?.HideInfoWindow();
-            };
+            map.PinClicked += Map_PinClicked;;
 
             // Selected Pin changed
             map.SelectedPinChanged += SelectedPin_Changed;
@@ -136,14 +122,29 @@ namespace XFGoogleMapSample
 
         void SelectedPin_Changed(object sender, SelectedPinChangedEventArgs e)
         {
-            labelStatus.Text = $"SelectedPin changed - {e?.SelectedPin?.Label ?? "nothing"}";
+            var time = DateTime.Now.ToString("hh:mm:ss");
+            labelStatus.Text = $"[{time}]SelectedPin changed - {e?.SelectedPin?.Label ?? "nothing"}";
             _selectedPin = e.SelectedPin;
+        }
+
+        void Map_PinClicked(object sender, PinClickedEventArgs e)
+        {
+            e.Handled = switchHandlePinClicked.IsToggled;
+
+            // If you set e.Handled = true,
+            // then Pin selection doesn't work automatically.
+            // All pin selection operations are delegated to you.
+            // Sample codes are below.
+            if (switchHandlePinClicked.IsToggled)
+            {
+                map.SelectedPin = e.Pin;
+                map.MoveToRegion(MapSpan.FromCenterAndRadius(e.Pin.Position, Distance.FromMeters(500)), true);
+            }
         }
 
         void Pin_Clicked(object sender, EventArgs e)
         {
             var pin = (Pin)sender;
-
             DisplayAlert("Pin Clicked", $"{pin.Label} Clicked.", "Close");
         }
     }

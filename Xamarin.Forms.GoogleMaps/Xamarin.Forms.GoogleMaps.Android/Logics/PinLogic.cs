@@ -72,16 +72,6 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
                 TransformXamarinViewToAndroidBitmap(outerItem, marker);
             }
 
-            outerItem.OnShowInfoWindow = () =>
-            {
-                UpdateSelectedPin(outerItem);
-            };
-
-            outerItem.OnHideInfoWindow = () =>
-            {
-                UpdateSelectedPin(null);
-            };
-
             // associate pin with marker for later lookup in event handlers
             outerItem.NativeObject = marker;
             return marker;
@@ -121,6 +111,14 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
             // lookup pin
             var targetPin = LookupPin(e.Marker);
 
+            // If set to PinClickedEventArgs.Handled = true in app codes,
+            // then all pin selection controlling by app.
+            if (Map.SendPinClicked(targetPin))
+            {
+                e.Handled = true;
+                return;
+            }
+
             try
             {
                 _onMarkerEvent = true;
@@ -132,7 +130,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
                 _onMarkerEvent = false;
             }
 
-            e.Handled = Map.HandlePinClicked;
+            e.Handled = false;
         }
 
         void OnInfoWindowClose(object sender, GoogleMap.InfoWindowCloseEventArgs e)
