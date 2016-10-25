@@ -112,6 +112,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 map.SetOnCameraChangeListener(this);
                 map.SetOnMapClickListener(this);
                 map.SetOnMapLongClickListener(this);
+                map.UiSettings.MapToolbarEnabled = false;
                 map.UiSettings.ZoomControlsEnabled = Map.HasZoomEnabled;
                 map.UiSettings.ZoomGesturesEnabled = Map.HasZoomEnabled;
                 map.UiSettings.ScrollGesturesEnabled = Map.HasScrollEnabled;
