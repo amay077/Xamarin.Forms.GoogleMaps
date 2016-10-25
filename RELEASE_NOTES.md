@@ -1,6 +1,12 @@
 Xamarin.Forms.GoogleMaps Release Notes
 ----
 
+# 1.7.0-beta2
+
+## New Features
+
+* #80 Disable MapToolbar in Android 
+
 # 1.7.0-beta1
 
 ## New Features
@@ -9,7 +15,7 @@ Xamarin.Forms.GoogleMaps Release Notes
 
 ## **Notice**
 
-* Pin.Clicked event is not obsolete. Please use Map.PinClicked instead of this.
+* Pin.Clicked event is now obsolete. Please use Map.PinClicked instead of this.
 
 # 1.6.1
 
