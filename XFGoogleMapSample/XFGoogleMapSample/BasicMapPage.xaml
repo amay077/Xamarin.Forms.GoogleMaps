@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage
 	xmlns="http://xamarin.com/schemas/2014/forms"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -12,6 +12,7 @@
 			Orientation="Vertical">
 			<Grid>
 				<Grid.RowDefinitions>
+			        <RowDefinition Height="Auto" />
 			        <RowDefinition Height="Auto" />
 			        <RowDefinition Height="Auto" />
 			        <RowDefinition Height="Auto" />
@@ -76,6 +77,11 @@
 					Text="GEOCODE"
 					Grid.Row="4"
 					Grid.Column="1" />
+
+				<Label x:Name="labelStatus"
+					Grid.Row="5"
+					Grid.Column="0"
+					Grid.ColumnSpan="2"/>
 						
 			</Grid>
 			<maps:Map x:Name="map" 
