@@ -15,6 +15,8 @@ namespace Xamarin.Forms.GoogleMaps
         public static readonly BindableProperty IconProperty = BindableProperty.Create("Icon", typeof(BitmapDescriptor), typeof(Pin), default(BitmapDescriptor));
 
         public static readonly BindableProperty IsDraggableProperty = BindableProperty.Create("IsDraggable", typeof(bool), typeof(Pin), false);
+        
+        public static readonly BindableProperty UniqueIdProperty = BindableProperty.Create("UniqueId", typeof(string), typeof(Pin), false);
 
         public string Label
         {
