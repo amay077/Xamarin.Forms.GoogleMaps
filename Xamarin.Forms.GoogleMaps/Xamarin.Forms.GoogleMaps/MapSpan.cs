@@ -73,6 +73,11 @@ namespace Xamarin.Forms.GoogleMaps
             return new MapSpan(new Position((minLat + maxLat) / 2d, (minLon + maxLon) / 2d), maxLat - minLat, maxLon - minLon);
         }
 
+        public static MapSpan FromBounds(Bounds bounds)
+        {
+            return new MapSpan(bounds.Center, bounds.HeightDegrees, bounds.WidthDegrees);
+        }
+
         public override int GetHashCode()
         {
             unchecked
