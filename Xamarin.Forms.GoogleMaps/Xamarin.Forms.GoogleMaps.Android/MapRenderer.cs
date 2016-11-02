@@ -22,7 +22,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
     {
         readonly BaseLogic<GoogleMap>[] _logics;
 
-        public MapRenderer()
+        public MapRenderer() : base()
         {
             AutoPackage = false;
             _logics = new BaseLogic<GoogleMap>[]
@@ -35,6 +35,8 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 new GroundOverlayLogic()
             };
         }
+
+        public MapRenderer(IntPtr javaReference, global::Android.Runtime.JniHandleOwnership transfer) : this() { }
 
         static Bundle s_bundle;
         internal static Bundle Bundle { set { s_bundle = value; } }
