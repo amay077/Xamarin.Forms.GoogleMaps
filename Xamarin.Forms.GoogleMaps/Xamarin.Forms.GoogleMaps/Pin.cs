@@ -16,6 +16,8 @@ namespace Xamarin.Forms.GoogleMaps
 
         public static readonly BindableProperty IsDraggableProperty = BindableProperty.Create("IsDraggable", typeof(bool), typeof(Pin), false);
 
+        public static readonly BindableProperty RotationProperty = BindableProperty.Create("Rotation", typeof(float), typeof(Pin), 0f);
+
         public string Label
         {
             get { return (string)GetValue(LabelProperty); }
@@ -50,6 +52,12 @@ namespace Xamarin.Forms.GoogleMaps
         {
             get { return (bool)GetValue(IsDraggableProperty); }
             set { SetValue(IsDraggableProperty, value); }
+        }
+
+        public float Rotation
+        {
+            get { return (float)GetValue(RotationProperty); }
+            set { SetValue(RotationProperty, value); }
         }
 
         public object Tag { get; set; }

@@ -53,6 +53,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
             nativeMarker.Title = outerItem.Label;
             nativeMarker.Snippet = outerItem.Address ?? string.Empty;
             nativeMarker.Draggable = outerItem.IsDraggable;
+            nativeMarker.Rotation = outerItem.Rotation;
 
             if (outerItem.Icon != null)
             {
