@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage
 	xmlns="http://xamarin.com/schemas/2014/forms"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -12,6 +12,8 @@
 			Orientation="Vertical">
 			<Grid>
 				<Grid.RowDefinitions>
+			        <RowDefinition Height="Auto" />
+			        <RowDefinition Height="Auto" />
 			        <RowDefinition Height="Auto" />
 			        <RowDefinition Height="Auto" />
 			        <RowDefinition Height="Auto" />
@@ -64,18 +66,33 @@
 					Grid.Row="3"
 					Grid.Column="1" />
 
+				<Label Text="IsTrafficEnabled" 
+					VerticalOptions="Center"
+					Grid.Row="4"
+					Grid.Column="0" />
+				<Switch x:Name="switchIsTrafficEnabled" 
+					VerticalOptions="Center"
+					HorizontalOptions="Start"
+					Grid.Row="4"
+					Grid.Column="1" />
+
 				<Entry 
 					x:Name="entryAddress"
 					VerticalOptions="Center"
 					Text="new york"
-					Grid.Row="4"
+					Grid.Row="5"
 					Grid.Column="0" />
 				<Button
 					x:Name="buttonGeocode"
 					VerticalOptions="Center"
 					Text="GEOCODE"
-					Grid.Row="4"
+					Grid.Row="5"
 					Grid.Column="1" />
+
+				<Label x:Name="labelStatus"
+					Grid.Row="6"
+					Grid.Column="0"
+					Grid.ColumnSpan="2"/>
 						
 			</Grid>
 			<maps:Map x:Name="map" 

@@ -22,7 +22,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
     {
         readonly BaseLogic<GoogleMap>[] _logics;
 
-        public MapRenderer()
+        public MapRenderer() : base()
         {
             AutoPackage = false;
             _logics = new BaseLogic<GoogleMap>[]
@@ -35,6 +35,8 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 new GroundOverlayLogic()
             };
         }
+
+        public MapRenderer(IntPtr javaReference, global::Android.Runtime.JniHandleOwnership transfer) : this() { }
 
         static Bundle s_bundle;
         internal static Bundle Bundle { set { s_bundle = value; } }
@@ -117,6 +119,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 map.UiSettings.ZoomGesturesEnabled = Map.HasZoomEnabled;
                 map.UiSettings.ScrollGesturesEnabled = Map.HasScrollEnabled;
                 map.MyLocationEnabled = map.UiSettings.MyLocationButtonEnabled = Map.IsShowingUser;
+                map.TrafficEnabled = Map.IsTrafficEnabled;
                 SetMapType();
             }
 
@@ -215,6 +218,10 @@ namespace Xamarin.Forms.GoogleMaps.Android
             {
                 NativeMap.UiSettings.ZoomControlsEnabled = Map.HasZoomEnabled;
                 NativeMap.UiSettings.ZoomGesturesEnabled = Map.HasZoomEnabled;
+            }
+            else if (e.PropertyName == Map.IsTrafficEnabledProperty.PropertyName)
+            {
+                NativeMap.TrafficEnabled = Map.IsTrafficEnabled;
             }
 
             foreach (var logic in _logics)
