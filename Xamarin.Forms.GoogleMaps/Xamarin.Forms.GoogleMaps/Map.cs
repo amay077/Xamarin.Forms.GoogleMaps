@@ -20,6 +20,8 @@ namespace Xamarin.Forms.GoogleMaps
 
         public static readonly BindableProperty SelectedPinProperty = BindableProperty.Create("SelectedPin", typeof(Pin), typeof(Map), default(Pin));
 
+        public static readonly BindableProperty IsTrafficEnabledProperty = BindableProperty.Create("IsTrafficEnabled", typeof(bool), typeof(Map), false);
+
         readonly ObservableCollection<Pin> _pins = new ObservableCollection<Pin>();
         readonly ObservableCollection<Polyline> _polylines = new ObservableCollection<Polyline>();
         readonly ObservableCollection<Polygon> _polygons = new ObservableCollection<Polygon>();
@@ -69,6 +71,13 @@ namespace Xamarin.Forms.GoogleMaps
             get { return (bool)GetValue(HasZoomEnabledProperty); }
             set { SetValue(HasZoomEnabledProperty, value); }
         }
+
+        public bool IsTrafficEnabled
+        {
+            get { return (bool)GetValue(IsTrafficEnabledProperty); }
+            set { SetValue(IsTrafficEnabledProperty, value); }
+        }
+
 
         public bool IsShowingUser
         {

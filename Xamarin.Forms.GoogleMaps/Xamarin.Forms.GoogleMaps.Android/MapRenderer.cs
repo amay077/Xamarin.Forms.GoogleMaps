@@ -119,6 +119,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 map.UiSettings.ZoomGesturesEnabled = Map.HasZoomEnabled;
                 map.UiSettings.ScrollGesturesEnabled = Map.HasScrollEnabled;
                 map.MyLocationEnabled = map.UiSettings.MyLocationButtonEnabled = Map.IsShowingUser;
+                map.TrafficEnabled = Map.IsTrafficEnabled;
                 SetMapType();
             }
 
@@ -217,6 +218,10 @@ namespace Xamarin.Forms.GoogleMaps.Android
             {
                 NativeMap.UiSettings.ZoomControlsEnabled = Map.HasZoomEnabled;
                 NativeMap.UiSettings.ZoomGesturesEnabled = Map.HasZoomEnabled;
+            }
+            else if (e.PropertyName == Map.IsTrafficEnabledProperty.PropertyName)
+            {
+                NativeMap.TrafficEnabled = Map.IsTrafficEnabled;
             }
 
             foreach (var logic in _logics)

@@ -95,6 +95,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                 UpdateIsShowingUser();
                 UpdateHasScrollEnabled();
                 UpdateHasZoomEnabled();
+                UpdateIsTrafficEnabled();
 
                 foreach (var logic in _logics)
                 {
@@ -112,18 +113,36 @@ namespace Xamarin.Forms.GoogleMaps.iOS
             var mapModel = (Map)Element;
 
             if (e.PropertyName == Map.MapTypeProperty.PropertyName)
+            {
                 UpdateMapType();
+            }
             else if (e.PropertyName == Map.IsShowingUserProperty.PropertyName)
+            {
                 UpdateIsShowingUser();
+            }
             else if (e.PropertyName == Map.HasScrollEnabledProperty.PropertyName)
+            {
                 UpdateHasScrollEnabled();
+            }
             else if (e.PropertyName == Map.HasZoomEnabledProperty.PropertyName)
+            {
                 UpdateHasZoomEnabled();
-            else if (e.PropertyName == VisualElement.IsVisibleProperty.PropertyName && ((Map)Element).LastMoveToRegion != null)
+            }
+            else if (e.PropertyName == Map.IsTrafficEnabledProperty.PropertyName)
+            {
+                UpdateIsTrafficEnabled();
+            }
+            else if (e.PropertyName == VisualElement.IsVisibleProperty.PropertyName &&
+                     ((Map) Element).LastMoveToRegion != null)
+            {
                 _shouldUpdateRegion = true;
+            }
+
 
             foreach (var logic in _logics)
+            {
                 logic.OnMapPropertyChanged(e);
+            }
         }
 
         public override void LayoutSubviews()
@@ -191,6 +210,11 @@ namespace Xamarin.Forms.GoogleMaps.iOS
         {
             ((MapView)Control).MyLocationEnabled = ((Map)Element).IsShowingUser;
             ((MapView)Control).Settings.MyLocationButton = ((Map)Element).IsShowingUser;
+        }
+
+        void UpdateIsTrafficEnabled()
+        {
+            ((MapView)Control).TrafficEnabled = ((Map)Element).IsTrafficEnabled;
         }
 
         void UpdateMapType()
