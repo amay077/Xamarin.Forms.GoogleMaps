@@ -49,6 +49,13 @@ namespace XFGoogleMapSample
             };
             switchIsShowingUser.IsToggled = map.IsShowingUser;
 
+            // IsTrafficEnabled
+            switchIsTrafficEnabled.Toggled += (sender, e) =>
+            {
+                map.IsTrafficEnabled = e.Value;
+            };
+            switchIsTrafficEnabled.IsToggled = map.IsTrafficEnabled;
+
             // Map Clicked
             map.MapClicked += (sender, e) =>
             {

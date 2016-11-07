@@ -18,6 +18,7 @@
 			        <RowDefinition Height="Auto" />
 			        <RowDefinition Height="Auto" />
 			        <RowDefinition Height="Auto" />
+			        <RowDefinition Height="Auto" />
 			    </Grid.RowDefinitions>
 			 
 			    <Grid.ColumnDefinitions>
@@ -65,21 +66,31 @@
 					Grid.Row="3"
 					Grid.Column="1" />
 
+				<Label Text="IsTrafficEnabled" 
+					VerticalOptions="Center"
+					Grid.Row="4"
+					Grid.Column="0" />
+				<Switch x:Name="switchIsTrafficEnabled" 
+					VerticalOptions="Center"
+					HorizontalOptions="Start"
+					Grid.Row="4"
+					Grid.Column="1" />
+
 				<Entry 
 					x:Name="entryAddress"
 					VerticalOptions="Center"
 					Text="new york"
-					Grid.Row="4"
+					Grid.Row="5"
 					Grid.Column="0" />
 				<Button
 					x:Name="buttonGeocode"
 					VerticalOptions="Center"
 					Text="GEOCODE"
-					Grid.Row="4"
+					Grid.Row="5"
 					Grid.Column="1" />
 
 				<Label x:Name="labelStatus"
-					Grid.Row="5"
+					Grid.Row="6"
 					Grid.Column="0"
 					Grid.ColumnSpan="2"/>
 						
