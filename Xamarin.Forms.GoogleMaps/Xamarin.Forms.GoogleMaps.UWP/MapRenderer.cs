@@ -55,8 +55,11 @@ namespace Xamarin.Forms.Maps.WinRT
                     await MoveToRegion(a.Span, a.Animate ? MapAnimationKind.Bow : MapAnimationKind.None), mapModel);
 
                 UpdateMapType();
+                UpdateIsTrafficEnabled();
                 UpdateHasScrollEnabled();
                 UpdateHasZoomEnabled();
+                UpdateHasRotateEnabled();
+                UpdateHasTiltEnabled();
 
                 ((ObservableCollection<Pin>)mapModel.Pins).CollectionChanged += OnCollectionChanged;
 
@@ -72,13 +75,65 @@ namespace Xamarin.Forms.Maps.WinRT
             base.OnElementPropertyChanged(sender, e);
 
             if (e.PropertyName == Map.MapTypeProperty.PropertyName)
+            {
                 UpdateMapType();
-            else if (e.PropertyName == Map.IsShowingUserProperty.PropertyName)
+                return;
+            }
+
+            if (e.PropertyName == Map.IsShowingUserProperty.PropertyName)
+            {
                 await UpdateIsShowingUser();
-            else if (e.PropertyName == Map.HasScrollEnabledProperty.PropertyName)
+                return;
+            }
+
+            if (e.PropertyName == Map.IsTrafficEnabledProperty.PropertyName)
+            {
+                UpdateIsTrafficEnabled();
+                return;
+            }
+
+            if (e.PropertyName == UiSettings.HasRotateEnabledProperty.PropertyName)
+            {
+                UpdateHasRotateEnabled();
+                return;
+            }
+
+            if (e.PropertyName == UiSettings.HasScrollEnabledProperty.PropertyName)
+            {
                 UpdateHasScrollEnabled();
-            else if (e.PropertyName == Map.HasZoomEnabledProperty.PropertyName)
+                return;
+            }
+
+            if (e.PropertyName == UiSettings.HasTiltEnabledProperty.PropertyName)
+            {
+                UpdateHasTiltEnabled();
+                return;
+            }
+
+            if (e.PropertyName == UiSettings.HasZoomEnabledProperty.PropertyName)
+            {
                 UpdateHasZoomEnabled();
+                return;
+            }
+        }
+
+        private void UpdateHasTiltEnabled()
+        {
+            Control.TiltInteractionMode = Element.UiSettings.HasTiltEnabled
+                ? MapInteractionMode.GestureAndControl
+                : MapInteractionMode.Disabled;
+        }
+
+        private void UpdateHasRotateEnabled()
+        {
+            Control.RotateInteractionMode = Element.UiSettings.HasRotateEnabled
+                ? MapInteractionMode.GestureAndControl
+                : MapInteractionMode.Disabled;
+        }
+
+        private void UpdateIsTrafficEnabled()
+        {
+            Control.TrafficFlowVisible = Element.IsTrafficEnabled;
         }
 
         protected override void Dispose(bool disposing)
@@ -105,20 +160,28 @@ namespace Xamarin.Forms.Maps.WinRT
             {
                 case NotifyCollectionChangedAction.Add:
                     foreach (Pin pin in e.NewItems)
+                    {
                         LoadPin(pin);
+                    }
                     break;
                 case NotifyCollectionChangedAction.Move:
                     // no matter
                     break;
                 case NotifyCollectionChangedAction.Remove:
                     foreach (Pin pin in e.OldItems)
+                    {
                         RemovePin(pin);
+                    }
                     break;
                 case NotifyCollectionChangedAction.Replace:
                     foreach (Pin pin in e.OldItems)
+                    {
                         RemovePin(pin);
+                    }
                     foreach (Pin pin in e.NewItems)
+                    {
                         LoadPin(pin);
+                    }
                     break;
                 case NotifyCollectionChangedAction.Reset:
                     ClearPins();
@@ -279,14 +342,14 @@ namespace Xamarin.Forms.Maps.WinRT
 #if WINDOWS_UWP
         void UpdateHasZoomEnabled()
         {
-            Control.ZoomInteractionMode = Element.HasZoomEnabled
+            Control.ZoomInteractionMode = Element.UiSettings.HasZoomEnabled
                 ? MapInteractionMode.GestureAndControl
                 : MapInteractionMode.ControlOnly;
         }
 
         void UpdateHasScrollEnabled()
         {
-            Control.PanInteractionMode = Element.HasScrollEnabled ? MapPanInteractionMode.Auto : MapPanInteractionMode.Disabled;
+            Control.PanInteractionMode = Element.UiSettings.HasScrollEnabled ? MapPanInteractionMode.Auto : MapPanInteractionMode.Disabled;
         }
 #else
 		void UpdateHasZoomEnabled()

@@ -58,7 +58,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
             return new SizeRequest(new Size(Context.ToPixels(40), Context.ToPixels(40)));
         }
 
-        protected async override void OnElementChanged(ElementChangedEventArgs<View> e)
+        protected override async void OnElementChanged(ElementChangedEventArgs<View> e)
         {
             base.OnElementChanged(e);
 
@@ -114,12 +114,15 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 map.SetOnCameraChangeListener(this);
                 map.SetOnMapClickListener(this);
                 map.SetOnMapLongClickListener(this);
-                map.UiSettings.MapToolbarEnabled = false;
-                map.UiSettings.ZoomControlsEnabled = Map.HasZoomEnabled;
-                map.UiSettings.ZoomGesturesEnabled = Map.HasZoomEnabled;
-                map.UiSettings.ScrollGesturesEnabled = Map.HasScrollEnabled;
-                map.MyLocationEnabled = map.UiSettings.MyLocationButtonEnabled = Map.IsShowingUser;
-                map.TrafficEnabled = Map.IsTrafficEnabled;
+                map.UiSettings.CompassEnabled = Map.UiSettings.IsCompassEnabled;
+                map.UiSettings.IndoorLevelPickerEnabled = Map.UiSettings.IsIndoorPickerEnabled;
+                map.UiSettings.MapToolbarEnabled = Map.UiSettings.IsMapToolbarEnabled;
+                map.UiSettings.MyLocationButtonEnabled = Map.UiSettings.IsMyLocationButtonEnabled;
+                map.UiSettings.RotateGesturesEnabled = Map.UiSettings.HasRotateEnabled;
+                map.UiSettings.ScrollGesturesEnabled = Map.UiSettings.HasScrollEnabled;
+                map.UiSettings.TiltGesturesEnabled = Map.UiSettings.HasTiltEnabled;
+                map.UiSettings.ZoomControlsEnabled = Map.UiSettings.HasZoomEnabled;
+                map.UiSettings.ZoomGesturesEnabled = Map.UiSettings.HasZoomEnabled;
                 SetMapType();
             }
 
@@ -208,24 +211,66 @@ namespace Xamarin.Forms.GoogleMaps.Android
             }
 
             if (NativeMap == null)
+            {
                 return;
+            }
 
             if (e.PropertyName == Map.IsShowingUserProperty.PropertyName)
-                NativeMap.MyLocationEnabled = NativeMap.UiSettings.MyLocationButtonEnabled = Map.IsShowingUser;
-            else if (e.PropertyName == Map.HasScrollEnabledProperty.PropertyName)
-                NativeMap.UiSettings.ScrollGesturesEnabled = Map.HasScrollEnabled;
-            else if (e.PropertyName == Map.HasZoomEnabledProperty.PropertyName)
             {
-                NativeMap.UiSettings.ZoomControlsEnabled = Map.HasZoomEnabled;
-                NativeMap.UiSettings.ZoomGesturesEnabled = Map.HasZoomEnabled;
+                NativeMap.MyLocationEnabled = NativeMap.UiSettings.MyLocationButtonEnabled = Map.IsShowingUser;
             }
-            else if (e.PropertyName == Map.IsTrafficEnabledProperty.PropertyName)
+
+            if (e.PropertyName == Map.IsTrafficEnabledProperty.PropertyName)
             {
                 NativeMap.TrafficEnabled = Map.IsTrafficEnabled;
             }
 
+            if (e.PropertyName == UiSettings.IsCompassEnabledProperty.PropertyName)
+            {
+                NativeMap.UiSettings.CompassEnabled = Map.UiSettings.IsCompassEnabled;
+            }
+
+            if (e.PropertyName == UiSettings.IsMyLocationButtonEnabledProperty.PropertyName)
+            {
+                NativeMap.UiSettings.MyLocationButtonEnabled = Map.UiSettings.IsMyLocationButtonEnabled;
+            }
+
+            if (e.PropertyName == UiSettings.HasRotateEnabledProperty.PropertyName)
+            {
+                NativeMap.UiSettings.RotateGesturesEnabled = Map.UiSettings.HasRotateEnabled;
+            }
+
+            if (e.PropertyName == UiSettings.HasScrollEnabledProperty.PropertyName)
+            {
+                NativeMap.UiSettings.ScrollGesturesEnabled = Map.UiSettings.HasScrollEnabled;
+            }
+
+            if (e.PropertyName == UiSettings.HasTiltEnabledProperty.PropertyName)
+            {
+                NativeMap.UiSettings.TiltGesturesEnabled = Map.UiSettings.HasTiltEnabled;
+            }
+
+            if (e.PropertyName == UiSettings.HasZoomEnabledProperty.PropertyName)
+            {
+                //It would be better to separate these properties
+                NativeMap.UiSettings.ZoomControlsEnabled = Map.UiSettings.HasZoomEnabled;
+                NativeMap.UiSettings.ZoomGesturesEnabled = Map.UiSettings.HasZoomEnabled;
+            }
+
+            if (e.PropertyName == UiSettings.IsIndoorPickerEnabledProperty.PropertyName)
+            {
+                NativeMap.UiSettings.IndoorLevelPickerEnabled = Map.UiSettings.IsIndoorPickerEnabled;
+            }
+
+            if (e.PropertyName == UiSettings.IsMapToolbarEnabledProperty.PropertyName)
+            {
+                NativeMap.UiSettings.MapToolbarEnabled = Map.UiSettings.IsMapToolbarEnabled;
+            }
+
             foreach (var logic in _logics)
+            {
                 logic.OnMapPropertyChanged(e);
+            }
         }
 
         void SetMapType()

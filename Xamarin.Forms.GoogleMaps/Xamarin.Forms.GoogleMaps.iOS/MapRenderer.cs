@@ -91,11 +91,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                 if (mapModel.LastMoveToRegion != null)
                     MoveToRegion(mapModel.LastMoveToRegion, false);
 
-                UpdateMapType();
-                UpdateIsShowingUser();
-                UpdateHasScrollEnabled();
-                UpdateHasZoomEnabled();
-                UpdateIsTrafficEnabled();
+                UpdateAllBindiningProperties();
 
                 foreach (var logic in _logics)
                 {
@@ -107,6 +103,26 @@ namespace Xamarin.Forms.GoogleMaps.iOS
             }
         }
 
+        private void UpdateAllBindiningProperties()
+        {
+            //Map Settings
+            UpdateMapType();
+            UpdateIsShowingUser();
+            UpdateIsTrafficEnabled();
+
+            //UI Settings
+            UpdateIsCompassEnabled();
+            UpdateIsMyLocationButtonEnabled();
+            UpdateHasRotateEnabled();
+            UpdateHasScrollEnabled();
+            UpdatHasTiltEnabled();
+            UpdateHasZoomEnabled();
+
+            //Platform specific settings
+            UpdateConsumesGesturesInView();
+            UpdateAllowScrollDuringRotateOrZoom();
+        }
+
         protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             base.OnElementPropertyChanged(sender, e);
@@ -116,33 +132,119 @@ namespace Xamarin.Forms.GoogleMaps.iOS
             {
                 UpdateMapType();
             }
-            else if (e.PropertyName == Map.IsShowingUserProperty.PropertyName)
-            {
-                UpdateIsShowingUser();
-            }
-            else if (e.PropertyName == Map.HasScrollEnabledProperty.PropertyName)
-            {
-                UpdateHasScrollEnabled();
-            }
-            else if (e.PropertyName == Map.HasZoomEnabledProperty.PropertyName)
-            {
-                UpdateHasZoomEnabled();
-            }
-            else if (e.PropertyName == Map.IsTrafficEnabledProperty.PropertyName)
+
+            if (e.PropertyName == Map.IsTrafficEnabledProperty.PropertyName)
             {
                 UpdateIsTrafficEnabled();
             }
-            else if (e.PropertyName == VisualElement.IsVisibleProperty.PropertyName &&
+
+            if (e.PropertyName == Map.IsShowingUserProperty.PropertyName)
+            {
+                UpdateIsShowingUser();
+            }
+
+            if (e.PropertyName == UiSettings.HasScrollEnabledProperty.PropertyName)
+            {
+                UpdateHasScrollEnabled();
+            }
+
+            if (e.PropertyName == UiSettings.IsCompassEnabledProperty.PropertyName)
+            {
+                UpdateIsCompassEnabled();
+            }
+
+            if (e.PropertyName == UiSettings.IsIndoorPickerEnabledProperty.PropertyName)
+            {
+                UpdateIndoorLevelPickerEnabled();
+            }
+
+            if (e.PropertyName == UiSettings.IsMyLocationButtonEnabledProperty.PropertyName)
+            {
+                UpdateIsMyLocationButtonEnabled();
+            }
+
+            if (e.PropertyName == UiSettings.HasRotateEnabledProperty.PropertyName)
+            {
+                UpdateHasRotateEnabled();
+            }
+
+            if (e.PropertyName == UiSettings.HasScrollEnabledProperty.PropertyName)
+            {
+                UpdatHasScrollEnabled();
+            }
+
+            if (e.PropertyName == UiSettings.HasTiltEnabledProperty.PropertyName)
+            {
+                UpdatHasTiltEnabled();
+            }
+
+            if (e.PropertyName == UiSettings.HasZoomEnabledProperty.PropertyName)
+            {
+                UpdateHasZoomEnabled();
+            }
+
+            if (e.PropertyName == UiSettings.ConsumesGesturesInViewProperty.PropertyName)
+            {
+                UpdateConsumesGesturesInView();
+            }
+
+            if (e.PropertyName == UiSettings.AllowScrollGesturesDuringRotateOrZoomProperty.PropertyName)
+            {
+                UpdateAllowScrollDuringRotateOrZoom();
+            }
+
+            if (e.PropertyName == VisualElement.IsVisibleProperty.PropertyName &&
                      ((Map) Element).LastMoveToRegion != null)
             {
                 _shouldUpdateRegion = true;
             }
 
-
             foreach (var logic in _logics)
             {
                 logic.OnMapPropertyChanged(e);
             }
+        }
+
+        private void UpdateIndoorLevelPickerEnabled()
+        {
+            ((MapView)Control).Settings.IndoorPicker = Map.UiSettings.IsIndoorPickerEnabled;
+        }
+
+        private void UpdateIsMyLocationButtonEnabled()
+        {
+            ((MapView)Control).Settings.MyLocationButton = Map.UiSettings.IsMyLocationButtonEnabled;
+        }
+
+        private void UpdateHasRotateEnabled()
+        {
+            ((MapView)Control).Settings.RotateGestures = Map.UiSettings.HasRotateEnabled;
+        }
+
+        private void UpdatHasScrollEnabled()
+        {
+            ((MapView)Control).Settings.ScrollGestures = Map.UiSettings.HasScrollEnabled;
+        }
+
+        private void UpdatHasTiltEnabled()
+        {
+            ((MapView)Control).Settings.TiltGestures = Map.UiSettings.HasTiltEnabled;
+        }
+
+        private void UpdateConsumesGesturesInView()
+        {
+            ((MapView)Control).Settings.ConsumesGesturesInView =
+                Map.UiSettings.ConsumesGesturesInView;
+        }
+
+        private void UpdateAllowScrollDuringRotateOrZoom()
+        {
+            ((MapView) Control).Settings.AllowScrollGesturesDuringRotateOrZoom =
+                Map.UiSettings.AllowScrollDuringRotateOrZoom;
+        }
+
+        private void UpdateIsCompassEnabled()
+        {
+            ((MapView)Control).Settings.CompassButton = Map.UiSettings.IsCompassEnabled;
         }
 
         public override void LayoutSubviews()
@@ -153,7 +255,6 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                 MoveToRegion(((Map)Element).LastMoveToRegion, false);
                 _shouldUpdateRegion = false;
             }
-
         }
 
         void CameraPositionChanged(object sender, GMSCameraEventArgs mkMapViewChangeEventArgs)
@@ -198,12 +299,12 @@ namespace Xamarin.Forms.GoogleMaps.iOS
 
         void UpdateHasScrollEnabled()
         {
-            ((MapView)Control).Settings.ScrollGestures = ((Map)Element).HasScrollEnabled;
+            ((MapView)Control).Settings.ScrollGestures = Map.UiSettings.HasScrollEnabled;
         }
 
         void UpdateHasZoomEnabled()
         {
-            ((MapView)Control).Settings.ZoomGestures = ((Map)Element).HasZoomEnabled;
+            ((MapView)Control).Settings.ZoomGestures = Map.UiSettings.HasScrollEnabled;
         }
 
         void UpdateIsShowingUser()
