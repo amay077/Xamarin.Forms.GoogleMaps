@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
 
 namespace Xamarin.Forms.GoogleMaps
@@ -8,10 +8,10 @@ namespace Xamarin.Forms.GoogleMaps
         // For URI specific SyncTileLayer
         internal Func<int, int, int, Uri> MakeTileUri { get; }
 
-        // For Image specific SyncTileLayer 
+        // For Image specific SyncTileLayer
         internal Func<int, int, int, byte[]> TileImageSync { get; }
 
-        // For Image specific AsyncTileLayer 
+        // For Image specific AsyncTileLayer
         internal Func<int, int, int, Task<byte[]>> TileImageAsync { get; }
 
         public int TileSize { get; } = 256;

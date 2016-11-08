@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -12,7 +12,7 @@ namespace XFGoogleMapSample
         bool _dirty;
 
         // default marker colors
-        readonly Tuple<string, Color>[] _colors = 
+        readonly Tuple<string, Color>[] _colors =
         {
             new Tuple<string, Color>("Green", Color.Green),
             new Tuple<string, Color>("Pink", Color.Pink),
@@ -20,11 +20,11 @@ namespace XFGoogleMapSample
         };
 
         // bundle(Android:Asset, iOS:Bundle) images
-        readonly string[] _bundles = 
-        { 
-            "image01.png", 
-            "image02.png", 
-            "image03.png" 
+        readonly string[] _bundles =
+        {
+            "image01.png",
+            "image02.png",
+            "image03.png"
         };
 
         // PCL side embedded resources
@@ -117,7 +117,7 @@ namespace XFGoogleMapSample
             };
 
             // Pin Draggable
-            switchIsDraggable.Toggled += (sender, e) => 
+            switchIsDraggable.Toggled += (sender, e) =>
             {
                 _pinTokyo.IsDraggable = switchIsDraggable.IsToggled;
             };

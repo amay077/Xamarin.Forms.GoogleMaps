@@ -1,4 +1,4 @@
-﻿using Android.Gms.Maps;
+using Android.Gms.Maps;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System;
@@ -24,7 +24,7 @@ namespace Xamarin.Forms.GoogleMaps.Android.Extensions
             }
 
             var comp = new TaskCompletionSource<GoogleMap>();
-            self.GetMapAsync(new OnMapReadyCallback(map => 
+            self.GetMapAsync(new OnMapReadyCallback(map =>
             {
                 comp.SetResult(map);
             }));

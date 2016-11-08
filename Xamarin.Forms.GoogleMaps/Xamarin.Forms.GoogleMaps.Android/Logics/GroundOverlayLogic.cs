@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Android.Gms.Maps;
 using Xamarin.Forms.GoogleMaps.Logics;
@@ -70,7 +70,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
             var targetOuterItem = GetItems(Map).FirstOrDefault(
                 outerItem => ((NativeGroundOverlay)outerItem.NativeObject).Id == nativeItem.Id);
 
-            // only consider event handled if a handler is present. 
+            // only consider event handled if a handler is present.
             // Else allow default behavior of displaying an info window.
             targetOuterItem?.SendTap();
         }

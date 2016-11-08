@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -51,7 +51,7 @@ namespace Xamarin.Forms.Maps.WinRT
                     Control.CenterChanged += async (s, a) => await UpdateVisibleRegion();
                 }
 
-                MessagingCenter.Subscribe<Map, MoveToRegionMessage>(this, "MapMoveToRegion", async (s, a) => 
+                MessagingCenter.Subscribe<Map, MoveToRegionMessage>(this, "MapMoveToRegion", async (s, a) =>
                     await MoveToRegion(a.Span, a.Animate ? MapAnimationKind.Bow : MapAnimationKind.None), mapModel);
 
                 UpdateMapType();

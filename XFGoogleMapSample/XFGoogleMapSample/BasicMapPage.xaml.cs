@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -21,7 +21,7 @@ namespace XFGoogleMapSample
                 pickerMapType.Items.Add(Enum.GetName(typeof(MapType), mapType));
             }
 
-            pickerMapType.SelectedIndexChanged += (sender, e) => 
+            pickerMapType.SelectedIndexChanged += (sender, e) =>
             {
                 map.MapType = mapTypeValues[pickerMapType.SelectedIndex];
             };
@@ -29,7 +29,7 @@ namespace XFGoogleMapSample
 
 
             // ZoomEnabled
-            switchHasZoomEnabled.Toggled += (sender, e) => 
+            switchHasZoomEnabled.Toggled += (sender, e) =>
             {
                 map.HasZoomEnabled = e.Value;
             };
@@ -73,7 +73,7 @@ namespace XFGoogleMapSample
             };
 
             // Geocode
-            buttonGeocode.Clicked += async (sender, e) => 
+            buttonGeocode.Clicked += async (sender, e) =>
             {
                 var geocoder = new Xamarin.Forms.GoogleMaps.Geocoder();
                 var positions = await geocoder.GetPositionsForAddressAsync(entryAddress.Text);

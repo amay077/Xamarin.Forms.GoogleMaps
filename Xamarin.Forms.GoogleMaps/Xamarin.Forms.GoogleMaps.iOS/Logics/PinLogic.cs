@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using CoreGraphics;
@@ -106,7 +106,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
             // lookup pin
             var targetPin = LookupPin(e.Marker);
 
-            // only consider event handled if a handler is present. 
+            // only consider event handled if a handler is present.
             // Else allow default behavior of displaying an info window.
             targetPin?.SendTap();
         }
