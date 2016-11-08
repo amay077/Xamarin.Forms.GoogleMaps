@@ -1,4 +1,4 @@
-﻿
+
 using System;
 
 namespace Xamarin.Forms.GoogleMaps
@@ -10,7 +10,7 @@ namespace Xamarin.Forms.GoogleMaps
 
         public Position Center
         {
-            get 
+            get
             {
                 return new Position((SouthWest.Latitude + NorthEast.Latitude) / 2d,
                               (SouthWest.Longitude + NorthEast.Longitude) / 2d);

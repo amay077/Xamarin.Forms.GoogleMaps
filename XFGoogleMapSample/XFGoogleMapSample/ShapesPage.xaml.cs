@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 using Xamarin.Forms;
@@ -17,7 +17,7 @@ namespace XFGoogleMapSample
             Circle circle = null;
 
             // Polyline
-            buttonAddPolyline.Clicked += (sender, e) => 
+            buttonAddPolyline.Clicked += (sender, e) =>
             {
                 polyline = new Polyline();
                 polyline.Positions.Add(new Position(40.77d, -73.93d));
@@ -37,7 +37,7 @@ namespace XFGoogleMapSample
                 buttonRemovePolyline.IsEnabled = true;
             };
 
-            buttonRemovePolyline.Clicked += (sender, e) => 
+            buttonRemovePolyline.Clicked += (sender, e) =>
             {
                 map.Polylines.Remove(polyline);
                 polyline.Clicked -= Polyline_Clicked;

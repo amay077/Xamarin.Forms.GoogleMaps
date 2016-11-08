@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 using Xamarin.Forms;
@@ -38,7 +38,7 @@ namespace XFGoogleMapSample
             circle.StrokeColor = Color.Purple;
             circle.StrokeWidth = 6f;
             circle.FillColor = Color.FromRgba(0, 0, 255, 32);
-            map.Circles.Add(circle); 
+            map.Circles.Add(circle);
 
             var pinNewYork = new Pin()
             {

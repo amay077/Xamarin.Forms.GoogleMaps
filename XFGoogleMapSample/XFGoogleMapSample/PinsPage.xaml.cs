@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 using Xamarin.Forms;
 using Xamarin.Forms.GoogleMaps;
@@ -16,7 +16,7 @@ namespace XFGoogleMapSample
             Pin pinNewYork = null;
 
             // Tokyo pin
-            buttonAddPinTokyo.Clicked += (sender, e) => 
+            buttonAddPinTokyo.Clicked += (sender, e) =>
             {
                 pinTokyo = new Pin()
                 {
@@ -33,7 +33,7 @@ namespace XFGoogleMapSample
                 buttonRemovePinTokyo.IsEnabled = true;
             };
 
-            buttonRemovePinTokyo.Clicked += (sender, e) => 
+            buttonRemovePinTokyo.Clicked += (sender, e) =>
             {
                 map.Pins.Remove(pinTokyo);
                 pinTokyo = null;
@@ -70,7 +70,7 @@ namespace XFGoogleMapSample
             buttonRemovePinNewYork.IsEnabled = false;
 
             // Clear Pins
-            buttonClearPins.Clicked += (sender, e) => 
+            buttonClearPins.Clicked += (sender, e) =>
             {
                 map.Pins.Clear();
 
@@ -83,7 +83,7 @@ namespace XFGoogleMapSample
             };
 
             // Select New York Pin
-            buttonSelectPinNewYork.Clicked += (sender, e) => 
+            buttonSelectPinNewYork.Clicked += (sender, e) =>
             {
                 if (pinNewYork == null)
                 {
@@ -95,7 +95,7 @@ namespace XFGoogleMapSample
             };
 
             // Clear Pin Selection
-            buttonClearSelection.Clicked += (sender, e) => 
+            buttonClearSelection.Clicked += (sender, e) =>
             {
                 if (map.SelectedPin == null)
                 {
@@ -121,7 +121,7 @@ namespace XFGoogleMapSample
         void Map_PinClicked(object sender, PinClickedEventArgs e)
         {
             DisplayAlert("Pin Clicked", $"{e.Pin.Label} Clicked.", "Close");
-            
+
             e.Handled = switchHandlePinClicked.IsToggled;
 
             // If you set e.Handled = true,

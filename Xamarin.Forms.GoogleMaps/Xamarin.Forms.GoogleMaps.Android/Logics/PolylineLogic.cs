@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -41,7 +41,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
             foreach (var p in outerItem.Positions)
                 opts.Add(new LatLng(p.Latitude, p.Longitude));
 
-            opts.InvokeWidth(outerItem.StrokeWidth * this.ScaledDensity); // TODO: convert from px to pt. Is this collect? (looks like same iOS Maps) 
+            opts.InvokeWidth(outerItem.StrokeWidth * this.ScaledDensity); // TODO: convert from px to pt. Is this collect? (looks like same iOS Maps)
             opts.InvokeColor(outerItem.StrokeColor.ToAndroid());
             opts.Clickable(outerItem.IsClickable);
 
@@ -80,7 +80,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
             var targetOuterItem = GetItems(Map).FirstOrDefault(
                 outerItem => ((NativePolyline)outerItem.NativeObject).Id == nativeItem.Id);
 
-            // only consider event handled if a handler is present. 
+            // only consider event handled if a handler is present.
             // Else allow default behavior of displaying an info window.
             targetOuterItem?.SendTap();
         }

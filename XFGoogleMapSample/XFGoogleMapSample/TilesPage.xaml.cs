@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -28,7 +28,7 @@ namespace XFGoogleMapSample
 			{
 				if (objTile != null) map.TileLayers.Remove(objTile);
 
-				objTile = TileLayer.FromTileUri((int x, int y, int zoom) => 
+				objTile = TileLayer.FromTileUri((int x, int y, int zoom) =>
                     new Uri($"http://{"abc".Substring(new Random().Next(3), 1)}.tiles.openrailwaymap.org/standard/{zoom}/{x}/{y}.png")
 				, 512);
 				objTile.Tag = "ORMTILE"; // Can set any object

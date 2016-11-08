@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Android.Gms.Maps.Model;
@@ -19,7 +19,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
 
             opts.InvokeCenter(new LatLng(outerItem.Center.Latitude, outerItem.Center.Longitude));
             opts.InvokeRadius(outerItem.Radius.Meters);
-            opts.InvokeStrokeWidth(outerItem.StrokeWidth * this.ScaledDensity); // TODO: convert from px to pt. Is this collect? (looks like same iOS Maps) 
+            opts.InvokeStrokeWidth(outerItem.StrokeWidth * this.ScaledDensity); // TODO: convert from px to pt. Is this collect? (looks like same iOS Maps)
             opts.InvokeStrokeColor(outerItem.StrokeColor.ToAndroid());
             opts.InvokeFillColor(outerItem.FillColor.ToAndroid());
             //opts.Clickable(outerItem.IsClickable);

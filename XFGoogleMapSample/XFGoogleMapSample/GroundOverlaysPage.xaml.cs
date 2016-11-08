@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 using Xamarin.Forms;
@@ -31,7 +31,7 @@ namespace XFGoogleMapSample
 
             // Transparency
             entryTransparency.Text = "0.5";
-            entryTransparency.TextChanged += (sender, e) => 
+            entryTransparency.TextChanged += (sender, e) =>
             {
                 var transparency = 0f;
                 if (float.TryParse(e.NewTextValue, out transparency))
@@ -53,7 +53,7 @@ namespace XFGoogleMapSample
 
             // IsClickable
             switchIsClickable.IsToggled = false;
-            switchIsClickable.Toggled += (sender, e) => 
+            switchIsClickable.Toggled += (sender, e) =>
             {
                 _overlay.IsClickable = e.Value;
             };
@@ -67,7 +67,7 @@ namespace XFGoogleMapSample
             };
             map.GroundOverlays.Add(_overlay);
 
-            _overlay.Clicked += (sender, e) => 
+            _overlay.Clicked += (sender, e) =>
             {
                 var overlay = sender as GroundOverlay;
                 this.DisplayAlert("Clicked", overlay.Tag as string, "CLOSE");

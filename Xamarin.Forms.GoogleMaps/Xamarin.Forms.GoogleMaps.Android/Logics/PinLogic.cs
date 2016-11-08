@@ -1,4 +1,4 @@
-﻿using Android.Gms.Maps.Model;
+using Android.Gms.Maps.Model;
 using System.Collections.Generic;
 using Android.Gms.Maps;
 using System.Linq;
@@ -101,7 +101,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
             // lookup pin
             var targetPin = LookupPin(e.Marker);
 
-            // only consider event handled if a handler is present. 
+            // only consider event handled if a handler is present.
             // Else allow default behavior of displaying an info window.
             targetPin?.SendTap();
         }
@@ -242,10 +242,10 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
 
         protected override void OnUpdateIcon(Pin outerItem, Marker nativeItem)
         {
-            if (outerItem.Icon != null && outerItem.Icon.Type == BitmapDescriptorType.View) 
+            if (outerItem.Icon != null && outerItem.Icon.Type == BitmapDescriptorType.View)
             {
                 // If the pin has an IconView set this method will convert it into an icon for the marker
-                TransformXamarinViewToAndroidBitmap(outerItem, nativeItem);       
+                TransformXamarinViewToAndroidBitmap(outerItem, nativeItem);
             }
             else
             {
