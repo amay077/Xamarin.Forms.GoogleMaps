@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -251,6 +252,11 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
                 });
             }
         }
-   }
+
+        protected override void OnUpdateRotation(Pin outerItem, Marker nativeItem)
+        {
+            nativeItem.Rotation = outerItem?.Rotation ?? 0f;
+        }
+    }
 }
 
