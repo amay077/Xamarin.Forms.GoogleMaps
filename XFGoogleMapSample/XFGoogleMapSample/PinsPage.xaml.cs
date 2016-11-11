@@ -24,7 +24,7 @@ namespace XFGoogleMapSample
                     Label = "Tokyo SKYTREE",
                     Address = "Sumida-ku, Tokyo, Japan",
                     Position = new Position(35.71d, 139.81d),
-                    Rotation = 92.3
+                    Rotation = 92.3f
                 };
 
                 map.Pins.Add(pinTokyo);

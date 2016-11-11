@@ -7,6 +7,7 @@ using Xamarin.Forms.GoogleMaps.Android;
 using Xamarin.Forms.GoogleMaps.Android.Extensions;
 using NativeBitmapDescriptorFactory = Android.Gms.Maps.Model.BitmapDescriptorFactory;
 using Android.Widget;
+using System;
 
 namespace Xamarin.Forms.GoogleMaps.Logics.Android
 {
@@ -274,6 +275,11 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
         protected override void OnUpdateIsDraggable(Pin outerItem, Marker nativeItem)
         {
             nativeItem.Draggable = outerItem?.IsDraggable ?? false;
+        }
+
+        protected override void OnUpdateRotation(Pin outerItem, Marker nativeItem)
+        {
+            nativeItem.Rotation = outerItem?.Rotation ?? 0f;
         }
     }
 }
