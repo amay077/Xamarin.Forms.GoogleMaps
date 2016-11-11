@@ -1,6 +1,12 @@
 Xamarin.Forms.GoogleMaps Release Notes
 ----
 
+# 1.7.0-beta4
+
+## New Features
+
+* #95 Add pin rotation support
+
 # 1.7.0-beta3
 
 ## New Features
