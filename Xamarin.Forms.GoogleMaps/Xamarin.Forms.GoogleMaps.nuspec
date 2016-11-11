@@ -3,8 +3,14 @@
 	<metadata minClientVersion="2.8.3">
 		<id>Xamarin.Forms.GoogleMaps</id>
 		<title>Xamarin.Forms.GoogleMaps</title>
-		<version>1.7.0-beta3</version>
+		<version>1.7.0-beta4</version>
 		<releaseNotes>
+
+# 1.7.0-beta4
+
+## New Features
+
+* #95 pin rotation support
 
 # 1.7.0-beta3
 
