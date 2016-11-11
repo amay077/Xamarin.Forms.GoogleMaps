@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage
 	xmlns="http://xamarin.com/schemas/2014/forms"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -10,8 +10,9 @@
 			VerticalOptions="Fill"
 			Orientation="Vertical">
 
-			<Grid>
+			<Grid Margin="15,10,15,0">
 				<Grid.RowDefinitions>
+			        <RowDefinition Height="Auto" />
 			        <RowDefinition Height="Auto" />
 			        <RowDefinition Height="Auto" />
 			        <RowDefinition Height="Auto" />
@@ -89,9 +90,21 @@
 						HorizontalTextAlignment="Start"/>
 				</StackLayout>
 
+				<Label  Text="Rotation:"
+						HorizontalOptions="End"
+						VerticalOptions="Center"
+						Grid.Row="5" 
+						Grid.Column="0"
+						Grid.ColumnSpan="2"/>
+				<Slider x:Name="sliderRotation"
+						Minimum="0" 
+						Maximum="360"
+						Grid.Row="5" 
+						Grid.Column="2" />
+
 				<Label  x:Name="labelDragStatus"
 						Text="Show status when Pin drag."
-						Grid.Row="4"
+						Grid.Row="6"
 						Grid.Column="0"
 						Grid.ColumnSpan="3"/>
 

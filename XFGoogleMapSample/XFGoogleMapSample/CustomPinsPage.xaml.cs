@@ -122,6 +122,12 @@ namespace XFGoogleMapSample
                 _pinTokyo.IsDraggable = switchIsDraggable.IsToggled;
             };
 
+            // Pin Rotation
+            sliderRotation.ValueChanged += (sender, e) =>
+            {
+                _pinTokyo.Rotation = (float)e.NewValue;
+            };
+
             map.PinDragStart += (_, e) => labelDragStatus.Text = $"DragStart - {PrintPin(e.Pin)}";
             map.PinDragging += (_, e) => labelDragStatus.Text = $"Dragging - {PrintPin(e.Pin)}";
             map.PinDragEnd += (_, e) => labelDragStatus.Text = $"DragEnd - {PrintPin(e.Pin)}";
