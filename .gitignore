@@ -42,3 +42,4 @@ Thumbs.db
 *.csproj.bak
 *.nupkg
 *.lock.json
+.idea/
