@@ -59,6 +59,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
                 .SetSnippet(outerItem.Address)
                 .Draggable(outerItem.IsDraggable)
                 .SetRotation(outerItem.Rotation)
+                .Anchor(outerItem.Offset.X,outerItem.Offset.Y)
                 ;
 
             if (outerItem.Icon != null)

@@ -55,6 +55,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
             nativeMarker.Snippet = outerItem.Address ?? string.Empty;
             nativeMarker.Draggable = outerItem.IsDraggable;
             nativeMarker.Rotation = outerItem.Rotation;
+            nativeMarker.GroundAnchor = new CGPoint(outerItem.Offset.X,outerItem.Offset.Y);
 
             if (outerItem.Icon != null)
             {
