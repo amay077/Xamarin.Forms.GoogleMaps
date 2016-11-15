@@ -1,34 +1,19 @@
 Xamarin.Forms.GoogleMaps Release Notes
 ----
 
-# 1.7.0-beta4
-
-## New Features
-
-* #95 Add pin rotation support
-
-# 1.7.0-beta3
-
-## New Features
-
-* PR#98 Add some convenient methods to Bounds and MapSpan
-* #103 Add traffic layer support
-
-## Bug Fixes
-
-* #89 Fix No constructor found for Xamarin.Forms.GoogleMaps.Android.MapRenderer::.ctor(System.IntPtr, Android.Runtime.JniHandleOwnership)
-
-# 1.7.0-beta2
-
-## New Features
-
-* #80 Disable MapToolbar in Android 
-
-# 1.7.0-beta1
+# 1.7.0
 
 ## New Features
 
 * #78 Add Map.PinClicked event and can handling pin selection yourself. 
+* #80 Disable MapToolbar in Android 
+* PR#98 Add some convenient methods to Bounds and MapSpan
+* #103 Add traffic layer support
+* #95 pin rotation support
+
+## Bug Fixes
+
+* #89 Fix No constructor found for Xamarin.Forms.GoogleMaps.Android.MapRenderer::.ctor(System.IntPtr, Android.Runtime.JniHandleOwnership)
 
 ## **Notice**
 
