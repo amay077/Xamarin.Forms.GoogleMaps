@@ -59,7 +59,7 @@ namespace XFGoogleMapSample.UWP
                 rootFrame.NavigationFailed += OnNavigationFailed;
 
                 Xamarin.Forms.Forms.Init(e);
-                Xamarin.FormsGoogleMaps.Init("your_api_key");
+                Xamarin.FormsGoogleMaps.Init(Variables.BING_MAPS_UWP_API_KEY);
 
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {
