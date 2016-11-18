@@ -11,6 +11,6 @@ namespace XFGoogleMapSample
 		public const string GOOGLE_MAPS_IOS_API_KEY = "your_google_maps_sdk_for_ios_api_key";
 
 		// https://msdn.microsoft.com/windows/uwp/maps-and-location/authentication-key
-		public const string BING_MAPS_UWP_API_KEY = "your_bing_maps_apikey");
+		public const string BING_MAPS_UWP_API_KEY = "your_bing_maps_apikey";
 	}
 }
