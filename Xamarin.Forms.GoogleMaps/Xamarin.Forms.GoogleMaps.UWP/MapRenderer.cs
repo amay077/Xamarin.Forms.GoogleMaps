@@ -53,9 +53,12 @@ namespace Xamarin.Forms.Maps.WinRT
                 {
                     SetNativeControl(new MapControl());
                     Control.MapServiceToken = FormsGoogleMaps.AuthenticationToken;
+                    Control.TrafficFlowVisible = Map.IsTrafficEnabled;
                     Control.ZoomLevelChanged += async (s, a) => await UpdateVisibleRegion();
                     Control.CenterChanged += async (s, a) => await UpdateVisibleRegion();
                     Control.MapTapped += Control_MapTapped;
+                    Control.MapHolding += Control_MapHolding;
+                    Control.MapElementClick += Control_MapElementClick;
                 }
 
                 MessagingCenter.Subscribe<Map, MoveToRegionMessage>(this, "MapMoveToRegion", async (s, a) =>
@@ -72,6 +75,16 @@ namespace Xamarin.Forms.Maps.WinRT
 
                 await UpdateIsShowingUser();
             }
+        }
+
+        private void Control_MapHolding(MapControl sender, MapInputEventArgs args)
+        {
+            Map.SendMapLongClicked(args.Location.Position.ToPosition());
+        }
+
+        private void Control_MapElementClick(MapControl sender, MapElementClickEventArgs args)
+        {
+            //throw new NotImplementedException();
         }
 
         private void Control_MapTapped(MapControl sender, MapInputEventArgs args)
@@ -91,6 +104,8 @@ namespace Xamarin.Forms.Maps.WinRT
                 UpdateHasScrollEnabled();
             else if (e.PropertyName == Map.HasZoomEnabledProperty.PropertyName)
                 UpdateHasZoomEnabled();
+            else if (e.PropertyName == Map.IsTrafficEnabledProperty.PropertyName)
+                Control.TrafficFlowVisible = Map.IsTrafficEnabled;
         }
 
         protected override void Dispose(bool disposing)
@@ -284,6 +299,9 @@ namespace Xamarin.Forms.Maps.WinRT
                     break;
                 case MapType.Hybrid:
                     Control.Style = MapStyle.AerialWithRoads;
+                    break;
+                case MapType.None:
+                    Control.Style = MapStyle.None;
                     break;
             }
         }
