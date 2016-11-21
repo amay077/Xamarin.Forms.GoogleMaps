@@ -10,6 +10,7 @@ using Windows.UI.Xaml.Controls.Maps;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Shapes;
 using Xamarin.Forms.GoogleMaps.Internals;
+using Xamarin.Forms.GoogleMaps.UWP.Extensions;
 #if WINDOWS_UWP
 using Xamarin.Forms.Platform.UWP;
 
@@ -28,6 +29,11 @@ namespace Xamarin.Forms.Maps.WinRT
 {
     public class MapRenderer : ViewRenderer<Map, MapControl>
     {
+        private Map Map
+        {
+            get { return Element as Map; }
+        }
+
         protected override async void OnElementChanged(ElementChangedEventArgs<Map> e)
         {
             base.OnElementChanged(e);
@@ -49,6 +55,7 @@ namespace Xamarin.Forms.Maps.WinRT
                     Control.MapServiceToken = FormsGoogleMaps.AuthenticationToken;
                     Control.ZoomLevelChanged += async (s, a) => await UpdateVisibleRegion();
                     Control.CenterChanged += async (s, a) => await UpdateVisibleRegion();
+                    Control.MapTapped += Control_MapTapped;
                 }
 
                 MessagingCenter.Subscribe<Map, MoveToRegionMessage>(this, "MapMoveToRegion", async (s, a) =>
@@ -65,6 +72,11 @@ namespace Xamarin.Forms.Maps.WinRT
 
                 await UpdateIsShowingUser();
             }
+        }
+
+        private void Control_MapTapped(MapControl sender, MapInputEventArgs args)
+        {
+            Map.SendMapClicked(args.Location.Position.ToPosition());
         }
 
         protected override async void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
