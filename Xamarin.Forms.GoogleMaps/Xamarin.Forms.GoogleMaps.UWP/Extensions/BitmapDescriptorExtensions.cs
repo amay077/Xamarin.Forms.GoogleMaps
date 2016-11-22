@@ -17,10 +17,10 @@ namespace Xamarin.Forms.GoogleMaps.Extensions.UWP
             switch (self.Type)
             {
                 case BitmapDescriptorType.Default:
-                    //TODO:
+                    //Intercepted in Pushpin.cs to render using Xamarin.Forms contentTemplate
                     return new BitmapImage();
                 case BitmapDescriptorType.Bundle:
-                    return new BitmapImage(new Uri(self.BundleName));
+                    return new BitmapImage(new Uri(String.Format("ms-appx:///{0}", self.BundleName)));
                 case BitmapDescriptorType.Stream:
                     var bitmap = new BitmapImage();
                     var memoryStream = new MemoryStream();
@@ -31,7 +31,7 @@ namespace Xamarin.Forms.GoogleMaps.Extensions.UWP
                 case BitmapDescriptorType.AbsolutePath:
                     return new BitmapImage(new Uri(self.AbsolutePath));
                 default:
-                    //TODO
+                    //Hopefully shouldnt hit this
                     return new BitmapImage();
             }
         }

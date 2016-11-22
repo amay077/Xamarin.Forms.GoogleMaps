@@ -5,7 +5,10 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Maps;
 using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Shapes;
 using Xamarin.Forms.GoogleMaps.Extensions.UWP;
+using Xamarin.Forms.Platform.UWP;
 
 #if WINDOWS_UWP
 
@@ -26,15 +29,7 @@ namespace Xamarin.Forms.Maps.WinRT
             if (pin == null)
                 throw new ArgumentNullException();
 
-            if (pin.Icon == null)
-            {
-                ContentTemplate = Windows.UI.Xaml.Application.Current.Resources["PushPinTemplate"] as Windows.UI.Xaml.DataTemplate;
-            }
-            else
-            {
-                Content = pin.Icon.ToBitmapDescriptor();
-            }
-
+            UpdateView(pin);
             Id = Guid.NewGuid();
             DataContext = _pin = pin;
 
@@ -44,6 +39,39 @@ namespace Xamarin.Forms.Maps.WinRT
             Unloaded += PushPinUnloaded;
             //Tapped += PushPinTapped;
             pin.NativeObject = this;
+        }
+
+        private void UpdateView(Pin pin)
+        {
+            if (pin.Icon == null || pin.Icon.Type == BitmapDescriptorType.Default)
+            {
+                // ContentTemplate = Windows.UI.Xaml.Application.Current.Resources["PushPinTemplate"] as Windows.UI.Xaml.DataTemplate;
+                var template = Windows.UI.Xaml.Application.Current.Resources["PushPinTemplate"] as Windows.UI.Xaml.DataTemplate;
+                var content = template.LoadContent();
+                var path = content as Path;
+                if (path != null)
+                {
+                    if (pin.Icon.Color != Color.Black)
+                    {
+                        var converter = new ColorConverter();
+                        var colour = 
+                        path.Fill = (SolidColorBrush)converter.Convert(pin.Icon.Color, null, null, null); ;
+                    }
+                    Content = path;
+                }
+            }
+            else
+            {
+                if (pin.Icon.Type != BitmapDescriptorType.View)
+                {
+                    var image = new Windows.UI.Xaml.Controls.Image() { Source = pin.Icon.ToBitmapDescriptor() };
+                    Content = image;
+                }
+                else
+                {
+                    TransformXamarinViewToUWPBitmap(pin, this);
+                }
+            }
         }
 
         void PushPinLoaded(object sender, RoutedEventArgs e)
@@ -61,6 +89,10 @@ namespace Xamarin.Forms.Maps.WinRT
         {
             if (e.PropertyName == Pin.PositionProperty.PropertyName)
                 UpdateLocation();
+            else if (e.PropertyName == Pin.IconProperty.PropertyName)
+            {
+                UpdateView(sender as Pin);
+            }
         }
 
         //void PushPinTapped(object sender, TappedRoutedEventArgs e)
@@ -78,6 +110,22 @@ namespace Xamarin.Forms.Maps.WinRT
             });
             MapControl.SetLocation(this, location);
             MapControl.SetNormalizedAnchorPoint(this, anchor);
+        }
+
+        //TODO: implement xamarin view to UWP
+        private async void TransformXamarinViewToUWPBitmap(Pin outerItem, ContentControl nativeItem)
+        {
+            if (outerItem?.Icon?.Type == BitmapDescriptorType.View && outerItem?.Icon?.View != null)
+            {
+                //var iconView = outerItem.Icon.View;
+                //var nativeView = await Utils.ConvertFormsToNative(iconView, new Rectangle(0, 0, (double)Utils.DpToPx((float)iconView.WidthRequest), (double)Utils.DpToPx((float)iconView.HeightRequest)), Platform.Android.Platform.CreateRenderer(iconView));
+                //var otherView = new FrameLayout(nativeView.Context);
+                //nativeView.LayoutParameters = new FrameLayout.LayoutParams(Utils.DpToPx((float)iconView.WidthRequest), Utils.DpToPx((float)iconView.HeightRequest));
+                //otherView.AddView(nativeView);
+                //nativeItem.SetIcon(await Utils.ConvertViewToBitmapDescriptor(otherView));
+                //nativeItem.SetAnchor((float)iconView.AnchorX, (float)iconView.AnchorY);
+                //nativeItem.Visible = true;
+            }
         }
     }
 }
