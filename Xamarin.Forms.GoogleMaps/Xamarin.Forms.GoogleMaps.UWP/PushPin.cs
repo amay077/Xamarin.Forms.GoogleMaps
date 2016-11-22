@@ -5,6 +5,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Maps;
 using Windows.UI.Xaml.Input;
+using Xamarin.Forms.GoogleMaps.Extensions.UWP;
 
 #if WINDOWS_UWP
 
@@ -18,19 +19,32 @@ namespace Xamarin.Forms.Maps.WinRT
     {
         readonly Pin _pin;
 
+        public Guid Id { get; set; }
+
         internal PushPin(Pin pin)
         {
             if (pin == null)
                 throw new ArgumentNullException();
 
-            ContentTemplate = Windows.UI.Xaml.Application.Current.Resources["PushPinTemplate"] as Windows.UI.Xaml.DataTemplate;
+            if (pin.Icon == null)
+            {
+                ContentTemplate = Windows.UI.Xaml.Application.Current.Resources["PushPinTemplate"] as Windows.UI.Xaml.DataTemplate;
+            }
+            else
+            {
+                //overwriting content later?
+                Content = pin.Icon.ToBitmapDescriptor();
+            }
+
+            Id = Guid.NewGuid();
             DataContext = Content = _pin = pin;
 
             UpdateLocation();
 
             Loaded += PushPinLoaded;
             Unloaded += PushPinUnloaded;
-            Tapped += PushPinTapped;
+            //Tapped += PushPinTapped;
+            pin.NativeObject = this;
         }
 
         void PushPinLoaded(object sender, RoutedEventArgs e)
@@ -41,7 +55,7 @@ namespace Xamarin.Forms.Maps.WinRT
         void PushPinUnloaded(object sender, RoutedEventArgs e)
         {
             _pin.PropertyChanged -= PinPropertyChanged;
-            Tapped -= PushPinTapped;
+           // Tapped -= PushPinTapped;
         }
 
         void PinPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -50,10 +64,10 @@ namespace Xamarin.Forms.Maps.WinRT
                 UpdateLocation();
         }
 
-        void PushPinTapped(object sender, TappedRoutedEventArgs e)
-        {
-            _pin.SendTap();
-        }
+        //void PushPinTapped(object sender, TappedRoutedEventArgs e)
+        //{
+        //    _pin.SendTap();
+        //}
 
         void UpdateLocation()
         {

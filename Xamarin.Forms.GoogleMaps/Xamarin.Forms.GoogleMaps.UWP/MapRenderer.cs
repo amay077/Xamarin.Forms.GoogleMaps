@@ -10,6 +10,8 @@ using Windows.UI.Xaml.Controls.Maps;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Shapes;
 using Xamarin.Forms.GoogleMaps.Internals;
+using Xamarin.Forms.GoogleMaps.Logics;
+using Xamarin.Forms.GoogleMaps.Logics.UWP;
 using Xamarin.Forms.GoogleMaps.UWP.Extensions;
 #if WINDOWS_UWP
 using Xamarin.Forms.Platform.UWP;
@@ -32,6 +34,21 @@ namespace Xamarin.Forms.Maps.WinRT
         private Map Map
         {
             get { return Element as Map; }
+        }
+
+        readonly BaseLogic<MapControl>[] _logics;
+
+        public MapRenderer() : base()
+        {
+            _logics = new BaseLogic<MapControl>[]
+            {
+                //new PolylineLogic(),
+                //new PolygonLogic(),
+                //new CircleLogic(),
+                //new PinLogic(),
+                new TileLayerLogic(),
+                //new GroundOverlayLogic()
+            };
         }
 
         protected override async void OnElementChanged(ElementChangedEventArgs<Map> e)
@@ -74,17 +91,37 @@ namespace Xamarin.Forms.Maps.WinRT
                     LoadPins();
 
                 await UpdateIsShowingUser();
+                OnMapReady(Control);
             }
+
+        }
+
+        private void OnMapReady(MapControl nativeMap)
+        {
+        }
+
+        private void Control_MapElementClick(MapControl sender, MapElementClickEventArgs args)
+        {
+            var targetPin = LookupPin(args.MapElements.OfType<PushPin>().FirstOrDefault());
+            // If set to PinClickedEventArgs.Handled = true in app codes,
+            // then all pin selection controlling by app.
+            if (Map.SendPinClicked(targetPin))
+            {
+                return;
+            }
+
+            if (targetPin != null && !ReferenceEquals(targetPin, Map.SelectedPin))
+                Map.SelectedPin = targetPin;
+        }
+
+        Pin LookupPin(PushPin marker)
+        {
+            return Map.Pins.FirstOrDefault(outerItem => ((PushPin)outerItem.NativeObject).Id == marker.Id);
         }
 
         private void Control_MapHolding(MapControl sender, MapInputEventArgs args)
         {
             Map.SendMapLongClicked(args.Location.Position.ToPosition());
-        }
-
-        private void Control_MapElementClick(MapControl sender, MapElementClickEventArgs args)
-        {
-            //throw new NotImplementedException();
         }
 
         private void Control_MapTapped(MapControl sender, MapInputEventArgs args)
