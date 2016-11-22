@@ -32,12 +32,11 @@ namespace Xamarin.Forms.Maps.WinRT
             }
             else
             {
-                //overwriting content later?
                 Content = pin.Icon.ToBitmapDescriptor();
             }
 
             Id = Guid.NewGuid();
-            DataContext = Content = _pin = pin;
+            DataContext = _pin = pin;
 
             UpdateLocation();
 
