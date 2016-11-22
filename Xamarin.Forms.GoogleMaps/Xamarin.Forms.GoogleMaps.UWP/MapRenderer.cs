@@ -36,6 +36,11 @@ namespace Xamarin.Forms.Maps.WinRT
             get { return Element as Map; }
         }
 
+        private MapControl NativeMap
+        {
+            get { return Control as MapControl; }
+        }
+
         readonly BaseLogic<MapControl>[] _logics;
 
         public MapRenderer() : base()
@@ -54,7 +59,7 @@ namespace Xamarin.Forms.Maps.WinRT
         protected override async void OnElementChanged(ElementChangedEventArgs<Map> e)
         {
             base.OnElementChanged(e);
-
+            var oldMapView = (MapControl)Control;
             if (e.OldElement != null)
             {
                 var mapModel = e.OldElement;
@@ -91,13 +96,15 @@ namespace Xamarin.Forms.Maps.WinRT
                     LoadPins();
 
                 await UpdateIsShowingUser();
-                OnMapReady(Control);
+
+                foreach (var logic in _logics)
+                {
+                    logic.Register(oldMapView, e.OldElement, NativeMap, Map);
+                    logic.RestoreItems();
+                    logic.OnMapPropertyChanged(new PropertyChangedEventArgs(Map.SelectedPinProperty.PropertyName));
+                }
             }
 
-        }
-
-        private void OnMapReady(MapControl nativeMap)
-        {
         }
 
         private void Control_MapElementClick(MapControl sender, MapElementClickEventArgs args)
@@ -143,6 +150,11 @@ namespace Xamarin.Forms.Maps.WinRT
                 UpdateHasZoomEnabled();
             else if (e.PropertyName == Map.IsTrafficEnabledProperty.PropertyName)
                 Control.TrafficFlowVisible = Map.IsTrafficEnabled;
+
+            foreach (var logic in _logics)
+            {
+                logic.OnMapPropertyChanged(e);
+            }
         }
 
         protected override void Dispose(bool disposing)
@@ -152,6 +164,9 @@ namespace Xamarin.Forms.Maps.WinRT
                 _disposed = true;
 
                 MessagingCenter.Unsubscribe<Map, MoveToRegionMessage>(this, "MapMoveToRegion");
+
+                foreach (var logic in _logics)
+                    logic.Unregister(NativeMap, Map);
 
                 if (Element != null)
                     ((ObservableCollection<Pin>)Element.Pins).CollectionChanged -= OnCollectionChanged;

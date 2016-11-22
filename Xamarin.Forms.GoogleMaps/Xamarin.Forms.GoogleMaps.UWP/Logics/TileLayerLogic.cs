@@ -5,47 +5,47 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls.Maps;
 using Xamarin.Forms.GoogleMaps.Logics;
+using Xamarin.Forms.GoogleMaps.UWP;
 
 namespace Xamarin.Forms.GoogleMaps.Logics.UWP
 {
-    internal class TileLayerLogic : DefaultLogic<TileLayer, MapTileDataSource, MapControl>
+    internal class TileLayerLogic : DefaultLogic<TileLayer, MapTileSource, MapControl>
     {
-        protected override MapTileDataSource CreateNativeItem(TileLayer outerItem)
+        protected override MapTileSource CreateNativeItem(TileLayer outerItem)
         {
-            MapTileDataSource nativeTileLayer = new MapTileDataSource();
+            var nativeTileLayer = new MapTileSource();
 
-            //if (outerItem.MakeTileUri != null)
-            //{
-            //    nativeTileLayer = NativeUrlTileLayer.FromUrlConstructor((nuint x, nuint y, nuint zoom) =>
-            //    {
-            //        var uri = outerItem.MakeTileUri((int)x, (int)y, (int)zoom);
-            //        return new NSUrl(uri.AbsoluteUri);
-            //    });
-            //    nativeTileLayer.TilePixelSize = outerItem.TileSize;
-            //}
-            //else if (outerItem.TileImageSync != null)
-            //{
-            //    nativeTileLayer = new TouchSyncTileLayer(outerItem.TileImageSync);
-            //    nativeTileLayer.TileSize = (nint)outerItem.TileSize;
-            //}
-            //else
-            //{
-            //    nativeTileLayer = new TouchAsyncTileLayer(outerItem.TileImageAsync);
-            //    nativeTileLayer.TileSize = (nint)outerItem.TileSize;
-            //}
+            if (outerItem.MakeTileUri != null)
+            {
+                nativeTileLayer.DataSource = new UWPUriTileLayer(outerItem.MakeTileUri);
+                nativeTileLayer.TilePixelSize = outerItem.TileSize;
+            }
+            else if (outerItem.TileImageSync != null)
+            {
+                nativeTileLayer.DataSource = new UWPSyncTileLayer(outerItem.TileImageSync);
+                nativeTileLayer.TilePixelSize = outerItem.TileSize;
+            }
+            else
+            {
+                nativeTileLayer.DataSource = new UWPAsyncTileLayer(outerItem.TileImageAsync);
+                nativeTileLayer.TilePixelSize = outerItem.TileSize;
+            }
 
-            //outerItem.NativeObject = nativeTileLayer;
-            //nativeTileLayer.Map = NativeMap;
-
+            outerItem.NativeObject = nativeTileLayer;
+            NativeMap.TileSources.Clear();
+            NativeMap.TileSources.Add(nativeTileLayer);
             return nativeTileLayer;
         }
 
-        protected override MapTileDataSource DeleteNativeItem(TileLayer outerItem)
+        protected override MapTileSource DeleteNativeItem(TileLayer outerItem)
         {
-            var nativeTileLayer = outerItem.NativeObject as MapTileDataSource;
+            var nativeTileLayer = outerItem.NativeObject as MapTileSource;
             if (nativeTileLayer == null)
                 return null;
-            //nativeTileLayer.Remove();
+            if (NativeMap != null)
+            {
+                NativeMap.TileSources.Remove(nativeTileLayer);
+            }
             return nativeTileLayer;
         }
 
