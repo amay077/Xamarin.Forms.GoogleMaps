@@ -88,7 +88,7 @@ namespace Xamarin.Forms.Maps.WinRT
                 var path = content as Path;
                 if (path != null)
                 {
-                    if (pin.Icon.Color != Color.Black)
+                    if (pin.Icon != null && pin.Icon.Color != Color.Black)
                     {
                         var converter = new ColorConverter();
                         var colour = 

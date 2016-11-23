@@ -63,7 +63,7 @@ namespace Xamarin.Forms.Maps.WinRT
             {
                 var mapModel = e.OldElement;
                 MessagingCenter.Unsubscribe<Map, MoveToRegionMessage>(this, "MapMoveToRegion");
-                ((ObservableCollection<Pin>)mapModel.Pins).CollectionChanged -= OnCollectionChanged;
+                //((ObservableCollection<Pin>)mapModel.Pins).CollectionChanged -= OnCollectionChanged;
             }
 
             if (e.NewElement != null)
@@ -135,8 +135,8 @@ namespace Xamarin.Forms.Maps.WinRT
                 foreach (var logic in _logics)
                     logic.Unregister(NativeMap, Map);
 
-                if (Element != null)
-                    ((ObservableCollection<Pin>)Element.Pins).CollectionChanged -= OnCollectionChanged;
+                //if (Element != null)
+                //    ((ObservableCollection<Pin>)Element.Pins).CollectionChanged -= OnCollectionChanged;
             }
             base.Dispose(disposing);
         }
@@ -145,63 +145,63 @@ namespace Xamarin.Forms.Maps.WinRT
         bool _firstZoomLevelChangeFired;
         Ellipse _userPositionCircle;
 
-        void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            switch (e.Action)
-            {
-                case NotifyCollectionChangedAction.Add:
-                    foreach (Pin pin in e.NewItems)
-                        LoadPin(pin);
-                    break;
-                case NotifyCollectionChangedAction.Move:
-                    // no matter
-                    break;
-                case NotifyCollectionChangedAction.Remove:
-                    foreach (Pin pin in e.OldItems)
-                        RemovePin(pin);
-                    break;
-                case NotifyCollectionChangedAction.Replace:
-                    foreach (Pin pin in e.OldItems)
-                        RemovePin(pin);
-                    foreach (Pin pin in e.NewItems)
-                        LoadPin(pin);
-                    break;
-                case NotifyCollectionChangedAction.Reset:
-                    ClearPins();
-                    break;
-            }
-        }
+//        void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+//        {
+//            switch (e.Action)
+//            {
+//                case NotifyCollectionChangedAction.Add:
+//                    foreach (Pin pin in e.NewItems)
+//                        LoadPin(pin);
+//                    break;
+//                case NotifyCollectionChangedAction.Move:
+//                    // no matter
+//                    break;
+//                case NotifyCollectionChangedAction.Remove:
+//                    foreach (Pin pin in e.OldItems)
+//                        RemovePin(pin);
+//                    break;
+//                case NotifyCollectionChangedAction.Replace:
+//                    foreach (Pin pin in e.OldItems)
+//                        RemovePin(pin);
+//                    foreach (Pin pin in e.NewItems)
+//                        LoadPin(pin);
+//                    break;
+//                case NotifyCollectionChangedAction.Reset:
+//                    ClearPins();
+//                    break;
+//            }
+//        }
 
-        void LoadPins()
-        {
-            foreach (var pin in Element.Pins)
-                LoadPin(pin);
-        }
+//        void LoadPins()
+//        {
+//            foreach (var pin in Element.Pins)
+//                LoadPin(pin);
+//        }
 
-        void ClearPins()
-        {
-            Control.Children.Clear();
-#pragma warning disable 4014 // don't wanna block UI thread
-            UpdateIsShowingUser();
-#pragma warning restore
-        }
+//        void ClearPins()
+//        {
+//            Control.Children.Clear();
+//#pragma warning disable 4014 // don't wanna block UI thread
+//            UpdateIsShowingUser();
+//#pragma warning restore
+//        }
 
-        void RemovePin(Pin pinToRemove)
-        {
-            var pushPin = Control.Children.FirstOrDefault(c =>
-            {
-                var pin = (c as PushPin);
-                return (pin != null && pin.DataContext.Equals(pinToRemove));
-            });
+//        void RemovePin(Pin pinToRemove)
+//        {
+//            var pushPin = Control.Children.FirstOrDefault(c =>
+//            {
+//                var pin = (c as PushPin);
+//                return (pin != null && pin.DataContext.Equals(pinToRemove));
+//            });
 
-            if (pushPin != null)
-                Control.Children.Remove(pushPin);
-        }
+//            if (pushPin != null)
+//                Control.Children.Remove(pushPin);
+//        }
 
-        void LoadPin(Pin pin)
-        {
-            Control.Children.Add(new PushPin(pin));
-        }
+//        void LoadPin(Pin pin)
+//        {
+//            Control.Children.Add(new PushPin(pin));
+//        }
 
         async Task UpdateIsShowingUser()
         {
