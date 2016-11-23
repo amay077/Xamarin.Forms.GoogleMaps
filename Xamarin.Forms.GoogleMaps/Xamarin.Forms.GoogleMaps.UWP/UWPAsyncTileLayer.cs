@@ -21,10 +21,12 @@ namespace Xamarin.Forms.GoogleMaps.UWP
 
         private void UWPSyncTileLayer_BitmapRequested(CustomMapTileDataSource sender, MapTileBitmapRequestedEventArgs args)
         {
+            var deferral = args.Request.GetDeferral();
             var data = _makeTileUri(args.X, args.Y, args.ZoomLevel).Result;
             MemoryStream m = new MemoryStream(data);
             m.Position = 0;
-            args.Request.PixelData = (IRandomAccessStreamReference)m.AsRandomAccessStream();
+            args.Request.PixelData = RandomAccessStreamReference.CreateFromStream(m.AsRandomAccessStream());
+            deferral.Complete();
         }
     }
 }

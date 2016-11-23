@@ -19,16 +19,22 @@ namespace Xamarin.Forms.GoogleMaps.Logics.UWP
             {
                 nativeTileLayer.DataSource = new UWPUriTileLayer(outerItem.MakeTileUri);
                 nativeTileLayer.TilePixelSize = outerItem.TileSize;
+                nativeTileLayer.AllowOverstretch = true;
+                NativeMap.Style = MapStyle.None;
             }
             else if (outerItem.TileImageSync != null)
             {
                 nativeTileLayer.DataSource = new UWPSyncTileLayer(outerItem.TileImageSync);
                 nativeTileLayer.TilePixelSize = outerItem.TileSize;
+                nativeTileLayer.AllowOverstretch = true;
+                NativeMap.Style = MapStyle.None;
             }
             else
             {
                 nativeTileLayer.DataSource = new UWPAsyncTileLayer(outerItem.TileImageAsync);
                 nativeTileLayer.TilePixelSize = outerItem.TileSize;
+                nativeTileLayer.AllowOverstretch = true;
+                NativeMap.Style = MapStyle.None;
             }
 
             outerItem.NativeObject = nativeTileLayer;
@@ -45,6 +51,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.UWP
             if (NativeMap != null)
             {
                 NativeMap.TileSources.Remove(nativeTileLayer);
+                UpdateMapType();
             }
             return nativeTileLayer;
         }
@@ -52,6 +59,25 @@ namespace Xamarin.Forms.GoogleMaps.Logics.UWP
         protected override IList<TileLayer> GetItems(Map map)
         {
             return map.TileLayers;
+        }
+
+        void UpdateMapType()
+        {
+            switch (Map.MapType)
+            {
+                case MapType.Street:
+                    NativeMap.Style = MapStyle.Road;
+                    break;
+                case MapType.Satellite:
+                    NativeMap.Style = MapStyle.Aerial;
+                    break;
+                case MapType.Hybrid:
+                    NativeMap.Style = MapStyle.AerialWithRoads;
+                    break;
+                case MapType.None:
+                    NativeMap.Style = MapStyle.None;
+                    break;
+            }
         }
     }
 }

@@ -19,8 +19,10 @@ namespace Xamarin.Forms.GoogleMaps.UWP
 
         private void UWPUriTileLayer_UriRequested(LocalMapTileDataSource sender, MapTileUriRequestedEventArgs args)
         {
+            var deferral = args.Request.GetDeferral();
             var uri = _makeTileUri(args.X, args.Y, args.ZoomLevel);
             args.Request.Uri = uri;
+            deferral.Complete();
         }
     }
 }
