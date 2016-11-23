@@ -80,7 +80,6 @@ namespace Xamarin.Forms.Maps.WinRT
                     Control.CenterChanged += async (s, a) => await UpdateVisibleRegion();
                     Control.MapTapped += Control_MapTapped;
                     Control.MapHolding += Control_MapHolding;
-                    Control.MapElementClick += Control_MapElementClick;
                 }
 
                 MessagingCenter.Subscribe<Map, MoveToRegionMessage>(this, "MapMoveToRegion", async (s, a) =>
@@ -107,24 +106,28 @@ namespace Xamarin.Forms.Maps.WinRT
 
         }
 
-        private void Control_MapElementClick(MapControl sender, MapElementClickEventArgs args)
-        {
-            var targetPin = LookupPin(args.MapElements.OfType<PushPin>().FirstOrDefault());
-            // If set to PinClickedEventArgs.Handled = true in app codes,
-            // then all pin selection controlling by app.
-            if (Map.SendPinClicked(targetPin))
-            {
-                return;
-            }
+        //private void Control_MapElementClick(MapControl sender, MapElementClickEventArgs args)
+        //{
+        //    var targetPin = LookupPin(args.MapElements.OfType<PushPin>().FirstOrDefault());
+        //    // If set to PinClickedEventArgs.Handled = true in app codes,
+        //    // then all pin selection controlling by app.
+        //    if (Map.SendPinClicked(targetPin))
+        //    {
+        //        return;
+        //    }
 
-            if (targetPin != null && !ReferenceEquals(targetPin, Map.SelectedPin))
-                Map.SelectedPin = targetPin;
-        }
+        //    if (targetPin != null && !ReferenceEquals(targetPin, Map.SelectedPin))
+        //    {
+        //        Map.SelectedPin = targetPin;
+        //        (targetPin.NativeObject as PushPin).DetailsView.Visibility = Windows.UI.Xaml.Visibility.Visible;
+        //    }
 
-        Pin LookupPin(PushPin marker)
-        {
-            return Map.Pins.FirstOrDefault(outerItem => ((PushPin)outerItem.NativeObject).Id == marker.Id);
-        }
+        //}
+
+        //Pin LookupPin(PushPin marker)
+        //{
+        //    return Map.Pins.FirstOrDefault(outerItem => ((PushPin)outerItem.NativeObject).Id == marker.Id);
+        //}
 
         private void Control_MapHolding(MapControl sender, MapInputEventArgs args)
         {

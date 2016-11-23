@@ -1,6 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
 using Windows.Devices.Geolocation;
+using Windows.UI;
+using Windows.UI.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Maps;
@@ -24,12 +26,24 @@ namespace Xamarin.Forms.Maps.WinRT
 
         public Guid Id { get; set; }
 
+        public StackPanel DetailsView { get; set; }
+        public FrameworkElement Icon { get; set; }
+
         internal PushPin(Pin pin)
         {
             if (pin == null)
                 throw new ArgumentNullException();
 
-            UpdateView(pin);
+            SetupDetailsView(pin);
+            UpdateIcon(pin);
+            StackPanel root = new StackPanel()
+            {
+                Width = 250
+            };
+            root.Children.Add(DetailsView);
+            root.Children.Add(Icon);
+            Content = root;
+
             Id = Guid.NewGuid();
             DataContext = _pin = pin;
 
@@ -37,15 +51,42 @@ namespace Xamarin.Forms.Maps.WinRT
 
             Loaded += PushPinLoaded;
             Unloaded += PushPinUnloaded;
-            //Tapped += PushPinTapped;
+            Tapped += PushPinTapped;
             pin.NativeObject = this;
         }
 
-        private void UpdateView(Pin pin)
+        private void SetupDetailsView(Pin pin)
+        {
+            //Setup details view
+            DetailsView = new StackPanel()
+            {
+                Width = 250,
+                Height = 70,
+                Opacity = 0.7,
+                Padding = new Windows.UI.Xaml.Thickness(5),
+                Background = new SolidColorBrush(Colors.White)
+            };
+            TextBlock name = new TextBlock()
+            {
+                Text = pin.Label,
+                Foreground = new SolidColorBrush(Colors.Black),
+                FontWeight = FontWeights.Bold,
+                TextWrapping = TextWrapping.WrapWholeWords
+            };
+            TextBlock address = new TextBlock()
+            {
+                Text = pin.Address,
+                Foreground = new SolidColorBrush(Colors.Black)
+            };
+            DetailsView.Children.Add(name);
+            DetailsView.Children.Add(address);
+            DetailsView.Visibility = Visibility.Collapsed;
+        }
+
+        private void UpdateIcon(Pin pin)
         {
             if (pin.Icon == null || pin.Icon.Type == BitmapDescriptorType.Default)
             {
-                // ContentTemplate = Windows.UI.Xaml.Application.Current.Resources["PushPinTemplate"] as Windows.UI.Xaml.DataTemplate;
                 var template = Windows.UI.Xaml.Application.Current.Resources["PushPinTemplate"] as Windows.UI.Xaml.DataTemplate;
                 var content = template.LoadContent();
                 var path = content as Path;
@@ -57,7 +98,7 @@ namespace Xamarin.Forms.Maps.WinRT
                         var colour = 
                         path.Fill = (SolidColorBrush)converter.Convert(pin.Icon.Color, null, null, null); ;
                     }
-                    Content = path;
+                    Icon = path;
                 }
             }
             else
@@ -65,7 +106,7 @@ namespace Xamarin.Forms.Maps.WinRT
                 if (pin.Icon.Type != BitmapDescriptorType.View)
                 {
                     var image = new Windows.UI.Xaml.Controls.Image() { Source = pin.Icon.ToBitmapDescriptor() };
-                    Content = image;
+                    Icon = image;
                 }
                 else
                 {
@@ -82,7 +123,7 @@ namespace Xamarin.Forms.Maps.WinRT
         void PushPinUnloaded(object sender, RoutedEventArgs e)
         {
             _pin.PropertyChanged -= PinPropertyChanged;
-           // Tapped -= PushPinTapped;
+            Tapped -= PushPinTapped;
         }
 
         void PinPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -91,14 +132,15 @@ namespace Xamarin.Forms.Maps.WinRT
                 UpdateLocation();
             else if (e.PropertyName == Pin.IconProperty.PropertyName)
             {
-                UpdateView(sender as Pin);
+                UpdateIcon(sender as Pin);
             }
         }
 
-        //void PushPinTapped(object sender, TappedRoutedEventArgs e)
-        //{
-        //    _pin.SendTap();
-        //}
+        void PushPinTapped(object sender, TappedRoutedEventArgs e)
+        {
+            _pin.SendTap();
+            DetailsView.Visibility = Visibility.Visible;
+        }
 
         void UpdateLocation()
         {
