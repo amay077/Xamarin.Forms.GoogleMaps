@@ -12,7 +12,6 @@ using Windows.UI.Xaml.Shapes;
 using Xamarin.Forms.GoogleMaps.Internals;
 using Xamarin.Forms.GoogleMaps.Logics;
 using Xamarin.Forms.GoogleMaps.Logics.UWP;
-using Xamarin.Forms.GoogleMaps.UWP.Extensions;
 #if WINDOWS_UWP
 using Xamarin.Forms.Platform.UWP;
 
@@ -50,7 +49,7 @@ namespace Xamarin.Forms.Maps.WinRT
                 //new PolylineLogic(),
                 //new PolygonLogic(),
                 //new CircleLogic(),
-                //new PinLogic(),
+                new PinLogic(),
                 new TileLayerLogic(),
                 //new GroundOverlayLogic()
             };
@@ -78,8 +77,6 @@ namespace Xamarin.Forms.Maps.WinRT
                     Control.TrafficFlowVisible = Map.IsTrafficEnabled;
                     Control.ZoomLevelChanged += async (s, a) => await UpdateVisibleRegion();
                     Control.CenterChanged += async (s, a) => await UpdateVisibleRegion();
-                    Control.MapTapped += Control_MapTapped;
-                    Control.MapHolding += Control_MapHolding;
                 }
 
                 MessagingCenter.Subscribe<Map, MoveToRegionMessage>(this, "MapMoveToRegion", async (s, a) =>
@@ -89,10 +86,10 @@ namespace Xamarin.Forms.Maps.WinRT
                 UpdateHasScrollEnabled();
                 UpdateHasZoomEnabled();
 
-                ((ObservableCollection<Pin>)mapModel.Pins).CollectionChanged += OnCollectionChanged;
+                //((ObservableCollection<Pin>)mapModel.Pins).CollectionChanged += OnCollectionChanged;
 
-                if (mapModel.Pins.Any())
-                    LoadPins();
+                //if (mapModel.Pins.Any())
+                //    LoadPins();
 
                 await UpdateIsShowingUser();
 
@@ -104,39 +101,6 @@ namespace Xamarin.Forms.Maps.WinRT
                 }
             }
 
-        }
-
-        //private void Control_MapElementClick(MapControl sender, MapElementClickEventArgs args)
-        //{
-        //    var targetPin = LookupPin(args.MapElements.OfType<PushPin>().FirstOrDefault());
-        //    // If set to PinClickedEventArgs.Handled = true in app codes,
-        //    // then all pin selection controlling by app.
-        //    if (Map.SendPinClicked(targetPin))
-        //    {
-        //        return;
-        //    }
-
-        //    if (targetPin != null && !ReferenceEquals(targetPin, Map.SelectedPin))
-        //    {
-        //        Map.SelectedPin = targetPin;
-        //        (targetPin.NativeObject as PushPin).DetailsView.Visibility = Windows.UI.Xaml.Visibility.Visible;
-        //    }
-
-        //}
-
-        //Pin LookupPin(PushPin marker)
-        //{
-        //    return Map.Pins.FirstOrDefault(outerItem => ((PushPin)outerItem.NativeObject).Id == marker.Id);
-        //}
-
-        private void Control_MapHolding(MapControl sender, MapInputEventArgs args)
-        {
-            Map.SendMapLongClicked(args.Location.Position.ToPosition());
-        }
-
-        private void Control_MapTapped(MapControl sender, MapInputEventArgs args)
-        {
-            Map.SendMapClicked(args.Location.Position.ToPosition());
         }
 
         protected override async void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)

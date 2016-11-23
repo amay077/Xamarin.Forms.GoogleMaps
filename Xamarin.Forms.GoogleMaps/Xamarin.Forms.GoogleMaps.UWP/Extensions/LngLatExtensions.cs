@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.Devices.Geolocation;
 
-namespace Xamarin.Forms.GoogleMaps.UWP.Extensions
+namespace Xamarin.Forms.GoogleMaps.Extensions.UWP
 {
     internal static class LngLatExtensions
     {
