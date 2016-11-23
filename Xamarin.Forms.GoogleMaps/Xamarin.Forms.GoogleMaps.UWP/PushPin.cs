@@ -106,7 +106,11 @@ namespace Xamarin.Forms.Maps.WinRT
             {
                 if (pin.Icon.Type != BitmapDescriptorType.View)
                 {
-                    var image = new Windows.UI.Xaml.Controls.Image() { Source = pin.Icon.ToBitmapDescriptor() };
+                    var image = new Windows.UI.Xaml.Controls.Image()
+                    {
+                        Source = pin.Icon.ToBitmapDescriptor(),
+                        Width = 50,
+                    };
                     if (Icon != null)
                     {
                         Root.Children.Remove(Icon);
@@ -123,7 +127,7 @@ namespace Xamarin.Forms.Maps.WinRT
 
         public void UpdateLocation()
         {
-            var anchor = new Windows.Foundation.Point(0.65, 1);
+            var anchor = new Windows.Foundation.Point(0.5, 1);
             var location = new Geopoint(new BasicGeoposition
             {
                 Latitude = _pin.Position.Latitude,
