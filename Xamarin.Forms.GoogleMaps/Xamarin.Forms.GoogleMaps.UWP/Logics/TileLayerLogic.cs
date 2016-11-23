@@ -20,24 +20,25 @@ namespace Xamarin.Forms.GoogleMaps.Logics.UWP
                 nativeTileLayer.DataSource = new UWPUriTileLayer(outerItem.MakeTileUri);
                 nativeTileLayer.TilePixelSize = outerItem.TileSize;
                 nativeTileLayer.AllowOverstretch = true;
-                NativeMap.Style = MapStyle.None;
+                //NativeMap.Style = MapStyle.None;
             }
             else if (outerItem.TileImageSync != null)
             {
                 nativeTileLayer.DataSource = new UWPSyncTileLayer(outerItem.TileImageSync);
                 nativeTileLayer.TilePixelSize = outerItem.TileSize;
                 nativeTileLayer.AllowOverstretch = true;
-                NativeMap.Style = MapStyle.None;
+               // NativeMap.Style = MapStyle.None;
             }
             else
             {
                 nativeTileLayer.DataSource = new UWPAsyncTileLayer(outerItem.TileImageAsync);
                 nativeTileLayer.TilePixelSize = outerItem.TileSize;
                 nativeTileLayer.AllowOverstretch = true;
-                NativeMap.Style = MapStyle.None;
+                //NativeMap.Style = MapStyle.None;
             }
 
             outerItem.NativeObject = nativeTileLayer;
+
             NativeMap.TileSources.Clear();
             NativeMap.TileSources.Add(nativeTileLayer);
             return nativeTileLayer;
@@ -51,7 +52,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.UWP
             if (NativeMap != null)
             {
                 NativeMap.TileSources.Remove(nativeTileLayer);
-                UpdateMapType();
+               // UpdateMapType();
             }
             return nativeTileLayer;
         }
