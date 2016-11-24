@@ -79,6 +79,16 @@ namespace Xamarin.Forms.GoogleMaps.Logics.UWP
         {
             //Select pin
             var pin = (sender as PushPin);
+            if (Map.SelectedPin != null)
+            {
+                foreach (var outerItem in GetItems(Map))
+                {
+                    if ((outerItem.NativeObject as PushPin).DetailsView.Visibility == Windows.UI.Xaml.Visibility.Visible)
+                    {
+                        (outerItem.NativeObject as PushPin).DetailsView.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                    }
+                }
+            }
             pin.DetailsView.Visibility = pin.DetailsView.Visibility == Windows.UI.Xaml.Visibility.Visible ? Windows.UI.Xaml.Visibility.Collapsed : Windows.UI.Xaml.Visibility.Visible;
             var targetPin = LookupPin(pin);
             // If set to PinClickedEventArgs.Handled = true in app codes,
@@ -90,16 +100,6 @@ namespace Xamarin.Forms.GoogleMaps.Logics.UWP
 
             if (targetPin != null && !ReferenceEquals(targetPin, Map.SelectedPin))
             {
-                if (Map.SelectedPin != null)
-                {
-                    foreach (var outerItem in GetItems(Map))
-                    {
-                        if ((outerItem.NativeObject as PushPin).DetailsView.Visibility == Windows.UI.Xaml.Visibility.Visible)
-                        {
-                            (outerItem.NativeObject as PushPin).DetailsView.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
-                        }
-                    }
-                }
                 Map.SelectedPin = targetPin;
             }
         }
