@@ -22,11 +22,14 @@ namespace Xamarin.Forms.GoogleMaps.UWP
         {
             var deferral = args.Request.GetDeferral();
             var uri = _makeTileUri(args.X, args.Y, args.ZoomLevel);
-            if (!uri.Scheme.ToLower().StartsWith("http"))
-            {            
-                uri = new Uri(string.Format("ms-appx:///local/{0}", uri.LocalPath.Replace(ApplicationData.Current.LocalFolder.Path,string.Empty).TrimStart('\\')));           
+            if (uri != null)
+            {
+                if (!uri.Scheme.ToLower().StartsWith("http"))
+                {
+                    uri = new Uri(string.Format("ms-appx:///local/{0}", uri.LocalPath.Replace(ApplicationData.Current.LocalFolder.Path, string.Empty).TrimStart('\\')));
+                }
+                args.Request.Uri = uri; 
             }
-            args.Request.Uri = uri;
             deferral.Complete();
         }
     }

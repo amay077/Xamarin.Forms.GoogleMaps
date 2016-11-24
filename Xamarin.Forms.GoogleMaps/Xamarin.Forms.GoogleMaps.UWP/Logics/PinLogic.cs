@@ -90,6 +90,16 @@ namespace Xamarin.Forms.GoogleMaps.Logics.UWP
 
             if (targetPin != null && !ReferenceEquals(targetPin, Map.SelectedPin))
             {
+                if (Map.SelectedPin != null)
+                {
+                    foreach (var outerItem in GetItems(Map))
+                    {
+                        if ((outerItem.NativeObject as PushPin).DetailsView.Visibility == Windows.UI.Xaml.Visibility.Visible)
+                        {
+                            (outerItem.NativeObject as PushPin).DetailsView.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                        }
+                    }
+                }
                 Map.SelectedPin = targetPin;
             }
         }

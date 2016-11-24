@@ -4,8 +4,10 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Storage;
 using Windows.Storage.Streams;
 using Windows.UI.Xaml.Controls.Maps;
+using System.Runtime.InteropServices.WindowsRuntime;
 
 namespace Xamarin.Forms.GoogleMaps.UWP
 {
@@ -19,25 +21,29 @@ namespace Xamarin.Forms.GoogleMaps.UWP
             this.BitmapRequested += UWPSyncTileLayer_BitmapRequested;
         }
 
-        private void UWPSyncTileLayer_BitmapRequested(CustomMapTileDataSource sender, MapTileBitmapRequestedEventArgs args)
+        private async void UWPSyncTileLayer_BitmapRequested(CustomMapTileDataSource sender, MapTileBitmapRequestedEventArgs args)
         {
             var deferral = args.Request.GetDeferral();
             var data = _makeTileUri(args.X, args.Y, args.ZoomLevel);
 
             if (data != null)
             {
+                MemoryStream stream = new MemoryStream();
+                stream.Write(data, 0, data.Length);
+                stream.Flush();
+                stream.Position = 0;
+
+                var decoder = await Windows.Graphics.Imaging.BitmapDecoder.CreateAsync(stream.AsRandomAccessStream());
+                var pixelProvider = await decoder.GetPixelDataAsync(Windows.Graphics.Imaging.BitmapPixelFormat.Rgba8, Windows.Graphics.Imaging.BitmapAlphaMode.Straight, new Windows.Graphics.Imaging.BitmapTransform(), Windows.Graphics.Imaging.ExifOrientationMode.RespectExifOrientation, Windows.Graphics.Imaging.ColorManagementMode.ColorManageToSRgb);
+                var pixelData = pixelProvider.DetachPixelData();
+
                 InMemoryRandomAccessStream randomAccessStream = new InMemoryRandomAccessStream();
                 IOutputStream outputStream = randomAccessStream.GetOutputStreamAt(0);
                 DataWriter writer = new DataWriter(outputStream);
-                writer.WriteBytes(data);
-                writer.StoreAsync().GetResults();
-                writer.FlushAsync().GetResults();
+                writer.WriteBytes(pixelData);
+                var i = await writer.StoreAsync();
+                var d = await writer.FlushAsync();
                 args.Request.PixelData = RandomAccessStreamReference.CreateFromStream(randomAccessStream);
-                //MemoryStream stream = new MemoryStream();
-                //stream.Write(data, 0, data.Length);
-                //stream.Position = 0;
-                //var streamReference = RandomAccessStreamReference.CreateFromStream(stream.AsRandomAccessStream());
-                //args.Request.PixelData = streamReference; 
             }
             deferral.Complete();
         }
