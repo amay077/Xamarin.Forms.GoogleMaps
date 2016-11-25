@@ -272,9 +272,9 @@ namespace Xamarin.Forms.Maps.WinRT
                     break;
                 case MapType.Hybrid:
                     Control.Style = MapStyle.AerialWithRoads;
+                    break;
                 case MapType.None:
                     Control.Style = MapStyle.None;
-                    break;
                     break;
             }
         }
