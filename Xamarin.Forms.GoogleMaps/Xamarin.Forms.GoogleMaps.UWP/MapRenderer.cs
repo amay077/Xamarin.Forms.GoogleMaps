@@ -10,6 +10,8 @@ using Windows.UI.Xaml.Controls.Maps;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Shapes;
 using Xamarin.Forms.GoogleMaps.Internals;
+using Xamarin.Forms.GoogleMaps.Logics;
+using Xamarin.Forms.GoogleMaps.Logics.UWP;
 #if WINDOWS_UWP
 using Xamarin.Forms.Platform.UWP;
 
@@ -28,6 +30,31 @@ namespace Xamarin.Forms.Maps.WinRT
 {
     public class MapRenderer : ViewRenderer<Map, MapControl>
     {
+        private Map Map
+        {
+            get { return Element as Map; }
+        }
+
+        private MapControl NativeMap
+        {
+            get { return Control as MapControl; }
+        }
+
+        readonly BaseLogic<MapControl>[] _logics;
+
+        public MapRenderer() : base()
+        {
+            _logics = new BaseLogic<MapControl>[]
+            {
+                //new PolylineLogic(),
+                //new PolygonLogic(),
+                //new CircleLogic(),
+                new PinLogic(),
+                //new TileLayerLogic(),
+                //new GroundOverlayLogic()
+            };
+        }
+
         protected override async void OnElementChanged(ElementChangedEventArgs<Map> e)
         {
             base.OnElementChanged(e);
@@ -36,13 +63,13 @@ namespace Xamarin.Forms.Maps.WinRT
             {
                 var mapModel = e.OldElement;
                 MessagingCenter.Unsubscribe<Map, MoveToRegionMessage>(this, "MapMoveToRegion");
-                ((ObservableCollection<Pin>)mapModel.Pins).CollectionChanged -= OnCollectionChanged;
+                //((ObservableCollection<Pin>)mapModel.Pins).CollectionChanged -= OnCollectionChanged;
             }
 
             if (e.NewElement != null)
             {
                 var mapModel = e.NewElement;
-
+                var oldMapView = (MapControl)Control;
                 if (Control == null)
                 {
                     SetNativeControl(new MapControl());
@@ -58,12 +85,19 @@ namespace Xamarin.Forms.Maps.WinRT
                 UpdateHasScrollEnabled();
                 UpdateHasZoomEnabled();
 
-                ((ObservableCollection<Pin>)mapModel.Pins).CollectionChanged += OnCollectionChanged;
+                //((ObservableCollection<Pin>)mapModel.Pins).CollectionChanged += OnCollectionChanged;
 
-                if (mapModel.Pins.Any())
-                    LoadPins();
+                //if (mapModel.Pins.Any())
+                //    LoadPins();
 
                 await UpdateIsShowingUser();
+
+                foreach (var logic in _logics)
+                {
+                    logic.Register(oldMapView, e.OldElement, NativeMap, Map);
+                    logic.RestoreItems();
+                    logic.OnMapPropertyChanged(new PropertyChangedEventArgs(Map.SelectedPinProperty.PropertyName));
+                }
             }
         }
 
@@ -79,6 +113,11 @@ namespace Xamarin.Forms.Maps.WinRT
                 UpdateHasScrollEnabled();
             else if (e.PropertyName == Map.HasZoomEnabledProperty.PropertyName)
                 UpdateHasZoomEnabled();
+
+            foreach (var logic in _logics)
+            {
+                logic.OnMapPropertyChanged(e);
+            }
         }
 
         protected override void Dispose(bool disposing)
@@ -89,8 +128,8 @@ namespace Xamarin.Forms.Maps.WinRT
 
                 MessagingCenter.Unsubscribe<Map, MoveToRegionMessage>(this, "MapMoveToRegion");
 
-                if (Element != null)
-                    ((ObservableCollection<Pin>)Element.Pins).CollectionChanged -= OnCollectionChanged;
+                //if (Element != null)
+                //    ((ObservableCollection<Pin>)Element.Pins).CollectionChanged -= OnCollectionChanged;
             }
             base.Dispose(disposing);
         }
@@ -99,63 +138,63 @@ namespace Xamarin.Forms.Maps.WinRT
         bool _firstZoomLevelChangeFired;
         Ellipse _userPositionCircle;
 
-        void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            switch (e.Action)
-            {
-                case NotifyCollectionChangedAction.Add:
-                    foreach (Pin pin in e.NewItems)
-                        LoadPin(pin);
-                    break;
-                case NotifyCollectionChangedAction.Move:
-                    // no matter
-                    break;
-                case NotifyCollectionChangedAction.Remove:
-                    foreach (Pin pin in e.OldItems)
-                        RemovePin(pin);
-                    break;
-                case NotifyCollectionChangedAction.Replace:
-                    foreach (Pin pin in e.OldItems)
-                        RemovePin(pin);
-                    foreach (Pin pin in e.NewItems)
-                        LoadPin(pin);
-                    break;
-                case NotifyCollectionChangedAction.Reset:
-                    ClearPins();
-                    break;
-            }
-        }
+//        void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+//        {
+//            switch (e.Action)
+//            {
+//                case NotifyCollectionChangedAction.Add:
+//                    foreach (Pin pin in e.NewItems)
+//                        LoadPin(pin);
+//                    break;
+//                case NotifyCollectionChangedAction.Move:
+//                    // no matter
+//                    break;
+//                case NotifyCollectionChangedAction.Remove:
+//                    foreach (Pin pin in e.OldItems)
+//                        RemovePin(pin);
+//                    break;
+//                case NotifyCollectionChangedAction.Replace:
+//                    foreach (Pin pin in e.OldItems)
+//                        RemovePin(pin);
+//                    foreach (Pin pin in e.NewItems)
+//                        LoadPin(pin);
+//                    break;
+//                case NotifyCollectionChangedAction.Reset:
+//                    ClearPins();
+//                    break;
+//            }
+//        }
 
-        void LoadPins()
-        {
-            foreach (var pin in Element.Pins)
-                LoadPin(pin);
-        }
+//        void LoadPins()
+//        {
+//            foreach (var pin in Element.Pins)
+//                LoadPin(pin);
+//        }
 
-        void ClearPins()
-        {
-            Control.Children.Clear();
-#pragma warning disable 4014 // don't wanna block UI thread
-            UpdateIsShowingUser();
-#pragma warning restore
-        }
+//        void ClearPins()
+//        {
+//            Control.Children.Clear();
+//#pragma warning disable 4014 // don't wanna block UI thread
+//            UpdateIsShowingUser();
+//#pragma warning restore
+//        }
 
-        void RemovePin(Pin pinToRemove)
-        {
-            var pushPin = Control.Children.FirstOrDefault(c =>
-            {
-                var pin = (c as PushPin);
-                return (pin != null && pin.DataContext.Equals(pinToRemove));
-            });
+//        void RemovePin(Pin pinToRemove)
+//        {
+//            var pushPin = Control.Children.FirstOrDefault(c =>
+//            {
+//                var pin = (c as PushPin);
+//                return (pin != null && pin.DataContext.Equals(pinToRemove));
+//            });
 
-            if (pushPin != null)
-                Control.Children.Remove(pushPin);
-        }
+//            if (pushPin != null)
+//                Control.Children.Remove(pushPin);
+//        }
 
-        void LoadPin(Pin pin)
-        {
-            Control.Children.Add(new PushPin(pin));
-        }
+//        void LoadPin(Pin pin)
+//        {
+//            Control.Children.Add(new PushPin(pin));
+//        }
 
         async Task UpdateIsShowingUser()
         {
