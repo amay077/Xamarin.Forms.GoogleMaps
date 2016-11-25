@@ -108,6 +108,9 @@
     <None Include="Windows_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="image01.png" />
+    <Content Include="image02.png" />
+    <Content Include="image03.png" />
     <Content Include="Properties\Default.UWP.rd.xml">
       <SubType>Designer</SubType>
     </Content>
