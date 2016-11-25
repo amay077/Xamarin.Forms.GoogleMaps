@@ -99,6 +99,7 @@
       <DependentUpon>GroundOverlaysPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Extensions\ListExtensions.cs" />
+    <Compile Include="Variables.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">
