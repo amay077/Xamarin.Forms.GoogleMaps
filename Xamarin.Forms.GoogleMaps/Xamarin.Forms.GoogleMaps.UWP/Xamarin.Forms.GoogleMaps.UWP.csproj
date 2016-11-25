@@ -112,9 +112,13 @@
     <Compile Include="FormsGoogleMap.cs" />
     <Compile Include="GeocoderBackend.cs" />
     <Compile Include="Logics\PinLogic.cs" />
+    <Compile Include="Logics\TileLayerLogic.cs" />
     <Compile Include="MapRenderer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PushPin.cs" />
+    <Compile Include="UWPAsyncTileLayer.cs" />
+    <Compile Include="UWPSyncTileLayer.cs" />
+    <Compile Include="UWPUriTileLayer.cs" />
     <EmbeddedResource Include="Properties\Xamarin.Forms.GoogleMaps.UWP.rd.xml" />
   </ItemGroup>
   <ItemGroup>

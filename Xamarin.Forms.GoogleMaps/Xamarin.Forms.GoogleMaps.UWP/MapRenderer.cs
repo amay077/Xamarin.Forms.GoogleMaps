@@ -50,7 +50,7 @@ namespace Xamarin.Forms.Maps.WinRT
                 //new PolygonLogic(),
                 //new CircleLogic(),
                 new PinLogic(),
-                //new TileLayerLogic(),
+                new TileLayerLogic(),
                 //new GroundOverlayLogic()
             };
         }
