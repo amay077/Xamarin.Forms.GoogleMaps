@@ -1,3 +1,3 @@
-msbuild Xamarin.Forms.GoogleMaps.sln /t:Clean;Build /p:Configuration=Release
+..\..\..\..\Nuget\Nuget.exe pack -build
 
-nuget pack
+pause

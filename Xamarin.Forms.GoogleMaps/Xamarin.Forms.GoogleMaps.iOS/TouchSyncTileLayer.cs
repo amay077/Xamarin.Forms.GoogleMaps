@@ -17,7 +17,15 @@ namespace Xamarin.Forms.GoogleMaps.iOS
         public override UIImage Tile(nuint x, nuint y, nuint zoom)
         {
             var imgByte = _tileImageSync((int)x, (int)y, (int)zoom);
-            return new UIImage(NSData.FromArray(imgByte));
+            if (imgByte != null)
+            {
+                return new UIImage(NSData.FromArray(imgByte));
+            }
+            else
+            {
+                return null;
+            }
+
         }
     }
 }

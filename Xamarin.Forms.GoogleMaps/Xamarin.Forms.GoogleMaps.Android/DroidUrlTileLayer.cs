@@ -15,7 +15,15 @@ namespace Xamarin.Forms.GoogleMaps.Android
         public override Java.Net.URL GetTileUrl(int x, int y, int zoom)
         {
             var uri = _makeTileUri(x, y, zoom);
-            return new Java.Net.URL(uri.AbsoluteUri);
+            if (uri != null)
+            {
+                return new Java.Net.URL(uri.AbsoluteUri);
+            }
+            else
+            {
+                return null;
+            }
+
         }
     }
 }
