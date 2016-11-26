@@ -21,8 +21,11 @@ namespace Xamarin.Forms.GoogleMaps.iOS
             _tileImageAsync((int)x, (int)y, (int)zoom).ContinueWith((Task<byte[]> task) =>
             {
                 var imgByte = task.Result;
-                var image = new UIImage(NSData.FromArray(imgByte));
-                receiver.ReceiveTile(x, y, zoom, image);
+                if (imgByte != null)
+                {
+                    var image = new UIImage(NSData.FromArray(imgByte));
+                    receiver.ReceiveTile(x, y, zoom, image);
+                }
             });
         }
     }

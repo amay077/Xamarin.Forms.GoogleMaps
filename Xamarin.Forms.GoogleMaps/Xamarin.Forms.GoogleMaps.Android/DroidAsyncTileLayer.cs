@@ -19,7 +19,14 @@ namespace Xamarin.Forms.GoogleMaps.Android
         public Tile GetTile(int x, int y, int zoom)
         {
             var imgByte = _tileImageAsync(x, y, zoom).Result;
-            return new Tile(_tileSize, _tileSize, imgByte);
+            if (imgByte != null)
+            {
+                return new Tile(_tileSize, _tileSize, imgByte);
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }
