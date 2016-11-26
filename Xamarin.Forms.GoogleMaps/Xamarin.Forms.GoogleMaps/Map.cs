@@ -11,16 +11,10 @@ namespace Xamarin.Forms.GoogleMaps
     public class Map : View, IEnumerable<Pin>
     {
         public static readonly BindableProperty MapTypeProperty = BindableProperty.Create("MapType", typeof(MapType), typeof(Map), default(MapType));
-
         public static readonly BindableProperty IsShowingUserProperty = BindableProperty.Create("IsShowingUser", typeof(bool), typeof(Map), default(bool));
-
-        public static readonly BindableProperty HasScrollEnabledProperty = BindableProperty.Create("HasScrollEnabled", typeof(bool), typeof(Map), true);
-
-        public static readonly BindableProperty HasZoomEnabledProperty = BindableProperty.Create("HasZoomEnabled", typeof(bool), typeof(Map), true);
-
         public static readonly BindableProperty SelectedPinProperty = BindableProperty.Create("SelectedPin", typeof(Pin), typeof(Map), default(Pin));
-
         public static readonly BindableProperty IsTrafficEnabledProperty = BindableProperty.Create("IsTrafficEnabled", typeof(bool), typeof(Map), false);
+        private static readonly UiSettings _uiSettings = new UiSettings();
 
         readonly ObservableCollection<Pin> _pins = new ObservableCollection<Pin>();
         readonly ObservableCollection<Polyline> _polylines = new ObservableCollection<Polyline>();
@@ -60,24 +54,11 @@ namespace Xamarin.Forms.GoogleMaps
         {
         }
 
-        public bool HasScrollEnabled
-        {
-            get { return (bool)GetValue(HasScrollEnabledProperty); }
-            set { SetValue(HasScrollEnabledProperty, value); }
-        }
-
-        public bool HasZoomEnabled
-        {
-            get { return (bool)GetValue(HasZoomEnabledProperty); }
-            set { SetValue(HasZoomEnabledProperty, value); }
-        }
-
         public bool IsTrafficEnabled
         {
             get { return (bool)GetValue(IsTrafficEnabledProperty); }
             set { SetValue(IsTrafficEnabledProperty, value); }
         }
-
 
         public bool IsShowingUser
         {
@@ -125,6 +106,11 @@ namespace Xamarin.Forms.GoogleMaps
         public IList<GroundOverlay> GroundOverlays
         {
             get { return _groundOverlays; }
+        }
+
+        public UiSettings UiSettings
+        {
+            get { return _uiSettings; }
         }
 
         public MapSpan VisibleRegion
