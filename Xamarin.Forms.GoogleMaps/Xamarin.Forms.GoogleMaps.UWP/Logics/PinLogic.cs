@@ -18,9 +18,6 @@ namespace Xamarin.Forms.GoogleMaps.Logics.UWP
             {
                 newNativeMap.MapTapped += NewNativeMap_MapTapped;
                 newNativeMap.MapHolding += NewNativeMap_MapHolding;
-                //newNativeMap.MarkerDragStart += OnMarkerDragStart;
-                //newNativeMap.MarkerDragEnd += OnMarkerDragEnd;
-                //newNativeMap.MarkerDrag += OnMarkerDrag;
             }
         }
 
@@ -32,9 +29,6 @@ namespace Xamarin.Forms.GoogleMaps.Logics.UWP
             {
                 nativeMap.MapTapped -= NewNativeMap_MapTapped;
                 nativeMap.MapHolding -= NewNativeMap_MapHolding;
-                //newNativeMap.MarkerDragStart += OnMarkerDragStart;
-                //newNativeMap.MarkerDragEnd += OnMarkerDragEnd;
-                //newNativeMap.MarkerDrag += OnMarkerDrag;
             }
         }
 
