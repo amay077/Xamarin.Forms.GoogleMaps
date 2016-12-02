@@ -43,4 +43,3 @@ Thumbs.db
 *.nupkg
 *.lock.json
 .idea/
-/Xamarin.Forms.GoogleMaps/pack Nuget.bat
