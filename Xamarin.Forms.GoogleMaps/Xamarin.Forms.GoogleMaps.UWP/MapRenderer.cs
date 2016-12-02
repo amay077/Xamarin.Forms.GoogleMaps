@@ -28,6 +28,16 @@ namespace Xamarin.Forms.Maps.WinRT
 {
     public class MapRenderer : ViewRenderer<Map, MapControl>
     {
+        private Map Map
+        {
+            get { return Element as Map; }
+        }
+
+        private MapControl NativeMap
+        {
+            get { return Control as MapControl; }
+        }
+
         protected override async void OnElementChanged(ElementChangedEventArgs<Map> e)
         {
             base.OnElementChanged(e);
@@ -47,6 +57,7 @@ namespace Xamarin.Forms.Maps.WinRT
                 {
                     SetNativeControl(new MapControl());
                     Control.MapServiceToken = FormsGoogleMaps.AuthenticationToken;
+                    Control.TrafficFlowVisible = Map.IsTrafficEnabled;
                     Control.ZoomLevelChanged += async (s, a) => await UpdateVisibleRegion();
                     Control.CenterChanged += async (s, a) => await UpdateVisibleRegion();
                 }
@@ -79,6 +90,8 @@ namespace Xamarin.Forms.Maps.WinRT
                 UpdateHasScrollEnabled();
             else if (e.PropertyName == Map.HasZoomEnabledProperty.PropertyName)
                 UpdateHasZoomEnabled();
+            else if (e.PropertyName == Map.IsTrafficEnabledProperty.PropertyName)
+                Control.TrafficFlowVisible = Map.IsTrafficEnabled;
         }
 
         protected override void Dispose(bool disposing)
@@ -272,6 +285,9 @@ namespace Xamarin.Forms.Maps.WinRT
                     break;
                 case MapType.Hybrid:
                     Control.Style = MapStyle.AerialWithRoads;
+                    break;
+                case MapType.None:
+                    Control.Style = MapStyle.None;
                     break;
             }
         }
