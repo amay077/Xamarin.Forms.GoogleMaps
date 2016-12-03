@@ -111,6 +111,14 @@ namespace XFGoogleMapSample
 
             // Selected Pin changed
             map.SelectedPinChanged += SelectedPin_Changed;
+
+            map.InfoWindowClicked += InfoWindow_Clicked;
+        }
+
+        private void InfoWindow_Clicked(object sender, InfoWindowClickedEventArgs e)
+        {
+            var time = DateTime.Now.ToString("hh:mm:ss");
+            labelStatus.Text = $"[{time}]InfoWindow Clicked - {e?.Pin?.Label ?? "nothing"}";
         }
 
         void SelectedPin_Changed(object sender, SelectedPinChangedEventArgs e)

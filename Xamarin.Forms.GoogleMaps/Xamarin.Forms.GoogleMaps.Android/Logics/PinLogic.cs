@@ -106,6 +106,11 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
             // only consider event handled if a handler is present.
             // Else allow default behavior of displaying an info window.
             targetPin?.SendTap();
+
+            if (targetPin != null)
+            {
+                Map.SendInfoWindowClicked(targetPin);
+            }
         }
 
         void OnMakerClick(object sender, GoogleMap.MarkerClickEventArgs e)
