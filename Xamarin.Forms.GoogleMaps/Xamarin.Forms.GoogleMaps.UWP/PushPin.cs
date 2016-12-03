@@ -142,14 +142,7 @@ namespace Xamarin.Forms.Maps.WinRT
         {
             if (outerItem?.Icon?.Type == BitmapDescriptorType.View && outerItem?.Icon?.View != null)
             {
-                //var iconView = outerItem.Icon.View;
-                //var nativeView = await Utils.ConvertFormsToNative(iconView, new Rectangle(0, 0, (double)Utils.DpToPx((float)iconView.WidthRequest), (double)Utils.DpToPx((float)iconView.HeightRequest)), Platform.Android.Platform.CreateRenderer(iconView));
-                //var otherView = new FrameLayout(nativeView.Context);
-                //nativeView.LayoutParameters = new FrameLayout.LayoutParams(Utils.DpToPx((float)iconView.WidthRequest), Utils.DpToPx((float)iconView.HeightRequest));
-                //otherView.AddView(nativeView);
-                //nativeItem.SetIcon(await Utils.ConvertViewToBitmapDescriptor(otherView));
-                //nativeItem.SetAnchor((float)iconView.AnchorX, (float)iconView.AnchorY);
-                //nativeItem.Visible = true;
+
             }
         }
     }
