@@ -3,8 +3,15 @@
 	<metadata minClientVersion="2.8.3">
 		<id>Xamarin.Forms.GoogleMaps</id>
 		<title>Xamarin.Forms.GoogleMaps</title>
-		<version>1.7.0</version>
+		<version>1.7.1-beta1</version>
 		<releaseNotes>
+
+# 1.7.1-beta1
+
+## New Features
+
+* #134 Add InfoWindowClicked event 
+* PR#127 [UWP]Supports EnableTraffic
 
 # 1.7.0
 
