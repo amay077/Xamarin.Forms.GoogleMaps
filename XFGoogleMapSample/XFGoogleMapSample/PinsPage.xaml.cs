@@ -24,7 +24,8 @@ namespace XFGoogleMapSample
                     Label = "Tokyo SKYTREE",
                     Address = "Sumida-ku, Tokyo, Japan",
                     Position = new Position(35.71d, 139.81d),
-                    Rotation = 92.3f
+                    Rotation = 33.3f,
+                    Tag = "id_tokyo"
                 };
 
                 map.Pins.Add(pinTokyo);
@@ -51,7 +52,8 @@ namespace XFGoogleMapSample
                     Type = PinType.Place,
                     Label = "Central Park NYC",
                     Address = "New York City, NY 10022",
-                    Position = new Position(40.78d, -73.96d)
+                    Position = new Position(40.78d, -73.96d),
+                    Tag = "id_new_york"
                 };
 
                 map.Pins.Add(pinNewYork);
@@ -111,6 +113,14 @@ namespace XFGoogleMapSample
 
             // Selected Pin changed
             map.SelectedPinChanged += SelectedPin_Changed;
+
+            map.InfoWindowClicked += InfoWindow_Clicked;
+        }
+
+        private void InfoWindow_Clicked(object sender, InfoWindowClickedEventArgs e)
+        {
+            var time = DateTime.Now.ToString("hh:mm:ss");
+            labelStatus.Text = $"[{time}]InfoWindow Clicked - {e?.Pin?.Tag.ToString() ?? "nothing"}";
         }
 
         void SelectedPin_Changed(object sender, SelectedPinChangedEventArgs e)
@@ -119,9 +129,9 @@ namespace XFGoogleMapSample
             labelStatus.Text = $"[{time}]SelectedPin changed - {e?.SelectedPin?.Label ?? "nothing"}";
         }
 
-        void Map_PinClicked(object sender, PinClickedEventArgs e)
+        async void Map_PinClicked(object sender, PinClickedEventArgs e)
         {
-            DisplayAlert("Pin Clicked", $"{e.Pin.Label} Clicked.", "Close");
+            await DisplayAlert("Pin Clicked", $"{e.Pin.Label} Clicked.", "Close");
 
             e.Handled = switchHandlePinClicked.IsToggled;
 

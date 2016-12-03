@@ -31,6 +31,7 @@ namespace Xamarin.Forms.GoogleMaps
 
         public event EventHandler<PinClickedEventArgs> PinClicked;
         public event EventHandler<SelectedPinChangedEventArgs> SelectedPinChanged;
+        public event EventHandler<InfoWindowClickedEventArgs> InfoWindowClicked;
 
         public event EventHandler<PinDragEventArgs> PinDragStart;
         public event EventHandler<PinDragEventArgs> PinDragEnd;
@@ -207,6 +208,12 @@ namespace Xamarin.Forms.GoogleMaps
             var args = new PinClickedEventArgs(pin);
             PinClicked?.Invoke(this, args);
             return args.Handled;
+        }
+
+        internal void SendInfoWindowClicked(Pin pin)
+        {
+            var args = new InfoWindowClickedEventArgs(pin);
+            InfoWindowClicked?.Invoke(this, args);
         }
 
         internal void SendPinDragStart(Pin pin)
