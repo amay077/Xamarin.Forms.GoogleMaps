@@ -79,7 +79,7 @@ namespace Xamarin.Forms.Maps.WinRT
                 };
             }
             DetailsView.Children.Add(PinLabel);
-            if (!string.IsNullOrEmpty(Address.Text))
+            if (!string.IsNullOrEmpty(pin.Address))
             {
                 DetailsView.Children.Add(Address);
             }
