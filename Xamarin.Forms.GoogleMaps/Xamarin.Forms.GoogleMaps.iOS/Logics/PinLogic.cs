@@ -111,6 +111,11 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
             // only consider event handled if a handler is present.
             // Else allow default behavior of displaying an info window.
             targetPin?.SendTap();
+
+            if (targetPin != null)
+            {
+                Map.SendInfoWindowClicked(targetPin);
+            }
         }
 
         bool HandleGMSTappedMarker(MapView mapView, Marker marker)

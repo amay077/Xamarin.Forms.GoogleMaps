@@ -60,6 +60,7 @@
     <Compile Include="GroundOverlay.cs" />
     <Compile Include="Bounds.cs" />
     <Compile Include="PinClickedEventArgs.cs" />
+    <Compile Include="InfoWindowClickedEventArgs.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Internals\" />
