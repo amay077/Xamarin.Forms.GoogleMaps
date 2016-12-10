@@ -19,7 +19,6 @@ namespace Xamarin.Forms.GoogleMaps
 
         public static double MilesTo(this Position gp, Position gp2)
             => KmTo(gp, gp2) * GeoConstants.MetersPerKilometer / GeoConstants.MetersPerMile;
-        
 
         public static double MetersTo(this Position gp, Position gp2)
             => KmTo(gp, gp2) * GeoConstants.MetersPerKilometer;
@@ -43,6 +42,18 @@ namespace Xamarin.Forms.GoogleMaps
             var c = Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
             return c * 2 * EarthRadiusKm;
         }
+
+        public static double KmTo(this Pin pin, Pin pin2)
+            => pin.Position.KmTo(pin2.Position);
+
+        public static double KmTo(this IPin pin, IPin pin2)
+            => pin.PinPosition.KmTo(pin2.PinPosition);
+
+        public static double KmTo(this Pin pin, Position pos)
+            => pin.Position.KmTo(pos);
+
+        public static double KmTo(this IPin pin, Position pos)
+            => pin.PinPosition.KmTo(pos);
 
         public static bool IsIn(this Position pos, ICircle c)
             => pos.KmTo(c.CircleCenter) <= c.CircleRadius.Kilometers;
