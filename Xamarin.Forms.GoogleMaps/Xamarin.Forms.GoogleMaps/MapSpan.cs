@@ -138,5 +138,14 @@ namespace Xamarin.Forms.GoogleMaps
             double latCircumference = LatitudeCircumferenceKm(position);
             return latCircumference * longitudeDegrees / 360;
         }
+
+        public override string ToString()
+        {
+            return ToString(DistanceType.Kilometers);
+        }
+        public string ToString(DistanceType type)
+        {
+            return "(" + this.Center.ToString() + ")," + (type == DistanceType.Kilometers ? Radius.Kilometers.ToString("F2").Replace(",", ".") + "km" : type == DistanceType.Meters ? Radius.Meters.ToString("F0") + " meters" : Radius.Miles.ToString("F2").Replace(",", ".") + " miles");
+        }
     }
 }

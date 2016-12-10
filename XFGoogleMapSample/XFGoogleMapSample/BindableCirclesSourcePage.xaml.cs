@@ -45,13 +45,13 @@ namespace XFGoogleMapSample
         private void InfoWindow_Clicked(object sender, InfoWindowClickedEventArgs e)
         {
             var time = DateTime.Now.ToString("hh:mm:ss");
-            labelStatus.Text = $"[{time}]InfoWindow Clicked - {e?.Pin?.Label.ToString() ?? "nothing"}";
+            Context.Status= $"[{time}]InfoWindow Clicked - {e?.Pin?.Label.ToString() ?? "nothing"}";
         }
 
         void SelectedPin_Changed(object sender, SelectedPinChangedEventArgs e)
         {
             var time = DateTime.Now.ToString("hh:mm:ss");
-            labelStatus.Text = $"[{time}]SelectedPin changed - {e?.SelectedPin?.Label ?? "nothing"}";
+            Context.Status = $"[{time}]SelectedPin changed - {e?.SelectedPin?.Label ?? "nothing"}";
         }
 
     }

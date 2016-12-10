@@ -43,5 +43,10 @@ namespace Xamarin.Forms.GoogleMaps
         {
             return !Equals(left, right);
         }
+
+        public override string ToString()
+        {
+            return Latitude.ToString("F5").Replace(",", ".") + "," + Longitude.ToString("F5").Replace(",", ".");
+        }
     }
 }

@@ -231,7 +231,7 @@ namespace Xamarin.Forms.Maps.WinRT
                 var center = new Position(boundingBox.Center.Latitude, boundingBox.Center.Longitude);
                 var latitudeDelta = Math.Abs(center.Latitude - boundingBox.NorthwestCorner.Latitude);
                 var longitudeDelta = Math.Abs(center.Longitude - boundingBox.NorthwestCorner.Longitude);
-                Element.VisibleRegion = new MapSpan(center, latitudeDelta, longitudeDelta);
+                Element.MapRegion = new MapSpan(center, latitudeDelta, longitudeDelta);
             }
         }
 

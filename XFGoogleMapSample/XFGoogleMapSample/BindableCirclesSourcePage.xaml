@@ -43,13 +43,13 @@
 						Grid.ColumnSpan="2" />
 				
 				<Label x:Name="labelStatus"
-						Text="Show status when Pin selected."
+						Text="{Binding Status}"
 						Grid.Row="5"
 						Grid.Column="1"
 						Grid.ColumnSpan="2" />
 				
 			</Grid>			
-			<maps:Map x:Name="map" PinsSource="{Binding Pins}" CirclesSource="{Binding Circles}" MapRegion="{Binding MapRegion}"
+			<maps:Map x:Name="map" PinsSource="{Binding Pins}" CirclesSource="{Binding Circles}" MapRegion="{Binding MapRegion,Mode=TwoWay}"
 					VerticalOptions="FillAndExpand"/>
 			
 		</StackLayout>

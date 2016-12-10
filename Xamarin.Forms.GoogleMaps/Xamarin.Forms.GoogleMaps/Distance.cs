@@ -75,4 +75,5 @@ namespace Xamarin.Forms.GoogleMaps
             return !left.Equals(right);
         }
     }
+    public enum DistanceType { Kilometers, Meters, Miles}
 }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
+using Xamarin.Forms.GoogleMaps.Events;
 using Xamarin.Forms.GoogleMaps.Internals;
 
 namespace Xamarin.Forms.GoogleMaps
@@ -128,6 +129,7 @@ namespace Xamarin.Forms.GoogleMaps
         // Allows to set map center at initiation
         public static readonly BindableProperty MapRegionProperty = BindableProperty.Create("MapRegion", typeof(MapSpan), typeof(Map), null, propertyChanged: OnMapRegionChanged);
         public MapSpan MapRegion { get { return (MapSpan)GetValue(MapRegionProperty); } set { SetValue(MapRegionProperty, value); } }
+        public bool CameraMoving { get; set; }
         private static void OnMapRegionChanged(BindableObject bindable, object oldValue, object newValue)
         {
             if (newValue == oldValue) return;
@@ -135,8 +137,15 @@ namespace Xamarin.Forms.GoogleMaps
             if (newVal == null) throw new ArgumentNullException(nameof(newValue));
             var map = bindable as Map;
             if (map == null) return;
-            map.MoveToRegion(newVal, true);
+            if (map.CameraMoving)
+            {
+                map.MapRegionChanged?.Invoke(map, new Events.RegionEventArgs() { OldValue = oldValue as MapSpan, NewValue = newVal });
+                return;
+            }
+            else
+                map.MoveToRegion(newVal, true);
         }
+        public event RegionChanged_Handler MapRegionChanged;
         #endregion MapRegion
 
         public static readonly BindableProperty MapTypeProperty = BindableProperty.Create("MapType", typeof(MapType), typeof(Map), default(MapType));
@@ -257,21 +266,21 @@ namespace Xamarin.Forms.GoogleMaps
             get { return _groundOverlays; }
         }
 
-        public MapSpan VisibleRegion
-        {
-            get { return _visibleRegion; }
-            internal set
-            {
-                if (_visibleRegion == value)
-                    return;
-                if (value == null)
-                    throw new ArgumentNullException(nameof(value));
-                OnPropertyChanging();
-                _visibleRegion = value;
-                MapRegion = value;
-                OnPropertyChanged();
-            }
-        }
+        //public MapSpan MapRegion
+        //{
+        //    get { return _visibleRegion; }
+        //    internal set
+        //    {
+        //        if (_visibleRegion == value)
+        //            return;
+        //        if (value == null)
+        //            throw new ArgumentNullException(nameof(value));
+        //        OnPropertyChanging();
+        //        _visibleRegion = value;
+        //        MapRegion = value;
+        //        OnPropertyChanged();
+        //    }
+        //}
 
         internal MapSpan LastMoveToRegion { get; private set; }
 
@@ -289,6 +298,7 @@ namespace Xamarin.Forms.GoogleMaps
         {
             if (mapSpan == null)
                 throw new ArgumentNullException(nameof(mapSpan));
+            if (LastMoveToRegion == mapSpan) return;
             LastMoveToRegion = mapSpan;
             MessagingCenter.Send(this, "MapMoveToRegion", new MoveToRegionMessage(mapSpan, animate));
         }
