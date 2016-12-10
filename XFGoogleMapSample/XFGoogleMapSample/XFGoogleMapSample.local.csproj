@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -67,8 +67,17 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="BindableSourceClasses\BindableContext.cs" />
+    <Compile Include="BindableSourceClasses\NotifyClass.cs" />
+    <Compile Include="BindableSourceClasses\PinModel.cs" />
+    <Compile Include="BindableSourceClasses\PinModel.IPin.cs">
+      <DependentUpon>PinModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BindablePinsSourcePage.xaml.cs">
+      <DependentUpon>BindablePinsSourcePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BasicMapPage.xaml.cs">
@@ -99,7 +108,7 @@
       <DependentUpon>GroundOverlaysPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Extensions\ListExtensions.cs" />
-    <Compile Include="Variables.cs" />
+    <Compile Include="Variables_sample.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">
@@ -120,6 +129,13 @@
       <Project>{F1C8F5A0-A55D-4C7D-9737-472F7AC222D4}</Project>
       <Name>Xamarin.Forms.GoogleMaps</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="BindablePinsSourcePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>
+      </SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Forms.2.3.0.49\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.2.3.0.49\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
