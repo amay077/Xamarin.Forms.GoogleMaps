@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using Xamarin.Forms.GoogleMaps.Internals;
 
 namespace Xamarin.Forms.GoogleMaps
 {
+    [TypeConverter(typeof(MapSpanTypeConverter))]
     public sealed class MapSpan
     {
         const double EarthRadiusKm = 6371;
