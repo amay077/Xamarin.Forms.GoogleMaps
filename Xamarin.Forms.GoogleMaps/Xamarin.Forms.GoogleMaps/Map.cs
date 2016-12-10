@@ -10,6 +10,63 @@ namespace Xamarin.Forms.GoogleMaps
 {
     public class Map : View, IEnumerable<Pin>
     {
+        #region PinsSource Property
+        public static readonly BindableProperty PinsSourceProperty = BindableProperty.Create("PinsSource", typeof(ObservableCollection<IPin>), typeof(Map), null, propertyChanged: OnPinsSourceChanged);
+        public ObservableCollection<IPin> PinsSource { get { return (ObservableCollection<IPin>)GetValue(PinsSourceProperty); } set { SetValue(PinsSourceProperty, value); } }
+        private void Register(ObservableCollection<IPin> source) { if (source != null) source.CollectionChanged += OnPinSourceCollectionChanged; }
+        private void Unregister(ObservableCollection<IPin> source) { if (source != null) source.CollectionChanged -= OnPinSourceCollectionChanged; }
+
+        static void OnPinsSourceChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            var map = bindable as Map;
+            if (map == null) return;
+            var source = oldValue as ObservableCollection<IPin>;
+            if (source != null) map.Unregister(source);
+            source = newValue as ObservableCollection<IPin>;
+            if (source != null) map.Register(source);
+        }
+
+        void OnPinSourceCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
+        {
+            switch (notifyCollectionChangedEventArgs.Action)
+            {
+                case NotifyCollectionChangedAction.Add:
+                    AddPins(notifyCollectionChangedEventArgs.NewItems);
+                    break;
+                case NotifyCollectionChangedAction.Remove:
+                    RemovePins(notifyCollectionChangedEventArgs.OldItems);
+                    break;
+                case NotifyCollectionChangedAction.Replace:
+                    RemovePins(notifyCollectionChangedEventArgs.OldItems);
+                    AddPins(notifyCollectionChangedEventArgs.NewItems);
+                    break;
+                case NotifyCollectionChangedAction.Reset:
+                    var pins = Pins.ToList();
+                    foreach (var p in pins) pins.Remove(p);
+                    AddPins((IList)PinsSource);
+                    break;
+                case NotifyCollectionChangedAction.Move:
+                    break;
+            }
+        }
+
+        private void RemovePins(IList oldPins)
+        {
+            if (oldPins != null)
+                foreach (IPin oldPin in oldPins)
+                {
+                    var pin = Pins.FirstOrDefault(p => ReferenceEquals( oldPin , p.BindingContext));
+                    Pins.Remove(pin);
+                }
+        }
+
+        private void AddPins(IList newPins)
+        {
+            if (newPins != null)
+                foreach (IPin p in newPins) Pins.Add(p.ToPin());
+        }
+        #endregion PinsSource
+
         public static readonly BindableProperty MapTypeProperty = BindableProperty.Create("MapType", typeof(MapType), typeof(Map), default(MapType));
 
         public static readonly BindableProperty IsShowingUserProperty = BindableProperty.Create("IsShowingUser", typeof(bool), typeof(Map), default(bool));
