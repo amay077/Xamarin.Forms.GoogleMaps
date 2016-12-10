@@ -9,9 +9,12 @@ using Xamarin.Forms.GoogleMaps;
 
 namespace XFGoogleMapSample
 {
-    public class BindableContext
+    public class BindableContext : NotifyClass
     {
         public MoveDirection Direction { get; set; }
+
+        private MapSpan _MapRegion = new MapSpan(new Position(48.858, 2.294), 1, 1);
+        public MapSpan MapRegion { get { return _MapRegion; } set { bool changed = _MapRegion != value; _MapRegion = value; if (changed) NotifyPropertyChanged(nameof(MapRegion)); } }
 
         const string CATEGORY_MOVABLE = "movable";
         const string CATEGORY_RANDOM = "random";
