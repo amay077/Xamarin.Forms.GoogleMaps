@@ -70,6 +70,10 @@
     <Compile Include="BindablePinsSourcePage.xaml.cs">
       <DependentUpon>BindablePinsSourcePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="BindableSourceClasses\BindableContext.cs" />
+    <Compile Include="BindableSourceClasses\NotifyClass.cs" />
+    <Compile Include="BindableSourceClasses\PinModel.cs" />
+    <Compile Include="BindableSourceClasses\PinModel.IPin.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
