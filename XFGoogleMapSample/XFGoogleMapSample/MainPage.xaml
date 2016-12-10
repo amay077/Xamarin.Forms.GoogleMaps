@@ -31,6 +31,8 @@
                 Text="GroundOverlays" />
         <Button x:Name="buttonBindablePinsSource"
                 Text="Bindable PinsSource" />
+        <Button x:Name="buttonBindableCirclesSource"
+                Text="Bindable CirclesSource" />
       </StackLayout>
     </ScrollView>
   </ContentPage.Content>

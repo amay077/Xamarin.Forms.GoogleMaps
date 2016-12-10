@@ -33,14 +33,14 @@ namespace XFGoogleMapSample
         public string Name
         {
             get { return _Name; }
-            set { bool changed = _Name != value; _Name = value; if (changed) NotifyPropertyChanged(nameof(Name)); }
+            set { bool changed = _Name != value; if (changed) { _Name = value; NotifyPropertyChanged(nameof(Name)); } }
         }
 
         private string _Details;
         public string Details
         {
             get { return _Details; }
-            set { bool changed = _Details != value; _Details = value; if (changed) NotifyPropertyChanged(nameof(Details)); }
+            set { bool changed = _Details != value; if (changed) { _Details = value; NotifyPropertyChanged(nameof(Details)); } }
         }
 
 

@@ -67,6 +67,63 @@ namespace Xamarin.Forms.GoogleMaps
         }
         #endregion PinsSource
 
+        #region CirclesSource Property
+        public static readonly BindableProperty CirclesSourceProperty = BindableProperty.Create("CirclesSource", typeof(ObservableCollection<ICircle>), typeof(Map), null, propertyChanged: OnCirclesSourceChanged);
+        public ObservableCollection<ICircle> CirclesSource { get { return (ObservableCollection<ICircle>)GetValue(CirclesSourceProperty); } set { SetValue(CirclesSourceProperty, value); } }
+        private void Register(ObservableCollection<ICircle> source) { if (source != null) source.CollectionChanged += OnCircleSourceCollectionChanged; }
+        private void Unregister(ObservableCollection<ICircle> source) { if (source != null) source.CollectionChanged -= OnCircleSourceCollectionChanged; }
+
+        static void OnCirclesSourceChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            var map = bindable as Map;
+            if (map == null) return;
+            var source = oldValue as ObservableCollection<ICircle>;
+            if (source != null) map.Unregister(source);
+            source = newValue as ObservableCollection<ICircle>;
+            if (source != null) map.Register(source);
+        }
+
+        void OnCircleSourceCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
+        {
+            switch (notifyCollectionChangedEventArgs.Action)
+            {
+                case NotifyCollectionChangedAction.Add:
+                    AddCircles(notifyCollectionChangedEventArgs.NewItems);
+                    break;
+                case NotifyCollectionChangedAction.Remove:
+                    RemoveCircles(notifyCollectionChangedEventArgs.OldItems);
+                    break;
+                case NotifyCollectionChangedAction.Replace:
+                    RemoveCircles(notifyCollectionChangedEventArgs.OldItems);
+                    AddCircles(notifyCollectionChangedEventArgs.NewItems);
+                    break;
+                case NotifyCollectionChangedAction.Reset:
+                    var circles = Circles.ToList();
+                    foreach (var p in circles) circles.Remove(p);
+                    AddCircles((IList)CirclesSource);
+                    break;
+                case NotifyCollectionChangedAction.Move:
+                    break;
+            }
+        }
+
+        private void RemoveCircles(IList oldCircles)
+        {
+            if (oldCircles != null)
+                foreach (ICircle oldCircle in oldCircles)
+                {
+                    var circle = Circles.FirstOrDefault(p => ReferenceEquals(oldCircle, p.BindingContext));
+                    Circles.Remove(circle);
+                }
+        }
+
+        private void AddCircles(IList newCircles)
+        {
+            if (newCircles != null)
+                foreach (ICircle p in newCircles) Circles.Add(p.ToCircle());
+        }
+        #endregion CirclesSource
+
         #region MapRegion 
         // Allows to set map center at initiation
         public static readonly BindableProperty MapRegionProperty = BindableProperty.Create("MapRegion", typeof(MapSpan), typeof(Map), null, propertyChanged: OnMapRegionChanged);

@@ -19,6 +19,7 @@ namespace XFGoogleMapSample
         const string CATEGORY_MOVABLE = "movable";
         const string CATEGORY_RANDOM = "random";
 
+        public ObservableCollection<ICircle> Circles { get; set; } = new ObservableCollection<ICircle>();
         public ObservableCollection<IPin> Pins { get; set; } = new ObservableCollection<IPin>();
         public PinModel AddPin(string name, string details, double lat, double lng)
         {
@@ -27,6 +28,7 @@ namespace XFGoogleMapSample
             return pin;
         }
 
+        #region Bindable PinsSource
         public void AddNewMovablePin()
         {
             var pin = new PinModel()
@@ -69,10 +71,43 @@ namespace XFGoogleMapSample
             var pin = Pins.LastOrDefault(p => ((p as PinModel)?.Category == CATEGORY_RANDOM));
             if (pin != null) Pins.Remove(pin);
         }
+        #endregion Bindable PinsSource
+
+        #region Bindable CirclesSource
+
+        public void AddNewMovablePinCircle()
+        {
+            Random r = new Random();
+            var pin = new PinModel()
+            {
+                Name = "Eiffel tower",
+                Details = "Click me to move up!",
+                Latitude = 48.858391 + 0.1 * r.NextDouble(),
+                Longitude = 2.294267 + 0.1 * r.NextDouble(),
+                Category = CATEGORY_MOVABLE
+            };
+
+            pin.CallOutClickedCommand = new Command((object o) => { if (!Circles.Any()) Circles.Add((new CircleModel(pin, 2))); var circle = Circles.FirstOrDefault() as CircleModel; circle.Center = pin; pin.Move100m(Direction); }, (o) => true);
+
+            Pins.Add(pin);
+        }
+
+        internal void RemoveMovablePinCircle()
+        {
+            var circle = Circles.FirstOrDefault();
+            if (circle != null) Circles.Remove(circle);
+            var pin = Pins.FirstOrDefault(p => ((p as PinModel)?.Category == CATEGORY_MOVABLE));
+            if (pin != null) Pins.Remove(pin);
+        }
+
+
+        #endregion Bindable CirclesSource
 
 
         internal void ClearPins()
         {
+            var circle = Circles.FirstOrDefault();
+            if (circle != null) Circles.Remove(circle);
             var pins = Pins.ToList();
             foreach (var p in pins) Pins.Remove(p);
         }

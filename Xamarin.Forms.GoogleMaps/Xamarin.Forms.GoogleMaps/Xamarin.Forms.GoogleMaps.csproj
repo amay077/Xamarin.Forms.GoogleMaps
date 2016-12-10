@@ -31,6 +31,7 @@
     <NoStdLib>false</NoStdLib>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\ICircle.cs" />
     <Compile Include="Interfaces\IPin.cs" />
     <Compile Include="Internals\MapSpanTypeConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -67,7 +67,14 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="BindableCirclesSourcePage.xaml.cs">
+      <DependentUpon>BindableCirclesSourcePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="BindableSourceClasses\BindableContext.cs" />
+    <Compile Include="BindableSourceClasses\CircleModel.cs" />
+    <Compile Include="BindableSourceClasses\CircleModel.ICircle.cs">
+      <DependentUpon>CircleModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="BindableSourceClasses\NotifyClass.cs" />
     <Compile Include="BindableSourceClasses\PinModel.cs" />
     <Compile Include="BindableSourceClasses\PinModel.IPin.cs">
@@ -135,6 +142,12 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>
       </SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="BindableCirclesSourcePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
