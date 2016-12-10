@@ -58,7 +58,7 @@
 						Grid.ColumnSpan="2" />
 				
 			</Grid>			
-			<maps:Map x:Name="map" PinsSource="{Binding Pins}"
+			<maps:Map x:Name="map" PinsSource="{Binding Pins}" MapRegion="{Binding MapRegion}"
 					VerticalOptions="FillAndExpand"/>
 			
 		</StackLayout>

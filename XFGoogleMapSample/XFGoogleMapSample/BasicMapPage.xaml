@@ -95,7 +95,7 @@
 					Grid.ColumnSpan="2"/>
 						
 			</Grid>
-			<maps:Map x:Name="map" 
+			<maps:Map x:Name="map"  MapRegion="(48.858,2.294),1,1"
 					VerticalOptions="FillAndExpand"/>
 		</StackLayout>
 	</ContentPage.Content>
