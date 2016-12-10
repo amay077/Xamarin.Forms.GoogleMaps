@@ -14,9 +14,22 @@ namespace XFGoogleMapSample
         public MoveDirection Direction { get; set; }
 
         private MapSpan _MapRegion = new MapSpan(new Position(48.858, 2.294), 1, 1);
-        public MapSpan MapRegion { get { return _MapRegion; }
-            set {
-                bool changed = _MapRegion != value; _MapRegion = value; if (changed) NotifyPropertyChanged(nameof(MapRegion)); } }
+        public MapSpan MapRegion
+        {
+            get { return _MapRegion; }
+            set
+            {
+                bool changed = _MapRegion != value; _MapRegion = value; if (changed) NotifyPropertyChanged(nameof(MapRegion));
+            }
+        }
+
+        private IPin _SelectedItem;
+        public IPin SelectedItem
+        {
+            get { return _SelectedItem; }
+            set { bool changed = _SelectedItem != value; if (changed) { NotifyIAmChanging(); _SelectedItem = value; NotifyIChanged(); } }
+        }
+
 
         const string CATEGORY_MOVABLE = "movable";
         const string CATEGORY_RANDOM = "random";
@@ -37,10 +50,10 @@ namespace XFGoogleMapSample
 
         private void BindableContext_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            switch(e.PropertyName)
+            switch (e.PropertyName)
             {
                 case nameof(MapRegion):
-                    Status = "MapRegion "+MapRegion.ToString();
+                    Status = "MapRegion " + MapRegion.ToString();
                     break;
             }
         }
@@ -98,7 +111,7 @@ namespace XFGoogleMapSample
             Random r = new Random();
             var pin = new PinModel()
             {
-                Name = "Eiffel tower",
+                Name = "Eiffel tower " + (PinNumber++),
                 Details = "Click me to move up!",
                 Latitude = 48.858391 + 0.1 * r.NextDouble(),
                 Longitude = 2.294267 + 0.1 * r.NextDouble(),
@@ -121,6 +134,20 @@ namespace XFGoogleMapSample
 
         #endregion Bindable CirclesSource
 
+        #region Bindable Properties
+
+        internal void RemovePin(IPin pin)
+        {
+            Pins.Remove(pin);
+        }
+
+        internal void SelectPin(IPin pin)
+        {
+            SelectedItem = pin;
+        }
+
+        #endregion Bindable Properties
+
 
         internal void ClearPins()
         {
@@ -130,7 +157,7 @@ namespace XFGoogleMapSample
             foreach (var p in pins) Pins.Remove(p);
         }
 
-        private string _Status= "Show status when Pin selected.";
+        private string _Status = "Show status when Pin selected.";
         public string Status
         {
             get { return _Status; }

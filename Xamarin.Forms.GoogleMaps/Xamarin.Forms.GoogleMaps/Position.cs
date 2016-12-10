@@ -18,7 +18,7 @@ namespace Xamarin.Forms.GoogleMaps
         {
             if (ReferenceEquals(null, obj))
                 return false;
-            if (obj.GetType() != GetType())
+            if (!(obj is Position) || ReferenceEquals(null, this))
                 return false;
             var other = (Position)obj;
             return Latitude == other.Latitude && Longitude == other.Longitude;

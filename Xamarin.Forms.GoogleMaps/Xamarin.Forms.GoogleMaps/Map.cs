@@ -156,9 +156,23 @@ namespace Xamarin.Forms.GoogleMaps
 
         public static readonly BindableProperty HasZoomEnabledProperty = BindableProperty.Create("HasZoomEnabled", typeof(bool), typeof(Map), true);
 
-        public static readonly BindableProperty SelectedPinProperty = BindableProperty.Create("SelectedPin", typeof(Pin), typeof(Map), default(Pin), defaultBindingMode: BindingMode.TwoWay);
-
         public static readonly BindableProperty IsTrafficEnabledProperty = BindableProperty.Create("IsTrafficEnabled", typeof(bool), typeof(Map), false);
+
+        public static readonly BindableProperty SelectedPinProperty = BindableProperty.Create("SelectedPin", typeof(Pin), typeof(Map), default(Pin), defaultBindingMode: BindingMode.TwoWay, propertyChanged: OnSelectedPinChanged);
+
+        public static readonly BindableProperty SelectedItemProperty = BindableProperty.Create(nameof(SelectedItem), typeof(IPin), typeof(Map), default(IPin), defaultBindingMode: BindingMode.TwoWay, propertyChanged: OnSelectedItemChanged);
+
+        private static void OnSelectedItemChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            var map = bindable as Map; if (map == null) return;
+            if (newValue == null && map.SelectedPin != null) { map.SelectedPin = null; return; }
+            var pin = map.Pins.FirstOrDefault(p => p.BindingContext == newValue);
+            // could add an exception if null, it means the object is not in the list
+            map.SelectedPin = pin;
+        }
+
+        private static void OnSelectedPinChanged(BindableObject bindable, object oldValue, object newValue)
+        { var map = bindable as Map; if (map == null) return; map.SelectedItem = map.SelectedPin?.BindingContext as IPin; }
 
         readonly ObservableCollection<Pin> _pins = new ObservableCollection<Pin>();
         readonly ObservableCollection<Polyline> _polylines = new ObservableCollection<Polyline>();
@@ -177,8 +191,6 @@ namespace Xamarin.Forms.GoogleMaps
 
         public event EventHandler<MapClickedEventArgs> MapClicked;
         public event EventHandler<MapLongClickedEventArgs> MapLongClicked;
-
-        MapSpan _visibleRegion;
 
         public Map(MapSpan region)
         {
@@ -234,6 +246,12 @@ namespace Xamarin.Forms.GoogleMaps
         {
             get { return (Pin)GetValue(SelectedPinProperty); }
             set { SetValue(SelectedPinProperty, value); }
+        }
+
+        public IPin SelectedItem
+        {
+            get { return (IPin)GetValue(SelectedItemProperty); }
+            set { SetValue(SelectedItemProperty, value); }
         }
 
         public IList<Pin> Pins

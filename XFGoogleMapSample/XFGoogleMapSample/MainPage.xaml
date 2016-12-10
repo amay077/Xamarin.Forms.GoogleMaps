@@ -33,6 +33,8 @@
                 Text="Bindable PinsSource" />
         <Button x:Name="buttonBindableCirclesSource"
                 Text="Bindable CirclesSource" />
+        <Button x:Name="buttonBindableProperties"
+                Text="Bindable Properties" />
       </StackLayout>
     </ScrollView>
   </ContentPage.Content>
