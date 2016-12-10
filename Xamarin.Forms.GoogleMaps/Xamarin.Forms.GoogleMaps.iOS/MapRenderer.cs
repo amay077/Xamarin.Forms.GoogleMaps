@@ -133,7 +133,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                 UpdateIsTrafficEnabled();
             }
             else if (e.PropertyName == VisualElement.IsVisibleProperty.PropertyName &&
-                     ((Map) Element).LastMoveToRegion != null)
+                     ((Map)Element).LastMoveToRegion != null)
             {
                 _shouldUpdateRegion = true;
             }
@@ -169,7 +169,12 @@ namespace Xamarin.Forms.GoogleMaps.iOS
             var minLon = Math.Min(Math.Min(Math.Min(region.NearLeft.Longitude, region.NearRight.Longitude), region.FarLeft.Longitude), region.FarRight.Longitude);
             var maxLat = Math.Max(Math.Max(Math.Max(region.NearLeft.Latitude, region.NearRight.Latitude), region.FarLeft.Latitude), region.FarRight.Latitude);
             var maxLon = Math.Max(Math.Max(Math.Max(region.NearLeft.Longitude, region.NearRight.Longitude), region.FarLeft.Longitude), region.FarRight.Longitude);
-            mapModel.VisibleRegion = new MapSpan(new Position((minLat + maxLat) / 2d, (minLon + maxLon) / 2d), maxLat - minLat, maxLon - minLon);
+            try
+            {
+                mapModel.CameraMoving = true;
+                mapModel.MapRegion = new MapSpan(new Position((minLat + maxLat) / 2d, (minLon + maxLon) / 2d), maxLat - minLat, maxLon - minLon);
+            }
+            finally { mapModel.CameraMoving = false; }
         }
 
         void CoordinateTapped(object sender, GMSCoordEventArgs e)
