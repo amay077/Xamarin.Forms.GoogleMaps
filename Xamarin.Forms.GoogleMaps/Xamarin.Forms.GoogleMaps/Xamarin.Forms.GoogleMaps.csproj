@@ -32,6 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Interfaces\IPin.cs" />
+    <Compile Include="Internals\MapSpanTypeConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Distance.cs" />
     <Compile Include="Geocoder.cs" />
