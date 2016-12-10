@@ -55,7 +55,7 @@ namespace Xamarin.Forms.GoogleMaps
             if (oldPins != null)
                 foreach (IPin oldPin in oldPins)
                 {
-                    var pin = Pins.FirstOrDefault(p => ReferenceEquals( oldPin , p.BindingContext));
+                    var pin = Pins.FirstOrDefault(p => ReferenceEquals(oldPin, p.BindingContext));
                     Pins.Remove(pin);
                 }
         }
@@ -66,6 +66,21 @@ namespace Xamarin.Forms.GoogleMaps
                 foreach (IPin p in newPins) Pins.Add(p.ToPin());
         }
         #endregion PinsSource
+
+        #region MapRegion 
+        // Allows to set map center at initiation
+        public static readonly BindableProperty MapRegionProperty = BindableProperty.Create("MapRegion", typeof(MapSpan), typeof(Map), null, propertyChanged: OnMapRegionChanged);
+        public MapSpan MapRegion { get { return (MapSpan)GetValue(MapRegionProperty); } set { SetValue(MapRegionProperty, value); } }
+        private static void OnMapRegionChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            if (newValue == oldValue) return;
+            var newVal = newValue as MapSpan;
+            if (newVal == null) throw new ArgumentNullException(nameof(newValue));
+            var map = bindable as Map;
+            if (map == null) return;
+            map.MoveToRegion(newVal, true);
+        }
+        #endregion MapRegion
 
         public static readonly BindableProperty MapTypeProperty = BindableProperty.Create("MapType", typeof(MapType), typeof(Map), default(MapType));
 
@@ -101,7 +116,7 @@ namespace Xamarin.Forms.GoogleMaps
 
         public Map(MapSpan region)
         {
-            LastMoveToRegion = region;
+            LastMoveToRegion = MapRegion ?? region;
 
             VerticalOptions = HorizontalOptions = LayoutOptions.FillAndExpand;
 
@@ -196,6 +211,7 @@ namespace Xamarin.Forms.GoogleMaps
                     throw new ArgumentNullException(nameof(value));
                 OnPropertyChanging();
                 _visibleRegion = value;
+                MapRegion = value;
                 OnPropertyChanged();
             }
         }
