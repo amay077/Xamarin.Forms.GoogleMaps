@@ -11,5 +11,4 @@ namespace Xamarin.Forms.GoogleMaps.Events
         public MapSpan OldValue { get; set; }
         public MapSpan NewValue { get; set; }
     }
-    public delegate void RegionChanged_Handler(object sender, RegionEventArgs args);
 }
