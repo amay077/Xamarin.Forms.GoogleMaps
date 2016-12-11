@@ -31,7 +31,13 @@
     <NoStdLib>false</NoStdLib>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Events\InfoWindowClickedEventArgs.cs" />
+    <Compile Include="Events\MapClickedEventArgs.cs" />
+    <Compile Include="Events\MapLongClickedEventArgs.cs" />
+    <Compile Include="Events\PinClickedEventArgs.cs" />
+    <Compile Include="Events\PinDragEventArgs.cs" />
     <Compile Include="Events\RegionEventArgs.cs" />
+    <Compile Include="Events\SelectedPinChangedEventArgs.cs" />
     <Compile Include="Extensions\GeoConstants.cs" />
     <Compile Include="Extensions\GeoExtensions.cs" />
     <Compile Include="Interfaces\ICircle.cs" />
@@ -51,7 +57,6 @@
     <Compile Include="Polygon.cs" />
     <Compile Include="Circle.cs" />
     <Compile Include="Internals\MoveToRegionMessage.cs" />
-    <Compile Include="SelectedPinChangedEventArgs.cs" />
     <Compile Include="TileLayer.cs" />
     <Compile Include="Logics\BaseLogic.cs" />
     <Compile Include="Logics\DefaultLogic.cs" />
@@ -60,13 +65,8 @@
     <Compile Include="BitmapDescriptor.cs" />
     <Compile Include="BitmapDescriptorFactory.cs" />
     <Compile Include="BitmapDescriptorType.cs" />
-    <Compile Include="PinDragEventArgs.cs" />
-    <Compile Include="MapClickedEventArgs.cs" />
-    <Compile Include="MapLongClickedEventArgs.cs" />
     <Compile Include="GroundOverlay.cs" />
     <Compile Include="Bounds.cs" />
-    <Compile Include="PinClickedEventArgs.cs" />
-    <Compile Include="InfoWindowClickedEventArgs.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
