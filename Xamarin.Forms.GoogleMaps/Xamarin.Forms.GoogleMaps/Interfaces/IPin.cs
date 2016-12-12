@@ -9,6 +9,9 @@ namespace Xamarin.Forms.GoogleMaps
 
         string PinSubTitle { get; }
 
+        /// <summary>
+        /// PinPosition needs a setter to be bindable
+        /// </summary>
         Position PinPosition { get; }
 
         PinType PinType { get; } 

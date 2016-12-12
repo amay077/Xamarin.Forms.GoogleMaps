@@ -27,20 +27,35 @@
 			        <ColumnDefinition Width="*" />
 			    </Grid.ColumnDefinitions>
 				
-				<Button x:Name="buttonAddMovablePin"
-						Text="Add movable Pin"
+				<Button Command="{Binding AddNewMovablePinCircleCommand}"
+						Text="Add movable Pin with circle"
 						Grid.Row="0"
 						Grid.Column="1"/>
-				<Button x:Name="buttonRemoveMovablePin"
+				<Button Command="{Binding RemoveMovablePinCircleCommand}"
 						Text="Remove pin"
 						Grid.Row="0"
 						Grid.Column="2"/>
 
-				<Button x:Name="buttonClearPins"
-						Text="Clear map"
+        <Button Command="{Binding AddNewMovingCircleCommand}"
+            Text="Add moving circle"
+            Grid.Row="1"
+            Grid.Column="1"/>
+        <Button Command="{Binding RemoveMovingCircleCommand}"
+						Text="Remove circle"
+						Grid.Row="1"
+						Grid.Column="2"/>
+
+        <Button Command="{Binding StartStopCirclesCommand}"
+						Text="Start/Stop circles"
 						Grid.Row="2"
 						Grid.Column="1"
-						Grid.ColumnSpan="2" />
+						Grid.ColumnSpan="1" />
+
+        <Button Command="{Binding ClearPinsCommand}"
+						Text="Clear map"
+						Grid.Row="2"
+						Grid.Column="2"
+						Grid.ColumnSpan="1" />
 				
 				<Label x:Name="labelStatus"
 						Text="{Binding Status}"
@@ -50,7 +65,7 @@
 				
 			</Grid>			
 			<maps:Map x:Name="map" PinsSource="{Binding Pins}" CirclesSource="{Binding Circles}" MapRegion="{Binding MapRegion,Mode=TwoWay}"
-					VerticalOptions="FillAndExpand"/>
+					VerticalOptions="FillAndExpand" InfoWindowClickedCommand="{Binding DispInfoWindowClickedCommand}" PinClickedCommand="{Binding PinClickedCommand}" />
 			
 		</StackLayout>
 		

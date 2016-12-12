@@ -75,16 +75,20 @@
     <Compile Include="BindablePropertiesPage.xaml.cs">
       <DependentUpon>BindablePropertiesPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="BindableSourceClasses\BindableCirclesContext.cs" />
+    <Compile Include="BindableSourceClasses\ContextBase.cs" />
     <Compile Include="BindableSourceClasses\BindableContext.cs" />
     <Compile Include="BindableSourceClasses\CircleModel.cs" />
     <Compile Include="BindableSourceClasses\CircleModel.ICircle.cs">
       <DependentUpon>CircleModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="BindableSourceClasses\MovingCircleModel.ICircle.cs" />
     <Compile Include="BindableSourceClasses\NotifyClass.cs" />
     <Compile Include="BindableSourceClasses\PinModel.cs" />
     <Compile Include="BindableSourceClasses\PinModel.IPin.cs">
       <DependentUpon>PinModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="BindableSourceClasses\MovingCircleModel.cs" />
     <Compile Include="Controls\RepeaterViewObject.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>

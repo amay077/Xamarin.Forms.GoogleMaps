@@ -13,7 +13,7 @@
 			VerticalOptions="Fill"
 			Orientation="Vertical">
 
-      <Grid>
+      <Grid RowSpacing="0">
         <Grid.RowDefinitions>
           <RowDefinition Height="Auto" />
           <RowDefinition Height="Auto" />
@@ -29,17 +29,17 @@
           <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <Button x:Name="buttonAddMovablePin"
+        <Button Command="{Binding AddNewMovablePinCommand}"
 						Text="Add movable Pin"
 						Grid.Row="0"
 						Grid.Column="1"/>
-        <Button x:Name="buttonRemoveMovablePin"
+        <Button Command="{Binding RemoveMovablePinCommand}"
 						Text="Remove pin"
 						Grid.Row="0"
 						Grid.Column="2"/>
 
         <xfg:RepeaterViewObject Grid.Row="6" BackgroundColor="#cccccc" VerticalOptions="Start"
-                       ItemsSource="{Binding Pins}"
+                       ItemsSource="{Binding Pins}" x:Name="ParentObject"
                        Spacing="0" Grid.Column="1" Grid.ColumnSpan="2"
                        Padding="0">
           <xfg:RepeaterViewObject.ItemTemplate>
@@ -51,7 +51,9 @@
                     <Label Text=" " />
                     <Label Text="{Binding PinTitle}" />
                   </StackLayout>
-                  <Button Text=" Select " HorizontalOptions="End" Clicked="SelectPin_Clicked" MinimumWidthRequest="30" >
+                  <Button Text=" Select " HorizontalOptions="End" 
+                          Command="{Binding BindingContext.SelectPinCommand, Source={x:Reference ParentObject}}" 
+                          CommandParameter="{Binding}" MinimumWidthRequest="30" >
                     <Button.TranslationX>
                       <OnPlatform x:TypeArguments="x:Double"
                                   Android="-70"
@@ -62,7 +64,9 @@
                             iOS="#EAEAEA" />
                     </Button.BackgroundColor>
                   </Button>
-                  <Button Text=" X " HorizontalOptions="End" Clicked="RemovePin_Clicked" MinimumWidthRequest="30" >
+                  <Button Text=" X " HorizontalOptions="End" 
+                          Command="{Binding BindingContext.RemovePinCommand, Source={x:Reference ParentObject}}" 
+                          CommandParameter="{Binding}" MinimumWidthRequest="30" >
                     <Button.BackgroundColor>
                       <OnPlatform x:TypeArguments="Color"
                             iOS="#EAEAEA" />
@@ -74,7 +78,7 @@
           </xfg:RepeaterViewObject.ItemTemplate>
         </xfg:RepeaterViewObject>
 
-        <Button x:Name="buttonClearPins"
+        <Button Command="{Binding ClearPinsCommand}"
 						Text="Clear map"
 						Grid.Row="2"
 						Grid.Column="1"

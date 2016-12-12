@@ -9,7 +9,8 @@ using Xamarin.Forms.GoogleMaps;
 
 namespace XFGoogleMapSample
 {
-    public partial class CircleModel : ICircle
+    // See ICircle implementation in the other partial class
+    public partial class CirclePinModel : ICircle
     {
         private void NotifyICircleProperties(string propertyName)
         {

@@ -27,25 +27,25 @@
 			        <ColumnDefinition Width="*" />
 			    </Grid.ColumnDefinitions>
 				
-				<Button x:Name="buttonAddMovablePin"
+				<Button Command="{Binding AddNewMovablePinCommand}"
 						Text="Add movable Pin"
 						Grid.Row="0"
 						Grid.Column="1"/>
-				<Button x:Name="buttonRemoveMovablePin"
+				<Button Command="{Binding RemoveMovablePinCommand}"
 						Text="Remove pin"
 						Grid.Row="0"
 						Grid.Column="2"/>
 
-				<Button x:Name="buttonAddPinParis"
+				<Button Command="{Binding AddPinParisCommand}"
 						Text="Add pin around Paris"
 						Grid.Row="1"
 						Grid.Column="1"/>
-				<Button x:Name="buttonRemovePinParis"
+				<Button Command="{Binding RemovePinParisCommand}"
 						Text="Remove pin"
 						Grid.Row="1"
 						Grid.Column="2"/>
 
-				<Button x:Name="buttonClearPins"
+				<Button Command="{Binding ClearPinsCommand}"
 						Text="Clear Pins"
 						Grid.Row="2"
 						Grid.Column="1"

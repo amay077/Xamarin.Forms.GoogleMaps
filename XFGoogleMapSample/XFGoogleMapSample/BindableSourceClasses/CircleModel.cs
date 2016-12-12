@@ -8,9 +8,9 @@ using Xamarin.Forms;
 
 namespace XFGoogleMapSample
 {
-    public partial class CircleModel : NotifyClass
+    public partial class CirclePinModel : NotifyClass
     {
-        public CircleModel(PinModel center, double radiusKm)
+        public CirclePinModel(PinModel center, double radiusKm)
         {
             PropertyChanged += CircleModel_PropertyChanged;
             PropertyChanging += CircleModel_PropertyChanging;

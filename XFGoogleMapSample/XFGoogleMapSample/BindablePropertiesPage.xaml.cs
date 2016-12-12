@@ -20,23 +20,6 @@ namespace XFGoogleMapSample
 
             InitializeComponent();
 
-            buttonAddMovablePin.Clicked += (sender, e) =>
-            {
-                Context.AddNewMovablePinCircle();
-            };
-
-            buttonRemoveMovablePin.Clicked += (sender, e) =>
-            {
-                Context.RemoveMovablePinCircle();
-            };
-
-            // Clear Pins
-            buttonClearPins.Clicked += (sender, e) =>
-            {
-                Context.ClearPins();
-            };
-
-
             map.SelectedPinChanged += SelectedPin_Changed;
 
             map.InfoWindowClicked += InfoWindow_Clicked;

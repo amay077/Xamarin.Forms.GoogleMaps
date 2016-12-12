@@ -9,6 +9,7 @@ using Xamarin.Forms.GoogleMaps;
 namespace XFGoogleMapSample
 {
     // This should be the main logic of the model
+    // See IPin implementation in the other partial class
     public partial class PinModel : NotifyClass
     {
         public PinModel(string name, string details, double latitude, double longitude) : this()

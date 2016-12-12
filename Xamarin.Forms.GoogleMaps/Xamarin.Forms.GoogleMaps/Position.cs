@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 
 namespace Xamarin.Forms.GoogleMaps
 {
+    [JsonConverter(typeof(Internals.PositionJsonConverterConverter))]
     public struct Position
     {
         public Position(double latitude, double longitude)
@@ -42,6 +44,11 @@ namespace Xamarin.Forms.GoogleMaps
         public static bool operator !=(Position left, Position right)
         {
             return !Equals(left, right);
+        }
+
+        public static Position operator -(Position left, Position right)
+        {
+            return new Position(left.Latitude - right.Latitude, left.Longitude - right.Longitude);
         }
 
         public override string ToString()
