@@ -101,7 +101,7 @@ namespace Xamarin.Forms.GoogleMaps
                     break;
                 case NotifyCollectionChangedAction.Reset:
                     var circles = Circles.ToList();
-                    foreach (var p in circles) circles.Remove(p);
+                    foreach (var p in circles) Circles.Remove(p);
                     AddCircles((IList)CirclesSource);
                     break;
                 case NotifyCollectionChangedAction.Move:
