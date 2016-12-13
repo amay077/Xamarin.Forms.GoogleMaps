@@ -63,7 +63,7 @@ namespace Xamarin.Forms.GoogleMaps
                     break;
                 case NotifyCollectionChangedAction.Reset:
                     var pins = Pins.ToList();
-                    foreach (var p in pins) pins.Remove(p);
+                    foreach (var p in pins) Pins.Remove(p);
                     AddPins((IList)PinsSource);
                     break;
                 case NotifyCollectionChangedAction.Move:
@@ -335,8 +335,8 @@ namespace Xamarin.Forms.GoogleMaps
             var args = new SelectedPinChangedEventArgs(selectedPin, selectedPin?.BindingContext as IPin);
             SelectedPinChanged?.Invoke(this, args);
             if (SelectedPinChangedCommand?.CanExecute(args) ?? false) SelectedPinChangedCommand.Execute(args);
-            if (item?.SelectedCommand?.CanExecute(item?.SelectedCommandParameter ?? args) ?? false)
-                item.SelectedCommand.Execute(item?.SelectedCommandParameter ?? args);
+            if (item?.PinSelectedCommand?.CanExecute(item?.PinSelectedCommandParameter ?? args) ?? false)
+                item.PinSelectedCommand.Execute(item?.PinSelectedCommandParameter ?? args);
         }
 
         internal bool SendPinClicked(Pin pin)

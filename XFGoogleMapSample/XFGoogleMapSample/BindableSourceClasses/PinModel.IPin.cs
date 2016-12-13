@@ -52,9 +52,9 @@ namespace XFGoogleMapSample
         private PinType _PinType;
         public PinType PinType { get { return _PinType; } set { bool changed = _PinType != value; _PinType = value; if (changed) NotifyPropertyChanged(nameof(PinType)); } }
 
-        public ICommand SelectedCommand { get; set; }
+        public ICommand PinSelectedCommand { get; set; }
 
-        public object SelectedCommandParameter { get; set; }
+        public object PinSelectedCommandParameter { get; set; }
 
         public ICommand InfoWindowClickedCommand { get; set; }
 

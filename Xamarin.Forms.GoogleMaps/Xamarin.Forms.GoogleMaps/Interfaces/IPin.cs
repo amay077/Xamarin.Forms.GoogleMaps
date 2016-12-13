@@ -30,9 +30,9 @@ namespace Xamarin.Forms.GoogleMaps
 
         object InfoWindowClickedCommandParameter { get; }
 
-        ICommand SelectedCommand { get; }
+        ICommand PinSelectedCommand { get; }
 
-        object SelectedCommandParameter { get; }
+        object PinSelectedCommandParameter { get; }
     }
     public static class IPinExtensions
     {
