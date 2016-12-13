@@ -32,10 +32,56 @@ namespace XFGoogleMapSample
             }
         }
 
+        #region Bindable PinsSource
+        public ICommand AddNewMovablePinCommand { get { return new Command(() => AddNewMovablePin()); } }
+        public void AddNewMovablePin()
+        {
+            var pin = new PinModel()
+            {
+                Name = "Eiffel tower",
+                Details = "Click me to move up!",
+                Latitude = 48.858391,
+                Longitude = 2.294267,
+                Category = CATEGORY_MOVABLE
+            };
+
+            pin.InfoWindowClickedCommand = new Command((object o) => { pin.Move100m(Direction); }, (o) => true);
+
+            Pins.Add(pin);
+        }
+
+        public ICommand RemoveMovablePinCommand { get { return new Command(() => RemoveMovablePin()); } }
+        internal void RemoveMovablePin()
+        {
+            var pin = Pins.FirstOrDefault(p => ((p as PinModel)?.Category == CATEGORY_MOVABLE));
+            if (pin != null) Pins.Remove(pin);
+        }
+
+        int PinNumber { get; set; } = 1;
+        public ICommand AddPinParisCommand { get { return new Command(() => AddPinParis()); } }
+        internal void AddPinParis()
+        {
+            Random r = new Random();
+            var lat = 48.855651 + 0.5 * r.NextDouble();
+            var lng = 2.347134 + 0.5 * r.NextDouble();
+            var pin = AddPin("Random pin " + (PinNumber++).ToString(), "click me to update", lat, lng);
+            pin.Category = CATEGORY_RANDOM;
+            pin.InfoWindowClickedCommand = new Command((object o) =>
+            {
+                pin.Name = "Random pin: " + (PinNumber++);
+                pin.Details = "Illustration of non-updating callout. Need to display it again by tapping on the pin.";
+            }, (o) => true);
+        }
+
+        public ICommand RemovePinParisCommand { get { return new Command(() => RemovePinParis()); } }
+        internal void RemovePinParis()
+        {
+            var pin = Pins.LastOrDefault(p => ((p as PinModel)?.Category == CATEGORY_RANDOM));
+            if (pin != null) Pins.Remove(pin);
+        }
+        #endregion Bindable PinsSource
 
         #region Bindable CirclesSource
-
-        int PinNumber = 0;
 
         public ICommand AddNewMovablePinCircleCommand { get { return new Command(() => AddNewMovablePinCircle()); } }
         public void AddNewMovablePinCircle()

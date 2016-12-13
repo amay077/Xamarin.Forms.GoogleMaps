@@ -29,11 +29,11 @@
           <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <Button Command="{Binding AddNewMovablePinCommand}"
+        <Button Command="{Binding AddNewMovablePinCircleCommand}"
 						Text="Add movable Pin"
 						Grid.Row="0"
 						Grid.Column="1"/>
-        <Button Command="{Binding RemoveMovablePinCommand}"
+        <Button Command="{Binding RemoveMovablePinCircleCommand}"
 						Text="Remove pin"
 						Grid.Row="0"
 						Grid.Column="2"/>
