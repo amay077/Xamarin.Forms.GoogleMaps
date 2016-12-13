@@ -22,9 +22,17 @@ namespace Xamarin.Forms.GoogleMaps
 
         float PinRotation { get;  }
 
-        ICommand CallOutClickedCommand { get; }
+        ICommand PinClickedCommand { get; }
 
-        object CallOutClickedCommandParameter { get; }
+        object PinClickedCommandParameter { get; }
+
+        ICommand InfoWindowClickedCommand { get; }
+
+        object InfoWindowClickedCommandParameter { get; }
+
+        ICommand SelectedCommand { get; }
+
+        object SelectedCommandParameter { get; }
     }
     public static class IPinExtensions
     {
@@ -38,8 +46,6 @@ namespace Xamarin.Forms.GoogleMaps
             pin.SetBinding(Pin.PositionProperty, nameof(IPin.PinPosition));
             pin.SetBinding(Pin.RotationProperty, nameof(IPin.PinRotation));
             pin.SetBinding(Pin.TypeProperty, nameof(IPin.PinType));
-            // TODO: unregister on pin remove?
-            pin.Clicked += (object sender, System.EventArgs e) => { if (iPin?.CallOutClickedCommand?.CanExecute(iPin?.CallOutClickedCommandParameter) ?? false) iPin.CallOutClickedCommand.Execute(iPin.CallOutClickedCommandParameter); };
             return pin;
         }
 

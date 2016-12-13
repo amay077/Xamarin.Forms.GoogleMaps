@@ -12,6 +12,25 @@ namespace Xamarin.Forms.GoogleMaps
 {
     public class Map : View, IEnumerable<Pin>
     {
+        public Map(MapSpan region)
+        {
+            LastMoveToRegion = MapRegion ?? region;
+
+            VerticalOptions = HorizontalOptions = LayoutOptions.FillAndExpand;
+
+            _pins.CollectionChanged += PinsOnCollectionChanged;
+            _polylines.CollectionChanged += PolylinesOnCollectionChanged;
+            _polygons.CollectionChanged += PolygonsOnCollectionChanged;
+            _circles.CollectionChanged += CirclesOnCollectionChanged;
+            _tileLayers.CollectionChanged += TileLayersOnCollectionChanged;
+            _groundOverlays.CollectionChanged += GroundOverlays_CollectionChanged;
+        }
+
+        // center on Rome by default
+        public Map() : this(new MapSpan(new Position(41.890202, 12.492049), 0.1, 0.1)) { }
+
+
+
         #region PinsSource Property
         public static readonly BindableProperty PinsSourceProperty = BindableProperty.Create(nameof(PinsSource), typeof(ObservableCollection<IPin>), typeof(Map), null, propertyChanged: OnPinsSourceChanged);
         public ObservableCollection<IPin> PinsSource { get { return (ObservableCollection<IPin>)GetValue(PinsSourceProperty); } set { SetValue(PinsSourceProperty, value); } }
@@ -147,17 +166,21 @@ namespace Xamarin.Forms.GoogleMaps
                 map.MoveToRegion(newVal, true);
         }
         public event EventHandler<RegionEventArgs> MapRegionChanged;
+
+        internal MapSpan LastMoveToRegion { get; private set; }
+
+        public void MoveToRegion(MapSpan mapSpan, bool animate = true)
+        {
+            if (mapSpan == null)
+                throw new ArgumentNullException(nameof(mapSpan));
+            if (LastMoveToRegion == mapSpan) return;
+            LastMoveToRegion = mapSpan;
+            MessagingCenter.Send(this, "MapMoveToRegion", new MoveToRegionMessage(mapSpan, animate));
+        }
+
         #endregion MapRegion
 
-        public static readonly BindableProperty MapTypeProperty = BindableProperty.Create(nameof(MapType), typeof(MapType), typeof(Map), default(MapType));
-
-        public static readonly BindableProperty IsShowingUserProperty = BindableProperty.Create(nameof(IsShowingUser), typeof(bool), typeof(Map), default(bool));
-
-        public static readonly BindableProperty HasScrollEnabledProperty = BindableProperty.Create(nameof(HasScrollEnabled), typeof(bool), typeof(Map), true);
-
-        public static readonly BindableProperty HasZoomEnabledProperty = BindableProperty.Create(nameof(HasZoomEnabled), typeof(bool), typeof(Map), true);
-
-        public static readonly BindableProperty IsTrafficEnabledProperty = BindableProperty.Create(nameof(IsTrafficEnabled), typeof(bool), typeof(Map), false);
+        #region Selected Pin/Item
 
         public static readonly BindableProperty SelectedPinProperty = BindableProperty.Create(nameof(SelectedPin), typeof(Pin), typeof(Map), default(Pin), defaultBindingMode: BindingMode.TwoWay, propertyChanged: OnSelectedPinChanged);
 
@@ -175,6 +198,35 @@ namespace Xamarin.Forms.GoogleMaps
         private static void OnSelectedPinChanged(BindableObject bindable, object oldValue, object newValue)
         { var map = bindable as Map; if (map == null) return; map.SelectedItem = map.SelectedPin?.BindingContext as IPin; }
 
+        public Pin SelectedPin { get { return (Pin)GetValue(SelectedPinProperty); } set { SetValue(SelectedPinProperty, value); } }
+
+        public IPin SelectedItem { get { return (IPin)GetValue(SelectedItemProperty); } set { SetValue(SelectedItemProperty, value); } }
+
+        #endregion Selected Pin/Item
+
+        #region Map Config
+        public static readonly BindableProperty MapTypeProperty = BindableProperty.Create(nameof(MapType), typeof(MapType), typeof(Map), default(MapType));
+
+        public static readonly BindableProperty IsShowingUserProperty = BindableProperty.Create(nameof(IsShowingUser), typeof(bool), typeof(Map), default(bool));
+
+        public static readonly BindableProperty HasScrollEnabledProperty = BindableProperty.Create(nameof(HasScrollEnabled), typeof(bool), typeof(Map), true);
+
+        public static readonly BindableProperty HasZoomEnabledProperty = BindableProperty.Create(nameof(HasZoomEnabled), typeof(bool), typeof(Map), true);
+
+        public static readonly BindableProperty IsTrafficEnabledProperty = BindableProperty.Create(nameof(IsTrafficEnabled), typeof(bool), typeof(Map), false);
+
+        public bool HasScrollEnabled { get { return (bool)GetValue(HasScrollEnabledProperty); } set { SetValue(HasScrollEnabledProperty, value); } }
+
+        public bool HasZoomEnabled { get { return (bool)GetValue(HasZoomEnabledProperty); } set { SetValue(HasZoomEnabledProperty, value); } }
+
+        public bool IsTrafficEnabled { get { return (bool)GetValue(IsTrafficEnabledProperty); } set { SetValue(IsTrafficEnabledProperty, value); } }
+
+        public bool IsShowingUser { get { return (bool)GetValue(IsShowingUserProperty); } set { SetValue(IsShowingUserProperty, value); } }
+
+        public MapType MapType { get { return (MapType)GetValue(MapTypeProperty); } set { SetValue(MapTypeProperty, value); } }
+        #endregion Map Config
+
+        #region Map Internal Data
         readonly ObservableCollection<Pin> _pins = new ObservableCollection<Pin>();
         readonly ObservableCollection<Polyline> _polylines = new ObservableCollection<Polyline>();
         readonly ObservableCollection<Polygon> _polygons = new ObservableCollection<Polygon>();
@@ -182,129 +234,26 @@ namespace Xamarin.Forms.GoogleMaps
         readonly ObservableCollection<TileLayer> _tileLayers = new ObservableCollection<TileLayer>();
         readonly ObservableCollection<GroundOverlay> _groundOverlays = new ObservableCollection<GroundOverlay>();
 
-        public event EventHandler<PinClickedEventArgs> PinClicked;
-        public event EventHandler<SelectedPinChangedEventArgs> SelectedPinChanged;
-        public event EventHandler<InfoWindowClickedEventArgs> InfoWindowClicked;
+        public IList<Pin> Pins { get { return _pins; } }
 
-        public event EventHandler<PinDragEventArgs> PinDragStart;
-        public event EventHandler<PinDragEventArgs> PinDragEnd;
-        public event EventHandler<PinDragEventArgs> PinDragging;
+        public IList<Polyline> Polylines { get { return _polylines; } }
 
-        public event EventHandler<MapClickedEventArgs> MapClicked;
-        public event EventHandler<MapLongClickedEventArgs> MapLongClicked;
+        public IList<Polygon> Polygons { get { return _polygons; } }
 
-        public Map(MapSpan region)
-        {
-            LastMoveToRegion = MapRegion ?? region;
+        public IList<Circle> Circles { get { return _circles; } }
 
-            VerticalOptions = HorizontalOptions = LayoutOptions.FillAndExpand;
+        public IList<TileLayer> TileLayers { get { return _tileLayers; } }
 
-            _pins.CollectionChanged += PinsOnCollectionChanged;
-            _polylines.CollectionChanged += PolylinesOnCollectionChanged;
-            _polygons.CollectionChanged += PolygonsOnCollectionChanged;
-            _circles.CollectionChanged += CirclesOnCollectionChanged;
-            _tileLayers.CollectionChanged += TileLayersOnCollectionChanged;
-            _groundOverlays.CollectionChanged += GroundOverlays_CollectionChanged;
-        }
-
-        // center on Rome by default
-        public Map() : this(new MapSpan(new Position(41.890202, 12.492049), 0.1, 0.1))
-        {
-        }
-
-        public bool HasScrollEnabled
-        {
-            get { return (bool)GetValue(HasScrollEnabledProperty); }
-            set { SetValue(HasScrollEnabledProperty, value); }
-        }
-
-        public bool HasZoomEnabled
-        {
-            get { return (bool)GetValue(HasZoomEnabledProperty); }
-            set { SetValue(HasZoomEnabledProperty, value); }
-        }
-
-        public bool IsTrafficEnabled
-        {
-            get { return (bool)GetValue(IsTrafficEnabledProperty); }
-            set { SetValue(IsTrafficEnabledProperty, value); }
-        }
+        public IList<GroundOverlay> GroundOverlays { get { return _groundOverlays; } }
 
 
-        public bool IsShowingUser
-        {
-            get { return (bool)GetValue(IsShowingUserProperty); }
-            set { SetValue(IsShowingUserProperty, value); }
-        }
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-        public MapType MapType
-        {
-            get { return (MapType)GetValue(MapTypeProperty); }
-            set { SetValue(MapTypeProperty, value); }
-        }
+        public IEnumerator<Pin> GetEnumerator() => _pins.GetEnumerator();
 
-        public Pin SelectedPin
-        {
-            get { return (Pin)GetValue(SelectedPinProperty); }
-            set { SetValue(SelectedPinProperty, value); }
-        }
+        #endregion Map Internal Data
 
-        public IPin SelectedItem
-        {
-            get { return (IPin)GetValue(SelectedItemProperty); }
-            set { SetValue(SelectedItemProperty, value); }
-        }
-
-        public IList<Pin> Pins
-        {
-            get { return _pins; }
-        }
-
-        public IList<Polyline> Polylines
-        {
-            get { return _polylines; }
-        }
-
-        public IList<Polygon> Polygons
-        {
-            get { return _polygons; }
-        }
-
-        public IList<Circle> Circles
-        {
-            get { return _circles; }
-        }
-
-        public IList<TileLayer> TileLayers
-        {
-            get { return _tileLayers; }
-        }
-
-        public IList<GroundOverlay> GroundOverlays
-        {
-            get { return _groundOverlays; }
-        }
-
-        internal MapSpan LastMoveToRegion { get; private set; }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-
-        public IEnumerator<Pin> GetEnumerator()
-        {
-            return _pins.GetEnumerator();
-        }
-
-        public void MoveToRegion(MapSpan mapSpan, bool animate = true)
-        {
-            if (mapSpan == null)
-                throw new ArgumentNullException(nameof(mapSpan));
-            if (LastMoveToRegion == mapSpan) return;
-            LastMoveToRegion = mapSpan;
-            MessagingCenter.Send(this, "MapMoveToRegion", new MoveToRegionMessage(mapSpan, animate));
-        }
+        #region Data input consistency check
 
         void PinsOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
@@ -341,6 +290,20 @@ namespace Xamarin.Forms.GoogleMaps
         {
         }
 
+        #endregion Data input consistency check
+
+        #region Map events
+        public event EventHandler<PinClickedEventArgs> PinClicked;
+        public event EventHandler<SelectedPinChangedEventArgs> SelectedPinChanged;
+        public event EventHandler<InfoWindowClickedEventArgs> InfoWindowClicked;
+
+        public event EventHandler<PinDragEventArgs> PinDragStart;
+        public event EventHandler<PinDragEventArgs> PinDragEnd;
+        public event EventHandler<PinDragEventArgs> PinDragging;
+
+        public event EventHandler<MapClickedEventArgs> MapClicked;
+        public event EventHandler<MapLongClickedEventArgs> MapLongClicked;
+
         public static readonly BindableProperty SelectedPinChangedCommandProperty = BindableProperty.Create(nameof(SelectedPinChangedCommand), typeof(ICommand), typeof(Map), null);
         public ICommand SelectedPinChangedCommand { get { return (ICommand)GetValue(SelectedPinChangedCommandProperty); } set { SetValue(SelectedPinChangedCommandProperty, value); } }
 
@@ -368,53 +331,70 @@ namespace Xamarin.Forms.GoogleMaps
 
         internal void SendSelectedPinChanged(Pin selectedPin)
         {
-            SelectedPinChanged?.Invoke(this, new SelectedPinChangedEventArgs(selectedPin));
-            if (SelectedPinChangedCommand?.CanExecute(selectedPin.BindingContext as IPin)??false) SelectedPinChangedCommand.Execute(selectedPin.BindingContext as IPin);
+            var item = selectedPin?.BindingContext as IPin;
+            var args = new SelectedPinChangedEventArgs(selectedPin, selectedPin?.BindingContext as IPin);
+            SelectedPinChanged?.Invoke(this, args);
+            if (SelectedPinChangedCommand?.CanExecute(args) ?? false) SelectedPinChangedCommand.Execute(args);
+            if (item?.SelectedCommand?.CanExecute(item?.SelectedCommandParameter ?? args) ?? false)
+                item.SelectedCommand.Execute(item?.SelectedCommandParameter ?? args);
         }
 
         internal bool SendPinClicked(Pin pin)
         {
-            var args = new PinClickedEventArgs(pin);
+            var item = pin?.BindingContext as IPin;
+            var args = new PinClickedEventArgs(pin, item);
             PinClicked?.Invoke(this, args);
-            if (PinClickedCommand?.CanExecute(pin.BindingContext as IPin) ?? false) PinClickedCommand.Execute(pin.BindingContext as IPin);
+            if (PinClickedCommand?.CanExecute(args) ?? false) PinClickedCommand.Execute(args);
+            if (item?.PinClickedCommand?.CanExecute(item?.PinClickedCommandParameter ?? args) ?? false)
+                item.InfoWindowClickedCommand.Execute(item?.PinClickedCommandParameter ?? args);
             return args.Handled;
         }
 
         internal void SendInfoWindowClicked(Pin pin)
         {
-            var args = new InfoWindowClickedEventArgs(pin);
+            var item = pin?.BindingContext as IPin;
+            var args = new InfoWindowClickedEventArgs(pin, item);
             InfoWindowClicked?.Invoke(this, args);
-            if (InfoWindowClickedCommand?.CanExecute(pin.BindingContext as IPin) ?? false) InfoWindowClickedCommand.Execute(pin.BindingContext as IPin);
+            if (InfoWindowClickedCommand?.CanExecute(args) ?? false) InfoWindowClickedCommand.Execute(args);
+            if (item?.InfoWindowClickedCommand?.CanExecute(item?.InfoWindowClickedCommandParameter ?? args) ?? false)
+                item.InfoWindowClickedCommand.Execute(item?.InfoWindowClickedCommandParameter ?? args);
         }
 
         internal void SendPinDragStart(Pin pin)
         {
-            PinDragStart?.Invoke(this, new PinDragEventArgs(pin));
-            if (PinDragStartCommand?.CanExecute(pin.BindingContext as IPin) ?? false) PinDragStartCommand.Execute(pin.BindingContext as IPin);
+            var args = new PinDragEventArgs(pin, pin?.BindingContext as IPin);
+            PinDragStart?.Invoke(this, args);
+            if (PinDragStartCommand?.CanExecute(args) ?? false) PinDragStartCommand.Execute(args);
+
         }
 
         internal void SendPinDragEnd(Pin pin)
         {
-            PinDragEnd?.Invoke(this, new PinDragEventArgs(pin));
-            if (PinDragEndCommand?.CanExecute(pin.BindingContext as IPin) ?? false) PinDragEndCommand.Execute(pin.BindingContext as IPin);
+            var args = new PinDragEventArgs(pin, pin?.BindingContext as IPin);
+            PinDragEnd?.Invoke(this, args);
+            if (PinDragEndCommand?.CanExecute(args) ?? false) PinDragEndCommand.Execute(args);
         }
 
         internal void SendPinDragging(Pin pin)
         {
-            PinDragging?.Invoke(this, new PinDragEventArgs(pin));
-            if (PinDraggingCommand?.CanExecute(pin.BindingContext as IPin) ?? false) PinDraggingCommand.Execute(pin.BindingContext as IPin);
+            var args = new PinDragEventArgs(pin, pin?.BindingContext as IPin);
+            PinDragging?.Invoke(this, args);
+            if (PinDraggingCommand?.CanExecute(args) ?? false) PinDraggingCommand.Execute(args);
         }
 
         internal void SendMapClicked(Position point)
         {
-            MapClicked?.Invoke(this, new MapClickedEventArgs(point));
-            if (MapClickedCommand?.CanExecute(point) ?? false) MapClickedCommand.Execute(point);
+            var args = new MapClickedEventArgs(point);
+            MapClicked?.Invoke(this, args);
+            if (MapClickedCommand?.CanExecute(args) ?? false) MapClickedCommand.Execute(args);
         }
 
         internal void SendMapLongClicked(Position point)
         {
-            MapLongClicked?.Invoke(this, new MapLongClickedEventArgs(point));
-            if (MapLongClickedCommand?.CanExecute(point) ?? false) MapLongClickedCommand.Execute(point);
+            var args = new MapLongClickedEventArgs(point);
+            MapLongClicked?.Invoke(this, args);
+            if (MapLongClickedCommand?.CanExecute(args) ?? false) MapLongClickedCommand.Execute(args);
         }
+        #endregion Map events
     }
 }

@@ -10,9 +10,17 @@ namespace Xamarin.Forms.GoogleMaps.Interfaces.SimpleImplementations
 {
     public class SimplePin : IPin
     {
-        public ICommand CallOutClickedCommand { get; set; }
+        public ICommand SelectedCommand { get; set; }
 
-        public object CallOutClickedCommandParameter { get; set; }
+        public object SelectedCommandParameter { get; set; }
+
+        public ICommand InfoWindowClickedCommand { get; set; }
+
+        public object InfoWindowClickedCommandParameter { get; set; }
+
+        public ICommand PinClickedCommand { get; set; }
+
+        public object PinClickedCommandParameter { get; set; }
 
         public BitmapDescriptor PinIcon { get; set; }
 

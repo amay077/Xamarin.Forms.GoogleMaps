@@ -39,7 +39,5 @@ namespace XFGoogleMapSample
             set { bool changed = _RadiusKm != value; if (changed) { NotifyIAmChanging(); _RadiusKm = value; NotifyIChanged(); } }
         }
 
-
-
     }
 }

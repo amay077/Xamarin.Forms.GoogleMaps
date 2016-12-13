@@ -40,12 +40,6 @@ namespace XFGoogleMapSample
 
         #region IPin NOT computed properties
 
-        ICommand _PinClickedCommand;
-        public ICommand CallOutClickedCommand { get { return _PinClickedCommand; } set { var changed = _PinClickedCommand != value; _PinClickedCommand = value; if (changed) { NotifyPropertyChanged(nameof(CallOutClickedCommand)); } } }
-
-        private object _PinClickedCommandParameter;
-        public object CallOutClickedCommandParameter { get { return _PinClickedCommandParameter; } set { bool changed = _PinClickedCommandParameter != value; _PinClickedCommandParameter = value; if (changed) NotifyPropertyChanged(nameof(CallOutClickedCommandParameter)); } }
-
         private BitmapDescriptor _PinIcon;
         public BitmapDescriptor PinIcon { get { return _PinIcon; } set { bool changed = _PinIcon != value; _PinIcon = value; if (changed) NotifyPropertyChanged(nameof(PinIcon)); } }
 
@@ -57,6 +51,18 @@ namespace XFGoogleMapSample
 
         private PinType _PinType;
         public PinType PinType { get { return _PinType; } set { bool changed = _PinType != value; _PinType = value; if (changed) NotifyPropertyChanged(nameof(PinType)); } }
+
+        public ICommand SelectedCommand { get; set; }
+
+        public object SelectedCommandParameter { get; set; }
+
+        public ICommand InfoWindowClickedCommand { get; set; }
+
+        public object InfoWindowClickedCommandParameter { get; set; }
+
+        public ICommand PinClickedCommand { get; set; }
+
+        public object PinClickedCommandParameter { get; set; }
 
         #endregion IPin NOT computed properties
     }
