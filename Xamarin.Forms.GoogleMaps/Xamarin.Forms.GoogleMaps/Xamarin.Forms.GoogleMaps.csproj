@@ -43,7 +43,6 @@
     <Compile Include="Events\SelectedPinChangedEventArgs.cs" />
     <Compile Include="Extensions\GeoConstants.cs" />
     <Compile Include="Extensions\GeoExtensions.cs" />
-    <Compile Include="Extensions\Interpolars.cs" />
     <Compile Include="Interfaces\ICircle.cs" />
     <Compile Include="Interfaces\SimpleImplementations\SimpleCircle.cs" />
     <Compile Include="Interfaces\IPin.cs" />
