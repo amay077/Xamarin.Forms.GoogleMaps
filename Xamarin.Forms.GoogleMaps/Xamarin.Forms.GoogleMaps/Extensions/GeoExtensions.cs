@@ -89,7 +89,7 @@ namespace Xamarin.Forms.GoogleMaps
             return Math.Sqrt(x * x + y * y) * GeoConstants.EarthRadiusKm;
         }
 
-        public static double EquirectangularKmTo(Position p1, Position p2)
+        public static double EquirectangularKmTo(this Position p1, Position p2)
             => EquirectangularKmTo_Degrees(p1.Latitude, p1.Longitude, p2.Latitude, p2.Longitude);
 
 
@@ -125,7 +125,7 @@ namespace Xamarin.Forms.GoogleMaps
             return x * x + y * y;
         }
 
-        public static double DistanceToOrder(Position p1, Position p2)
+        public static double DistanceToOrder(this Position p1, Position p2)
             => DistanceToOrder_Degrees(p1.Latitude, p1.Longitude, p2.Latitude, p2.Longitude);
 
         #endregion Approximate distance calculations
