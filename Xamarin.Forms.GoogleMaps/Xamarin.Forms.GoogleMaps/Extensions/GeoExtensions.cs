@@ -26,25 +26,26 @@ namespace Xamarin.Forms.GoogleMaps
         public static double MetersTo(this Position gp, Position gp2)
             => KmTo(gp, gp2) * GeoConstants.MetersPerKilometer;
 
-        public static double KmTo(this Position gp, Position gp2)
-        {
-            if (gp2 == null) return double.MaxValue;
-            return KmTo(gp, gp2.Latitude, gp2.Longitude);
-        }
-        public static double KmTo(this Position gp, double lat2, double lng2)
-        {
-            var latR1 = gp.Latitude.ToRadians();
-            var latR2 = lat2.ToRadians();
+        public static double DegreesKmTo(double lat1Degrees, double lng1Degrees, double lat2Degrees, double lng2Degrees)
+            => KmTo(lat1Degrees.ToRadians(), lng1Degrees.ToRadians(), lat2Degrees.ToRadians(), lng2Degrees.ToRadians());
 
-            var demiDLat = (latR2 - latR1) / 2;
-            var demiDLon = (lng2.ToRadians() - gp.Longitude.ToRadians()) / 2;
+        public static double KmTo(double lat1Rad, double lng1Rad, double lat2Rad, double lng2Rad)
+        {
+            var demiDLat = (lat2Rad - lat1Rad) / 2;
+            var demiDLon = (lng2Rad - lng1Rad) / 2;
 
             var a = Math.Sin(demiDLat) * Math.Sin(demiDLat) +
-                Math.Cos(latR1) * Math.Cos(latR2) *
+                Math.Cos(lat1Rad) * Math.Cos(lat2Rad) *
                 Math.Sin(demiDLon) * Math.Sin(demiDLon);
             var c = Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
             return c * 2 * EarthRadiusKm;
         }
+
+        public static double KmTo(this Position gp, Position gp2)
+            => (gp2 == null) ? double.MaxValue : DegreesKmTo(gp.Latitude, gp.Longitude, gp2.Latitude, gp2.Longitude);
+
+        public static double KmTo(this Position gp, double lat2Degrees, double lng2Degrees)
+            => DegreesKmTo(gp.Latitude, gp.Longitude, lat2Degrees, lng2Degrees);
 
         public static double KmTo(this Pin pin, Pin pin2)
             => pin.Position.KmTo(pin2.Position);
