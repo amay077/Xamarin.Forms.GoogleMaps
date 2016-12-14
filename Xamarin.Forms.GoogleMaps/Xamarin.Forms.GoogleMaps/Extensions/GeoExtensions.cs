@@ -10,7 +10,7 @@ namespace Xamarin.Forms.GoogleMaps
     {
         const double EarthRadiusKm = GeoConstants.EarthRadiusKm;
 
-        const double ToRadiansFactorD = 1.0d / 180d * (double)Math.PI;
+        public const double ToRadiansFactorD = 1.0d / 180d * (double)Math.PI;
 
         public static double ToRadians(this double val)
             => ToRadiansFactorD * val;
@@ -35,9 +35,12 @@ namespace Xamarin.Forms.GoogleMaps
             var demiDLat = (lat2Rad - lat1Rad) / 2;
             var demiDLon = (lng2Rad - lng1Rad) / 2;
 
-            var a = Math.Sin(demiDLat) * Math.Sin(demiDLat) +
+            var a =
+                Math.Pow(Math.Sin(demiDLat), 2) +  //    Sin²(a)=(1-cos(2a))/2
+                                                   //(1 - Math.Cos(2 * demiDLat)) / 2 +
                 Math.Cos(lat1Rad) * Math.Cos(lat2Rad) *
-                Math.Sin(demiDLon) * Math.Sin(demiDLon);
+                Math.Pow(Math.Sin(demiDLon), 2);
+                                                   //(1 - Math.Cos(2 * demiDLon)) / 2;
             var c = Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
             return c * 2 * EarthRadiusKm;
         }
@@ -173,21 +176,92 @@ namespace Xamarin.Forms.GoogleMaps
             return TranslateToBearingDistance(position1, bearing, distanceKm);
         }
 
-        #endregion Position translations
+        public static Position TranslateInterpolateLinear(this Position from, Position to, float fraction)
+        {
+            double lat = (to.Latitude - from.Latitude) * fraction + from.Latitude;
+            double lng = (to.Longitude - from.Longitude) * fraction + from.Longitude;
+            return new Position(lat, lng);
+        }
+
+        public static Position TranslateInterpolateLinearFixed(this Position from, Position to, float fraction)
+        {
+            double lat = (to.Latitude - from.Latitude) * fraction + from.Latitude;
+            double lngDelta = to.Longitude - from.Longitude;
+
+            // Take the shortest path across the 180th meridian.
+            if (Math.Abs(lngDelta) > 180)
+            {
+                lngDelta -= Math.Sign(lngDelta) * 360;
+            }
+            double lng = lngDelta * fraction + from.Longitude;
+            return new Position(lat, lng);
+        }
+
+        /* From github.com/googlemaps/android-maps-utils */
+        public static Position TranslateInterpolateSpherical(this Position from, Position to, float fraction)
+        {
+            // http://en.wikipedia.org/wiki/Slerp
+            double fromLat = from.Latitude.ToRadians();
+            double fromLng = from.Longitude.ToRadians();
+            double toLat = to.Latitude.ToRadians();
+            double toLng = to.Longitude.ToRadians();
+            double cosFromLat = Math.Cos(fromLat);
+            double cosToLat = Math.Cos(toLat);
+
+            // Computes Spherical interpolation coefficients.
+            double angle = GeoExtensions.AngleBetween(fromLat, fromLng, toLat, toLng);
+            double sinAngle = Math.Sin(angle);
+            if (sinAngle < 1E-6)
+            {
+                return from;
+            }
+            double a = Math.Sin((1 - fraction) * angle) / sinAngle;
+            double b = Math.Sin(fraction * angle) / sinAngle;
+
+            // Converts from polar to vector and interpolate.
+            double x = a * cosFromLat * Math.Cos(fromLng) + b * cosToLat * Math.Cos(toLng);
+            double y = a * cosFromLat * Math.Sin(fromLng) + b * cosToLat * Math.Sin(toLng);
+            double z = a * Math.Sin(fromLat) + b * Math.Sin(toLat);
+
+            // Converts interpolated vector back to polar.
+            double lat = Math.Atan2(z, Math.Sqrt(x * x + y * y));
+            double lng = Math.Atan2(y, x);
+            return new Position(lat.ToDegrees(), lng.ToDegrees());
+        }
+
+        #endregion Position translations        
 
         #region Segment tools
 
         public static double LengthKm(this ISegment s) => s.Position2.KmTo(s.Position1);
 
+        // To check if same as bearing...
+        public static double AngleBetween(double fromLatRad, double fromLngRad, double toLatRad, double toLngRad)
+        { // https://gist.github.com/broady/6314689
+            // Haversine's formula
+            double dLat = fromLatRad - toLatRad;
+            double dLng = fromLngRad - toLngRad;
+            return 2 * Math.Asin(Math.Sqrt(
+                Math.Pow(Math.Sin(dLat / 2), 2) +
+                    Math.Cos(fromLatRad) * Math.Cos(toLatRad) * 
+                    Math.Pow(Math.Sin(dLng / 2), 2)));
+        }
+
+        /// <summary>
+        /// Angle between the segment and constant longitude
+        /// </summary>
         public static double ToBearingRad(this ISegment s)
         {
-            if (s.Position1.KmTo(s.Position2) == 0) return 0;
-            var diff = s.Position2 - s.Position1;
-            var lat1 = s.Position1.Latitude.ToRadians();
-            var lat2 = s.Position2.Latitude.ToRadians();
-            var lng1 = s.Position1.Longitude.ToRadians();
-            var lng2 = s.Position2.Longitude.ToRadians();
-
+            return ToBearingRad(s.Position1.Latitude.ToRadians(), s.Position1.Longitude.ToRadians(), s.Position2.Latitude.ToRadians(), s.Position2.Longitude.ToRadians());
+        }
+        /// <summary>
+        /// Angle between the segment and constant longitude
+        /// 
+        /// This formula is for the initial bearing (sometimes referred to as forward azimuth) which if followed in a straight line along a great-circle arc will take you from the start point to the end point
+        /// <see cref="http://www.movable-type.co.uk/scripts/latlong.html"/>
+        /// </summary>
+        public static double ToBearingRad(double lat1, double lng1, double lat2, double lng2)
+        {
             // http://www.movable-type.co.uk/scripts/latlong.html
             var y = Math.Sin(lng2 - lng1) * Math.Cos(lat2);
             var x = Math.Cos(lat1) * Math.Sin(lat2) -
