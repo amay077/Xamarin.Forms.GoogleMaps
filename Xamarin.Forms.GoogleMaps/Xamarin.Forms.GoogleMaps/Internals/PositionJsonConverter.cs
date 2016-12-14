@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Xamarin.Forms.GoogleMaps.Internals
 {
-    public class PositionJsonConverterConverter : JsonConverter
+    public class PositionJsonConverter : JsonConverter
     {
         public override bool CanConvert(Type objectType)
         {

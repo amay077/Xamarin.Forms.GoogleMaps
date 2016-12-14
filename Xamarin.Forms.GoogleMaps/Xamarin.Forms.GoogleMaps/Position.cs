@@ -3,7 +3,7 @@ using System;
 
 namespace Xamarin.Forms.GoogleMaps
 {
-    [JsonConverter(typeof(Internals.PositionJsonConverterConverter))]
+    [JsonConverter(typeof(Internals.PositionJsonConverter))]
     public struct Position
     {
         public Position(double latitude, double longitude)
