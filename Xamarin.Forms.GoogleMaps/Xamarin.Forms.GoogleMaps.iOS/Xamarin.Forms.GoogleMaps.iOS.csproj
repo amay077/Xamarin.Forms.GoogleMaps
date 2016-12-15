@@ -75,6 +75,8 @@
     <Reference Include="Xamarin.iOS" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\MarkerExtensions.cs" />
+    <Compile Include="Logics\GenericAnimatorUpdateListner.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="FormsGoogleMaps.cs" />
     <Compile Include="MapRenderer.cs" />

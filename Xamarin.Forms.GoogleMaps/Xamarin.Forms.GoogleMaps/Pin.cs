@@ -18,6 +18,8 @@ namespace Xamarin.Forms.GoogleMaps
 
         public static readonly BindableProperty RotationProperty = BindableProperty.Create("Rotation", typeof(float), typeof(Pin), 0f);
 
+        public static readonly BindableProperty AppearAnimationProperty = BindableProperty.Create(nameof(AppearAnimation), typeof(AppearMarkerAnimation), typeof(Pin), default(AppearMarkerAnimation));
+
         public string Label
         {
             get { return (string)GetValue(LabelProperty); }
@@ -59,6 +61,14 @@ namespace Xamarin.Forms.GoogleMaps
             get { return (float)GetValue(RotationProperty); }
             set { SetValue(RotationProperty, value); }
         }
+
+        public AppearMarkerAnimation AppearAnimation
+        {
+            get { return (AppearMarkerAnimation)GetValue(AppearAnimationProperty); }
+            set { SetValue(AppearAnimationProperty, value); }
+        }
+
+
 
         public object Tag { get; set; }
 
