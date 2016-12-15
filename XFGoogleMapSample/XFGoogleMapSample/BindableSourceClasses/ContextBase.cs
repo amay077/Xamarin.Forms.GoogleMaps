@@ -19,13 +19,13 @@ namespace XFGoogleMapSample
         }
 
         protected MapSpan _MapRegion = new MapSpan(new Position(48.858, 2.294), 1, 1);
-        public MapSpan MapRegion { get { return _MapRegion; } set { bool changed = _MapRegion != value; if (changed) { NotifyIAmChanging(); _MapRegion = value; NotifyIChanged(); } } }
+        public MapSpan MapRegion { get { return _MapRegion; } set { bool changed = _MapRegion != value; if (changed) { OnPropertyChanging(); _MapRegion = value; OnPropertyChanged(); } } }
 
         private IPin _SelectedItem;
-        public IPin SelectedItem { get { return _SelectedItem; } set { bool changed = _SelectedItem != value; if (changed) { NotifyIAmChanging(); _SelectedItem = value; NotifyIChanged(); } } }
+        public IPin SelectedItem { get { return _SelectedItem; } set { bool changed = _SelectedItem != value; if (changed) { OnPropertyChanging(); _SelectedItem = value; OnPropertyChanged(); } } }
 
         private string _Status = "Shows status here";
-        public string Status { get { return _Status; } set { bool changed = _Status != value; if (changed) { NotifyIAmChanging(); _Status = value; NotifyIChanged(); } } }
+        public string Status { get { return _Status; } set { bool changed = _Status != value; if (changed) { OnPropertyChanging(); _Status = value; OnPropertyChanged(); } } }
 
         public ObservableCollection<ICircle> Circles { get; set; } = new ObservableCollection<ICircle>();
         public ObservableCollection<IPin> Pins { get; set; } = new ObservableCollection<IPin>();

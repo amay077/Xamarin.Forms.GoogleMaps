@@ -49,7 +49,7 @@ namespace XFGoogleMapSample
                 Category = CATEGORY_MOVABLE
             };
 
-            pin.InfoWindowClickedCommand = new Command((object o) => { if (!Circles.Any()) Circles.Add((new CirclePinModel(pin, 2))); var circle = Circles.FirstOrDefault() as CirclePinModel; circle.Center = pin; pin.Move100m(Direction); }, (o) => true);
+            pin.PinConfig.InfoWindowClickedCommand = new Command((object o) => { if (!Circles.Any()) Circles.Add((new CirclePinModel(pin, 2))); var circle = Circles.FirstOrDefault() as CirclePinModel; circle.Center = pin; pin.Move100m(Direction); }, (o) => true);
 
             Pins.Add(pin);
         }

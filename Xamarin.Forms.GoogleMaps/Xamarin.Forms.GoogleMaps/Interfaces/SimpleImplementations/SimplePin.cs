@@ -8,34 +8,28 @@ using System.Windows.Input;
 
 namespace Xamarin.Forms.GoogleMaps.Interfaces.SimpleImplementations
 {
-    public class SimplePin : IPin
+    public class SimplePin : BindableObject, IPin
     {
-        public ICommand PinSelectedCommand { get; set; }
+        private string _PinTitle;
+        public string PinTitle { get { return _PinTitle; } set { bool changed = _PinTitle != value; if (changed) { OnPropertyChanging(); _PinTitle = value; OnPropertyChanged(); } } }
 
-        public object PinSelectedCommandParameter { get; set; }
+        private string _PinSubTitle;
+        public string PinSubTitle { get { return _PinSubTitle; } set { bool changed = _PinSubTitle != value; if (changed) { OnPropertyChanging(); _PinSubTitle = value; OnPropertyChanged(); } } }
 
-        public ICommand InfoWindowClickedCommand { get; set; }
+        private Position _PinPosition;
+        public Position PinPosition { get { return _PinPosition; } set { bool changed = _PinPosition != value; if (changed) { OnPropertyChanging(); _PinPosition = value; OnPropertyChanged(); } } }
 
-        public object InfoWindowClickedCommandParameter { get; set; }
+        private float _PinRotation;
+        public float PinRotation { get { return _PinRotation; } set { bool changed = _PinRotation != value; if (changed) { OnPropertyChanging(); _PinRotation = value; OnPropertyChanged(); } } }
 
-        public ICommand PinClickedCommand { get; set; }
+        private bool _PinIsDraggable;
+        public bool PinIsDraggable { get { return _PinIsDraggable; } set { bool changed = _PinIsDraggable != value; if (changed) { OnPropertyChanging(); _PinIsDraggable = value; OnPropertyChanged(); } } }
 
-        public object PinClickedCommandParameter { get; set; }
+        private BitmapDescriptor _PinIcon;
+        public BitmapDescriptor PinIcon { get { return _PinIcon; } set { bool changed = _PinIcon != value; if (changed) { OnPropertyChanging(); _PinIcon = value; OnPropertyChanged(); } } }
 
-        public BitmapDescriptor PinIcon { get; set; }
-
-        public bool PinIsDraggable { get; set; }
-
-        public Position PinPosition { get; set; }
-
-        public float PinRotation { get; set; }
-
-        public string PinSubTitle { get; set; }
-
-        public string PinTitle { get; set; }
-
-        public PinType PinType { get; set; }
-
-        public event PropertyChangedEventHandler PropertyChanged;
+        private IPinConfig _PinConfig=new SimplePinConfig();
+        public IPinConfig PinConfig { get { return _PinConfig; } set { bool changed = _PinConfig != value; if (changed) { OnPropertyChanging(); _PinConfig = value; OnPropertyChanged(); } } }
     }
+
 }

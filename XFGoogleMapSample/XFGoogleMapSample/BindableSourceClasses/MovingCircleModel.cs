@@ -53,15 +53,15 @@ namespace XFGoogleMapSample
         }
 
         private bool _Moving;
-        public bool Moving { get { return _Moving; } set { bool changed = _Moving != value; if (changed) { NotifyIAmChanging(); _Moving = value; NotifyIChanged(); } } }
+        public bool Moving { get { return _Moving; } set { bool changed = _Moving != value; if (changed) { OnPropertyChanging(); _Moving = value; OnPropertyChanged(); } } }
 
         private double _MovingRadiusKm;
-        public double MovingRadiusKm { get { return _MovingRadiusKm; } set { bool changed = _MovingRadiusKm != value; if (changed) { NotifyIAmChanging(); _MovingRadiusKm = value; NotifyIChanged(); } } }
+        public double MovingRadiusKm { get { return _MovingRadiusKm; } set { bool changed = _MovingRadiusKm != value; if (changed) { OnPropertyChanging(); _MovingRadiusKm = value; OnPropertyChanged(); } } }
 
         private Position _InitialCenter;
-        public Position InitialCenter { get { return _InitialCenter; } set { bool changed = _InitialCenter != value; if (changed) { NotifyIAmChanging(); _InitialCenter = value; NotifyIChanged(); } } }
+        public Position InitialCenter { get { return _InitialCenter; } set { bool changed = _InitialCenter != value; if (changed) { OnPropertyChanging(); _InitialCenter = value; OnPropertyChanged(); } } }
 
         private Position _NextTarget;
-        public Position NextTarget { get { return _NextTarget; } set { bool changed = _NextTarget != value; if (changed) { NotifyIAmChanging(); _NextTarget = value; NotifyIChanged(); } } }
+        public Position NextTarget { get { return _NextTarget; } set { bool changed = _NextTarget != value; if (changed) { OnPropertyChanging(); _NextTarget = value; OnPropertyChanged(); } } }
     }
 }

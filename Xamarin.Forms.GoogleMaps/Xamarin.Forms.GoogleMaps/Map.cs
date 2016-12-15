@@ -335,8 +335,8 @@ namespace Xamarin.Forms.GoogleMaps
             var args = new SelectedPinChangedEventArgs(selectedPin, selectedPin?.BindingContext as IPin);
             SelectedPinChanged?.Invoke(this, args);
             if (SelectedPinChangedCommand?.CanExecute(args) ?? false) SelectedPinChangedCommand.Execute(args);
-            if (item?.PinSelectedCommand?.CanExecute(item?.PinSelectedCommandParameter ?? args) ?? false)
-                item.PinSelectedCommand.Execute(item?.PinSelectedCommandParameter ?? args);
+            if (item?.PinConfig?.PinSelectedCommand?.CanExecute(item?.PinConfig?.PinSelectedCommandParameter ?? args) ?? false)
+                item.PinConfig?.PinSelectedCommand.Execute(item?.PinConfig?.PinSelectedCommandParameter ?? args);
         }
 
         internal bool SendPinClicked(Pin pin)
@@ -345,8 +345,8 @@ namespace Xamarin.Forms.GoogleMaps
             var args = new PinClickedEventArgs(pin, item);
             PinClicked?.Invoke(this, args);
             if (PinClickedCommand?.CanExecute(args) ?? false) PinClickedCommand.Execute(args);
-            if (item?.PinClickedCommand?.CanExecute(item?.PinClickedCommandParameter ?? args) ?? false)
-                item.InfoWindowClickedCommand.Execute(item?.PinClickedCommandParameter ?? args);
+            if (item?.PinConfig?.PinClickedCommand?.CanExecute(item?.PinConfig?.PinClickedCommandParameter ?? args) ?? false)
+                item.PinConfig?.InfoWindowClickedCommand.Execute(item?.PinConfig?.PinClickedCommandParameter ?? args);
             return args.Handled;
         }
 
@@ -356,30 +356,38 @@ namespace Xamarin.Forms.GoogleMaps
             var args = new InfoWindowClickedEventArgs(pin, item);
             InfoWindowClicked?.Invoke(this, args);
             if (InfoWindowClickedCommand?.CanExecute(args) ?? false) InfoWindowClickedCommand.Execute(args);
-            if (item?.InfoWindowClickedCommand?.CanExecute(item?.InfoWindowClickedCommandParameter ?? args) ?? false)
-                item.InfoWindowClickedCommand.Execute(item?.InfoWindowClickedCommandParameter ?? args);
+            if (item?.PinConfig?.InfoWindowClickedCommand?.CanExecute(item?.PinConfig?.InfoWindowClickedCommandParameter ?? args) ?? false)
+                item.PinConfig?.InfoWindowClickedCommand.Execute(item?.PinConfig?.InfoWindowClickedCommandParameter ?? args);
         }
 
         internal void SendPinDragStart(Pin pin)
         {
+            var item = pin?.BindingContext as IPin;
             var args = new PinDragEventArgs(pin, pin?.BindingContext as IPin);
             PinDragStart?.Invoke(this, args);
             if (PinDragStartCommand?.CanExecute(args) ?? false) PinDragStartCommand.Execute(args);
-
+            if (item?.PinConfig?.PinDragStartCommand?.CanExecute(item?.PinConfig?.PinDragStartCommandParameter ?? args) ?? false)
+                item.PinConfig?.PinDragStartCommand.Execute(item?.PinConfig?.PinDragStartCommandParameter ?? args);
         }
 
         internal void SendPinDragEnd(Pin pin)
         {
+            var item = pin?.BindingContext as IPin;
             var args = new PinDragEventArgs(pin, pin?.BindingContext as IPin);
             PinDragEnd?.Invoke(this, args);
             if (PinDragEndCommand?.CanExecute(args) ?? false) PinDragEndCommand.Execute(args);
+            if (item?.PinConfig?.PinDragEndCommand?.CanExecute(item?.PinConfig?.PinDragEndCommandParameter ?? args) ?? false)
+                item.PinConfig?.PinDragEndCommand.Execute(item?.PinConfig?.PinDragEndCommandParameter ?? args);
         }
 
         internal void SendPinDragging(Pin pin)
         {
+            var item = pin?.BindingContext as IPin;
             var args = new PinDragEventArgs(pin, pin?.BindingContext as IPin);
             PinDragging?.Invoke(this, args);
             if (PinDraggingCommand?.CanExecute(args) ?? false) PinDraggingCommand.Execute(args);
+            if (item?.PinConfig?.PinDraggingCommand?.CanExecute(item?.PinConfig?.PinDraggingCommandParameter ?? args) ?? false)
+                item.PinConfig?.PinDraggingCommand.Execute(item?.PinConfig?.PinDraggingCommandParameter ?? args);
         }
 
         internal void SendMapClicked(Position point)

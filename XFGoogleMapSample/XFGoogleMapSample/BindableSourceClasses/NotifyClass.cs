@@ -12,8 +12,8 @@ namespace XFGoogleMapSample
     {
         protected void NotifyPropertyChanging(string prop) { PropertyChanging?.Invoke(this, new PropertyChangedEventArgs(prop)); }
         protected void NotifyPropertyChanged(string prop) { PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop)); }
-        protected void NotifyIAmChanging([CallerMemberName] string propertyName = null) => NotifyPropertyChanging(propertyName);
-        protected void NotifyIChanged([CallerMemberName] string propertyName = null) => NotifyPropertyChanged(propertyName);
+        protected void OnPropertyChanging([CallerMemberName] string propertyName = null) => NotifyPropertyChanging(propertyName);
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null) => NotifyPropertyChanged(propertyName);
         public event PropertyChangedEventHandler PropertyChanging;
         public event PropertyChangedEventHandler PropertyChanged;
     }

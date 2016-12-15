@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Windows.Input;
 
 namespace Xamarin.Forms.GoogleMaps
@@ -14,26 +15,48 @@ namespace Xamarin.Forms.GoogleMaps
         /// </summary>
         Position PinPosition { get; }
 
-        PinType PinType { get; } 
+        float PinRotation { get; }
 
         BitmapDescriptor PinIcon { get; }
 
         bool PinIsDraggable { get; }
 
-        float PinRotation { get;  }
-
-        ICommand PinClickedCommand { get; }
-
-        object PinClickedCommandParameter { get; }
-
-        ICommand InfoWindowClickedCommand { get; }
-
-        object InfoWindowClickedCommandParameter { get; }
-
-        ICommand PinSelectedCommand { get; }
-
-        object PinSelectedCommandParameter { get; }
+        IPinConfig PinConfig { get; }
     }
+    public interface IPinConfig
+    {
+        PinType PinType { get; set; }
+
+        ICommand PinClickedCommand { get; set; }
+
+        object PinClickedCommandParameter { get; set; }
+
+        ICommand InfoWindowClickedCommand { get; set; }
+
+        object InfoWindowClickedCommandParameter { get; set; }
+
+        ICommand PinSelectedCommand { get; set; }
+
+        object PinSelectedCommandParameter { get; set; }
+
+        ICommand PinDragStartCommand { get; set; }
+
+        object PinDragStartCommandParameter { get; set; }
+
+        ICommand PinDragEndCommand { get; set; }
+
+        object PinDragEndCommandParameter { get; set; }
+
+        ICommand PinDraggingCommand { get; set; }
+
+        object PinDraggingCommandParameter { get; set; }
+
+        AppearMarkerAnimation AppearAnimation { get; set; }
+
+        Pin GMPin { get; set; }
+        object NativePin { get; set; }
+    }
+
     public static class IPinExtensions
     {
         public static Pin ToPin(this IPin iPin)
@@ -45,7 +68,11 @@ namespace Xamarin.Forms.GoogleMaps
             pin.SetBinding(Pin.IsDraggableProperty, nameof(IPin.PinIsDraggable));
             pin.SetBinding(Pin.PositionProperty, nameof(IPin.PinPosition));
             pin.SetBinding(Pin.RotationProperty, nameof(IPin.PinRotation));
-            pin.SetBinding(Pin.TypeProperty, nameof(IPin.PinType));
+            if (iPin.PinConfig != null)
+            {
+                pin.SetBinding(Pin.TypeProperty, nameof(IPin.PinConfig) + "." + nameof(IPinConfig.PinType));
+                pin.SetBinding(Pin.AppearAnimationProperty, nameof(IPin.PinConfig) + "." + nameof(IPinConfig.AppearAnimation));
+            }
             return pin;
         }
 

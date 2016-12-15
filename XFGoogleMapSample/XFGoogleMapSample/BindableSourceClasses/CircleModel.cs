@@ -29,14 +29,14 @@ namespace XFGoogleMapSample
         public PinModel Center
         {
             get { return _Center; }
-            set { bool changed = _Center != value; if (changed) { NotifyIAmChanging(); _Center = value; NotifyIChanged(); } }
+            set { bool changed = _Center != value; if (changed) { OnPropertyChanging(); _Center = value; OnPropertyChanged(); } }
         }
 
         private double _RadiusKm;
         public double RadiusKm
         {
             get { return _RadiusKm; }
-            set { bool changed = _RadiusKm != value; if (changed) { NotifyIAmChanging(); _RadiusKm = value; NotifyIChanged(); } }
+            set { bool changed = _RadiusKm != value; if (changed) { OnPropertyChanging(); _RadiusKm = value; OnPropertyChanged(); } }
         }
 
     }

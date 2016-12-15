@@ -14,35 +14,35 @@ namespace XFGoogleMapSample
         public Position CircleCenter
         {
             get { return _CircleCenter; }
-            set { bool changed = _CircleCenter != value; if (changed) { NotifyIAmChanging(); _CircleCenter = value; NotifyIChanged(); } }
+            set { bool changed = _CircleCenter != value; if (changed) { OnPropertyChanging(); _CircleCenter = value; OnPropertyChanged(); } }
         }
 
         private Color _CircleFillColor;
         public Color CircleFillColor
         {
             get { return _CircleFillColor; }
-            set { bool changed = _CircleFillColor != value; if (changed) { NotifyIAmChanging(); _CircleFillColor = value; NotifyIChanged(); } }
+            set { bool changed = _CircleFillColor != value; if (changed) { OnPropertyChanging(); _CircleFillColor = value; OnPropertyChanged(); } }
         }
 
         private Distance _CircleRadius;
         public Distance CircleRadius
         {
             get { return _CircleRadius; }
-            set { bool changed = _CircleRadius != value; if (changed) { NotifyIAmChanging(); _CircleRadius = value; NotifyIChanged(); } }
+            set { bool changed = _CircleRadius != value; if (changed) { OnPropertyChanging(); _CircleRadius = value; OnPropertyChanged(); } }
         }
 
         private Color _CircleStrokeColor;
         public Color CircleStrokeColor
         {
             get { return _CircleStrokeColor; }
-            set { bool changed = _CircleStrokeColor != value; if (changed) { NotifyIAmChanging(); _CircleStrokeColor = value; NotifyIChanged(); } }
+            set { bool changed = _CircleStrokeColor != value; if (changed) { OnPropertyChanging(); _CircleStrokeColor = value; OnPropertyChanged(); } }
         }
 
         private float _CircleStrokeWidth;
         public float CircleStrokeWidth
         {
             get { return _CircleStrokeWidth; }
-            set { bool changed = _CircleStrokeWidth != value; if (changed) { NotifyIAmChanging(); _CircleStrokeWidth = value; NotifyIChanged(); } }
+            set { bool changed = _CircleStrokeWidth != value; if (changed) { OnPropertyChanging(); _CircleStrokeWidth = value; OnPropertyChanged(); } }
         }
     }
 }

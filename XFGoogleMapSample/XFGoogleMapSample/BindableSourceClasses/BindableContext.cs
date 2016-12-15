@@ -45,7 +45,7 @@ namespace XFGoogleMapSample
                 Category = CATEGORY_MOVABLE
             };
 
-            pin.InfoWindowClickedCommand = new Command((object o) => { pin.Move100m(Direction); }, (o) => true);
+            pin.PinConfig.InfoWindowClickedCommand = new Command((object o) => { pin.Move100m(Direction); }, (o) => true);
 
             Pins.Add(pin);
         }
@@ -64,13 +64,24 @@ namespace XFGoogleMapSample
             Random r = new Random();
             var lat = 48.855651 + 0.5 * r.NextDouble();
             var lng = 2.347134 + 0.5 * r.NextDouble();
-            var pin = AddPin("Random pin " + (PinNumber++).ToString(), "click me to update", lat, lng);
+            var pin = new PinModel() { Name = "Random pin " + (PinNumber++).ToString(), Details = "click me to update", Latitude = lat, Longitude = lng };
             pin.Category = CATEGORY_RANDOM;
-            pin.InfoWindowClickedCommand = new Command((object o) =>
+
+
+            if(r.NextDouble()<1d/3)
+                pin.PinConfig.AppearAnimation = AppearMarkerAnimation.Fall;
+            else if(r.NextDouble()<1d/2)
+                pin.PinConfig.AppearAnimation = AppearMarkerAnimation.FadeIn;
+            else
+                pin.PinConfig.AppearAnimation = AppearMarkerAnimation.Shake;
+
+            pin.PinConfig.InfoWindowClickedCommand = new Command((object o) =>
             {
                 pin.Name = "Random pin: " + (PinNumber++);
                 pin.Details = "Illustration of non-updating callout. Need to display it again by tapping on the pin.";
             }, (o) => true);
+
+            Pins.Add(pin);
         }
 
         public ICommand RemovePinParisCommand { get { return new Command(() => RemovePinParis()); } }
@@ -96,7 +107,7 @@ namespace XFGoogleMapSample
                 Category = CATEGORY_MOVABLE
             };
 
-            pin.InfoWindowClickedCommand = new Command((object o) => { if (!Circles.Any()) Circles.Add((new CirclePinModel(pin, 2))); var circle = Circles.FirstOrDefault() as CirclePinModel; circle.Center = pin; pin.Move100m(Direction); }, (o) => true);
+            pin.PinConfig.InfoWindowClickedCommand = new Command((object o) => { if (!Circles.Any()) Circles.Add((new CirclePinModel(pin, 2))); var circle = Circles.FirstOrDefault() as CirclePinModel; circle.Center = pin; pin.Move100m(Direction); }, (o) => true);
 
             Pins.Add(pin);
         }

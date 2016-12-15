@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms.GoogleMaps;
+using Xamarin.Forms.GoogleMaps.Interfaces.SimpleImplementations;
 
 namespace XFGoogleMapSample
 {
@@ -52,17 +53,8 @@ namespace XFGoogleMapSample
         private PinType _PinType;
         public PinType PinType { get { return _PinType; } set { bool changed = _PinType != value; _PinType = value; if (changed) NotifyPropertyChanged(nameof(PinType)); } }
 
-        public ICommand PinSelectedCommand { get; set; }
-
-        public object PinSelectedCommandParameter { get; set; }
-
-        public ICommand InfoWindowClickedCommand { get; set; }
-
-        public object InfoWindowClickedCommandParameter { get; set; }
-
-        public ICommand PinClickedCommand { get; set; }
-
-        public object PinClickedCommandParameter { get; set; }
+        private IPinConfig _PinConfig=new SimplePinConfig();
+        public IPinConfig PinConfig { get { return _PinConfig; } set { bool changed = _PinConfig != value; if (changed) { OnPropertyChanging(); _PinConfig = value; OnPropertyChanged(); } } }
 
         #endregion IPin NOT computed properties
     }

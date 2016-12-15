@@ -55,6 +55,18 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
             nativeMarker.Snippet = outerItem.Address ?? string.Empty;
             nativeMarker.Draggable = outerItem.IsDraggable;
             nativeMarker.Rotation = outerItem.Rotation;
+            switch (outerItem.AppearAnimation)
+            {
+                case AppearMarkerAnimation.None:
+                case AppearMarkerAnimation.Fall:
+                    nativeMarker.AppearAnimation = MarkerAnimation.None;
+                    break;
+                case AppearMarkerAnimation.Pop:
+                case AppearMarkerAnimation.Any:
+                    nativeMarker.AppearAnimation = MarkerAnimation.Pop;
+                    break;
+            }
+
 
             if (outerItem.Icon != null)
             {
@@ -68,8 +80,8 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
 
             return nativeMarker;
         }
-
-        protected override Marker DeleteNativeItem(Pin outerItem)
+        
+    protected override Marker DeleteNativeItem(Pin outerItem)
         {
             var nativeMarker = outerItem.NativeObject as Marker;
             nativeMarker.Map = null;

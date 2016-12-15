@@ -7,7 +7,6 @@ using Xamarin.Forms.GoogleMaps.Android;
 using Xamarin.Forms.GoogleMaps.Android.Extensions;
 using NativeBitmapDescriptorFactory = Android.Gms.Maps.Model.BitmapDescriptorFactory;
 using Android.Widget;
-using System;
 
 namespace Xamarin.Forms.GoogleMaps.Logics.Android
 {
@@ -74,9 +73,56 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
                 TransformXamarinViewToAndroidBitmap(outerItem, marker);
             }
 
+            switch (outerItem.AppearAnimation)
+            {
+                case AppearMarkerAnimation.Fall:
+                    FallAnimation(marker, 300);
+                    break;
+                case AppearMarkerAnimation.FadeIn:
+                    FadeInAnimation(marker, 300);
+                    break;
+                case AppearMarkerAnimation.Any:
+                case AppearMarkerAnimation.Shake:
+                    ShakeAnimation(marker, 400);
+                    break;
+                case AppearMarkerAnimation.Pop:
+                    // Not implemented yet
+                    PopInAnimation(marker, 300);
+                    break;
+                case AppearMarkerAnimation.None:
+                default:
+                    break;
+            }
+
             // associate pin with marker for later lookup in event handlers
             outerItem.NativeObject = marker;
             return marker;
+        }
+
+        void FallAnimation(Marker marker, long durationMs)
+        {
+            var visibleRegion = NativeMap.Projection.VisibleRegion.LatLngBounds;
+            Position endPos = marker.Position.ToPosition();
+            marker.Position = new LatLng(visibleRegion.Northeast.Latitude, visibleRegion.Center.Longitude);
+            marker.AnimateLine(endPos, durationMs);
+//            FallAnimation(marker, startPos, durationMs);
+        }
+
+        void FadeInAnimation(Marker marker, long durationMs)
+        {
+            marker.Alpha = 0;
+            marker.AnimateFadeIn(durationMs);
+        }
+
+        void ShakeAnimation(Marker marker, long durationMs)
+        {
+            marker.Rotation = 0;
+            marker.AnimateShake(3,durationMs);
+        }
+
+        void PopInAnimation(Marker marker, long durationMs)
+        {
+            marker.AnimatePopIn(durationMs);
         }
 
         protected override Marker DeleteNativeItem(Pin outerItem)
