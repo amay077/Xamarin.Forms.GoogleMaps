@@ -44,3 +44,4 @@ Thumbs.db
 *.lock.json
 .idea/
 Xamarin.Forms.GoogleMaps/Xamarin.Forms.GoogleMaps/Xamarin.Forms.GoogleMaps.csproj
+Variable_sample.cs
