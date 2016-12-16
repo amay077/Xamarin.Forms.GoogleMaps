@@ -81,7 +81,7 @@ namespace XFGoogleMapSample
                 {
                     var pos = positions.First();
                     map.MoveToRegion(MapSpan.FromCenterAndRadius(pos, Distance.FromMeters(5000)));
-                    var reg = map.VisibleRegion;
+                    var reg = map.MapRegion;
                     var format = "0.00";
                     labelStatus.Text = $"Center = {reg.Center.Latitude.ToString(format)}, {reg.Center.Longitude.ToString(format)}";
                 }

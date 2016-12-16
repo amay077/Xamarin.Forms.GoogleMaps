@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:maps="clr-namespace:Xamarin.Forms.GoogleMaps;assembly=Xamarin.Forms.GoogleMaps"
+	x:Class="XFGoogleMapSample.BindablePinsSourcePage"
+	Title="Pins">
+
+	<ContentPage.Content>
+
+		<StackLayout
+			VerticalOptions="Fill"
+			Orientation="Vertical">
+
+			<Grid>
+				<Grid.RowDefinitions>
+			        <RowDefinition Height="Auto" />
+			        <RowDefinition Height="Auto" />
+			        <RowDefinition Height="Auto" />
+			        <RowDefinition Height="Auto" />
+			        <RowDefinition Height="Auto" />
+			        <RowDefinition Height="Auto" />
+			    </Grid.RowDefinitions>
+			 
+			    <Grid.ColumnDefinitions>
+			        <ColumnDefinition Width="Auto" />
+			        <ColumnDefinition Width="*" />
+			    </Grid.ColumnDefinitions>
+				
+				<Button Command="{Binding AddNewMovablePinCommand}"
+						Text="Add movable Pin"
+						Grid.Row="0"
+						Grid.Column="1"/>
+				<Button Command="{Binding RemoveMovablePinCommand}"
+						Text="Remove pin"
+						Grid.Row="0"
+						Grid.Column="2"/>
+
+				<Button Command="{Binding AddPinParisCommand}"
+						Text="Add pin around Paris"
+						Grid.Row="1"
+						Grid.Column="1"/>
+				<Button Command="{Binding RemovePinParisCommand}"
+						Text="Remove pin"
+						Grid.Row="1"
+						Grid.Column="2"/>
+
+				<Button Command="{Binding ClearPinsCommand}"
+						Text="Clear Pins"
+						Grid.Row="2"
+						Grid.Column="1"
+						Grid.ColumnSpan="2" />
+				
+				<Label x:Name="labelStatus"
+						Text="Show status when Pin selected."
+						Grid.Row="5"
+						Grid.Column="1"
+						Grid.ColumnSpan="2" />
+				
+			</Grid>			
+			<maps:Map x:Name="map" PinsSource="{Binding Pins}" MapRegion="{Binding MapRegion}"
+					VerticalOptions="FillAndExpand"/>
+			
+		</StackLayout>
+		
+	</ContentPage.Content>
+</ContentPage>

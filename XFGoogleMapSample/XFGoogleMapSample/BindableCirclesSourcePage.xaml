@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:maps="clr-namespace:Xamarin.Forms.GoogleMaps;assembly=Xamarin.Forms.GoogleMaps"
+	x:Class="XFGoogleMapSample.BindableCirclesSourcePage"
+	Title="Pins">
+
+	<ContentPage.Content>
+
+		<StackLayout
+			VerticalOptions="Fill"
+			Orientation="Vertical">
+
+			<Grid>
+				<Grid.RowDefinitions>
+			        <RowDefinition Height="Auto" />
+			        <RowDefinition Height="Auto" />
+			        <RowDefinition Height="Auto" />
+			        <RowDefinition Height="Auto" />
+			        <RowDefinition Height="Auto" />
+			        <RowDefinition Height="Auto" />
+			    </Grid.RowDefinitions>
+			 
+			    <Grid.ColumnDefinitions>
+			        <ColumnDefinition Width="Auto" />
+			        <ColumnDefinition Width="*" />
+			    </Grid.ColumnDefinitions>
+				
+				<Button Command="{Binding AddNewMovablePinCircleCommand}"
+						Text="Add movable Pin with circle"
+						Grid.Row="0"
+						Grid.Column="1"/>
+				<Button Command="{Binding RemoveMovablePinCircleCommand}"
+						Text="Remove pin"
+						Grid.Row="0"
+						Grid.Column="2"/>
+
+        <Button Command="{Binding AddNewMovingCircleCommand}"
+            Text="Add moving circle"
+            Grid.Row="1"
+            Grid.Column="1"/>
+        <Button Command="{Binding RemoveMovingCircleCommand}"
+						Text="Remove circle"
+						Grid.Row="1"
+						Grid.Column="2"/>
+
+        <Button Command="{Binding StartStopCirclesCommand}"
+						Text="Start/Stop circles"
+						Grid.Row="2"
+						Grid.Column="1"
+						Grid.ColumnSpan="1" />
+
+        <Button Command="{Binding ClearPinsCommand}"
+						Text="Clear map"
+						Grid.Row="2"
+						Grid.Column="2"
+						Grid.ColumnSpan="1" />
+				
+				<Label x:Name="labelStatus"
+						Text="{Binding Status}"
+						Grid.Row="5"
+						Grid.Column="1"
+						Grid.ColumnSpan="2" />
+				
+			</Grid>			
+			<maps:Map x:Name="map" PinsSource="{Binding Pins}" CirclesSource="{Binding Circles}" MapRegion="{Binding MapRegion,Mode=TwoWay}"
+					VerticalOptions="FillAndExpand" InfoWindowClickedCommand="{Binding DispInfoWindowClickedCommand}" PinClickedCommand="{Binding PinClickedCommand}" />
+			
+		</StackLayout>
+		
+	</ContentPage.Content>
+</ContentPage>

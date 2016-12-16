@@ -282,14 +282,20 @@ namespace Xamarin.Forms.GoogleMaps.Android
             var lr = projection.FromScreenLocation(new global::Android.Graphics.Point(width, height));
             var dlat = Math.Max(Math.Abs(ul.Latitude - lr.Latitude), Math.Abs(ur.Latitude - ll.Latitude));
             var dlong = Math.Max(Math.Abs(ul.Longitude - lr.Longitude), Math.Abs(ur.Longitude - ll.Longitude));
-            ((Map)Element).VisibleRegion = new MapSpan(
-                    new Position(
-                        pos.Latitude,
-                        pos.Longitude
-                    ),
-                dlat,
-                dlong
-            );
+            var map2 = ((Map)Element);
+            try
+            {
+                map2.CameraMoving = true;
+                map2.MapRegion = new MapSpan(
+                        new Position(
+                            pos.Latitude,
+                            pos.Longitude
+                        ),
+                    dlat,
+                    dlong
+                );
+            }
+            finally { map2.CameraMoving = true; }
         }
 
         bool _disposed;

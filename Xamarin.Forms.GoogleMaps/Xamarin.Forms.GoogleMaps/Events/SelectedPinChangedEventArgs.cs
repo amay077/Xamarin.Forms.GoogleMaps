@@ -9,9 +9,16 @@ namespace Xamarin.Forms.GoogleMaps
             private set;
         }
 
-        internal SelectedPinChangedEventArgs(Pin selectedPin)
+        public IPin SelectedItem
+        {
+            get;
+            private set;
+        }
+
+        internal SelectedPinChangedEventArgs(Pin selectedPin, IPin item)
         {
             this.SelectedPin = selectedPin;
+            SelectedItem = item;
         }
     }
 }

@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using Xamarin.Forms.GoogleMaps.Internals;
 
 namespace Xamarin.Forms.GoogleMaps
 {
+    [TypeConverter(typeof(MapSpanTypeConverter))]
     public sealed class MapSpan
     {
-        const double EarthRadiusKm = 6371;
-        const double EarthCircumferenceKm = EarthRadiusKm * 2 * Math.PI;
+        const double EarthRadiusKm = GeoConstants.EarthRadiusKm;
+        const double EarthCircumferenceKm = GeoConstants.EarthCircumferenceKm;
         const double MinimumRangeDegrees = 0.001 / EarthCircumferenceKm * 360; // 1 meter
 
         public MapSpan(Position center, double latitudeDegrees, double longitudeDegrees)
@@ -135,6 +137,15 @@ namespace Xamarin.Forms.GoogleMaps
         {
             double latCircumference = LatitudeCircumferenceKm(position);
             return latCircumference * longitudeDegrees / 360;
+        }
+
+        public override string ToString()
+        {
+            return ToString(DistanceType.Kilometers);
+        }
+        public string ToString(DistanceType type)
+        {
+            return "(" + this.Center.ToString() + ")," + (type == DistanceType.Kilometers ? Radius.Kilometers.ToString("F2").Replace(",", ".") + "km" : type == DistanceType.Meters ? Radius.Meters.ToString("F0") + " meters" : Radius.Miles.ToString("F2").Replace(",", ".") + " miles");
         }
     }
 }

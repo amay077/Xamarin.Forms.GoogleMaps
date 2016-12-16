@@ -6,28 +6,36 @@
 	x:Class="XFGoogleMapSample.MainPage"
 	Title="Xamarin.Forms.GoogleMaps sample">
 
-	<ContentPage.Content>
-		<StackLayout
-			HorizontalOptions="Fill"
-			VerticalOptions="Fill"
-			Orientation="Vertical">
+  <ContentPage.Content>
+    <ScrollView>
+      <StackLayout
+        HorizontalOptions="Fill"
+        VerticalOptions="Fill"
+        Orientation="Vertical">
 
-			<Button x:Name="buttonBasicMap"
-					Text="Basic Map" />
-			<Button x:Name="buttonPins"
-					Text="Pins" />
-			<Button x:Name="buttonShapes"
-					Text="Shapes" />
-			<Button x:Name="buttonTiles"
-					Text="Tiles" />
-            <Button x:Name="buttonCustomPins"
-                    Text="Custom Pin" />
-            <Button x:Name="buttonShapesWithInitialize"
-                    Text="Shapes with initialize" />
-            <Button x:Name="buttonBindingPin"
-                    Text="Binding Pin" />
-            <Button x:Name="buttonGroundOverlays"
-                    Text="GroundOverlays" />
-		</StackLayout>
-	</ContentPage.Content>
+        <Button x:Name="buttonBasicMap"
+            Text="Basic Map" />
+        <Button x:Name="buttonPins"
+            Text="Pins" />
+        <Button x:Name="buttonShapes"
+            Text="Shapes" />
+        <Button x:Name="buttonTiles"
+            Text="Tiles" />
+        <Button x:Name="buttonCustomPins"
+                Text="Custom Pin" />
+        <Button x:Name="buttonShapesWithInitialize"
+                Text="Shapes with initialize" />
+        <Button x:Name="buttonBindingPin"
+                Text="Binding Pin" />
+        <Button x:Name="buttonGroundOverlays"
+                Text="GroundOverlays" />
+        <Button x:Name="buttonBindablePinsSource"
+                Text="Bindable PinsSource" />
+        <Button x:Name="buttonBindableCirclesSource"
+                Text="Bindable CirclesSource" />
+        <Button x:Name="buttonBindableProperties"
+                Text="Bindable Properties" />
+      </StackLayout>
+    </ScrollView>
+  </ContentPage.Content>
 </ContentPage>

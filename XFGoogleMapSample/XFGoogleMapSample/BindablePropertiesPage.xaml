@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:maps="clr-namespace:Xamarin.Forms.GoogleMaps;assembly=Xamarin.Forms.GoogleMaps"
+  xmlns:xfg="clr-namespace:XFGoogleMapSample"
+	x:Class="XFGoogleMapSample.BindablePropertiesPage"
+	Title="Pins">
+
+  <ContentPage.Content>
+
+    <StackLayout
+			VerticalOptions="Fill"
+			Orientation="Vertical">
+
+      <Grid RowSpacing="0">
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="Auto" />
+          <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Button Command="{Binding AddNewMovablePinCircleCommand}"
+						Text="Add movable Pin"
+						Grid.Row="0"
+						Grid.Column="1"/>
+        <Button Command="{Binding RemoveMovablePinCircleCommand}"
+						Text="Remove pin"
+						Grid.Row="0"
+						Grid.Column="2"/>
+
+        <xfg:RepeaterViewObject Grid.Row="6" BackgroundColor="#cccccc" VerticalOptions="Start"
+                       ItemsSource="{Binding Pins}" x:Name="ParentObject"
+                       Spacing="0" Grid.Column="1" Grid.ColumnSpan="2"
+                       Padding="0">
+          <xfg:RepeaterViewObject.ItemTemplate>
+            <DataTemplate>
+              <ViewCell>
+                <Grid HorizontalOptions="FillAndExpand" VerticalOptions="Start">
+                  <StackLayout Orientation="Horizontal" VerticalOptions="Center" HorizontalOptions="Start"  >
+                    <Label Text="{Binding PinPosition}" />
+                    <Label Text=" " />
+                    <Label Text="{Binding PinTitle}" />
+                  </StackLayout>
+                  <Button Text=" Select " HorizontalOptions="End" 
+                          Command="{Binding BindingContext.SelectPinCommand, Source={x:Reference ParentObject}}" 
+                          CommandParameter="{Binding}" MinimumWidthRequest="30" >
+                    <Button.TranslationX>
+                      <OnPlatform x:TypeArguments="x:Double"
+                                  Android="-70"
+                                  iOS="-70" />
+                    </Button.TranslationX>
+                    <Button.BackgroundColor>
+                      <OnPlatform x:TypeArguments="Color"
+                            iOS="#EAEAEA" />
+                    </Button.BackgroundColor>
+                  </Button>
+                  <Button Text=" X " HorizontalOptions="End" 
+                          Command="{Binding BindingContext.RemovePinCommand, Source={x:Reference ParentObject}}" 
+                          CommandParameter="{Binding}" MinimumWidthRequest="30" >
+                    <Button.BackgroundColor>
+                      <OnPlatform x:TypeArguments="Color"
+                            iOS="#EAEAEA" />
+                    </Button.BackgroundColor>
+                  </Button>
+                </Grid>
+              </ViewCell>
+            </DataTemplate>
+          </xfg:RepeaterViewObject.ItemTemplate>
+        </xfg:RepeaterViewObject>
+
+        <Button Command="{Binding ClearPinsCommand}"
+						Text="Clear map"
+						Grid.Row="2"
+						Grid.Column="1"
+						Grid.ColumnSpan="2" />
+
+        <StackLayout Orientation="Horizontal" BindingContext="{Binding MapRegion}" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2">
+          <Label Text="MapRegion: "/>
+          <Label Text="("/>
+          <Label BindingContext="{Binding Center}" Text="{Binding Latitude,StringFormat='{0:F4}'}"/>
+          <Label Text=","/>
+          <Label BindingContext="{Binding Center}" Text="{Binding Longitude,StringFormat='{0:F4}'}"/>
+          <Label Text="), "/>
+          <Label BindingContext="{Binding Radius}" Text="{Binding Kilometers,StringFormat='{0:F2} km'}"/>
+        </StackLayout>
+
+        <StackLayout Orientation="Horizontal" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2">
+          <Label Text="SelectedItem: "/>
+          <Label BindingContext="{Binding SelectedItem}" Text="{Binding Name}"/>
+        </StackLayout>
+
+        <Label x:Name="labelStatus"
+						Text="{Binding Status}"
+						Grid.Row="5"
+						Grid.Column="1"
+						Grid.ColumnSpan="2" />
+
+      </Grid>
+      <maps:Map x:Name="map" PinsSource="{Binding Pins}" CirclesSource="{Binding Circles}" MapRegion="{Binding MapRegion,Mode=TwoWay}" SelectedItem="{Binding SelectedItem,Mode=TwoWay}"
+					VerticalOptions="FillAndExpand"/>
+
+    </StackLayout>
+
+  </ContentPage.Content>
+</ContentPage>
