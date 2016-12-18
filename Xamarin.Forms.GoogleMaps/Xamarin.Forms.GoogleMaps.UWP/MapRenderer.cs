@@ -10,6 +10,8 @@ using Windows.UI.Xaml.Controls.Maps;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Shapes;
 using Xamarin.Forms.GoogleMaps.Internals;
+using Xamarin.Forms.GoogleMaps.Logics;
+using Xamarin.Forms.GoogleMaps.Logics.UWP;
 #if WINDOWS_UWP
 using Xamarin.Forms.Platform.UWP;
 
@@ -38,6 +40,16 @@ namespace Xamarin.Forms.Maps.WinRT
             get { return Control as MapControl; }
         }
 
+        readonly BaseLogic<MapControl>[] _logics;
+
+        public MapRenderer() : base()
+        {
+            _logics = new BaseLogic<MapControl>[]
+            {
+                new TileLayerLogic(),
+            };
+        }
+
         protected override async void OnElementChanged(ElementChangedEventArgs<Map> e)
         {
             base.OnElementChanged(e);
@@ -52,7 +64,7 @@ namespace Xamarin.Forms.Maps.WinRT
             if (e.NewElement != null)
             {
                 var mapModel = e.NewElement;
-
+                var oldMapView = (MapControl)Control;
                 if (Control == null)
                 {
                     SetNativeControl(new MapControl());
@@ -75,6 +87,13 @@ namespace Xamarin.Forms.Maps.WinRT
                     LoadPins();
 
                 await UpdateIsShowingUser();
+
+                foreach (var logic in _logics)
+                {
+                    logic.Register(oldMapView, e.OldElement, NativeMap, Map);
+                    logic.RestoreItems();
+                    logic.OnMapPropertyChanged(new PropertyChangedEventArgs(Map.SelectedPinProperty.PropertyName));
+                }
             }
         }
 
