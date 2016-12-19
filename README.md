@@ -35,6 +35,8 @@ Furthermore, I am using Google Maps instead of MapKit because it is easy for def
 |Lines|-|Yes|
 |Circles|-|Yes|
 |Custom map tiles|-|Yes|
+|Pins binding|-|Yes|
+|Pins appearing animation|-|Yes|
 
 For more information, see [Comparison with Xamarin.Forms.Maps](https://github.com/amay077/Xamarin.Forms.GoogleMaps/wiki/Comparison-with-Xamarin.Forms.Maps).
 
