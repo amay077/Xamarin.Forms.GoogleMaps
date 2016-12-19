@@ -4,8 +4,10 @@ using System.Windows.Input;
 
 namespace Xamarin.Forms.GoogleMaps
 {
-    public interface IPin : INotifyPropertyChanged
+    public interface IPin : IComparable<IPin>, INotifyPropertyChanged
     {
+        string PinId { get; }
+
         string PinTitle { get; }
 
         string PinSubTitle { get; }
@@ -13,7 +15,7 @@ namespace Xamarin.Forms.GoogleMaps
         /// <summary>
         /// PinPosition needs a setter to be bindable
         /// </summary>
-        Position PinPosition { get; }
+        Position PinPosition { get; set; }
 
         float PinRotation { get; }
 
@@ -21,7 +23,8 @@ namespace Xamarin.Forms.GoogleMaps
 
         bool PinIsDraggable { get; }
 
-        IPinConfig PinConfig { get; }
+        IPinConfig PinConfig { get; set; }
+
     }
     public interface IPinConfig
     {
@@ -59,6 +62,13 @@ namespace Xamarin.Forms.GoogleMaps
 
     public static class IPinExtensions
     {
+        public static int CompareTo(this IPin iPin, IPin to)
+        {
+            if (iPin?.PinId == null) return 1;
+            if (to?.PinId == null) return -1;
+            return iPin.PinId.CompareTo(to.PinId);
+        }
+
         public static Pin ToPin(this IPin iPin)
         {
             var pin = new Pin() { BindingContext = iPin };

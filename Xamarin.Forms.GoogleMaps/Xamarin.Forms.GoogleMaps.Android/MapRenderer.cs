@@ -41,8 +41,6 @@ namespace Xamarin.Forms.GoogleMaps.Android
         static Bundle s_bundle;
         internal static Bundle Bundle { set { s_bundle = value; } }
 
-        const string MoveMessageName = "MapMoveToRegion";
-
         protected GoogleMap NativeMap { get; private set; }
 
         protected Map Map => (Map)Element;
@@ -81,7 +79,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
             if (e.OldElement != null)
             {
                 var oldMapModel = (Map)e.OldElement;
-                MessagingCenter.Unsubscribe<Map, MoveToRegionMessage>(this, MoveMessageName);
+                MessagingCenter.Unsubscribe<Map, MoveToRegionMessage>(this, Map.MoveMessageName);
 
                 var oldGoogleMap = await oldMapView.GetGoogleMapAsync();
                 if (oldGoogleMap != null)
@@ -101,7 +99,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 _oldMap = (Map)e.OldElement;
             }
 
-            MessagingCenter.Subscribe<Map, MoveToRegionMessage>(this, MoveMessageName, OnMoveToRegionMessage, Map);
+            MessagingCenter.Subscribe<Map, MoveToRegionMessage>(this, Map.MoveMessageName, OnMoveToRegionMessage, Map);
 
             NativeMap = await ((MapView)Control).GetGoogleMapAsync();
             OnMapReady(NativeMap);
@@ -115,7 +113,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 map.SetOnMapClickListener(this);
                 map.SetOnMapLongClickListener(this);
                 map.UiSettings.MapToolbarEnabled = false;
-                map.UiSettings.ZoomControlsEnabled = Map.HasZoomEnabled;
+                map.UiSettings.ZoomControlsEnabled = Map.HasZoomButtons;
                 map.UiSettings.ZoomGesturesEnabled = Map.HasZoomEnabled;
                 map.UiSettings.ScrollGesturesEnabled = Map.HasScrollEnabled;
                 map.MyLocationEnabled = map.UiSettings.MyLocationButtonEnabled = Map.IsShowingUser;
@@ -133,6 +131,11 @@ namespace Xamarin.Forms.GoogleMaps.Android
             {
                 InitializeLogic();
             }
+        }
+
+        private void OnZoomButtonsMessage(Map map, bool enabled)
+        {
+            NativeMap.UiSettings.ZoomControlsEnabled = Map.HasZoomButtons;
         }
 
         void OnMoveToRegionMessage(Map s, MoveToRegionMessage m)
@@ -215,14 +218,11 @@ namespace Xamarin.Forms.GoogleMaps.Android
             else if (e.PropertyName == Map.HasScrollEnabledProperty.PropertyName)
                 NativeMap.UiSettings.ScrollGesturesEnabled = Map.HasScrollEnabled;
             else if (e.PropertyName == Map.HasZoomEnabledProperty.PropertyName)
-            {
-                NativeMap.UiSettings.ZoomControlsEnabled = Map.HasZoomEnabled;
                 NativeMap.UiSettings.ZoomGesturesEnabled = Map.HasZoomEnabled;
-            }
+            else if (e.PropertyName == Map.HasZoomEnabledProperty.PropertyName)
+                NativeMap.UiSettings.ZoomControlsEnabled = Map.HasZoomButtons;
             else if (e.PropertyName == Map.IsTrafficEnabledProperty.PropertyName)
-            {
                 NativeMap.TrafficEnabled = Map.IsTrafficEnabled;
-            }
 
             foreach (var logic in _logics)
                 logic.OnMapPropertyChanged(e);
@@ -249,7 +249,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
                     map.MapType = GoogleMap.MapTypeNone;
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException();
+                    throw new ArgumentOutOfRangeException(nameof(Map.MapType));
             }
         }
 
@@ -307,7 +307,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
 
                 if (this.Map != null)
                 {
-                    MessagingCenter.Unsubscribe<Map, MoveToRegionMessage>(this, MoveMessageName);
+                    MessagingCenter.Unsubscribe<Map, MoveToRegionMessage>(this, Map.MoveMessageName);
                 }
 
                 foreach (var logic in _logics)

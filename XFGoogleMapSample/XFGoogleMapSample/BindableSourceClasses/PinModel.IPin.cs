@@ -33,13 +33,16 @@ namespace XFGoogleMapSample
 
         public string PinTitle { get { return Name; } }
 
-        public Position PinPosition { get { return new Position(Latitude, Longitude); } }
+        public Position PinPosition { get { return new Position(Latitude, Longitude); } set { Latitude = value.Latitude;Longitude = value.Longitude; } }
 
         public string PinSubTitle { get { return Details; }  }
 
         #endregion IPin computed properties
 
         #region IPin NOT computed properties
+
+        private string _PinId = Guid.NewGuid().ToString();
+        public string PinId { get { return _PinId; } set { bool changed = _PinId != value; if (changed) { OnPropertyChanging(); _PinId = value; OnPropertyChanged(); } } }
 
         private BitmapDescriptor _PinIcon;
         public BitmapDescriptor PinIcon { get { return _PinIcon; } set { bool changed = _PinIcon != value; _PinIcon = value; if (changed) NotifyPropertyChanged(nameof(PinIcon)); } }
@@ -57,5 +60,7 @@ namespace XFGoogleMapSample
         public IPinConfig PinConfig { get { return _PinConfig; } set { bool changed = _PinConfig != value; if (changed) { OnPropertyChanging(); _PinConfig = value; OnPropertyChanged(); } } }
 
         #endregion IPin NOT computed properties
+        public int CompareTo(IPin other)
+            => ((IPin)this).CompareTo(other);
     }
 }

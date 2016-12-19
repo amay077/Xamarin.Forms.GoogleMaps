@@ -31,7 +31,7 @@ namespace Xamarin.Forms.GoogleMaps.Interfaces.SimpleImplementations
 
         public PinType PinType { get; set; } = PinType.Place;
 
-        public AppearMarkerAnimation AppearAnimation { get; set; } = AppearMarkerAnimation.None;
+        public AppearMarkerAnimation AppearAnimation { get; set; } = AppearMarkerAnimation.Any;
 
         public Pin GMPin { get; set; }
         public object NativePin { get; set; }

@@ -175,8 +175,10 @@ namespace Xamarin.Forms.GoogleMaps
                 throw new ArgumentNullException(nameof(mapSpan));
             if (LastMoveToRegion == mapSpan) return;
             LastMoveToRegion = mapSpan;
-            MessagingCenter.Send(this, "MapMoveToRegion", new MoveToRegionMessage(mapSpan, animate));
+            MessagingCenter.Send(this, MoveMessageName, new MoveToRegionMessage(mapSpan, animate));
         }
+
+        public const string MoveMessageName = "MapMoveToRegion";
 
         #endregion MapRegion
 
@@ -207,19 +209,29 @@ namespace Xamarin.Forms.GoogleMaps
         #region Map Config
         public static readonly BindableProperty MapTypeProperty = BindableProperty.Create(nameof(MapType), typeof(MapType), typeof(Map), default(MapType));
 
+        public static readonly BindableProperty IsShowingCompasProperty = BindableProperty.Create(nameof(IsShowingCompas), typeof(bool), typeof(Map), default(bool));
+
         public static readonly BindableProperty IsShowingUserProperty = BindableProperty.Create(nameof(IsShowingUser), typeof(bool), typeof(Map), default(bool));
 
         public static readonly BindableProperty HasScrollEnabledProperty = BindableProperty.Create(nameof(HasScrollEnabled), typeof(bool), typeof(Map), true);
 
         public static readonly BindableProperty HasZoomEnabledProperty = BindableProperty.Create(nameof(HasZoomEnabled), typeof(bool), typeof(Map), true);
 
+        public static readonly BindableProperty HasZoomButtonsProperty = BindableProperty.Create(nameof(HasZoomButtons), typeof(bool), typeof(Map), false);
+
         public static readonly BindableProperty IsTrafficEnabledProperty = BindableProperty.Create(nameof(IsTrafficEnabled), typeof(bool), typeof(Map), false);
+
 
         public bool HasScrollEnabled { get { return (bool)GetValue(HasScrollEnabledProperty); } set { SetValue(HasScrollEnabledProperty, value); } }
 
         public bool HasZoomEnabled { get { return (bool)GetValue(HasZoomEnabledProperty); } set { SetValue(HasZoomEnabledProperty, value); } }
 
+        /// <summary>Show/hide zoom buttons (Android only)</summary>
+        public bool HasZoomButtons { get { return (bool)GetValue(HasZoomButtonsProperty); } set { SetValue(HasZoomButtonsProperty, value); } }
+
         public bool IsTrafficEnabled { get { return (bool)GetValue(IsTrafficEnabledProperty); } set { SetValue(IsTrafficEnabledProperty, value); } }
+
+        public bool IsShowingCompas { get { return (bool)GetValue(IsShowingCompasProperty); } set { SetValue(IsShowingCompasProperty, value); } }
 
         public bool IsShowingUser { get { return (bool)GetValue(IsShowingUserProperty); } set { SetValue(IsShowingUserProperty, value); } }
 

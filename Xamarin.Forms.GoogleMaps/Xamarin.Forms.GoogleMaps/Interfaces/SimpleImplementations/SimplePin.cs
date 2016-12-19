@@ -10,6 +10,9 @@ namespace Xamarin.Forms.GoogleMaps.Interfaces.SimpleImplementations
 {
     public class SimplePin : BindableObject, IPin
     {
+        private string _PinId = Guid.NewGuid().ToString();
+        public string PinId { get { return _PinId; } set { bool changed = _PinId != value; if (changed) { OnPropertyChanging(); _PinId = value; OnPropertyChanged(); } } }
+
         private string _PinTitle;
         public string PinTitle { get { return _PinTitle; } set { bool changed = _PinTitle != value; if (changed) { OnPropertyChanging(); _PinTitle = value; OnPropertyChanged(); } } }
 
@@ -28,8 +31,11 @@ namespace Xamarin.Forms.GoogleMaps.Interfaces.SimpleImplementations
         private BitmapDescriptor _PinIcon;
         public BitmapDescriptor PinIcon { get { return _PinIcon; } set { bool changed = _PinIcon != value; if (changed) { OnPropertyChanging(); _PinIcon = value; OnPropertyChanged(); } } }
 
-        private IPinConfig _PinConfig=new SimplePinConfig();
+        private IPinConfig _PinConfig = new SimplePinConfig();
         public IPinConfig PinConfig { get { return _PinConfig; } set { bool changed = _PinConfig != value; if (changed) { OnPropertyChanging(); _PinConfig = value; OnPropertyChanged(); } } }
+
+        public int CompareTo(IPin other)
+            => ((IPin)this).CompareTo(other);
     }
 
 }

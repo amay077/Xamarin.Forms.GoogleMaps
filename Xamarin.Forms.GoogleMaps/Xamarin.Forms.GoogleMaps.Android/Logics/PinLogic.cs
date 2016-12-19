@@ -75,13 +75,13 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
 
             switch (outerItem.AppearAnimation)
             {
+                case AppearMarkerAnimation.Any:
                 case AppearMarkerAnimation.Fall:
                     FallAnimation(marker, 300);
                     break;
                 case AppearMarkerAnimation.FadeIn:
                     FadeInAnimation(marker, 300);
                     break;
-                case AppearMarkerAnimation.Any:
                 case AppearMarkerAnimation.Shake:
                     ShakeAnimation(marker, 400);
                     break;

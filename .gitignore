@@ -43,5 +43,5 @@ Thumbs.db
 *.nupkg
 *.lock.json
 .idea/
-Xamarin.Forms.GoogleMaps/Xamarin.Forms.GoogleMaps/Xamarin.Forms.GoogleMaps.csproj
-Variable_sample.cs
+XFGoogleMapSample/XFGoogleMapSample/Variables_sample.cs
+XFGoogleMapSample/XFGoogleMapSample/Variables_sample.cs

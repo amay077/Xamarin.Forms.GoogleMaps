@@ -7,7 +7,7 @@
 	<key>CFBundleName</key>
 	<string>XFGoogleMapSample</string>
 	<key>CFBundleIdentifier</key>
-	<string>net.amay077.xfgooglemapsample</string>
+	<string></string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
@@ -40,8 +40,6 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>XSAppIconAssets</key>
-	<string>Assets.xcassets/AppIcons.appiconset</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>Can we use your location</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
