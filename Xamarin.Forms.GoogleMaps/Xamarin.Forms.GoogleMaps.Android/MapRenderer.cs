@@ -24,6 +24,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
 
         public MapRenderer() : base()
         {
+            SaveEnabled = false;
             AutoPackage = false;
             _logics = new BaseLogic<GoogleMap>[]
             {
@@ -58,23 +59,8 @@ namespace Xamarin.Forms.GoogleMaps.Android
 
         protected async override void OnElementChanged(ElementChangedEventArgs<View> e)
         {
-            base.OnElementChanged(e);
-
+            if (ReferenceEquals(e.NewElement, e.OldElement)) return;
             var oldMapView = (MapView)Control;
-
-            var mapView = new MapView(Context);
-            mapView.OnCreate(s_bundle);
-            mapView.OnResume();
-            SetNativeControl(mapView);
-
-            var activity = Context as Activity;
-            if (activity != null)
-            {
-                var metrics = new DisplayMetrics();
-                activity.WindowManager.DefaultDisplay.GetMetrics(metrics);
-                foreach (var logic in _logics)
-                    logic.ScaledDensity = metrics.ScaledDensity;
-            }
 
             if (e.OldElement != null)
             {
@@ -99,6 +85,23 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 _oldMap = (Map)e.OldElement;
             }
 
+
+            base.OnElementChanged(e);
+
+            var mapView = new MapView(Context);
+            mapView.OnCreate(s_bundle);
+            mapView.OnResume();
+            SetNativeControl(mapView);
+
+            var activity = Context as Activity;
+            if (activity != null)
+            {
+                var metrics = new DisplayMetrics();
+                activity.WindowManager.DefaultDisplay.GetMetrics(metrics);
+                foreach (var logic in _logics)
+                    logic.ScaledDensity = metrics.ScaledDensity;
+            }
+
             MessagingCenter.Subscribe<Map, MoveToRegionMessage>(this, Map.MoveMessageName, OnMoveToRegionMessage, Map);
 
             NativeMap = await ((MapView)Control).GetGoogleMapAsync();
@@ -109,7 +112,6 @@ namespace Xamarin.Forms.GoogleMaps.Android
         {
             if (map != null)
             {
-                map.SetOnCameraChangeListener(this);
                 map.SetOnMapClickListener(this);
                 map.SetOnMapLongClickListener(this);
                 map.UiSettings.MapToolbarEnabled = false;
@@ -131,6 +133,8 @@ namespace Xamarin.Forms.GoogleMaps.Android
             {
                 InitializeLogic();
             }
+            if (map != null)
+                map.SetOnCameraChangeListener(this);
         }
 
         private void OnZoomButtonsMessage(Map map, bool enabled)
@@ -179,13 +183,13 @@ namespace Xamarin.Forms.GoogleMaps.Android
             }
             else if (changed && NativeMap != null)
             {
-                UpdateVisibleRegion(NativeMap.CameraPosition.Target);
+                UpdateMapRegion(NativeMap.CameraPosition.Target);
             }
         }
 
         void InitializeLogic()
         {
-            MoveToRegion(((Map)Element).LastMoveToRegion, false);
+            MoveToRegion(((Map)Element).MapRegion, false);
 
             foreach (var logic in _logics)
             {
@@ -204,7 +208,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
         {
             base.OnElementPropertyChanged(sender, e);
 
-            if (e.PropertyName == Map.MapTypeProperty.PropertyName)
+            if (e.PropertyName == nameof(Map.MapType))
             {
                 SetMapType();
                 return;
@@ -213,15 +217,15 @@ namespace Xamarin.Forms.GoogleMaps.Android
             if (NativeMap == null)
                 return;
 
-            if (e.PropertyName == Map.IsShowingUserProperty.PropertyName)
+            if (e.PropertyName == nameof(Map.IsShowingUser))
                 NativeMap.MyLocationEnabled = NativeMap.UiSettings.MyLocationButtonEnabled = Map.IsShowingUser;
-            else if (e.PropertyName == Map.HasScrollEnabledProperty.PropertyName)
+            else if (e.PropertyName == nameof(Map.HasScrollEnabled))
                 NativeMap.UiSettings.ScrollGesturesEnabled = Map.HasScrollEnabled;
-            else if (e.PropertyName == Map.HasZoomEnabledProperty.PropertyName)
+            else if (e.PropertyName == nameof(Map.HasZoomEnabled))
                 NativeMap.UiSettings.ZoomGesturesEnabled = Map.HasZoomEnabled;
-            else if (e.PropertyName == Map.HasZoomEnabledProperty.PropertyName)
+            else if (e.PropertyName == nameof(Map.HasZoomEnabled))
                 NativeMap.UiSettings.ZoomControlsEnabled = Map.HasZoomButtons;
-            else if (e.PropertyName == Map.IsTrafficEnabledProperty.PropertyName)
+            else if (e.PropertyName == nameof(Map.IsTrafficEnabled))
                 NativeMap.TrafficEnabled = Map.IsTrafficEnabled;
 
             foreach (var logic in _logics)
@@ -255,7 +259,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
 
         public void OnCameraChange(CameraPosition pos)
         {
-            UpdateVisibleRegion(pos.Target);
+            UpdateMapRegion(pos.Target);
         }
 
         public void OnMapClick(LatLng point)
@@ -268,7 +272,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
             Map.SendMapLongClicked(point.ToPosition());
         }
 
-        void UpdateVisibleRegion(LatLng pos)
+        void UpdateMapRegion(LatLng pos)
         {
             var map = NativeMap;
             if (map == null)
@@ -285,17 +289,17 @@ namespace Xamarin.Forms.GoogleMaps.Android
             var map2 = ((Map)Element);
             try
             {
+                var region = projection.VisibleRegion;
+
                 map2.CameraMoving = true;
-                map2.MapRegion = new MapSpan(
-                        new Position(
-                            pos.Latitude,
-                            pos.Longitude
-                        ),
-                    dlat,
-                    dlong
-                );
+
+                //var center1 = region.LatLngBounds.Center.ToPosition();
+                //var center2 = pos.ToPosition(); gives wrong values!
+
+                var bounds = region.ToBounds();
+                map2.SetMapRegionInternal(MapSpan.FromBounds(bounds));
             }
-            finally { map2.CameraMoving = true; }
+            finally { map2.CameraMoving = false; }
         }
 
         bool _disposed;

@@ -15,8 +15,6 @@ namespace Xamarin.Forms.GoogleMaps.iOS
     {
         bool _shouldUpdateRegion = true;
 
-        const string MoveMessageName = "MapMoveToRegion";
-
         protected MapView NativeMap => (MapView)Control;
         protected Map Map => (Map)Element;
 
@@ -48,7 +46,8 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                 if (Element != null)
                 {
                     var mapModel = (Map)Element;
-                    MessagingCenter.Unsubscribe<Map, MoveToRegionMessage>(this, MoveMessageName);
+                    MessagingCenter.Unsubscribe<Map, MoveToRegionMessage>(this, Map.MoveMessageName);
+                    MessagingCenter.Unsubscribe<Map>(this, Map.CenterOnMyLocationMessageName);
                 }
 
                 foreach (var logic in _logics)
@@ -87,7 +86,8 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                     mkMapView.CoordinateLongPressed += CoordinateLongPressed;
                 }
 
-                MessagingCenter.Subscribe<Map, MoveToRegionMessage>(this, MoveMessageName, (s, a) => MoveToRegion(a.Span, a.Animate), mapModel);
+                MessagingCenter.Subscribe<Map>(this, Map.CenterOnMyLocationMessageName, (s) => NativeMap.Animate(NativeMap.MyLocation.Coordinate), mapModel);
+                MessagingCenter.Subscribe<Map, MoveToRegionMessage>(this, Map.MoveMessageName, (s, a) => MoveToRegion(a.Span, a.Animate), mapModel);
                 if (mapModel.LastMoveToRegion != null)
                     MoveToRegion(mapModel.LastMoveToRegion, false);
 
@@ -172,7 +172,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
             try
             {
                 mapModel.CameraMoving = true;
-                mapModel.MapRegion = new MapSpan(new Position((minLat + maxLat) / 2d, (minLon + maxLon) / 2d), maxLat - minLat, maxLon - minLon);
+                mapModel.MapRegion = new MapSpan(mkMapViewChangeEventArgs.Position.Target.ToPosition(), maxLat - minLat, maxLon - minLon);
             }
             finally { mapModel.CameraMoving = false; }
         }

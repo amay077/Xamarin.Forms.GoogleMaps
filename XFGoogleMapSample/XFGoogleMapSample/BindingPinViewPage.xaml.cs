@@ -31,7 +31,21 @@ namespace XFGoogleMapSample
 			{
 				pin.Icon = BitmapDescriptorFactory.FromView(new BindingPinView(e.NewTextValue));
 			};
+
+            map.MapLongClicked += Map_MapLongClicked;
 		}
-	}
+
+        private void Map_MapLongClicked(object sender, MapLongClickedEventArgs e)
+        {
+            var pin = new Pin()
+            {
+                Type = PinType.Place,
+                Label = "Map center",
+                Address = "Here",
+                Position = map.MapRegion.Center,
+            };
+            map.Pins.Add(pin);
+        }
+    }
 }
 

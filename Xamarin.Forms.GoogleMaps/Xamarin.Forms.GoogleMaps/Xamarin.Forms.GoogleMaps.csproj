@@ -34,6 +34,7 @@
     <NoStdLib>false</NoStdLib>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Events\MapMoveEndedEventArgs.cs" />
     <Compile Include="Events\InfoWindowClickedEventArgs.cs" />
     <Compile Include="Events\MapClickedEventArgs.cs" />
     <Compile Include="Events\MapLongClickedEventArgs.cs" />
@@ -50,6 +51,7 @@
     <Compile Include="Interfaces\SimpleImplementations\SimplePin.cs" />
     <Compile Include="Interfaces\SimpleImplementations\SimplePinConfig.cs" />
     <Compile Include="Interfaces\SimpleImplementations\SimpleSegment.cs" />
+    <Compile Include="Internals\Delayer.cs" />
     <Compile Include="Internals\MapSpanTypeConverter.cs" />
     <Compile Include="Internals\PositionJsonConverter.cs" />
     <Compile Include="Logics\AppearMarkerAnimation.cs" />

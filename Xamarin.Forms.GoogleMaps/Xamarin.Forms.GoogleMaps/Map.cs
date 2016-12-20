@@ -29,8 +29,6 @@ namespace Xamarin.Forms.GoogleMaps
         // center on Rome by default
         public Map() : this(new MapSpan(new Position(41.890202, 12.492049), 0.1, 0.1)) { }
 
-
-
         #region PinsSource Property
         public static readonly BindableProperty PinsSourceProperty = BindableProperty.Create(nameof(PinsSource), typeof(ObservableCollection<IPin>), typeof(Map), null, propertyChanged: OnPinsSourceChanged);
         public ObservableCollection<IPin> PinsSource { get { return (ObservableCollection<IPin>)GetValue(PinsSourceProperty); } set { SetValue(PinsSourceProperty, value); } }
@@ -149,7 +147,26 @@ namespace Xamarin.Forms.GoogleMaps
         // Allows to set map center at initiation
         public static readonly BindableProperty MapRegionProperty = BindableProperty.Create(nameof(MapRegion), typeof(MapSpan), typeof(Map), null, propertyChanged: OnMapRegionChanged);
         public MapSpan MapRegion { get { return (MapSpan)GetValue(MapRegionProperty); } set { SetValue(MapRegionProperty, value); } }
-        public bool CameraMoving { get; set; }
+        public static readonly BindableProperty CameraMovingProperty = BindableProperty.Create(nameof(CameraMoving), typeof(bool), typeof(Map), false);
+        public bool CameraMoving { get { return (bool)GetValue(CameraMovingProperty); } set { SetValue(CameraMovingProperty, value); } }
+
+        internal void SetMapRegionInternal(MapSpan newValue)
+        {
+            CameraMoving = true;
+            MapRegion = newValue;
+            CameraMoving = false;
+            DelayOnMapMoveEnded();
+        }
+
+        Tools.Delayer MapMoveEndDelayer;
+        private void DelayOnMapMoveEnded()
+        {
+            if (MapMoveEndDelayer == null) { MapMoveEndDelayer = new Tools.Delayer(1000); MapMoveEndDelayer.Action += MapMoveEndDelayer_Action; }
+            MapMoveEndDelayer.ResetAndTick();
+        }
+        private void MapMoveEndDelayer_Action(object sender, EventArgs e)
+            => SendMapMoveEnded();
+
         private static void OnMapRegionChanged(BindableObject bindable, object oldValue, object newValue)
         {
             if (newValue == oldValue) return;
@@ -316,6 +333,9 @@ namespace Xamarin.Forms.GoogleMaps
         public event EventHandler<MapClickedEventArgs> MapClicked;
         public event EventHandler<MapLongClickedEventArgs> MapLongClicked;
 
+        public event EventHandler<MapMoveEndedEventArgs> MapMoveEnded;
+
+
         public static readonly BindableProperty SelectedPinChangedCommandProperty = BindableProperty.Create(nameof(SelectedPinChangedCommand), typeof(ICommand), typeof(Map), null);
         public ICommand SelectedPinChangedCommand { get { return (ICommand)GetValue(SelectedPinChangedCommandProperty); } set { SetValue(SelectedPinChangedCommandProperty, value); } }
 
@@ -339,6 +359,9 @@ namespace Xamarin.Forms.GoogleMaps
 
         public static readonly BindableProperty MapLongClickedCommandProperty = BindableProperty.Create(nameof(MapLongClickedCommand), typeof(ICommand), typeof(Map), null);
         public ICommand MapLongClickedCommand { get { return (ICommand)GetValue(MapLongClickedCommandProperty); } set { SetValue(MapLongClickedCommandProperty, value); } }
+
+        public static readonly BindableProperty MapMoveEndedCommandProperty = BindableProperty.Create(nameof(MapMoveEndedCommand), typeof(ICommand), typeof(Map), null);
+        public ICommand MapMoveEndedCommand { get { return (ICommand)GetValue(MapMoveEndedCommandProperty); } set { SetValue(MapMoveEndedCommandProperty, value); } }
 
 
         internal void SendSelectedPinChanged(Pin selectedPin)
@@ -415,6 +438,21 @@ namespace Xamarin.Forms.GoogleMaps
             MapLongClicked?.Invoke(this, args);
             if (MapLongClickedCommand?.CanExecute(args) ?? false) MapLongClickedCommand.Execute(args);
         }
+
+        internal void SendMapMoveEnded()
+        {
+            var args = new MapMoveEndedEventArgs() { Region = MapRegion };
+            MapMoveEnded?.Invoke(this, args);
+            if (MapMoveEndedCommand?.CanExecute(args) ?? false) MapMoveEndedCommand.Execute(args);
+        }
+
+
         #endregion Map events
+
+        public const string CenterOnMyLocationMessageName = "CenterOnMyLocation";
+        public void CenterOnMyLocation()
+        {
+            MessagingCenter.Send(this, CenterOnMyLocationMessageName);
+        }
     }
 }
