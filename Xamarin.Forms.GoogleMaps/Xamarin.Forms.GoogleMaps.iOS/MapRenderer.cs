@@ -222,6 +222,20 @@ namespace Xamarin.Forms.GoogleMaps.iOS
             ((MapView)Control).TrafficEnabled = ((Map)Element).IsTrafficEnabled;
         }
 
+        //void MoveMyLocationButton(LayoutOptions horizontal, LayoutOptions vertical)
+        //{
+        //    var mapView = ((MapView)Control);
+        //    var subView=mapView.Subviews.GetValue(mapView.Subviews.Length - 1);
+        //    UIKit.UIButton button = subView as UIKit.UIButton;
+        //    if(button!=null)
+        //    {
+        //        button.AutoresizingMask= UIKit.UIViewAutoresizing.FlexibleRightMargin | UIKit.UIViewAutoresizing.FlexibleTopMargin;
+        //        CoreGraphics.CGRect frame = button.Frame;
+        //        //frame.Origin.X = 5;
+        //        button.Frame = frame;
+        //    }
+        //}
+
         void UpdateMapType()
         {
             switch (((Map)Element).MapType)
