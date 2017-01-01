@@ -47,6 +47,10 @@ namespace Xamarin.Forms.GoogleMaps.Logics.UWP
                     }
                 }
             }
+            if (Map.SelectedPin != null)
+            {
+                Map.SelectedPin = null;
+            }
         }
 
         private void NewNativeMap_MapHolding(MapControl sender, MapInputEventArgs args)
@@ -95,6 +99,10 @@ namespace Xamarin.Forms.GoogleMaps.Logics.UWP
             if (targetPin != null && !ReferenceEquals(targetPin, Map.SelectedPin))
             {
                 Map.SelectedPin = targetPin;
+            }
+            else
+            {
+                Map.SelectedPin = null;
             }
         }
 
