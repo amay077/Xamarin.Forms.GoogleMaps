@@ -66,12 +66,14 @@ namespace Xamarin.Forms.Maps.WinRT
                 Text = pin.Label,
                 Foreground = new SolidColorBrush(Colors.Black),
                 FontWeight = FontWeights.Bold,
-                TextWrapping = TextWrapping.WrapWholeWords
+                TextWrapping = TextWrapping.WrapWholeWords,
+                HorizontalAlignment = HorizontalAlignment.Center
             };
             Address = new TextBlock()
             {
                 Text = pin.Address,
-                Foreground = new SolidColorBrush(Colors.Black)
+                Foreground = new SolidColorBrush(Colors.Black),
+                HorizontalAlignment = HorizontalAlignment.Center
             };
             DetailsView.Children.Add(PinLabel);
             DetailsView.Children.Add(Address);
