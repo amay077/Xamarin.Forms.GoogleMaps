@@ -58,7 +58,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
             return new SizeRequest(new Size(Context.ToPixels(40), Context.ToPixels(40)));
         }
 
-        protected async override void OnElementChanged(ElementChangedEventArgs<View> e)
+        protected override async void OnElementChanged(ElementChangedEventArgs<View> e)
         {
             base.OnElementChanged(e);
 
