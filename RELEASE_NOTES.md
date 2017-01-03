@@ -1,5 +1,24 @@
 Xamarin.Forms.GoogleMaps Release Notes
 ----
+# 1.7.1-beta3
+
+## New Features
+
+* PR#137 Change default bindingmode on SelectedPin to TwoWay
+* PR#166 [UWP]Supports InfoWindow
+* PR#136 [UWP]Supports TileLayers
+
+## Bug Fixes
+
+* #148 java.Lang.IllegalArgumentException: hue outside range
+* #160 Center of MapRegion on iOS seems not right
+
+# 1.7.1-beta2
+
+## New Features
+
+* #134 Add InfoWindowClicked event 
+* PR#127 [UWP]Supports EnableTraffic
 
 # 1.7.0
 
