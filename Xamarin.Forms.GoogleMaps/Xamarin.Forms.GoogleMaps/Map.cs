@@ -171,7 +171,12 @@ namespace Xamarin.Forms.GoogleMaps
         {
             if (newValue == oldValue) return;
             var newVal = newValue as MapSpan;
-            if (newVal == null) throw new ArgumentNullException(nameof(newValue));
+            if (newVal == null)
+#if DEBUG
+                throw new ArgumentNullException(nameof(newValue));
+#else
+                return;
+#endif
             var map = bindable as Map;
             if (map == null) return;
             if (map.CameraMoving)
@@ -189,7 +194,11 @@ namespace Xamarin.Forms.GoogleMaps
         public void MoveToRegion(MapSpan mapSpan, bool animate = true)
         {
             if (mapSpan == null)
+#if DEBUG
                 throw new ArgumentNullException(nameof(mapSpan));
+#else
+                return;
+#endif
             if (LastMoveToRegion == mapSpan) return;
             LastMoveToRegion = mapSpan;
             MessagingCenter.Send(this, MoveMessageName, new MoveToRegionMessage(mapSpan, animate));
@@ -197,9 +206,9 @@ namespace Xamarin.Forms.GoogleMaps
 
         public const string MoveMessageName = "MapMoveToRegion";
 
-        #endregion MapRegion
+#endregion MapRegion
 
-        #region Selected Pin/Item
+#region Selected Pin/Item
 
         public static readonly BindableProperty SelectedPinProperty = BindableProperty.Create(nameof(SelectedPin), typeof(Pin), typeof(Map), default(Pin), defaultBindingMode: BindingMode.TwoWay, propertyChanged: OnSelectedPinChanged);
 
@@ -221,9 +230,9 @@ namespace Xamarin.Forms.GoogleMaps
 
         public IPin SelectedItem { get { return (IPin)GetValue(SelectedItemProperty); } set { SetValue(SelectedItemProperty, value); } }
 
-        #endregion Selected Pin/Item
+#endregion Selected Pin/Item
 
-        #region Map Config
+#region Map Config
         public static readonly BindableProperty MapTypeProperty = BindableProperty.Create(nameof(MapType), typeof(MapType), typeof(Map), default(MapType));
 
         public static readonly BindableProperty IsShowingCompasProperty = BindableProperty.Create(nameof(IsShowingCompas), typeof(bool), typeof(Map), default(bool));
@@ -253,9 +262,9 @@ namespace Xamarin.Forms.GoogleMaps
         public bool IsShowingUser { get { return (bool)GetValue(IsShowingUserProperty); } set { SetValue(IsShowingUserProperty, value); } }
 
         public MapType MapType { get { return (MapType)GetValue(MapTypeProperty); } set { SetValue(MapTypeProperty, value); } }
-        #endregion Map Config
+#endregion Map Config
 
-        #region Map Internal Data
+#region Map Internal Data
         readonly ObservableCollection<Pin> _pins = new ObservableCollection<Pin>();
         readonly ObservableCollection<Polyline> _polylines = new ObservableCollection<Polyline>();
         readonly ObservableCollection<Polygon> _polygons = new ObservableCollection<Polygon>();
@@ -280,9 +289,9 @@ namespace Xamarin.Forms.GoogleMaps
 
         public IEnumerator<Pin> GetEnumerator() => _pins.GetEnumerator();
 
-        #endregion Map Internal Data
+#endregion Map Internal Data
 
-        #region Data input consistency check
+#region Data input consistency check
 
         void PinsOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
@@ -319,9 +328,9 @@ namespace Xamarin.Forms.GoogleMaps
         {
         }
 
-        #endregion Data input consistency check
+#endregion Data input consistency check
 
-        #region Map events
+#region Map events
         public event EventHandler<PinClickedEventArgs> PinClicked;
         public event EventHandler<SelectedPinChangedEventArgs> SelectedPinChanged;
         public event EventHandler<InfoWindowClickedEventArgs> InfoWindowClicked;
@@ -447,7 +456,7 @@ namespace Xamarin.Forms.GoogleMaps
         }
 
 
-        #endregion Map events
+#endregion Map events
 
         public const string CenterOnMyLocationMessageName = "CenterOnMyLocation";
         public void CenterOnMyLocation()

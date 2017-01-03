@@ -6,6 +6,11 @@ using Android.OS;
 using Java.Lang;
 using Xamarin.Forms.Platform.Android;
 using Math = System.Math;
+using AView = Android.Views.View;
+using AImageView = Android.Widget.ImageView;
+using ARelativeLayout = Android.Widget.RelativeLayout;
+using ALayoutDirection = Android.Views.LayoutDirection;
+using AGravityFlags = Android.Views.GravityFlags;
 using Android.Util;
 using Android.App;
 using Xamarin.Forms.GoogleMaps.Internals;
@@ -66,6 +71,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
             {
                 var oldMapModel = (Map)e.OldElement;
                 MessagingCenter.Unsubscribe<Map, MoveToRegionMessage>(this, Map.MoveMessageName);
+                MessagingCenter.Unsubscribe<Map>(this, Map.CenterOnMyLocationMessageName);
 
                 var oldGoogleMap = await oldMapView.GetGoogleMapAsync();
                 if (oldGoogleMap != null)
@@ -103,8 +109,34 @@ namespace Xamarin.Forms.GoogleMaps.Android
             }
 
             MessagingCenter.Subscribe<Map, MoveToRegionMessage>(this, Map.MoveMessageName, OnMoveToRegionMessage, Map);
+            MessagingCenter.Subscribe<Map>(this, Map.CenterOnMyLocationMessageName, (s) =>
+            {
+                var loc = NativeMap?.MyLocation;
+                if (loc != null) NativeMap.AnimateCamera(CameraUpdateFactory.NewLatLng(new LatLng(loc.Latitude, loc.Longitude)));
+            });
 
-            NativeMap = await ((MapView)Control).GetGoogleMapAsync();
+            var mapView2 = (MapView)Control;
+
+            //// To move the "My Location" button
+            //            if (mapView2 != null &&
+            //                mapView2.FindViewById(Integer.ParseInt("1")) != null)
+            //            {
+            //                // Get the button view
+            //                AImageView locationButton = (AImageView)((AView)(mapView2.FindViewById(1).Parent)).FindViewById(2);
+
+            //                // its parent places it on top right
+            //                //var rl = locationButton.Parent as ARelativeLayout;
+            //                //if (rl != null) rl.SetGravity(AGravityFlags.RelativeLayoutDirection | AGravityFlags.Top | AGravityFlags.Left);
+
+            //                // and next place it, on bottom right (as Google Maps app)
+            //                MarginLayoutParams layoutParams = //(LayoutParams)
+            //                        locationButton.LayoutParameters as MarginLayoutParams;
+            //                if (layoutParams != null)
+            //                    layoutParams.SetMargins(0, 170, 15, 0);
+            ////                    layoutParams.LeftMargin = 15;
+            //            }
+
+            NativeMap = await mapView2.GetGoogleMapAsync();
             OnMapReady(NativeMap);
         }
 
@@ -272,34 +304,64 @@ namespace Xamarin.Forms.GoogleMaps.Android
             Map.SendMapLongClicked(point.ToPosition());
         }
 
+//        différencier mapcenter et screencenter
+
         void UpdateMapRegion(LatLng pos)
         {
-            var map = NativeMap;
-            if (map == null)
-                return;
-            var projection = map.Projection;
-            var width = Control.Width;
-            var height = Control.Height;
-            var ul = projection.FromScreenLocation(new global::Android.Graphics.Point(0, 0));
-            var ur = projection.FromScreenLocation(new global::Android.Graphics.Point(width, 0));
-            var ll = projection.FromScreenLocation(new global::Android.Graphics.Point(0, height));
-            var lr = projection.FromScreenLocation(new global::Android.Graphics.Point(width, height));
-            var dlat = Math.Max(Math.Abs(ul.Latitude - lr.Latitude), Math.Abs(ur.Latitude - ll.Latitude));
-            var dlong = Math.Max(Math.Abs(ul.Longitude - lr.Longitude), Math.Abs(ur.Longitude - ll.Longitude));
-            var map2 = ((Map)Element);
             try
             {
-                var region = projection.VisibleRegion;
+                var map = NativeMap;
+                if (map == null)
+                    return;
+                var projection = map.Projection;
+                var width = Control.Width;
+                var height = Control.Height;
+                var ul = projection.FromScreenLocation(new global::Android.Graphics.Point(0, 0));
+                var ur = projection.FromScreenLocation(new global::Android.Graphics.Point(width, 0));
+                var ll = projection.FromScreenLocation(new global::Android.Graphics.Point(0, height));
+                var lr = projection.FromScreenLocation(new global::Android.Graphics.Point(width, height));
 
-                map2.CameraMoving = true;
+                var center = projection.FromScreenLocation(new global::Android.Graphics.Point(width / 2, height / 2));
 
-                //var center1 = region.LatLngBounds.Center.ToPosition();
-                //var center2 = pos.ToPosition(); gives wrong values!
+                var dlat = Math.Max(Math.Abs(ul.Latitude - lr.Latitude), Math.Abs(ur.Latitude - ll.Latitude));
+                var dlong = Math.Max(Math.Abs(ul.Longitude - lr.Longitude), Math.Abs(ur.Longitude - ll.Longitude));
 
-                var bounds = region.ToBounds();
-                map2.SetMapRegionInternal(MapSpan.FromBounds(bounds));
+
+                var map2 = ((Map)Element);
+                try
+                {
+                    //                var region = projection.VisibleRegion;
+
+                    map2.CameraMoving = true;
+
+                    ////var center1 = region.LatLngBounds.Center.ToPosition();
+                    ////var center2 = pos.ToPosition(); gives wrong values!
+
+                    //var bounds = region.ToBounds();
+                    //map2.SetMapRegionInternal(MapSpan.FromBounds(bounds));
+                    map2.SetMapRegionInternal(new MapSpan(center.ToPosition(), dlat, dlong));// MapSpan.From(bounds));
+                }
+                finally { map2.CameraMoving = false; }
             }
-            finally { map2.CameraMoving = false; }
+            catch { }
+
+            /////////////////// iOS way
+            //var mapModel = (Map)Element;
+            //var mkMapView = (MapView)Control;
+
+            //var region = mkMapView.Projection.VisibleRegion;
+            //var minLat = Math.Min(Math.Min(Math.Min(region.NearLeft.Latitude, region.NearRight.Latitude), region.FarLeft.Latitude), region.FarRight.Latitude);
+            //var minLon = Math.Min(Math.Min(Math.Min(region.NearLeft.Longitude, region.NearRight.Longitude), region.FarLeft.Longitude), region.FarRight.Longitude);
+            //var maxLat = Math.Max(Math.Max(Math.Max(region.NearLeft.Latitude, region.NearRight.Latitude), region.FarLeft.Latitude), region.FarRight.Latitude);
+            //var maxLon = Math.Max(Math.Max(Math.Max(region.NearLeft.Longitude, region.NearRight.Longitude), region.FarLeft.Longitude), region.FarRight.Longitude);
+            //try
+            //{
+            //    mapModel.CameraMoving = true;
+            //    mapModel.MapRegion = new MapSpan(mkMapViewChangeEventArgs.Position.Target.ToPosition(), maxLat - minLat, maxLon - minLon);
+            //}
+            //finally { mapModel.CameraMoving = false; }
+
+
         }
 
         bool _disposed;
@@ -312,6 +374,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 if (this.Map != null)
                 {
                     MessagingCenter.Unsubscribe<Map, MoveToRegionMessage>(this, Map.MoveMessageName);
+                    MessagingCenter.Unsubscribe<Map>(this, Map.CenterOnMyLocationMessageName);
                 }
 
                 foreach (var logic in _logics)
