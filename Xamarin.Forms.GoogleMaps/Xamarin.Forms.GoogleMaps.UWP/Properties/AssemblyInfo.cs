@@ -23,7 +23,7 @@ using Xamarin.Forms.Platform.UWP;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 
-[assembly: AssemblyVersion("1.7.0.6")]
-[assembly: AssemblyFileVersion("1.7.0.6")]
+[assembly: AssemblyVersion("1.7.0.7")]
+[assembly: AssemblyFileVersion("1.7.0.7")]
 [assembly: ComVisible(false)]
 [assembly: ExportRenderer(typeof(Map), typeof(MapRenderer))]
