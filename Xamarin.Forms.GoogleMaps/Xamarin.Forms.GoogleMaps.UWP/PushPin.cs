@@ -69,14 +69,24 @@ namespace Xamarin.Forms.Maps.WinRT
                 TextWrapping = TextWrapping.WrapWholeWords,
                 HorizontalAlignment = HorizontalAlignment.Center
             };
-            Address = new TextBlock()
+            if (!string.IsNullOrEmpty(pin.Address))
             {
-                Text = pin.Address,
-                Foreground = new SolidColorBrush(Colors.Black),
-                HorizontalAlignment = HorizontalAlignment.Center
-            };
+                Address = new TextBlock()
+                {
+                    Text = pin.Address,
+                    Foreground = new SolidColorBrush(Colors.Black),
+                    HorizontalAlignment = HorizontalAlignment.Center
+                };
+            }
             DetailsView.Children.Add(PinLabel);
-            DetailsView.Children.Add(Address);
+            if (!string.IsNullOrEmpty(pin.Address))
+            {
+                DetailsView.Children.Add(Address);
+            }
+            else
+            {
+                DetailsView.Height = 35;
+            }
             DetailsView.Visibility = Visibility.Collapsed;
             Root.Children.Add(DetailsView);
         }

@@ -49,35 +49,14 @@ namespace Xamarin.Forms.GoogleMaps.Logics.UWP
             var nativeTileLayer = outerItem.NativeObject as MapTileSource;
             if (nativeTileLayer == null)
                 return null;
-            if (NativeMap != null)
-            {
-                NativeMap.TileSources.Remove(nativeTileLayer);
-            }
+
+            NativeMap?.TileSources.Remove(nativeTileLayer);
             return nativeTileLayer;
         }
 
         protected override IList<TileLayer> GetItems(Map map)
         {
             return map.TileLayers;
-        }
-
-        void UpdateMapType()
-        {
-            switch (Map.MapType)
-            {
-                case MapType.Street:
-                    NativeMap.Style = MapStyle.Road;
-                    break;
-                case MapType.Satellite:
-                    NativeMap.Style = MapStyle.Aerial;
-                    break;
-                case MapType.Hybrid:
-                    NativeMap.Style = MapStyle.AerialWithRoads;
-                    break;
-                case MapType.None:
-                    NativeMap.Style = MapStyle.None;
-                    break;
-            }
         }
     }
 }
