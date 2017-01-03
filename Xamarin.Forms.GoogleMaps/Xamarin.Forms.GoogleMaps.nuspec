@@ -3,8 +3,21 @@
 	<metadata minClientVersion="2.8.3">
 		<id>Xamarin.Forms.GoogleMaps</id>
 		<title>Xamarin.Forms.GoogleMaps</title>
-		<version>1.7.1-beta2</version>
+		<version>1.7.1-beta3</version>
 		<releaseNotes>
+
+# 1.7.1-beta3
+
+## New Features
+
+* PR#137 Change default bindingmode on SelectedPin to TwoWay
+* PR#166 [UWP]Supports InfoWindow
+* PR#136 [UWP]Supports TileLayers
+
+## Bug Fixes
+
+* #148 java.Lang.IllegalArgumentException: hue outside range
+* #160 Center of MapRegion on iOS seems not right
 
 # 1.7.1-beta2
 
