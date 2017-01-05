@@ -191,7 +191,7 @@ namespace Xamarin.Forms.GoogleMaps
         void TileLayersOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             //if (e.NewItems != null && e.NewItems.Cast<ITileLayer>().Any(tileLayer => (circle.Center == null || circle.Radius == null || circle.Radius.Meters <= 0f)))
-            //	throw new ArgumentException("Circle must have a center and radius");
+            //  throw new ArgumentException("Circle must have a center and radius");
         }
 
         void GroundOverlays_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
