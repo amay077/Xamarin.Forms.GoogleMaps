@@ -140,7 +140,7 @@
     </MonoDevelop>
   </ProjectExtensions>
   <PropertyGroup Condition=" '$(OS)' == 'Windows_NT' ">
-    <PreBuildEvent>if not exist "$(ProjectDir)Variables.cs" copy "$(ProjectDir)Variables_sample.cs" "$(ProjectDir)Variables.cs" >nul</PreBuildEvent>
+    <PreBuildEvent>if not exist "$(ProjectDir)Variables.cs" copy "$(ProjectDir)Variables_sample.cs" "$(ProjectDir)Variables.cs" &gt;nul</PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(OS)' != 'Windows_NT' ">
     <PreBuildEvent>rsync -u "$(ProjectDir)Variables_sample.cs" "$(ProjectDir)Variables.cs"</PreBuildEvent>
