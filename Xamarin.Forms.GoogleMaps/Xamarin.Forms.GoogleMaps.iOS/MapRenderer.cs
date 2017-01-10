@@ -8,6 +8,7 @@ using Xamarin.Forms.GoogleMaps.Internals;
 using Xamarin.Forms.GoogleMaps.Logics.iOS;
 using Xamarin.Forms.GoogleMaps.Logics;
 using Xamarin.Forms.GoogleMaps.iOS.Extensions;
+using UIKit;
 
 namespace Xamarin.Forms.GoogleMaps.iOS
 {
@@ -66,8 +67,22 @@ namespace Xamarin.Forms.GoogleMaps.iOS
         protected override void OnElementChanged(ElementChangedEventArgs<View> e)
         {
             base.OnElementChanged(e);
-            var oldMapView = (MapView)Control;
 
+            // For XAML Previewer or FormsGoogleMaps.Init not called.
+            if (!FormsGoogleMaps.IsInitialized)
+            {
+                var label = new UILabel()
+                {
+                    Text = "Xamarin.Forms.GoogleMaps",
+                    BackgroundColor = Color.Teal.ToUIColor(),
+                    TextColor = Color.Black.ToUIColor(),
+                    TextAlignment = UITextAlignment.Center
+                };
+                SetNativeControl(label);
+                return;
+            }
+
+            var oldMapView = (MapView)Control;
             if (e.OldElement != null)
             {
                 var mapModel = (Map)e.OldElement;
@@ -110,6 +125,13 @@ namespace Xamarin.Forms.GoogleMaps.iOS
         protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             base.OnElementPropertyChanged(sender, e);
+
+            // For XAML Previewer or FormsGoogleMaps.Init not called.
+            if (!FormsGoogleMaps.IsInitialized)
+            {
+                return;
+            }
+
             var mapModel = (Map)Element;
 
             if (e.PropertyName == Map.MapTypeProperty.PropertyName)
@@ -148,6 +170,13 @@ namespace Xamarin.Forms.GoogleMaps.iOS
         public override void LayoutSubviews()
         {
             base.LayoutSubviews();
+
+            // For XAML Previewer or FormsGoogleMaps.Init not called.
+            if (!FormsGoogleMaps.IsInitialized)
+            {
+                return;
+            }
+
             if (_shouldUpdateRegion)
             {
                 MoveToRegion(((Map)Element).LastMoveToRegion, false);

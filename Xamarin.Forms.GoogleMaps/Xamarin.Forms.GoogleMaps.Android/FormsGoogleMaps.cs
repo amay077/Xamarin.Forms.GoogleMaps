@@ -18,7 +18,6 @@ namespace Xamarin
         {
             if (IsInitialized)
                 return;
-            IsInitialized = true;
 
             Context = activity;
 
@@ -31,6 +30,7 @@ namespace Xamarin
                 try
                 {
                     MapsInitializer.Initialize(Context);
+                    IsInitialized = true;
                 }
                 catch (Exception e)
                 {
