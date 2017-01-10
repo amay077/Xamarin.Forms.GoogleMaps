@@ -12,6 +12,8 @@ using Xamarin.Forms.GoogleMaps.Internals;
 using Xamarin.Forms.GoogleMaps.Logics.Android;
 using Xamarin.Forms.GoogleMaps.Logics;
 using Xamarin.Forms.GoogleMaps.Android.Extensions;
+using Android.Widget;
+using Android.Views;
 
 namespace Xamarin.Forms.GoogleMaps.Android
 {
@@ -61,6 +63,20 @@ namespace Xamarin.Forms.GoogleMaps.Android
         protected override async void OnElementChanged(ElementChangedEventArgs<View> e)
         {
             base.OnElementChanged(e);
+
+            // For XAML Previewer or FormsGoogleMaps.Init not called.
+            if (!FormsGoogleMaps.IsInitialized)
+            {
+                var tv = new TextView(Context)
+                {
+                    Gravity = GravityFlags.Center,
+                    Text = "Xamarin.Forms.GoogleMaps"
+                };
+                tv.SetBackgroundColor(Color.Teal.ToAndroid());
+                tv.SetTextColor(Color.Black.ToAndroid());
+                SetNativeControl(tv);
+                return;
+            }
 
             var oldMapView = (MapView)Control;
 
@@ -168,6 +184,12 @@ namespace Xamarin.Forms.GoogleMaps.Android
         {
             base.OnLayout(changed, l, t, r, b);
 
+            // For XAML Previewer or FormsGoogleMaps.Init not called.
+            if (!FormsGoogleMaps.IsInitialized)
+            {
+                return;
+            }
+
             _onLayout = true;
 
             if (_ready && _onLayout)
@@ -200,6 +222,12 @@ namespace Xamarin.Forms.GoogleMaps.Android
         protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             base.OnElementPropertyChanged(sender, e);
+
+            // For XAML Previewer or FormsGoogleMaps.Init not called.
+            if (!FormsGoogleMaps.IsInitialized)
+            {
+                return;
+            }
 
             if (e.PropertyName == Map.MapTypeProperty.PropertyName)
             {
