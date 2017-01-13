@@ -117,10 +117,12 @@ namespace XFGoogleMapSample
             map.InfoWindowClicked += InfoWindow_Clicked;
         }
 
-        private void InfoWindow_Clicked(object sender, InfoWindowClickedEventArgs e)
+        private async void InfoWindow_Clicked(object sender, InfoWindowClickedEventArgs e)
         {
             var time = DateTime.Now.ToString("hh:mm:ss");
             labelStatus.Text = $"[{time}]InfoWindow Clicked - {e?.Pin?.Tag.ToString() ?? "nothing"}";
+
+            await Navigation.PushAsync(new DetailPage());
         }
 
         void SelectedPin_Changed(object sender, SelectedPinChangedEventArgs e)
@@ -131,7 +133,7 @@ namespace XFGoogleMapSample
 
         async void Map_PinClicked(object sender, PinClickedEventArgs e)
         {
-            await DisplayAlert("Pin Clicked", $"{e.Pin.Label} Clicked.", "Close");
+            //await DisplayAlert("Pin Clicked", $"{e.Pin.Label} Clicked.", "Close");
 
             e.Handled = switchHandlePinClicked.IsToggled;
 
