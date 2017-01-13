@@ -1,5 +1,11 @@
 Xamarin.Forms.GoogleMaps Release Notes
 ----
+# 1.7.1-beta4
+
+## New Features
+
+* #153 Supports XAML Previewer for Visual Stuidio/Xamarin Studio
+
 # 1.7.1-beta3
 
 ## New Features
