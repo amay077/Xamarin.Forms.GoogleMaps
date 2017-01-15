@@ -93,10 +93,10 @@
       <HintPath>..\packages\Xamarin.GooglePlayServices.Maps.29.0.0.1\lib\MonoAndroid41\Xamarin.GooglePlayServices.Maps.dll</HintPath>
     </Reference>
     <Reference Include="Xamarin.Forms.GoogleMaps.Android">
-      <HintPath>..\packages\Xamarin.Forms.GoogleMaps.1.7.1-beta4\lib\MonoAndroid10\Xamarin.Forms.GoogleMaps.Android.dll</HintPath>
+      <HintPath>..\packages\Xamarin.Forms.GoogleMaps.1.7.1\lib\MonoAndroid10\Xamarin.Forms.GoogleMaps.Android.dll</HintPath>
     </Reference>
     <Reference Include="Xamarin.Forms.GoogleMaps">
-      <HintPath>..\packages\Xamarin.Forms.GoogleMaps.1.7.1-beta4\lib\MonoAndroid10\Xamarin.Forms.GoogleMaps.dll</HintPath>
+      <HintPath>..\packages\Xamarin.Forms.GoogleMaps.1.7.1\lib\MonoAndroid10\Xamarin.Forms.GoogleMaps.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
