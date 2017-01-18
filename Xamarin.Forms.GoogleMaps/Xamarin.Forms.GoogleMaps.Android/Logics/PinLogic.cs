@@ -286,6 +286,17 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
         {
             nativeItem.Rotation = outerItem?.Rotation ?? 0f;
         }
+
+        protected override void OnUpdateIsVisible(Pin outerItem, Marker nativeItem)
+        {
+            var isVisible = outerItem?.IsVisible ?? false;
+            nativeItem.Visible = isVisible;
+
+            if (!isVisible && ReferenceEquals(Map.SelectedPin, outerItem))
+            {
+                Map.SelectedPin = null;
+            }
+        }
     }
 }
 

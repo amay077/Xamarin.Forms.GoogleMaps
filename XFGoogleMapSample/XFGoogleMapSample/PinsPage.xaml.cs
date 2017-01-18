@@ -37,10 +37,11 @@ namespace XFGoogleMapSample
 
             buttonRemovePinTokyo.Clicked += (sender, e) =>
             {
-                map.Pins.Remove(pinTokyo);
-                pinTokyo = null;
-                ((Button)sender).IsEnabled = false;
-                buttonAddPinTokyo.IsEnabled = true;
+                //map.Pins.Remove(pinTokyo);
+                //pinTokyo = null;
+                //((Button)sender).IsEnabled = false;
+                //buttonAddPinTokyo.IsEnabled = true;
+                pinTokyo.IsVisible = !pinTokyo.IsVisible;
             };
             buttonRemovePinTokyo.IsEnabled = false;
 
