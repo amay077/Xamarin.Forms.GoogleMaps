@@ -109,6 +109,13 @@ namespace XFGoogleMapSample
                 map.SelectedPin = null;
             };
 
+
+            // Visible/Invisible Pin tokyo
+            switchIsVisibleTokyo.Toggled += (sender, args) =>
+            {
+                pinTokyo.IsVisible = args.Value;
+            };
+
             map.PinClicked += Map_PinClicked;;
 
             // Selected Pin changed

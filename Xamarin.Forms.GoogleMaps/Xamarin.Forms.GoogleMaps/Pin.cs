@@ -18,6 +18,8 @@ namespace Xamarin.Forms.GoogleMaps
 
         public static readonly BindableProperty RotationProperty = BindableProperty.Create("Rotation", typeof(float), typeof(Pin), 0f);
 
+        public static readonly BindableProperty IsVisibleProperty = BindableProperty.Create("IsVisible", typeof(bool), typeof(Pin), true);
+
         public string Label
         {
             get { return (string)GetValue(LabelProperty); }
@@ -58,6 +60,12 @@ namespace Xamarin.Forms.GoogleMaps
         {
             get { return (float)GetValue(RotationProperty); }
             set { SetValue(RotationProperty, value); }
+        }
+
+        public bool IsVisible
+        {
+            get { return (bool)GetValue(IsVisibleProperty); }
+            set { SetValue(IsVisibleProperty, value); }
         }
 
         public object Tag { get; set; }
