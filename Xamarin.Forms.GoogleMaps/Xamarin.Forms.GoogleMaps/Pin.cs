@@ -20,7 +20,7 @@ namespace Xamarin.Forms.GoogleMaps
 
         public static readonly BindableProperty IsVisibleProperty = BindableProperty.Create("IsVisible", typeof(bool), typeof(Pin), true);
 
-        public static readonly BindableProperty PinOffsetProperty = BindableProperty.Create("PinOffset", typeof(bool), typeof(Pin), true);
+        public static readonly BindableProperty AnchorProperty = BindableProperty.Create("Anchor", typeof(Point), typeof(Pin), new Point(0.5d, 1.0d));
 
         public string Label
         {
@@ -70,10 +70,10 @@ namespace Xamarin.Forms.GoogleMaps
             set { SetValue(IsVisibleProperty, value); }
         }
 
-        public PinOffset Offset
+        public Point Anchor
         {
-            get { return (PinOffset)GetValue(PinOffsetProperty); }
-            set { SetValue(PinOffsetProperty, value); }
+            get { return (Point)GetValue(AnchorProperty); }
+            set { SetValue(AnchorProperty, value); }
         }
 
         public object Tag { get; set; }

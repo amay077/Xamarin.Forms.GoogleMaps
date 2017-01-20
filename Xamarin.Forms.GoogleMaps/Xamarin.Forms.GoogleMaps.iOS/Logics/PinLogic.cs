@@ -55,7 +55,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
             nativeMarker.Snippet = outerItem.Address ?? string.Empty;
             nativeMarker.Draggable = outerItem.IsDraggable;
             nativeMarker.Rotation = outerItem.Rotation;
-            nativeMarker.GroundAnchor = new CGPoint(outerItem.Offset.X,outerItem.Offset.Y);
+            nativeMarker.GroundAnchor = new CGPoint(outerItem.Anchor.X, outerItem.Anchor.Y);
 
             if (outerItem.Icon != null)
             {
@@ -276,6 +276,11 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
                 if (ReferenceEquals(Map.SelectedPin, outerItem))
                     Map.SelectedPin = null;
             }
+        }
+
+        protected override void OnUpdateAnchor(Pin outerItem, Marker nativeItem)
+        {
+            nativeItem.GroundAnchor = new CGPoint(outerItem.Anchor.X, outerItem.Anchor.Y);
         }
     }
 }
