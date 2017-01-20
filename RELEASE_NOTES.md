@@ -1,5 +1,11 @@
 Xamarin.Forms.GoogleMaps Release Notes
 ----
+# 1.8.0-beta1
+
+## New Features
+
+* #173 Add Pin.IsVisible property
+
 # 1.7.1
 
 ## New Features
