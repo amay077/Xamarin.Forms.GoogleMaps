@@ -31,7 +31,6 @@
     <NoStdLib>false</NoStdLib>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="PinOffset.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Distance.cs" />
     <Compile Include="Geocoder.cs" />

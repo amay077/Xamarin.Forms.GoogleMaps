@@ -116,6 +116,18 @@ namespace XFGoogleMapSample
                 pinTokyo.IsVisible = args.Value;
             };
 
+            // AnchorX Pin new york
+            sliderAnchorXNewyork.ValueChanged += (sender, args) =>
+            {
+                pinNewYork.Anchor = new Point(args.NewValue / 100d, pinNewYork.Anchor.Y);
+            };
+
+            // AnchorY Pin new york
+            sliderAnchorYNewyork.ValueChanged += (sender, args) =>
+            {
+                pinNewYork.Anchor = new Point(pinNewYork.Anchor.X, args.NewValue / 100d);
+            };
+
             map.PinClicked += Map_PinClicked;;
 
             // Selected Pin changed

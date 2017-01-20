@@ -59,8 +59,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
                 .SetSnippet(outerItem.Address)
                 .Draggable(outerItem.IsDraggable)
                 .SetRotation(outerItem.Rotation)
-                .Anchor(outerItem.Offset.X,outerItem.Offset.Y)
-                ;
+                .Anchor((float)outerItem.Anchor.X, (float)outerItem.Anchor.Y);
 
             if (outerItem.Icon != null)
             {
@@ -297,6 +296,10 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
             {
                 Map.SelectedPin = null;
             }
+        }
+        protected override void OnUpdateAnchor(Pin outerItem, Marker nativeItem)
+        {
+            nativeItem.SetAnchor((float)outerItem.Anchor.X, (float)outerItem.Anchor.Y);
         }
     }
 }
