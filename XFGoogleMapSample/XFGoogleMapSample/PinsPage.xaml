@@ -30,6 +30,7 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
                     <Grid.ColumnDefinitions>
@@ -95,9 +96,26 @@
                                VerticalOptions="Center" />
                     </StackLayout>
 
+                    <Grid
+                        Grid.Row="6"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Grid.Column="0" Text="Anchor Pin NewYork"
+                               VerticalOptions="Center" />
+                        <Slider Grid.Column="1" x:Name="sliderAnchorXNewyork" Minimum="0" Maximum="100" Value="50" />
+                        <Slider Grid.Column="2" x:Name="sliderAnchorYNewyork" Minimum="0" Maximum="100" Value="100" />
+                    </Grid>
+
                     <Label x:Name="labelStatus"
                            Text="Show status when Pin selected."
-                           Grid.Row="6"
+                           Grid.Row="7"
                            Grid.Column="0"
                            Grid.ColumnSpan="2" />
 
