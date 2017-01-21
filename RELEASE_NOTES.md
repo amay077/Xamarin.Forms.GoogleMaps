@@ -1,5 +1,11 @@
 Xamarin.Forms.GoogleMaps Release Notes
 ----
+# 1.8.0-beta2
+
+## New Features
+
+* #176 Add Map.MyLocationButtonClicked event
+
 # 1.8.0-beta1
 
 ## New Features
