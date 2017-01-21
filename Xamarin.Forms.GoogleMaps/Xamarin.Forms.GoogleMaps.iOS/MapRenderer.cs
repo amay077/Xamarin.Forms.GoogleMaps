@@ -59,6 +59,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                 mkMapView.CoordinateLongPressed -= CoordinateLongPressed;
                 mkMapView.CoordinateTapped -= CoordinateTapped;
                 mkMapView.CameraPositionChanged -= CameraPositionChanged;
+                mkMapView.DidTapMyLocationButton = null;
             }
 
             base.Dispose(disposing);
@@ -100,6 +101,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                     mkMapView.CameraPositionChanged += CameraPositionChanged;
                     mkMapView.CoordinateTapped += CoordinateTapped;
                     mkMapView.CoordinateLongPressed += CoordinateLongPressed;
+                    mkMapView.DidTapMyLocationButton = DidTapMyLocation;
                 }
 
                 MessagingCenter.Subscribe<Map, MoveToRegionMessage>(this, MoveMessageName, (s, a) => MoveToRegion(a.Span, a.Animate), mapModel);
@@ -209,6 +211,11 @@ namespace Xamarin.Forms.GoogleMaps.iOS
         void CoordinateLongPressed(object sender, GMSCoordEventArgs e)
         {
             Map.SendMapLongClicked(e.Coordinate.ToPosition());
+        }
+
+        bool DidTapMyLocation(MapView mapView)
+        {
+            return Map.SendMyLocationClicked();
         }
 
         void MoveToRegion(MapSpan mapSpan, bool animated = true)

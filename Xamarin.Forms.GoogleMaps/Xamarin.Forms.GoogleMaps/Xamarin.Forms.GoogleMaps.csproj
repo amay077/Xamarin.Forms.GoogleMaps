@@ -61,6 +61,7 @@
     <Compile Include="Bounds.cs" />
     <Compile Include="PinClickedEventArgs.cs" />
     <Compile Include="InfoWindowClickedEventArgs.cs" />
+    <Compile Include="MyLocationButtonClickedEventArgs.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
