@@ -17,8 +17,9 @@
 			        <RowDefinition Height="Auto" />
 			        <RowDefinition Height="Auto" />
 			        <RowDefinition Height="Auto" />
-			        <RowDefinition Height="Auto" />
-			        <RowDefinition Height="Auto" />
+				    <RowDefinition Height="Auto" />
+				    <RowDefinition Height="Auto" />
+				    <RowDefinition Height="Auto" />
 			    </Grid.RowDefinitions>
 			 
 			    <Grid.ColumnDefinitions>
@@ -56,41 +57,51 @@
 					Grid.Row="2"
 					Grid.Column="1" />
 
-				<Label Text="IsShowingUser" 
-					VerticalOptions="Center"
-					Grid.Row="3"
-					Grid.Column="0" />
-				<Switch x:Name="switchIsShowingUser" 
-					VerticalOptions="Center"
-					HorizontalOptions="Start"
-					Grid.Row="3"
-					Grid.Column="1" />
+			    <Label Text="IsShowingUser"
+			           VerticalOptions="Center"
+			           Grid.Row="3"
+			           Grid.Column="0" />
+			    <Switch x:Name="switchIsShowingUser"
+			            VerticalOptions="Center"
+			            HorizontalOptions="Start"
+			            Grid.Row="3"
+			            Grid.Column="1" />
 
-				<Label Text="IsTrafficEnabled" 
+			    <Label Text="Handle MyLocationButton"
+			           VerticalOptions="Center"
+			           Grid.Row="4"
+			           Grid.Column="0" />
+			    <Switch x:Name="switchHandleMyLocationButton"
+			            VerticalOptions="Center"
+			            HorizontalOptions="Start"
+			            Grid.Row="4"
+			            Grid.Column="1" />
+
+			    <Label Text="IsTrafficEnabled"
 					VerticalOptions="Center"
-					Grid.Row="4"
+					Grid.Row="5"
 					Grid.Column="0" />
 				<Switch x:Name="switchIsTrafficEnabled" 
 					VerticalOptions="Center"
 					HorizontalOptions="Start"
-					Grid.Row="4"
+					Grid.Row="5"
 					Grid.Column="1" />
 
 				<Entry 
 					x:Name="entryAddress"
 					VerticalOptions="Center"
 					Text="new york"
-					Grid.Row="5"
+					Grid.Row="6"
 					Grid.Column="0" />
 				<Button
 					x:Name="buttonGeocode"
 					VerticalOptions="Center"
 					Text="GEOCODE"
-					Grid.Row="5"
+					Grid.Row="6"
 					Grid.Column="1" />
 
 				<Label x:Name="labelStatus"
-					Grid.Row="6"
+					Grid.Row="7"
 					Grid.Column="0"
 					Grid.ColumnSpan="2"/>
 						
