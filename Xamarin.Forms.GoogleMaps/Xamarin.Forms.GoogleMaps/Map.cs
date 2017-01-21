@@ -39,6 +39,7 @@ namespace Xamarin.Forms.GoogleMaps
 
         public event EventHandler<MapClickedEventArgs> MapClicked;
         public event EventHandler<MapLongClickedEventArgs> MapLongClicked;
+        public event EventHandler<MyLocationButtonClickedEventArgs> MyLocationButtonClicked;
 
         MapSpan _visibleRegion;
 
@@ -239,6 +240,13 @@ namespace Xamarin.Forms.GoogleMaps
         internal void SendMapLongClicked(Position point)
         {
             MapLongClicked?.Invoke(this, new MapLongClickedEventArgs(point));
+        }
+
+        internal bool SendMyLocationClicked()
+        {
+            var args = new MyLocationButtonClickedEventArgs();
+            MyLocationButtonClicked?.Invoke(this, args);
+            return args.Handled;
         }
     }
 }

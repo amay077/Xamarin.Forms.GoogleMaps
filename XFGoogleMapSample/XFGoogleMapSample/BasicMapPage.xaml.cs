@@ -72,6 +72,19 @@ namespace XFGoogleMapSample
                 this.DisplayAlert("MapLongClicked", $"{lat}/{lng}", "CLOSE");
             };
 
+            // Map MyLocationButton clicked
+            map.MyLocationButtonClicked += (sender, args) =>
+            {
+                args.Handled = switchHandleMyLocationButton.IsToggled;
+                if (switchHandleMyLocationButton.IsToggled)
+                {
+                    this.DisplayAlert("MyLocationButtonClicked", 
+                                 "If set MyLocationButtonClickedEventArgs.Handled = true then skip obtain current location", 
+                                 "OK");
+                }
+
+            };
+
             // Geocode
             buttonGeocode.Clicked += async (sender, e) =>
             {
@@ -87,7 +100,7 @@ namespace XFGoogleMapSample
                 }
                 else
                 {
-                    await this.DisplayAlert("Not found", "Geocoder returns no results", "Close");
+                    this.DisplayAlert("Not found", "Geocoder returns no results", "Close");
                 }
             };
         }

@@ -20,7 +20,8 @@ namespace Xamarin.Forms.GoogleMaps.Android
     public class MapRenderer : ViewRenderer,
         GoogleMap.IOnCameraChangeListener,
         GoogleMap.IOnMapClickListener,
-        GoogleMap.IOnMapLongClickListener
+        GoogleMap.IOnMapLongClickListener,
+        GoogleMap.IOnMyLocationButtonClickListener
     {
         readonly BaseLogic<GoogleMap>[] _logics;
 
@@ -106,6 +107,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
                     oldGoogleMap.SetOnCameraChangeListener(null);
                     oldGoogleMap.SetOnMapClickListener(null);
                     oldGoogleMap.SetOnMapLongClickListener(null);
+                    oldGoogleMap.SetOnMyLocationButtonClickListener(null);
                 }
 
                 oldMapView.Dispose();
@@ -130,6 +132,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 map.SetOnCameraChangeListener(this);
                 map.SetOnMapClickListener(this);
                 map.SetOnMapLongClickListener(this);
+                map.SetOnMyLocationButtonClickListener(this);
                 map.UiSettings.MapToolbarEnabled = false;
                 map.UiSettings.ZoomControlsEnabled = Map.HasZoomEnabled;
                 map.UiSettings.ZoomGesturesEnabled = Map.HasZoomEnabled;
@@ -294,6 +297,11 @@ namespace Xamarin.Forms.GoogleMaps.Android
         public void OnMapLongClick(LatLng point)
         {
             Map.SendMapLongClicked(point.ToPosition());
+        }
+
+        public bool OnMyLocationButtonClick()
+        {
+            return Map.SendMyLocationClicked();
         }
 
         void UpdateVisibleRegion(LatLng pos)
