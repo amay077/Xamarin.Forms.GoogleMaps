@@ -62,6 +62,8 @@
     <Compile Include="PinClickedEventArgs.cs" />
     <Compile Include="InfoWindowClickedEventArgs.cs" />
     <Compile Include="MyLocationButtonClickedEventArgs.cs" />
+    <Compile Include="CameraPosition.cs" />
+    <Compile Include="CameraChangedEventArgs.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

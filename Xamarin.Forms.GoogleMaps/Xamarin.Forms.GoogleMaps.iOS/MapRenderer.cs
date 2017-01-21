@@ -201,6 +201,8 @@ namespace Xamarin.Forms.GoogleMaps.iOS
             var maxLat = Math.Max(Math.Max(Math.Max(region.NearLeft.Latitude, region.NearRight.Latitude), region.FarLeft.Latitude), region.FarRight.Latitude);
             var maxLon = Math.Max(Math.Max(Math.Max(region.NearLeft.Longitude, region.NearRight.Longitude), region.FarLeft.Longitude), region.FarRight.Longitude);
             mapModel.VisibleRegion = new MapSpan(mkMapViewChangeEventArgs.Position.Target.ToPosition(), maxLat - minLat, maxLon - minLon);
+
+            Map.SendCameraChanged(mkMapViewChangeEventArgs.Position.ToXamarinForms());
         }
 
         void CoordinateTapped(object sender, GMSCoordEventArgs e)

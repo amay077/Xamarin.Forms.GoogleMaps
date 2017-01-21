@@ -110,6 +110,7 @@
     <Compile Include="Logics\GroundOverlayLogic.cs" />
     <Compile Include="Extensions\BoundsExtensions.cs" />
     <Compile Include="Extensions\MapViewExtensions.cs" />
+    <Compile Include="Extensions\CameraPositionExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
