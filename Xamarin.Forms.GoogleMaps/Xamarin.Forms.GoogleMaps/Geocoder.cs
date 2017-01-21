@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Xamarin.Forms.GoogleMaps
 {
-    public class Geocoder
+    public sealed class Geocoder
     {
         internal static Func<string, Task<IEnumerable<Position>>> GetPositionsForAddressAsyncFunc;
 

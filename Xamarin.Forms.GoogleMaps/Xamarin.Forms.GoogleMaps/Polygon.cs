@@ -5,7 +5,7 @@ using System.Collections.Specialized;
 
 namespace Xamarin.Forms.GoogleMaps
 {
-    public class Polygon : BindableObject
+    public sealed class Polygon : BindableObject
     {
         public static readonly BindableProperty StrokeWidthProperty = BindableProperty.Create("StrokeWidth", typeof(float), typeof(float), 1f);
         public static readonly BindableProperty StrokeColorProperty = BindableProperty.Create("StrokeColor", typeof(Color), typeof(Color), Color.Blue);

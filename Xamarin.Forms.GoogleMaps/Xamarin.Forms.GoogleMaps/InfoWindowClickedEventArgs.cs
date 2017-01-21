@@ -2,7 +2,7 @@
 
 namespace Xamarin.Forms.GoogleMaps
 {
-    public class InfoWindowClickedEventArgs : EventArgs
+    public sealed class InfoWindowClickedEventArgs : EventArgs
     {
         public Pin Pin { get; }
 

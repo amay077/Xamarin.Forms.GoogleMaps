@@ -1,7 +1,7 @@
 ﻿using System;
 namespace Xamarin.Forms.GoogleMaps
 {
-    public class PinClickedEventArgs : EventArgs
+    public sealed class PinClickedEventArgs : EventArgs
     {
         public bool Handled { get; set; } = false;
         public Pin Pin { get; }

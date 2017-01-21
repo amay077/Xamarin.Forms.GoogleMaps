@@ -1,7 +1,7 @@
 ﻿using System;
 namespace Xamarin.Forms.GoogleMaps
 {
-    public class PinDragEventArgs : EventArgs
+    public sealed class PinDragEventArgs : EventArgs
     {
         public Pin Pin
         {

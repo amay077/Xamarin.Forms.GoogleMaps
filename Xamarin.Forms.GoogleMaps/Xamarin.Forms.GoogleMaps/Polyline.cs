@@ -5,7 +5,7 @@ using System.Collections.Specialized;
 
 namespace Xamarin.Forms.GoogleMaps
 {
-    public class Polyline : BindableObject
+    public sealed class Polyline : BindableObject
     {
         void HandleAction(GoogleMaps.Polygon arg1, NotifyCollectionChangedEventArgs arg2)
         {

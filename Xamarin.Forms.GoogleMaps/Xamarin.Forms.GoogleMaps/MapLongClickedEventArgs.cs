@@ -2,7 +2,7 @@
 
 namespace Xamarin.Forms.GoogleMaps
 {
-    public class MapLongClickedEventArgs : EventArgs
+    public sealed class MapLongClickedEventArgs : EventArgs
     {
         public Position Point { get; }
 
