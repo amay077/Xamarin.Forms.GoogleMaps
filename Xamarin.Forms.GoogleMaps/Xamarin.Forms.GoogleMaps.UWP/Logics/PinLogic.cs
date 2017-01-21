@@ -173,5 +173,10 @@ namespace Xamarin.Forms.GoogleMaps.Logics.UWP
                 Windows.UI.Xaml.Visibility.Visible : 
                 Windows.UI.Xaml.Visibility.Collapsed;
         }
+
+        protected override void OnUpdateAnchor(Pin outerItem, PushPin nativeItem)
+        {
+            //not implemented
+        }
     }
 }
