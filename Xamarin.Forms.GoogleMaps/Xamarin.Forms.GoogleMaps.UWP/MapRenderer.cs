@@ -9,6 +9,7 @@ using Windows.UI;
 using Windows.UI.Xaml.Controls.Maps;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Shapes;
+using Xamarin.Forms.GoogleMaps.Extensions.UWP;
 using Xamarin.Forms.GoogleMaps.Internals;
 using Xamarin.Forms.GoogleMaps.Logics;
 using Xamarin.Forms.GoogleMaps.Logics.UWP;
@@ -55,23 +56,31 @@ namespace Xamarin.Forms.Maps.WinRT
         {
             base.OnElementChanged(e);
 
+            var oldMapView = (MapControl)Control;
+
             if (e.OldElement != null)
             {
                 var mapModel = e.OldElement;
                 MessagingCenter.Unsubscribe<Map, MoveToRegionMessage>(this, "MapMoveToRegion");
+
+                if (oldMapView != null)
+                {
+                    oldMapView.ActualCameraChanged  -= OnActualCameraChanged;
+                    oldMapView.ZoomLevelChanged -= OnZoomLevelChanged;
+                }
             }
 
             if (e.NewElement != null)
             {
                 var mapModel = e.NewElement;
-                var oldMapView = (MapControl)Control;
                 if (Control == null)
                 {
                     SetNativeControl(new MapControl());
                     Control.MapServiceToken = FormsGoogleMaps.AuthenticationToken;
                     Control.TrafficFlowVisible = Map.IsTrafficEnabled;
-                    Control.ZoomLevelChanged += async (s, a) => await UpdateVisibleRegion();
+                    Control.ZoomLevelChanged += OnZoomLevelChanged;
                     Control.CenterChanged += async (s, a) => await UpdateVisibleRegion();
+                    Control.ActualCameraChanged += OnActualCameraChanged;
                 }
 
                 MessagingCenter.Subscribe<Map, MoveToRegionMessage>(this, "MapMoveToRegion", async (s, a) =>
@@ -90,6 +99,29 @@ namespace Xamarin.Forms.Maps.WinRT
                     logic.OnMapPropertyChanged(new PropertyChangedEventArgs(Map.SelectedPinProperty.PropertyName));
                 }
             }
+        }
+
+        private async void OnZoomLevelChanged(MapControl sender, object args)
+        {
+            var camera = sender.ActualCamera;
+            var pos = new CameraPosition(
+                camera.Location.Position.ToPosition(),
+                camera.Roll,
+                camera.Pitch,
+                sender.ZoomLevel);
+            Map.SendCameraChanged(pos);
+            await UpdateVisibleRegion();
+        }
+
+        private void OnActualCameraChanged(MapControl sender, MapActualCameraChangedEventArgs args)
+        {
+            var camera = args.Camera;
+            var pos = new CameraPosition(
+                camera.Location.Position.ToPosition(),
+                camera.Roll,
+                camera.Pitch,
+                sender.ZoomLevel);
+            Map.SendCameraChanged(pos);
         }
 
         protected override async void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
