@@ -1,3 +1,6 @@
+(This is template for issue. Please choose from feature request or bug report or others then write.)
+
+----
 # FEATURE REQUEST / SUGGESTION
 
 ## SUMMARY
@@ -16,13 +19,12 @@
 
 which platform do you want?
 
-- [ ] Android
+- [x] Android
 - [ ] iOS
 - [ ] UWP
 
 ----
-
-# BUG/PROBREM REPORT
+# BUG / PROBREM REPORT
 
 ## SUMMARY
 
@@ -41,7 +43,7 @@ which platform do you want?
 ## PLATFORMS
 
 - [ ] Android
-- [ ] iOS
+- [x] iOS
 - [ ] UWP
 
 ## STEPS FOR REPRODUCE
@@ -55,3 +57,9 @@ which platform do you want?
 ```
 // code for reproduce
 ```
+
+----
+
+# OTHERS
+
+(free format)
