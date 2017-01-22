@@ -15,6 +15,8 @@ using Xamarin.Forms.GoogleMaps.Android.Extensions;
 using Android.Widget;
 using Android.Views;
 
+using GCameraPosition = Android.Gms.Maps.Model.CameraPosition;
+
 namespace Xamarin.Forms.GoogleMaps.Android
 {
     public class MapRenderer : ViewRenderer,
@@ -284,9 +286,10 @@ namespace Xamarin.Forms.GoogleMaps.Android
             }
         }
 
-        public void OnCameraChange(CameraPosition pos)
+        public void OnCameraChange(GCameraPosition pos)
         {
             UpdateVisibleRegion(pos.Target);
+            Map.SendCameraChanged(pos.ToXamarinForms());
         }
 
         public void OnMapClick(LatLng point)

@@ -85,6 +85,12 @@ namespace XFGoogleMapSample
 
             };
 
+            map.CameraChanged += (sender, args) =>
+            {
+                var p = args.Position;
+                labelStatus.Text = $"Lat={p.Target.Latitude:0.00}, Long={p.Target.Longitude:0.00}, Zoom={p.Zoom:0.00}, Bearing={p.Bearing:0.00}, Tilt={p.Tilt:0.00}";
+            };
+
             // Geocode
             buttonGeocode.Clicked += async (sender, e) =>
             {

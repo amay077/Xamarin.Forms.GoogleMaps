@@ -1,113 +1,122 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <ContentPage
-	xmlns="http://xamarin.com/schemas/2014/forms"
-	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-	xmlns:maps="clr-namespace:Xamarin.Forms.GoogleMaps;assembly=Xamarin.Forms.GoogleMaps"
-	x:Class="XFGoogleMapSample.BasicMapPage"
-	Title="BasicMap">
-	<ContentPage.Content>
-		<StackLayout
-			HorizontalOptions="Fill"
-			VerticalOptions="Fill"
-			Orientation="Vertical">
-			<Grid>
-				<Grid.RowDefinitions>
-			        <RowDefinition Height="Auto" />
-			        <RowDefinition Height="Auto" />
-			        <RowDefinition Height="Auto" />
-			        <RowDefinition Height="Auto" />
-			        <RowDefinition Height="Auto" />
-				    <RowDefinition Height="Auto" />
-				    <RowDefinition Height="Auto" />
-				    <RowDefinition Height="Auto" />
-			    </Grid.RowDefinitions>
-			 
-			    <Grid.ColumnDefinitions>
-			        <ColumnDefinition Width="*" />
-			        <ColumnDefinition Width="Auto" />
-			    </Grid.ColumnDefinitions>
-				
-				<Label Text="MapType" 
-					VerticalOptions="Center"
-					Grid.Row="0"
-					Grid.Column="0"/>
-			    <Picker x:Name="pickerMapType"
-					VerticalOptions="Center"
-					Title="MapType"
-					Grid.Row="0"
-					Grid.Column="1" />
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:maps="clr-namespace:Xamarin.Forms.GoogleMaps;assembly=Xamarin.Forms.GoogleMaps"
+    x:Class="XFGoogleMapSample.BasicMapPage"
+    Title="BasicMap">
+    <ContentPage.Content>
+        <Grid
+            HorizontalOptions="Fill"
+            VerticalOptions="Fill">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="4*" />
+                <RowDefinition Height="6*" />
+            </Grid.RowDefinitions>
 
-				<Label Text="HasZoomEnabled" 
-					VerticalOptions="Center"
-					Grid.Row="1"
-					Grid.Column="0" />
-				<Switch x:Name="switchHasZoomEnabled" 
-					VerticalOptions="Center"
-					HorizontalOptions="Start"
-					Grid.Row="1"
-					Grid.Column="1" />
+            <ScrollView Grid.Row="0"
+                        Orientation="Vertical">
 
-				<Label Text="HasScrollEnabled" 
-					VerticalOptions="Center"
-					Grid.Row="2"
-					Grid.Column="0" />
-				<Switch x:Name="switchHasScrollEnabled" 
-					VerticalOptions="Center"
-					HorizontalOptions="Start"
-					Grid.Row="2"
-					Grid.Column="1" />
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
 
-			    <Label Text="IsShowingUser"
-			           VerticalOptions="Center"
-			           Grid.Row="3"
-			           Grid.Column="0" />
-			    <Switch x:Name="switchIsShowingUser"
-			            VerticalOptions="Center"
-			            HorizontalOptions="Start"
-			            Grid.Row="3"
-			            Grid.Column="1" />
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
 
-			    <Label Text="Handle MyLocationButton"
-			           VerticalOptions="Center"
-			           Grid.Row="4"
-			           Grid.Column="0" />
-			    <Switch x:Name="switchHandleMyLocationButton"
-			            VerticalOptions="Center"
-			            HorizontalOptions="Start"
-			            Grid.Row="4"
-			            Grid.Column="1" />
+                    <Label Text="MapType"
+                           VerticalOptions="Center"
+                           Grid.Row="0"
+                           Grid.Column="0" />
+                    <Picker x:Name="pickerMapType"
+                            VerticalOptions="Center"
+                            Title="MapType"
+                            Grid.Row="0"
+                            Grid.Column="1" />
 
-			    <Label Text="IsTrafficEnabled"
-					VerticalOptions="Center"
-					Grid.Row="5"
-					Grid.Column="0" />
-				<Switch x:Name="switchIsTrafficEnabled" 
-					VerticalOptions="Center"
-					HorizontalOptions="Start"
-					Grid.Row="5"
-					Grid.Column="1" />
+                    <Label Text="HasZoomEnabled"
+                           VerticalOptions="Center"
+                           Grid.Row="1"
+                           Grid.Column="0" />
+                    <Switch x:Name="switchHasZoomEnabled"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Start"
+                            Grid.Row="1"
+                            Grid.Column="1" />
 
-				<Entry 
-					x:Name="entryAddress"
-					VerticalOptions="Center"
-					Text="new york"
-					Grid.Row="6"
-					Grid.Column="0" />
-				<Button
-					x:Name="buttonGeocode"
-					VerticalOptions="Center"
-					Text="GEOCODE"
-					Grid.Row="6"
-					Grid.Column="1" />
+                    <Label Text="HasScrollEnabled"
+                           VerticalOptions="Center"
+                           Grid.Row="2"
+                           Grid.Column="0" />
+                    <Switch x:Name="switchHasScrollEnabled"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Start"
+                            Grid.Row="2"
+                            Grid.Column="1" />
 
-				<Label x:Name="labelStatus"
-					Grid.Row="7"
-					Grid.Column="0"
-					Grid.ColumnSpan="2"/>
-						
-			</Grid>
-			<maps:Map x:Name="map" 
-					VerticalOptions="FillAndExpand"/>
-		</StackLayout>
-	</ContentPage.Content>
+                    <Label Text="IsShowingUser"
+                           VerticalOptions="Center"
+                           Grid.Row="3"
+                           Grid.Column="0" />
+                    <Switch x:Name="switchIsShowingUser"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Start"
+                            Grid.Row="3"
+                            Grid.Column="1" />
+
+                    <Label Text="Handle MyLocationButton"
+                           VerticalOptions="Center"
+                           Grid.Row="4"
+                           Grid.Column="0" />
+                    <Switch x:Name="switchHandleMyLocationButton"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Start"
+                            Grid.Row="4"
+                            Grid.Column="1" />
+
+                    <Label Text="IsTrafficEnabled"
+                           VerticalOptions="Center"
+                           Grid.Row="5"
+                           Grid.Column="0" />
+                    <Switch x:Name="switchIsTrafficEnabled"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Start"
+                            Grid.Row="5"
+                            Grid.Column="1" />
+
+                    <Entry
+                        x:Name="entryAddress"
+                        VerticalOptions="Center"
+                        Text="new york"
+                        Grid.Row="6"
+                        Grid.Column="0" />
+                    <Button
+                        x:Name="buttonGeocode"
+                        VerticalOptions="Center"
+                        Text="GEOCODE"
+                        Grid.Row="6"
+                        Grid.Column="1" />
+
+                    <Label x:Name="labelStatus"
+                           Grid.Row="7"
+                           Grid.Column="0"
+                           Grid.ColumnSpan="2" />
+                </Grid>
+            </ScrollView>
+
+            <maps:Map Grid.Row="1" x:Name="map"
+                      VerticalOptions="FillAndExpand" />
+        </Grid>
+    </ContentPage.Content>
 </ContentPage>
