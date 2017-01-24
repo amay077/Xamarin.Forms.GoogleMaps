@@ -29,7 +29,8 @@ namespace Xamarin.Forms.GoogleMaps.Logics
             foreach (TOuter outerItem in newItems)
             {
                 outerItem.PropertyChanged += OnItemPropertyChanged;
-                if (CreateNativeItem(outerItem) != null)
+                var nat = CreateNativeItem(outerItem);
+                if (nat != null)
                     _outerItems.Add(outerItem);
             }
         }

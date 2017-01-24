@@ -18,7 +18,7 @@ namespace Xamarin.Forms.GoogleMaps
         {
             if (ReferenceEquals(null, obj))
                 return false;
-            if (obj.GetType() != GetType())
+            if (!(obj is Position) || ReferenceEquals(null, this))
                 return false;
             var other = (Position)obj;
             return Latitude == other.Latitude && Longitude == other.Longitude;
@@ -42,6 +42,11 @@ namespace Xamarin.Forms.GoogleMaps
         public static bool operator !=(Position left, Position right)
         {
             return !Equals(left, right);
+        }
+
+        public static Position operator -(Position left, Position right)
+        {
+            return new Position(left.Latitude - right.Latitude, left.Longitude - right.Longitude);
         }
     }
 }
