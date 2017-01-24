@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Xamarin.Forms.GoogleMaps
 {
-    public static class GeoConstants
+    internal static class GeoConstants
     {
         public const double EarthRadiusKm = 6371;
         public const double EarthCircumferenceKm = EarthRadiusKm * 2 * Math.PI;
