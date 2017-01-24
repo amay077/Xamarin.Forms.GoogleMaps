@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using Xamarin.Forms.GoogleMaps.Internals;
 
 namespace Xamarin.Forms.GoogleMaps
 {

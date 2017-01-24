@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Xamarin.Forms.GoogleMaps
+namespace Xamarin.Forms.GoogleMaps.Internals
 {
     internal static class GeoConstants
     {
