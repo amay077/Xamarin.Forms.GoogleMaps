@@ -24,6 +24,7 @@ Xamarin公式の地図ライブラリ [Xamarin.Forms.Maps](https://developer.xam
 |機能|X.F.Maps|X.F.GoogleMaps|
 | ------------------- | :-----------: | :-----------: |
 |地図の種類|Yes|Yes|
+|渋滞状況地図|-|Yes|
 |地図イベント|-|Yes|
 |地図の移動(アニメーション付き)|Yes|Yes|
 |地図の移動(アニメーション無し)|-|Yes|
