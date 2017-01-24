@@ -25,6 +25,7 @@ Furthermore, I am using Google Maps instead of MapKit because it is easy for def
 |Feature|X.F.Maps|X.F.GoogleMaps|
 | ------------------- | :-----------: | :-----------: |
 |Map types|Yes|Yes|
+|Traffic map|-|Yes|
 |Map events|-|Yes|
 |Pannning with animation|Yes|Yes|
 |Pannning directly|-|Yes|
