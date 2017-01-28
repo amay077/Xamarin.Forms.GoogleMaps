@@ -65,6 +65,7 @@
     <Compile Include="CameraPosition.cs" />
     <Compile Include="CameraChangedEventArgs.cs" />
     <Compile Include="Internals\GeoConstants.cs" />
+    <Compile Include="Internals\IMapRequestDelegate.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

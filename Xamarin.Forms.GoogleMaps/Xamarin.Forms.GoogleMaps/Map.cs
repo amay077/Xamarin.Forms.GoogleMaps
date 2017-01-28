@@ -42,6 +42,8 @@ namespace Xamarin.Forms.GoogleMaps
         public event EventHandler<MyLocationButtonClickedEventArgs> MyLocationButtonClicked;
         public event EventHandler<CameraChangedEventArgs> CameraChanged;
 
+        internal Action<MoveToRegionMessage> OnMoveToRegion { get; set; }
+
         MapSpan _visibleRegion;
 
         public Map(MapSpan region)
@@ -162,7 +164,7 @@ namespace Xamarin.Forms.GoogleMaps
             if (mapSpan == null)
                 throw new ArgumentNullException(nameof(mapSpan));
             LastMoveToRegion = mapSpan;
-            MessagingCenter.Send(this, "MapMoveToRegion", new MoveToRegionMessage(mapSpan, animate));
+            SendMoveToRegion(new MoveToRegionMessage(mapSpan, animate));
         }
 
         void PinsOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -253,6 +255,11 @@ namespace Xamarin.Forms.GoogleMaps
         internal void SendCameraChanged(CameraPosition position)
         {
             CameraChanged?.Invoke(this, new CameraChangedEventArgs(position));
+        }
+
+        private void SendMoveToRegion(MoveToRegionMessage message)
+        {
+            OnMoveToRegion?.Invoke(message);
         }
     }
 }
