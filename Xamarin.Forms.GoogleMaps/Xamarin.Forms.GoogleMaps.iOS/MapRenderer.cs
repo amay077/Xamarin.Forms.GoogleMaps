@@ -12,11 +12,9 @@ using UIKit;
 
 namespace Xamarin.Forms.GoogleMaps.iOS
 {
-    public class MapRenderer : ViewRenderer
+    public class MapRenderer : ViewRenderer, IMapRequestDelegate
     {
         bool _shouldUpdateRegion = true;
-
-        const string MoveMessageName = "MapMoveToRegion";
 
         protected MapView NativeMap => (MapView)Control;
         protected Map Map => (Map)Element;
@@ -49,7 +47,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                 if (Element != null)
                 {
                     var mapModel = (Map)Element;
-                    MessagingCenter.Unsubscribe<Map, MoveToRegionMessage>(this, MoveMessageName);
+                    Map.OnMoveToRegion = null;
                 }
 
                 foreach (var logic in _logics)
@@ -86,8 +84,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
             var oldMapView = (MapView)Control;
             if (e.OldElement != null)
             {
-                var mapModel = (Map)e.OldElement;
-                MessagingCenter.Unsubscribe<Map, MoveToRegionMessage>(this, "MapMoveToRegion");
+                Map.OnMoveToRegion = null;
             }
 
             if (e.NewElement != null)
@@ -104,7 +101,8 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                     mkMapView.DidTapMyLocationButton = DidTapMyLocation;
                 }
 
-                MessagingCenter.Subscribe<Map, MoveToRegionMessage>(this, MoveMessageName, (s, a) => MoveToRegion(a.Span, a.Animate), mapModel);
+
+                Map.OnMoveToRegion = ((IMapRequestDelegate)this).OnMoveToRegion;
                 if (mapModel.LastMoveToRegion != null)
                     MoveToRegion(mapModel.LastMoveToRegion, false);
 
@@ -275,5 +273,11 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                     throw new ArgumentOutOfRangeException();
             }
         }
+
+        void IMapRequestDelegate.OnMoveToRegion(MoveToRegionMessage m)
+        {
+            MoveToRegion(m.Span, m.Animate);
+        }
+
     }
 }

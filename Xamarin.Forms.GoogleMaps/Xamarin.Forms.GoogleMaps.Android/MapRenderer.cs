@@ -20,6 +20,7 @@ using GCameraPosition = Android.Gms.Maps.Model.CameraPosition;
 namespace Xamarin.Forms.GoogleMaps.Android
 {
     public class MapRenderer : ViewRenderer,
+        IMapRequestDelegate,
         GoogleMap.IOnCameraChangeListener,
         GoogleMap.IOnMapClickListener,
         GoogleMap.IOnMapLongClickListener,
@@ -45,8 +46,6 @@ namespace Xamarin.Forms.GoogleMaps.Android
 
         static Bundle s_bundle;
         internal static Bundle Bundle { set { s_bundle = value; } }
-
-        const string MoveMessageName = "MapMoveToRegion";
 
         protected GoogleMap NativeMap { get; private set; }
 
@@ -100,7 +99,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
             if (e.OldElement != null)
             {
                 var oldMapModel = (Map)e.OldElement;
-                MessagingCenter.Unsubscribe<Map, MoveToRegionMessage>(this, MoveMessageName);
+                Map.OnMoveToRegion = null;
 
                 var oldGoogleMap = await oldMapView.GetGoogleMapAsync();
                 if (oldGoogleMap != null)
@@ -121,7 +120,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 _oldMap = (Map)e.OldElement;
             }
 
-            MessagingCenter.Subscribe<Map, MoveToRegionMessage>(this, MoveMessageName, OnMoveToRegionMessage, Map);
+            Map.OnMoveToRegion = ((IMapRequestDelegate)this).OnMoveToRegion;
 
             NativeMap = await ((MapView)Control).GetGoogleMapAsync();
             OnMapReady(NativeMap);
@@ -156,7 +155,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
             }
         }
 
-        void OnMoveToRegionMessage(Map s, MoveToRegionMessage m)
+        void IMapRequestDelegate.OnMoveToRegion(MoveToRegionMessage m)
         {
             MoveToRegion(m.Span, m.Animate);
         }
@@ -340,7 +339,8 @@ namespace Xamarin.Forms.GoogleMaps.Android
 
                 if (this.Map != null)
                 {
-                    MessagingCenter.Unsubscribe<Map, MoveToRegionMessage>(this, MoveMessageName);
+                    //MessagingCenter.Unsubscribe<Map, MoveToRegionMessage>(this, MoveMessageName);
+                    Map.OnMoveToRegion = null;
                 }
 
                 foreach (var logic in _logics)
