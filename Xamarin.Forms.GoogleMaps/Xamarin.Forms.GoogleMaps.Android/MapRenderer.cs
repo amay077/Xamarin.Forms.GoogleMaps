@@ -94,6 +94,8 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 activity.WindowManager.DefaultDisplay.GetMetrics(metrics);
                 foreach (var logic in _logics)
                     logic.ScaledDensity = metrics.ScaledDensity;
+
+                _cameraLogic.ScaledDensity = metrics.ScaledDensity;
             }
 
             if (e.OldElement != null)

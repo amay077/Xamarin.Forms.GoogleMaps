@@ -7,7 +7,16 @@ namespace Xamarin.Forms.GoogleMaps.Logics
         protected Map _map;
         protected TNativeMap _nativeMap;
 
-        public abstract void Register(Map map, TNativeMap nativeMap);
+        public float ScaledDensity { get; internal set; }
+
+        public void Register(Map map, TNativeMap nativeMap)
+        {
+            _map = map;
+            _nativeMap = nativeMap;
+
+            _map.OnMoveToRegion = OnMoveToRegionRequest;
+            _map.OnMoveCamera = OnMoveCameraRequest;
+        }
 
         public void Unregister()
         {

@@ -2,9 +2,7 @@
 using System.ComponentModel;
 using Xamarin.Forms.Platform.iOS;
 using Google.Maps;
-using CoreLocation;
 using System.Drawing;
-using Xamarin.Forms.GoogleMaps.Internals;
 using Xamarin.Forms.GoogleMaps.Logics.iOS;
 using Xamarin.Forms.GoogleMaps.Logics;
 using Xamarin.Forms.GoogleMaps.iOS.Extensions;
@@ -46,12 +44,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
         {
             if (disposing)
             {
-
-                if (Element != null)
-                {
-                    _cameraLogic.Unregister();
-                    var mapModel = (Map)Element;
-                }
+                _cameraLogic.Unregister();
 
                 foreach (var logic in _logics)
                     logic.Unregister(NativeMap, Map);
@@ -107,7 +100,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                 _cameraLogic.Register(Map, NativeMap);
 
                 if (mapModel.LastMoveToRegion != null)
-                    MoveToRegion(mapModel.LastMoveToRegion, false);
+                    _cameraLogic.MoveToRegion(mapModel.LastMoveToRegion, false);
 
                 UpdateMapType();
                 UpdateIsShowingUser();
@@ -182,7 +175,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
 
             if (_shouldUpdateRegion)
             {
-                MoveToRegion(((Map)Element).LastMoveToRegion, false);
+                _cameraLogic.MoveToRegion(((Map)Element).LastMoveToRegion, false);
                 _shouldUpdateRegion = false;
             }
 
@@ -219,20 +212,6 @@ namespace Xamarin.Forms.GoogleMaps.iOS
         bool DidTapMyLocation(MapView mapView)
         {
             return Map.SendMyLocationClicked();
-        }
-
-        void MoveToRegion(MapSpan mapSpan, bool animated = true)
-        {
-            Position center = mapSpan.Center;
-            var halfLat = mapSpan.LatitudeDegrees / 2d;
-            var halfLong = mapSpan.LongitudeDegrees / 2d;
-            var mapRegion = new CoordinateBounds(new CLLocationCoordinate2D(center.Latitude - halfLat, center.Longitude - halfLong),
-                                                new CLLocationCoordinate2D(center.Latitude + halfLat, center.Longitude + halfLong));
-
-            if (animated)
-                ((MapView)Control).Animate(GCameraUpdate.FitBounds(mapRegion));
-            else
-                ((MapView)Control).MoveCamera(GCameraUpdate.FitBounds(mapRegion));
         }
 
         void UpdateHasScrollEnabled()

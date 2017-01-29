@@ -7,7 +7,7 @@ namespace Xamarin.Forms.GoogleMaps.Android.Extensions
 {
     internal static class CameraUpdateExtensions
     {
-        public static GCameraUpdate ToAndroid(this CameraUpdate self)
+        public static GCameraUpdate ToAndroid(this CameraUpdate self, float scaledDensity)
         {
             switch (self.UpdateType)
             {
@@ -16,7 +16,7 @@ namespace Xamarin.Forms.GoogleMaps.Android.Extensions
                 case CameraUpdateType.LatLngZoom:
                     return GCameraUpdateFactory.NewLatLngZoom(self.Position.ToLatLng(), (float) self.Zoom);
                 case CameraUpdateType.LatLngBounds:
-                    return GCameraUpdateFactory.NewLatLngBounds(self.Bounds.ToLatLngBounds(), self.Padding);
+                    return GCameraUpdateFactory.NewLatLngBounds(self.Bounds.ToLatLngBounds(), (int)(self.Padding * scaledDensity)); // TODO: convert from px to pt. Is this collect? (looks like same iOS Maps)
                 case CameraUpdateType.CameraPosition:
                     return GCameraUpdateFactory.NewCameraPosition(self.CameraPosition.ToAndroid());
                 default:

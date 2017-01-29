@@ -10,21 +10,12 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
 {
     internal sealed class CameraLogic : BaseCameraLogic<GoogleMap>
     {
-        public override void Register(Map map, GoogleMap nativeMap)
-        {
-            _map = map;
-            _nativeMap = nativeMap;
-
-            _map.OnMoveToRegion = OnMoveToRegionRequest;
-            _map.OnMoveCamera = OnMoveCameraRequest;
-        }
-
         public override void OnMoveToRegionRequest(MoveToRegionMessage m)
         {
             MoveToRegion(m.Span, m.Animate);
         }
 
-        public void MoveToRegion(MapSpan span, bool animate)
+        internal void MoveToRegion(MapSpan span, bool animate)
         {
             if (_nativeMap == null)
                 return;
@@ -49,7 +40,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
 
         public override void OnMoveCameraRequest(CameraUpdateMessage m)
         {
-            _nativeMap.MoveCamera(m.Update.ToAndroid());
+            _nativeMap.MoveCamera(m.Update.ToAndroid(ScaledDensity));
             m.Callback.OnFinished();
         }
     }
