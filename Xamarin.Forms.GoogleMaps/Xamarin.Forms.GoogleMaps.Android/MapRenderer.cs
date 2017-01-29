@@ -8,7 +8,6 @@ using Xamarin.Forms.Platform.Android;
 using Math = System.Math;
 using Android.Util;
 using Android.App;
-using Xamarin.Forms.GoogleMaps.Internals;
 using Xamarin.Forms.GoogleMaps.Logics.Android;
 using Xamarin.Forms.GoogleMaps.Logics;
 using Xamarin.Forms.GoogleMaps.Android.Extensions;
