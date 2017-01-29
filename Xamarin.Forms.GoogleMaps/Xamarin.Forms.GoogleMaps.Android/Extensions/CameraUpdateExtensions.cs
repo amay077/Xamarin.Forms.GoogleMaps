@@ -13,6 +13,12 @@ namespace Xamarin.Forms.GoogleMaps.Android.Extensions
             {
                 case CameraUpdateType.LatLng:
                     return GCameraUpdateFactory.NewLatLng(self.Position.ToLatLng());
+                case CameraUpdateType.LatLngZoom:
+                    return GCameraUpdateFactory.NewLatLngZoom(self.Position.ToLatLng(), (float) self.Zoom);
+                case CameraUpdateType.LatLngBounds:
+                    return GCameraUpdateFactory.NewLatLngBounds(self.Bounds.ToLatLngBounds(), self.Padding);
+                case CameraUpdateType.CameraPosition:
+                    return GCameraUpdateFactory.NewCameraPosition(self.CameraPosition.ToAndroid());
                 default:
                     throw new ArgumentException($"{nameof(self)} UpdateType is not supported.");
             }

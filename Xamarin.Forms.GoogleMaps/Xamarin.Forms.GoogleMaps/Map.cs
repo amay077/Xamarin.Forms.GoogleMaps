@@ -174,7 +174,6 @@ namespace Xamarin.Forms.GoogleMaps
         {
             var comp = new TaskCompletionSource<AnimationStatus>();
 
-
             SendMoveCamera(new CameraUpdateMessage(cameraUpdate, new DelegateAnimationCallback(
                 () => comp.SetResult(AnimationStatus.Finished), 
                 () => comp.SetResult(AnimationStatus.Canceled))));

@@ -12,6 +12,7 @@
             VerticalOptions="Fill">
             <Grid.RowDefinitions>
                 <RowDefinition Height="4*" />
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="6*" />
             </Grid.RowDefinitions>
 
@@ -25,7 +26,9 @@
                 </StackLayout>
             </ScrollView>
 
-            <maps:Map Grid.Row="1" x:Name="map"
+			<Label Grid.Row="1" x:Name="labelStatus" />
+
+            <maps:Map Grid.Row="2" x:Name="map"
                       VerticalOptions="FillAndExpand" />
         </Grid>
     </ContentPage.Content>
