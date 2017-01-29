@@ -3,7 +3,7 @@ namespace Xamarin.Forms.GoogleMaps.Internals
 {
     internal interface IMapRequestDelegate
     {
-        void OnMoveToRegion(MoveToRegionMessage m);
-        void OnMoveCamera(CameraUpdateMessage m);
+        void OnMoveToRegionRequest(MoveToRegionMessage m);
+        void OnMoveCameraRequest(CameraUpdateMessage m);
     }
 }

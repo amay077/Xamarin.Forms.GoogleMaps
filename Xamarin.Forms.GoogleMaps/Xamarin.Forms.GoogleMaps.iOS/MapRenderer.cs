@@ -12,7 +12,7 @@ using UIKit;
 
 namespace Xamarin.Forms.GoogleMaps.iOS
 {
-    public class MapRenderer : ViewRenderer, IMapRequestDelegate
+    public class MapRenderer : ViewRenderer
     {
         bool _shouldUpdateRegion = true;
 
@@ -273,11 +273,5 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                     throw new ArgumentOutOfRangeException();
             }
         }
-
-        void IMapRequestDelegate.OnMoveToRegion(MoveToRegionMessage m)
-        {
-            MoveToRegion(m.Span, m.Animate);
-        }
-
     }
 }

@@ -21,12 +21,12 @@ using GCameraPosition = Android.Gms.Maps.Model.CameraPosition;
 namespace Xamarin.Forms.GoogleMaps.Android
 {
     public class MapRenderer : ViewRenderer,
-        IMapRequestDelegate,
         GoogleMap.IOnCameraChangeListener,
         GoogleMap.IOnMapClickListener,
         GoogleMap.IOnMapLongClickListener,
         GoogleMap.IOnMyLocationButtonClickListener
     {
+        readonly CameraLogic _cameraLogic = new CameraLogic();
         readonly BaseLogic<GoogleMap>[] _logics;
 
         public MapRenderer() : base()
@@ -100,8 +100,8 @@ namespace Xamarin.Forms.GoogleMaps.Android
             if (e.OldElement != null)
             {
                 var oldMapModel = (Map)e.OldElement;
-                Map.OnMoveCamera = null;
-                Map.OnMoveToRegion = null;
+
+                _cameraLogic.Unregister();
 
                 var oldGoogleMap = await oldMapView.GetGoogleMapAsync();
                 if (oldGoogleMap != null)
@@ -122,10 +122,10 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 _oldMap = (Map)e.OldElement;
             }
 
-            Map.OnMoveToRegion = ((IMapRequestDelegate)this).OnMoveToRegion;
-            Map.OnMoveCamera = ((IMapRequestDelegate)this).OnMoveCamera;
-
             NativeMap = await ((MapView)Control).GetGoogleMapAsync();
+
+            _cameraLogic.Register(Map, NativeMap);
+
             OnMapReady(NativeMap);
         }
 
@@ -158,41 +158,6 @@ namespace Xamarin.Forms.GoogleMaps.Android
             }
         }
 
-        void IMapRequestDelegate.OnMoveToRegion(MoveToRegionMessage m)
-        {
-            MoveToRegion(m.Span, m.Animate);
-        }
-
-        void MoveToRegion(MapSpan span, bool animate)
-        {
-            var map = NativeMap;
-            if (map == null)
-                return;
-
-            span = span.ClampLatitude(85, -85);
-            var ne = new LatLng(span.Center.Latitude + span.LatitudeDegrees / 2, span.Center.Longitude + span.LongitudeDegrees / 2);
-            var sw = new LatLng(span.Center.Latitude - span.LatitudeDegrees / 2, span.Center.Longitude - span.LongitudeDegrees / 2);
-            var update = GCameraUpdateFactory.NewLatLngBounds(new LatLngBounds(sw, ne), 0);
-
-            try
-            {
-                if (animate)
-                    map.AnimateCamera(update);
-                else
-                    map.MoveCamera(update);
-            }
-            catch (IllegalStateException exc)
-            {
-                System.Diagnostics.Debug.WriteLine("MoveToRegion exception: " + exc);
-            }
-        }
-
-        void IMapRequestDelegate.OnMoveCamera(CameraUpdateMessage m)
-        {
-            NativeMap.MoveCamera(m.Update.ToAndroid());
-            m.Callback.OnFinished();
-        }
-
         protected override void OnLayout(bool changed, int l, int t, int r, int b)
         {
             base.OnLayout(changed, l, t, r, b);
@@ -217,7 +182,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
 
         void InitializeLogic()
         {
-            MoveToRegion(((Map)Element).LastMoveToRegion, false);
+            _cameraLogic.MoveToRegion(((Map)Element).LastMoveToRegion, false);
 
             foreach (var logic in _logics)
             {
@@ -346,11 +311,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
             {
                 _disposed = true;
 
-                if (this.Map != null)
-                {
-                    Map.OnMoveCamera = null;
-                    Map.OnMoveToRegion = null;
-                }
+                _cameraLogic.Unregister();
 
                 foreach (var logic in _logics)
                     logic.Unregister(NativeMap, Map);
