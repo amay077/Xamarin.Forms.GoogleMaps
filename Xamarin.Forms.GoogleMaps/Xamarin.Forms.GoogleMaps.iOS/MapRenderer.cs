@@ -10,6 +10,8 @@ using Xamarin.Forms.GoogleMaps.Logics;
 using Xamarin.Forms.GoogleMaps.iOS.Extensions;
 using UIKit;
 
+using GCameraUpdate = Google.Maps.CameraUpdate;
+
 namespace Xamarin.Forms.GoogleMaps.iOS
 {
     public class MapRenderer : ViewRenderer
@@ -19,6 +21,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
         protected MapView NativeMap => (MapView)Control;
         protected Map Map => (Map)Element;
 
+        readonly CameraLogic _cameraLogic = new CameraLogic();
         readonly BaseLogic<MapView>[] _logics;
 
         public MapRenderer()
@@ -46,8 +49,8 @@ namespace Xamarin.Forms.GoogleMaps.iOS
 
                 if (Element != null)
                 {
+                    _cameraLogic.Unregister();
                     var mapModel = (Map)Element;
-                    Map.OnMoveToRegion = null;
                 }
 
                 foreach (var logic in _logics)
@@ -84,7 +87,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
             var oldMapView = (MapView)Control;
             if (e.OldElement != null)
             {
-                Map.OnMoveToRegion = null;
+                _cameraLogic.Unregister();
             }
 
             if (e.NewElement != null)
@@ -101,8 +104,8 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                     mkMapView.DidTapMyLocationButton = DidTapMyLocation;
                 }
 
+                _cameraLogic.Register(Map, NativeMap);
 
-                Map.OnMoveToRegion = ((IMapRequestDelegate)this).OnMoveToRegion;
                 if (mapModel.LastMoveToRegion != null)
                     MoveToRegion(mapModel.LastMoveToRegion, false);
 
@@ -227,9 +230,9 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                                                 new CLLocationCoordinate2D(center.Latitude + halfLat, center.Longitude + halfLong));
 
             if (animated)
-                ((MapView)Control).Animate(CameraUpdate.FitBounds(mapRegion));
+                ((MapView)Control).Animate(GCameraUpdate.FitBounds(mapRegion));
             else
-                ((MapView)Control).MoveCamera(CameraUpdate.FitBounds(mapRegion));
+                ((MapView)Control).MoveCamera(GCameraUpdate.FitBounds(mapRegion));
         }
 
         void UpdateHasScrollEnabled()
