@@ -15,6 +15,7 @@ using Xamarin.Forms.GoogleMaps.Android.Extensions;
 using Android.Widget;
 using Android.Views;
 
+using GCameraUpdateFactory = Android.Gms.Maps.CameraUpdateFactory;
 using GCameraPosition = Android.Gms.Maps.Model.CameraPosition;
 
 namespace Xamarin.Forms.GoogleMaps.Android
@@ -99,6 +100,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
             if (e.OldElement != null)
             {
                 var oldMapModel = (Map)e.OldElement;
+                Map.OnMoveCamera = null;
                 Map.OnMoveToRegion = null;
 
                 var oldGoogleMap = await oldMapView.GetGoogleMapAsync();
@@ -121,6 +123,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
             }
 
             Map.OnMoveToRegion = ((IMapRequestDelegate)this).OnMoveToRegion;
+            Map.OnMoveCamera = ((IMapRequestDelegate)this).OnMoveCamera;
 
             NativeMap = await ((MapView)Control).GetGoogleMapAsync();
             OnMapReady(NativeMap);
@@ -169,7 +172,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
             span = span.ClampLatitude(85, -85);
             var ne = new LatLng(span.Center.Latitude + span.LatitudeDegrees / 2, span.Center.Longitude + span.LongitudeDegrees / 2);
             var sw = new LatLng(span.Center.Latitude - span.LatitudeDegrees / 2, span.Center.Longitude - span.LongitudeDegrees / 2);
-            var update = CameraUpdateFactory.NewLatLngBounds(new LatLngBounds(sw, ne), 0);
+            var update = GCameraUpdateFactory.NewLatLngBounds(new LatLngBounds(sw, ne), 0);
 
             try
             {
@@ -182,6 +185,12 @@ namespace Xamarin.Forms.GoogleMaps.Android
             {
                 System.Diagnostics.Debug.WriteLine("MoveToRegion exception: " + exc);
             }
+        }
+
+        void IMapRequestDelegate.OnMoveCamera(CameraUpdateMessage m)
+        {
+            NativeMap.MoveCamera(m.Update.ToAndroid());
+            m.Callback.OnFinished();
         }
 
         protected override void OnLayout(bool changed, int l, int t, int r, int b)
@@ -339,7 +348,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
 
                 if (this.Map != null)
                 {
-                    //MessagingCenter.Unsubscribe<Map, MoveToRegionMessage>(this, MoveMessageName);
+                    Map.OnMoveCamera = null;
                     Map.OnMoveToRegion = null;
                 }
 

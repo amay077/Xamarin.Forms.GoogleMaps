@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
 using Xamarin.Forms.GoogleMaps.Internals;
+using System.Threading.Tasks;
 
 namespace Xamarin.Forms.GoogleMaps
 {
@@ -43,6 +44,8 @@ namespace Xamarin.Forms.GoogleMaps
         public event EventHandler<CameraChangedEventArgs> CameraChanged;
 
         internal Action<MoveToRegionMessage> OnMoveToRegion { get; set; }
+
+        internal Action<CameraUpdateMessage> OnMoveCamera { get; set; }
 
         MapSpan _visibleRegion;
 
@@ -167,6 +170,18 @@ namespace Xamarin.Forms.GoogleMaps
             SendMoveToRegion(new MoveToRegionMessage(mapSpan, animate));
         }
 
+        public Task<AnimationStatus> MoveCamera(CameraUpdate cameraUpdate)
+        {
+            var comp = new TaskCompletionSource<AnimationStatus>();
+
+
+            SendMoveCamera(new CameraUpdateMessage(cameraUpdate, new DelegateAnimationCallback(
+                () => comp.SetResult(AnimationStatus.Finished), 
+                () => comp.SetResult(AnimationStatus.Canceled))));
+
+            return comp.Task;
+        }
+
         void PinsOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.NewItems != null && e.NewItems.Cast<Pin>().Any(pin => pin.Label == null))
@@ -260,6 +275,11 @@ namespace Xamarin.Forms.GoogleMaps
         private void SendMoveToRegion(MoveToRegionMessage message)
         {
             OnMoveToRegion?.Invoke(message);
+        }
+
+        void SendMoveCamera(CameraUpdateMessage message)
+        {
+            OnMoveCamera?.Invoke(message);
         }
     }
 }

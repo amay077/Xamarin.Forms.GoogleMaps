@@ -66,6 +66,13 @@
     <Compile Include="CameraChangedEventArgs.cs" />
     <Compile Include="Internals\GeoConstants.cs" />
     <Compile Include="Internals\IMapRequestDelegate.cs" />
+    <Compile Include="CameraUpdateFactory.cs" />
+    <Compile Include="CameraUpdate.cs" />
+    <Compile Include="Internals\CameraUpdateMessage.cs" />
+    <Compile Include="Internals\IAnimationCallback.cs" />
+    <Compile Include="AnimationStatus.cs" />
+    <Compile Include="Internals\DelegateAnimationCallback.cs" />
+    <Compile Include="Internals\CameraUpdateType.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

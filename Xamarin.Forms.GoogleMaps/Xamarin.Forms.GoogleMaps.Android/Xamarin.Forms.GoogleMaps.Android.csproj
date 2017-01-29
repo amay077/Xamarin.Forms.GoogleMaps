@@ -112,6 +112,7 @@
     <Compile Include="Extensions\BoundsExtensions.cs" />
     <Compile Include="Extensions\MapViewExtensions.cs" />
     <Compile Include="Extensions\CameraPositionExtensions.cs" />
+    <Compile Include="Extensions\CameraUpdateExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
