@@ -62,6 +62,9 @@
     <EmbeddedResource Include="GroundOverlaysPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Include="CameraPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -97,6 +100,9 @@
     </Compile>
     <Compile Include="GroundOverlaysPage.xaml.cs">
       <DependentUpon>GroundOverlaysPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CameraPage.xaml.cs">
+      <DependentUpon>CameraPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Extensions\ListExtensions.cs" />
     <Compile Include="Variables.cs" />
