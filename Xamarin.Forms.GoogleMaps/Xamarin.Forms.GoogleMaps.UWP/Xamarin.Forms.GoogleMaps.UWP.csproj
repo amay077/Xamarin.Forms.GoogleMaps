@@ -108,9 +108,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\BitmapDescriptorExtensions.cs" />
+    <Compile Include="Extensions\BoundsExtensions.cs" />
     <Compile Include="Extensions\LngLatExtensions.cs" />
+    <Compile Include="Extensions\PositionExtensions.cs" />
     <Compile Include="FormsGoogleMap.cs" />
     <Compile Include="GeocoderBackend.cs" />
+    <Compile Include="Logics\CameraLogic.cs" />
     <Compile Include="Logics\PinLogic.cs" />
     <Compile Include="Logics\TileLayerLogic.cs" />
     <Compile Include="MapRenderer.cs" />

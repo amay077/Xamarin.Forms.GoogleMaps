@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:maps="clr-namespace:Xamarin.Forms.GoogleMaps;assembly=Xamarin.Forms.GoogleMaps"
+    x:Class="XFGoogleMapSample.CameraPage"
+    Title="Camera Operations">
+    <ContentPage.Content>
+        <Grid
+            HorizontalOptions="Fill"
+            VerticalOptions="Fill">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="4*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="6*" />
+            </Grid.RowDefinitions>
+
+            <ScrollView Grid.Row="0"
+                        Orientation="Vertical">
+
+                <StackLayout Orientation="Vertical">
+
+                    <Button x:Name="buttonMoveToPosition" Text="Move to LatLng" />
+                    <Button x:Name="buttonMoveToPositionZoom" Text="Move to LatLngZoom" />
+                    <Button x:Name="buttonMoveToBounds" Text="Move to LatLngBounds" />
+                    <Button x:Name="buttonMoveToCameraPosition" Text="Move to CameraPosition" />
+
+                </StackLayout>
+            </ScrollView>
+
+            <Label Grid.Row="1" x:Name="labelStatus" />
+
+            <maps:Map Grid.Row="2" x:Name="map"
+                      VerticalOptions="FillAndExpand" />
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

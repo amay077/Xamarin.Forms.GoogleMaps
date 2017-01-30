@@ -2,23 +2,24 @@
 using System.ComponentModel;
 using Xamarin.Forms.Platform.iOS;
 using Google.Maps;
-using CoreLocation;
 using System.Drawing;
-using Xamarin.Forms.GoogleMaps.Internals;
 using Xamarin.Forms.GoogleMaps.Logics.iOS;
 using Xamarin.Forms.GoogleMaps.Logics;
 using Xamarin.Forms.GoogleMaps.iOS.Extensions;
 using UIKit;
 
+using GCameraUpdate = Google.Maps.CameraUpdate;
+
 namespace Xamarin.Forms.GoogleMaps.iOS
 {
-    public class MapRenderer : ViewRenderer, IMapRequestDelegate
+    public class MapRenderer : ViewRenderer
     {
         bool _shouldUpdateRegion = true;
 
         protected MapView NativeMap => (MapView)Control;
         protected Map Map => (Map)Element;
 
+        readonly CameraLogic _cameraLogic = new CameraLogic();
         readonly BaseLogic<MapView>[] _logics;
 
         public MapRenderer()
@@ -43,12 +44,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
         {
             if (disposing)
             {
-
-                if (Element != null)
-                {
-                    var mapModel = (Map)Element;
-                    Map.OnMoveToRegion = null;
-                }
+                _cameraLogic.Unregister();
 
                 foreach (var logic in _logics)
                     logic.Unregister(NativeMap, Map);
@@ -84,7 +80,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
             var oldMapView = (MapView)Control;
             if (e.OldElement != null)
             {
-                Map.OnMoveToRegion = null;
+                _cameraLogic.Unregister();
             }
 
             if (e.NewElement != null)
@@ -101,10 +97,10 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                     mkMapView.DidTapMyLocationButton = DidTapMyLocation;
                 }
 
+                _cameraLogic.Register(Map, NativeMap);
 
-                Map.OnMoveToRegion = ((IMapRequestDelegate)this).OnMoveToRegion;
                 if (mapModel.LastMoveToRegion != null)
-                    MoveToRegion(mapModel.LastMoveToRegion, false);
+                    _cameraLogic.MoveToRegion(mapModel.LastMoveToRegion, false);
 
                 UpdateMapType();
                 UpdateIsShowingUser();
@@ -179,7 +175,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
 
             if (_shouldUpdateRegion)
             {
-                MoveToRegion(((Map)Element).LastMoveToRegion, false);
+                _cameraLogic.MoveToRegion(((Map)Element).LastMoveToRegion, false);
                 _shouldUpdateRegion = false;
             }
 
@@ -216,20 +212,6 @@ namespace Xamarin.Forms.GoogleMaps.iOS
         bool DidTapMyLocation(MapView mapView)
         {
             return Map.SendMyLocationClicked();
-        }
-
-        void MoveToRegion(MapSpan mapSpan, bool animated = true)
-        {
-            Position center = mapSpan.Center;
-            var halfLat = mapSpan.LatitudeDegrees / 2d;
-            var halfLong = mapSpan.LongitudeDegrees / 2d;
-            var mapRegion = new CoordinateBounds(new CLLocationCoordinate2D(center.Latitude - halfLat, center.Longitude - halfLong),
-                                                new CLLocationCoordinate2D(center.Latitude + halfLat, center.Longitude + halfLong));
-
-            if (animated)
-                ((MapView)Control).Animate(CameraUpdate.FitBounds(mapRegion));
-            else
-                ((MapView)Control).MoveCamera(CameraUpdate.FitBounds(mapRegion));
         }
 
         void UpdateHasScrollEnabled()
@@ -273,11 +255,5 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                     throw new ArgumentOutOfRangeException();
             }
         }
-
-        void IMapRequestDelegate.OnMoveToRegion(MoveToRegionMessage m)
-        {
-            MoveToRegion(m.Span, m.Animate);
-        }
-
     }
 }

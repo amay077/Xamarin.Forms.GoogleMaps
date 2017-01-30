@@ -7,6 +7,20 @@ namespace Xamarin.Forms.GoogleMaps
     {
         public Position SouthWest { get; }
         public Position NorthEast { get; }
+        public Position SouthEast
+        {
+            get
+            {
+                return new Position(SouthWest.Latitude, NorthEast.Longitude);
+            }
+        }
+
+        public Position NorthWest {
+            get
+            {
+                return new Position(NorthEast.Latitude, SouthWest.Longitude);
+            }
+        }
 
         public Position Center
         {

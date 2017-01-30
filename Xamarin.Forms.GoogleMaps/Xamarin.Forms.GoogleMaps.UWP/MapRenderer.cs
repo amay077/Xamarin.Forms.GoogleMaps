@@ -13,6 +13,7 @@ using Xamarin.Forms.GoogleMaps.Extensions.UWP;
 using Xamarin.Forms.GoogleMaps.Internals;
 using Xamarin.Forms.GoogleMaps.Logics;
 using Xamarin.Forms.GoogleMaps.Logics.UWP;
+using Xamarin.Forms.GoogleMaps.UWP.Logics;
 #if WINDOWS_UWP
 using Xamarin.Forms.Platform.UWP;
 
@@ -29,8 +30,10 @@ namespace Xamarin.Forms.GoogleMaps.UWP
 namespace Xamarin.Forms.Maps.WinRT
 #endif
 {
-    public class MapRenderer : ViewRenderer<Map, MapControl>, IMapRequestDelegate
+    public class MapRenderer : ViewRenderer<Map, MapControl>
     {
+        private readonly CameraLogic _cameraLogic = new CameraLogic();
+
         private Map Map
         {
             get { return Element as Map; }
@@ -61,7 +64,7 @@ namespace Xamarin.Forms.Maps.WinRT
             if (e.OldElement != null)
             {
                 var mapModel = e.OldElement;
-                Map.OnMoveToRegion = null;
+                _cameraLogic.Unregister();
 
                 if (oldMapView != null)
                 {
@@ -83,7 +86,7 @@ namespace Xamarin.Forms.Maps.WinRT
                     Control.ActualCameraChanged += OnActualCameraChanged;
                 }
 
-                Map.OnMoveToRegion = ((IMapRequestDelegate)this).OnMoveToRegion;
+                _cameraLogic.Register(Map, NativeMap);
 
                 UpdateMapType();
                 UpdateHasScrollEnabled();
@@ -117,7 +120,7 @@ namespace Xamarin.Forms.Maps.WinRT
             var camera = args.Camera;
             var pos = new CameraPosition(
                 camera.Location.Position.ToPosition(),
-                camera.Roll,
+                camera.Heading,
                 camera.Pitch,
                 sender.ZoomLevel);
             Map.SendCameraChanged(pos);
@@ -150,7 +153,7 @@ namespace Xamarin.Forms.Maps.WinRT
             {
                 _disposed = true;
 
-                Map.OnMoveToRegion = null;
+                _cameraLogic.Unregister();
             }
             base.Dispose(disposing);
         }
@@ -176,22 +179,6 @@ namespace Xamarin.Forms.Maps.WinRT
                 Control.Children.Remove(_userPositionCircle);
         }
 
-        async Task MoveToRegion(MapSpan span, MapAnimationKind animation = MapAnimationKind.Bow)
-        {
-            var nw = new BasicGeoposition
-            {
-                Latitude = span.Center.Latitude + span.LatitudeDegrees / 2,
-                Longitude = span.Center.Longitude - span.LongitudeDegrees / 2
-            };
-            var se = new BasicGeoposition
-            {
-                Latitude = span.Center.Latitude - span.LatitudeDegrees / 2,
-                Longitude = span.Center.Longitude + span.LongitudeDegrees / 2
-            };
-            var boundingBox = new GeoboundingBox(nw, se);
-            await Control.TrySetViewBoundsAsync(boundingBox, null, animation);
-        }
-
         async Task UpdateVisibleRegion()
         {
             if (Control == null || Element == null)
@@ -199,7 +186,7 @@ namespace Xamarin.Forms.Maps.WinRT
 
             if (!_firstZoomLevelChangeFired)
             {
-                await MoveToRegion(Element.LastMoveToRegion, MapAnimationKind.None);
+                await _cameraLogic.MoveToRegion(Element.LastMoveToRegion, MapAnimationKind.None);
                 _firstZoomLevelChangeFired = true;
                 return;
             }
@@ -292,11 +279,6 @@ namespace Xamarin.Forms.Maps.WinRT
         void UpdateHasScrollEnabled()
         {
             Control.PanInteractionMode = Element.HasScrollEnabled ? MapPanInteractionMode.Auto : MapPanInteractionMode.Disabled;
-        }
-
-        async void IMapRequestDelegate.OnMoveToRegion(MoveToRegionMessage m)
-        {
-            await MoveToRegion(m.Span, m.Animate ? MapAnimationKind.Bow : MapAnimationKind.None);
         }
 #else
         void UpdateHasZoomEnabled()

@@ -11,7 +11,7 @@ namespace Xamarin.Forms.GoogleMaps
         public double Tilt { get; }
         public double Zoom { get; }
 
-        internal CameraPosition(Position target, double bearing, double tilt, double zoom)
+        public CameraPosition(Position target, double bearing, double tilt, double zoom)
         {
             Target = target;
             Bearing = bearing;
