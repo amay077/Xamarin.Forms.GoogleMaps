@@ -120,7 +120,7 @@ namespace Xamarin.Forms.Maps.WinRT
             var camera = args.Camera;
             var pos = new CameraPosition(
                 camera.Location.Position.ToPosition(),
-                camera.Roll,
+                camera.Heading,
                 camera.Pitch,
                 sender.ZoomLevel);
             Map.SendCameraChanged(pos);
