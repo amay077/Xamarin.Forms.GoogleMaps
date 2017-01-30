@@ -1,5 +1,12 @@
 Xamarin.Forms.GoogleMaps Release Notes
 ----
+# 1.8.0-beta3
+
+## New Features
+
+* #7 Add CameraChanged event
+* #7 Add MoveCamera method
+
 # 1.8.0-beta2
 
 ## New Features
