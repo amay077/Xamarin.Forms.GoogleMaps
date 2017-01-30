@@ -11,7 +11,7 @@ using Xamarin.Forms.GoogleMaps.UWP.Extensions;
 
 namespace Xamarin.Forms.GoogleMaps.UWP.Logics
 {
-    internal class CameraLogic : BaseCameraLogic<MapControl>
+    internal sealed class CameraLogic : BaseCameraLogic<MapControl>
     {
         public async override void OnMoveToRegionRequest(MoveToRegionMessage m)
         {
