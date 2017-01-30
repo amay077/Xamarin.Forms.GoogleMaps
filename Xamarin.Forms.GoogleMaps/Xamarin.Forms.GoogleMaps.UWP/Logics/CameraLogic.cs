@@ -43,17 +43,19 @@ namespace Xamarin.Forms.GoogleMaps.UWP.Logics
                     break;
                 case CameraUpdateType.LatLngZoom:
                     _nativeMap.Center = m.Update.Position.ToGeopoint();
-                    await _nativeMap.TryZoomToAsync(m.Update.Zoom);
+                    _nativeMap.ZoomLevel = m.Update.Zoom;
                     break;
                 case CameraUpdateType.LatLngBounds:
                     await _nativeMap.TrySetViewBoundsAsync(
                         m.Update.Bounds.ToGeoboundingBox(), null, MapAnimationKind.None);
                     break;
                 case CameraUpdateType.CameraPosition:
-                    _nativeMap.Center = m.Update.CameraPosition.Target.ToGeopoint();
-                    await _nativeMap.TryRotateAsync(m.Update.CameraPosition.Bearing);
-                    await _nativeMap.TryTiltToAsync(m.Update.CameraPosition.Tilt);
-                    await _nativeMap.TryZoomToAsync(m.Update.CameraPosition.Zoom);
+                    await _nativeMap.TrySetViewAsync(
+                        m.Update.CameraPosition.Target.ToGeopoint(),
+                        m.Update.CameraPosition.Zoom,
+                        m.Update.CameraPosition.Bearing,
+                        m.Update.CameraPosition.Tilt,
+                        MapAnimationKind.None);
                     break;
                 default:
                     break;
