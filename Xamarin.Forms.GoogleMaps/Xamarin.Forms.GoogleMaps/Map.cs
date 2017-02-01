@@ -6,6 +6,8 @@ using System.Collections.Specialized;
 using System.Linq;
 using Xamarin.Forms.GoogleMaps.Internals;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using Xamarin.Forms.GoogleMaps.Events;
 
 namespace Xamarin.Forms.GoogleMaps
 {
@@ -42,6 +44,7 @@ namespace Xamarin.Forms.GoogleMaps
         public event EventHandler<MapLongClickedEventArgs> MapLongClicked;
         public event EventHandler<MyLocationButtonClickedEventArgs> MyLocationButtonClicked;
         public event EventHandler<CameraChangedEventArgs> CameraChanged;
+        public event EventHandler<MapMoveEndedEventArgs> MapMoveEnded;
 
         internal Action<MoveToRegionMessage> OnMoveToRegion { get; set; }
 
@@ -69,6 +72,43 @@ namespace Xamarin.Forms.GoogleMaps
         public Map() : this(new MapSpan(new Position(41.890202, 12.492049), 0.1, 0.1))
         {
         }
+
+        #region MapRegion
+        // Allows to set map center at initiation
+        public static readonly BindableProperty MapRegionProperty = BindableProperty.Create(nameof(VisibleRegion), typeof(MapSpan), typeof(Map), null, propertyChanged: OnMapRegionChanged);
+        public MapSpan VisibleRegion { get { return (MapSpan)GetValue(MapRegionProperty); } set { SetValue(MapRegionProperty, value); } }
+        public static readonly BindableProperty CameraMovingProperty = BindableProperty.Create(nameof(CameraMoving), typeof(bool), typeof(Map), false);
+        public bool CameraMoving { get { return (bool)GetValue(CameraMovingProperty); } set { SetValue(CameraMovingProperty, value); } }
+
+        internal void SetMapRegionInternal(MapSpan newValue)
+        {
+            CameraMoving = true;
+            VisibleRegion = newValue;
+            CameraMoving = false;
+            SendMapMoveEnded();
+        }
+
+        private static void OnMapRegionChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            if (newValue == oldValue) return;
+            var newVal = newValue as MapSpan;
+            if (newVal == null)
+                return;
+            var map = bindable as Map;
+            if (map == null) return;
+
+            if (map.CameraMoving)
+            {
+                map.MapRegionChanged?.Invoke(map, new Events.RegionEventArgs() { OldValue = oldValue as MapSpan, NewValue = newVal });
+                return;
+            }
+
+            map.MoveToRegion(newVal, true);
+        }
+
+        public event EventHandler<RegionEventArgs> MapRegionChanged;
+
+        #endregion MapRegion
 
         public bool HasScrollEnabled
         {
@@ -137,21 +177,6 @@ namespace Xamarin.Forms.GoogleMaps
             get { return _groundOverlays; }
         }
 
-        public MapSpan VisibleRegion
-        {
-            get { return _visibleRegion; }
-            internal set
-            {
-                if (_visibleRegion == value)
-                    return;
-                if (value == null)
-                    throw new ArgumentNullException(nameof(value));
-                OnPropertyChanging();
-                _visibleRegion = value;
-                OnPropertyChanged();
-            }
-        }
-
         internal MapSpan LastMoveToRegion { get; private set; }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -177,7 +202,7 @@ namespace Xamarin.Forms.GoogleMaps
             var comp = new TaskCompletionSource<AnimationStatus>();
 
             SendMoveCamera(new CameraUpdateMessage(cameraUpdate, null, new DelegateAnimationCallback(
-                () => comp.SetResult(AnimationStatus.Finished), 
+                () => comp.SetResult(AnimationStatus.Finished),
                 () => comp.SetResult(AnimationStatus.Canceled))));
 
             return comp.Task;
@@ -293,10 +318,16 @@ namespace Xamarin.Forms.GoogleMaps
         {
             OnMoveCamera?.Invoke(message);
         }
-    
+
         void SendAnimateCamera(CameraUpdateMessage message)
         {
             OnAnimateCamera?.Invoke(message);
+        }
+
+        internal void SendMapMoveEnded()
+        {
+            var args = new MapMoveEndedEventArgs() { Region = VisibleRegion };
+            MapMoveEnded?.Invoke(this, args);
         }
     }
 }

@@ -31,6 +31,8 @@
     <NoStdLib>false</NoStdLib>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Events\MapMoveEndedEventArgs.cs" />
+    <Compile Include="Events\RegionEventArgs.cs" />
     <Compile Include="Logics\BaseCameraLogic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Distance.cs" />
