@@ -176,18 +176,18 @@ namespace Xamarin.Forms.GoogleMaps
         {
             var comp = new TaskCompletionSource<AnimationStatus>();
 
-            SendMoveCamera(new CameraUpdateMessage(cameraUpdate, new DelegateAnimationCallback(
+            SendMoveCamera(new CameraUpdateMessage(cameraUpdate, null, new DelegateAnimationCallback(
                 () => comp.SetResult(AnimationStatus.Finished), 
                 () => comp.SetResult(AnimationStatus.Canceled))));
 
             return comp.Task;
         }
 
-        public Task<AnimationStatus> AnimateCamera(CameraUpdate cameraUpdate)
+        public Task<AnimationStatus> AnimateCamera(CameraUpdate cameraUpdate, TimeSpan? duration = null)
         {
             var comp = new TaskCompletionSource<AnimationStatus>();
 
-            SendAnimateCamera(new CameraUpdateMessage(cameraUpdate, new DelegateAnimationCallback(
+            SendAnimateCamera(new CameraUpdateMessage(cameraUpdate, duration, new DelegateAnimationCallback(
                 () => comp.SetResult(AnimationStatus.Finished),
                 () => comp.SetResult(AnimationStatus.Canceled))));
 

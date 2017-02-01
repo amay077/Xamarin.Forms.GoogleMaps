@@ -75,7 +75,7 @@ namespace XFGoogleMapSample
             buttonAnimateToPositionZoom.Clicked += async (sender, e) =>
             {
                 var animState = await map.AnimateCamera(CameraUpdateFactory.NewPositionZoom(
-                    pinNewyork.Position, 16d)); // New york
+                    pinNewyork.Position, 16d), TimeSpan.FromSeconds(1)); // New york
                 Debug.WriteLine($"Animate with Position and Zoom result = {animState}");
             };
 
@@ -85,7 +85,7 @@ namespace XFGoogleMapSample
                 var animState = await map.AnimateCamera(CameraUpdateFactory.NewBounds(
                     new Bounds(pinLisboa.Position,  // Lisboa
                                pinParis.Position),  // Paris
-                   50)); // 50px
+                   50), TimeSpan.FromSeconds(3)); // 50px
                 Debug.WriteLine($"Animate with Bounds result = {animState}");
             };
 
@@ -97,7 +97,8 @@ namespace XFGoogleMapSample
                         pinTokyo.Position, // Tokyo
                         45d, // bearing(rotation)
                         60d, // tilt
-                        17d)));
+                        17d)), 
+                    TimeSpan.FromSeconds(5));
                 Debug.WriteLine($"Animate with CameraPosition result = {animState}");
             };
         }

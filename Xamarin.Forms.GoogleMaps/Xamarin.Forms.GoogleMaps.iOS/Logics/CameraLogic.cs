@@ -78,7 +78,12 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
             _isCancelAnimate = _isAnimate;
 
             CATransaction.Begin();
-            CATransaction.AnimationDuration = 5;
+
+            if (m.Duration.HasValue)
+            {
+                CATransaction.AnimationDuration = m.Duration.Value.TotalSeconds;
+            }
+
             CATransaction.CompletionBlock = () => 
             {
                 _isAnimate = false;

@@ -47,10 +47,19 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
 
         public override void OnAnimateCameraRequest(CameraUpdateMessage m)
         {
-            _nativeMap.AnimateCamera(m.Update.ToAndroid(ScaledDensity), 
-                new DelegateCancelableCallback(
+            var update = m.Update.ToAndroid(ScaledDensity);
+            var callback = new DelegateCancelableCallback(
                     () => m.Callback.OnFinished(),
-                    () => m.Callback.OnCanceled()));
+                    () => m.Callback.OnCanceled());
+
+            if (m.Duration.HasValue)
+            {
+                _nativeMap.AnimateCamera(update, (int)m.Duration.Value.TotalMilliseconds, callback);
+            }
+            else
+            {
+                _nativeMap.AnimateCamera(update, callback);
+            }
         }
     }
 }
