@@ -9,6 +9,7 @@ using Xamarin.Forms.GoogleMaps.iOS.Extensions;
 using UIKit;
 
 using GCameraUpdate = Google.Maps.CameraUpdate;
+using GCameraPosition = Google.Maps.CameraPosition;
 
 namespace Xamarin.Forms.GoogleMaps.iOS
 {
@@ -19,7 +20,8 @@ namespace Xamarin.Forms.GoogleMaps.iOS
         protected MapView NativeMap => (MapView)Control;
         protected Map Map => (Map)Element;
 
-        readonly CameraLogic _cameraLogic = new CameraLogic();
+        readonly CameraLogic _cameraLogic;
+
         readonly BaseLogic<MapView>[] _logics;
 
         public MapRenderer()
@@ -33,6 +35,11 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                 new TileLayerLogic(),
                 new GroundOverlayLogic()
             };
+
+            _cameraLogic = new CameraLogic(() =>
+            {
+                OnCameraPositionChanged(NativeMap.Camera);
+            });
         }
 
         public override SizeRequest GetDesiredSize(double widthConstraint, double heightConstraint)
@@ -181,7 +188,12 @@ namespace Xamarin.Forms.GoogleMaps.iOS
 
         }
 
-        void CameraPositionChanged(object sender, GMSCameraEventArgs mkMapViewChangeEventArgs)
+        void CameraPositionChanged(object sender, GMSCameraEventArgs args)
+        {
+            OnCameraPositionChanged(args.Position);
+        }
+
+        void OnCameraPositionChanged(GCameraPosition pos)
         {
             if (Element == null)
                 return;
@@ -194,9 +206,9 @@ namespace Xamarin.Forms.GoogleMaps.iOS
             var minLon = Math.Min(Math.Min(Math.Min(region.NearLeft.Longitude, region.NearRight.Longitude), region.FarLeft.Longitude), region.FarRight.Longitude);
             var maxLat = Math.Max(Math.Max(Math.Max(region.NearLeft.Latitude, region.NearRight.Latitude), region.FarLeft.Latitude), region.FarRight.Latitude);
             var maxLon = Math.Max(Math.Max(Math.Max(region.NearLeft.Longitude, region.NearRight.Longitude), region.FarLeft.Longitude), region.FarRight.Longitude);
-            mapModel.VisibleRegion = new MapSpan(mkMapViewChangeEventArgs.Position.Target.ToPosition(), maxLat - minLat, maxLon - minLon);
+            mapModel.VisibleRegion = new MapSpan(pos.Target.ToPosition(), maxLat - minLat, maxLon - minLon);
 
-            Map.SendCameraChanged(mkMapViewChangeEventArgs.Position.ToXamarinForms());
+            Map.SendCameraChanged(pos.ToXamarinForms());
         }
 
         void CoordinateTapped(object sender, GMSCoordEventArgs e)
