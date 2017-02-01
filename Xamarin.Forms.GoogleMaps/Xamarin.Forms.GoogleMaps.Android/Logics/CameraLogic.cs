@@ -2,6 +2,7 @@
 using Android.Gms.Maps.Model;
 using Java.Lang;
 using Xamarin.Forms.GoogleMaps.Android.Extensions;
+using Xamarin.Forms.GoogleMaps.Android.Logics;
 using Xamarin.Forms.GoogleMaps.Internals;
 
 using GCameraUpdateFactory = Android.Gms.Maps.CameraUpdateFactory;
@@ -42,6 +43,14 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
         {
             _nativeMap.MoveCamera(m.Update.ToAndroid(ScaledDensity));
             m.Callback.OnFinished();
+        }
+
+        public override void OnAnimateCameraRequest(CameraUpdateMessage m)
+        {
+            _nativeMap.AnimateCamera(m.Update.ToAndroid(ScaledDensity), 
+                new DelegateCancelableCallback(
+                    () => m.Callback.OnFinished(),
+                    () => m.Callback.OnCanceled()));
         }
     }
 }
