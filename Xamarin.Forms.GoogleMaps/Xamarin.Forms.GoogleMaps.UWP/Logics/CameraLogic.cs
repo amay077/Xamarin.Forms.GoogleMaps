@@ -48,7 +48,9 @@ namespace Xamarin.Forms.GoogleMaps.UWP.Logics
                 case CameraUpdateType.LatLngBounds:
                     _nativeMap.Heading = 0d;
                     await _nativeMap.TrySetViewBoundsAsync(
-                        m.Update.Bounds.ToGeoboundingBox(), null, MapAnimationKind.None);
+                        m.Update.Bounds.ToGeoboundingBox(),
+                        new Windows.UI.Xaml.Thickness(m.Update.Padding), 
+                        MapAnimationKind.None);
                     break;
                 case CameraUpdateType.CameraPosition:
                     await _nativeMap.TrySetViewAsync(
@@ -65,5 +67,44 @@ namespace Xamarin.Forms.GoogleMaps.UWP.Logics
             m.Callback.OnFinished();
         }
 
+        public async override void OnAnimateCameraRequest(CameraUpdateMessage m)
+        {
+            bool result = false;
+            switch (m.Update.UpdateType)
+            {
+                case CameraUpdateType.LatLng:
+                    result = await _nativeMap.TrySetViewAsync(m.Update.Position.ToGeopoint());
+                    break;
+                case CameraUpdateType.LatLngZoom:
+                    result = await _nativeMap.TrySetViewAsync(m.Update.Position.ToGeopoint(), m.Update.Zoom);
+                    break;
+                case CameraUpdateType.LatLngBounds:
+                    _nativeMap.Heading = 0d;
+                    result = await _nativeMap.TrySetViewBoundsAsync(
+                        m.Update.Bounds.ToGeoboundingBox(),
+                        new Windows.UI.Xaml.Thickness(m.Update.Padding),
+                        MapAnimationKind.Bow);
+                    break;
+                case CameraUpdateType.CameraPosition:
+                    result = await _nativeMap.TrySetViewAsync(
+                        m.Update.CameraPosition.Target.ToGeopoint(),
+                        m.Update.CameraPosition.Zoom,
+                        m.Update.CameraPosition.Bearing,
+                        m.Update.CameraPosition.Tilt,
+                        MapAnimationKind.Bow);
+                    break;
+                default:
+                    break;
+            }
+
+            if (result)
+            {
+                m.Callback.OnFinished();
+            }
+            else
+            {
+                m.Callback.OnCanceled();
+            }
+        }
     }
 }

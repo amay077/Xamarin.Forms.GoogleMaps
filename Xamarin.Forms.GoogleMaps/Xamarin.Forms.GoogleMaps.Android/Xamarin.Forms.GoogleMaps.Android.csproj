@@ -114,6 +114,7 @@
     <Compile Include="Extensions\MapViewExtensions.cs" />
     <Compile Include="Extensions\CameraPositionExtensions.cs" />
     <Compile Include="Extensions\CameraUpdateExtensions.cs" />
+    <Compile Include="Logics\DelegateCancelableCallback.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
