@@ -46,6 +46,7 @@ namespace Xamarin.Forms.GoogleMaps.UWP.Logics
                     _nativeMap.ZoomLevel = m.Update.Zoom;
                     break;
                 case CameraUpdateType.LatLngBounds:
+                    _nativeMap.Heading = 0d;
                     await _nativeMap.TrySetViewBoundsAsync(
                         m.Update.Bounds.ToGeoboundingBox(), null, MapAnimationKind.None);
                     break;
