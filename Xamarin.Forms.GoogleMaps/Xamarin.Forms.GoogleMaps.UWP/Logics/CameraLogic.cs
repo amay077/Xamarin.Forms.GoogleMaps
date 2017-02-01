@@ -65,5 +65,48 @@ namespace Xamarin.Forms.GoogleMaps.UWP.Logics
             m.Callback.OnFinished();
         }
 
+        public async override void OnAnimateCameraRequest(CameraUpdateMessage m)
+        {
+            bool result = false;
+            switch (m.Update.UpdateType)
+            {
+                case CameraUpdateType.LatLng:
+                    result = await _nativeMap.TrySetViewAsync(m.Update.Position.ToGeopoint());
+                    break;
+                case CameraUpdateType.LatLngZoom:
+                    result = await _nativeMap.TrySetViewAsync(m.Update.Position.ToGeopoint(), m.Update.Zoom);
+                    break;
+                case CameraUpdateType.LatLngBounds:
+                    {
+                        _nativeMap.Heading = 0d;
+                        var result2 = await _nativeMap.TrySetViewBoundsAsync(
+                            m.Update.Bounds.ToGeoboundingBox(), null, MapAnimationKind.Bow);
+                        System.Diagnostics.Debug.WriteLine("result2 = " + result2.ToString());
+                        result = result2;
+                        break;
+                    }
+                case CameraUpdateType.CameraPosition:
+                    result = await _nativeMap.TrySetViewAsync(
+                        m.Update.CameraPosition.Target.ToGeopoint(),
+                        m.Update.CameraPosition.Zoom,
+                        m.Update.CameraPosition.Bearing,
+                        m.Update.CameraPosition.Tilt,
+                        MapAnimationKind.Bow);
+                    break;
+                default:
+                    break;
+            }
+
+            System.Diagnostics.Debug.WriteLine(result.ToString());
+
+            if (result)
+            {
+                m.Callback.OnFinished();
+            }
+            else
+            {
+                m.Callback.OnCanceled();
+            }
+        }
     }
 }
