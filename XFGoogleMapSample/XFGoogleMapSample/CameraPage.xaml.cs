@@ -52,7 +52,7 @@ namespace XFGoogleMapSample
                    50)); // 50px
             };
 
-            // MoveToCamera with Bounds
+            // MoveToCamera with CameraPosition
             buttonMoveToCameraPosition.Clicked += async (sender, e) =>
             {
                 await map.MoveCamera(CameraUpdateFactory.NewCameraPosition(
@@ -68,28 +68,28 @@ namespace XFGoogleMapSample
             {
                 var animState = await map.AnimateCamera(CameraUpdateFactory.NewPosition(
                     pinMelbourne.Position)); // Melbourne
-                Debug.WriteLine($"Animate result = {animState}");
+                Debug.WriteLine($"Animate with Position result = {animState}");
             };
 
-            // MoveToCamera with Position and Zoom
+            // AnimateToCamera with Position and Zoom
             buttonAnimateToPositionZoom.Clicked += async (sender, e) =>
             {
                 var animState = await map.AnimateCamera(CameraUpdateFactory.NewPositionZoom(
                     pinNewyork.Position, 16d)); // New york
-                Debug.WriteLine($"Animate result = {animState}");
+                Debug.WriteLine($"Animate with Position and Zoom result = {animState}");
             };
 
-            // MoveToCamera with Bounds
+            // AnimateToCamera with Bounds
             buttonAnimateToBounds.Clicked += async (sender, e) =>
             {
                 var animState = await map.AnimateCamera(CameraUpdateFactory.NewBounds(
                     new Bounds(pinLisboa.Position,  // Lisboa
                                pinParis.Position),  // Paris
                    50)); // 50px
-                Debug.WriteLine($"Animate result = {animState}");
+                Debug.WriteLine($"Animate with Bounds result = {animState}");
             };
 
-            // MoveToCamera with Bounds
+            // AnimateToCamera with CameraPosition
             buttonAnimateToCameraPosition.Clicked += async (sender, e) =>
             {
                 var animState = await map.AnimateCamera(CameraUpdateFactory.NewCameraPosition(
@@ -98,7 +98,7 @@ namespace XFGoogleMapSample
                         45d, // bearing(rotation)
                         60d, // tilt
                         17d)));
-                Debug.WriteLine($"Animate result = {animState}");
+                Debug.WriteLine($"Animate with CameraPosition result = {animState}");
             };
         }
     }
