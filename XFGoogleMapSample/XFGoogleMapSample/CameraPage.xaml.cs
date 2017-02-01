@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using System.Diagnostics;
 using Xamarin.Forms;
 using Xamarin.Forms.GoogleMaps;
 
@@ -61,6 +61,44 @@ namespace XFGoogleMapSample
                         45d, // bearing(rotation)
                         60d, // tilt
                         17d)));
+            };
+
+            // AnimateToCamera with Position
+            buttonAnimateToPosition.Clicked += async (sender, e) =>
+            {
+                var animState = await map.AnimateCamera(CameraUpdateFactory.NewPosition(
+                    pinMelbourne.Position)); // Melbourne
+                Debug.WriteLine($"Animate result = {animState}");
+            };
+
+            // MoveToCamera with Position and Zoom
+            buttonAnimateToPositionZoom.Clicked += async (sender, e) =>
+            {
+                var animState = await map.AnimateCamera(CameraUpdateFactory.NewPositionZoom(
+                    pinNewyork.Position, 16d)); // New york
+                Debug.WriteLine($"Animate result = {animState}");
+            };
+
+            // MoveToCamera with Bounds
+            buttonAnimateToBounds.Clicked += async (sender, e) =>
+            {
+                var animState = await map.AnimateCamera(CameraUpdateFactory.NewBounds(
+                    new Bounds(pinLisboa.Position,  // Lisboa
+                               pinParis.Position),  // Paris
+                   50)); // 50px
+                Debug.WriteLine($"Animate result = {animState}");
+            };
+
+            // MoveToCamera with Bounds
+            buttonAnimateToCameraPosition.Clicked += async (sender, e) =>
+            {
+                var animState = await map.AnimateCamera(CameraUpdateFactory.NewCameraPosition(
+                    new CameraPosition(
+                        pinTokyo.Position, // Tokyo
+                        45d, // bearing(rotation)
+                        60d, // tilt
+                        17d)));
+                Debug.WriteLine($"Animate result = {animState}");
             };
         }
     }
