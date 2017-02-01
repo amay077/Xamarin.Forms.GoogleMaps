@@ -77,12 +77,10 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
         {
             _isCancelAnimate = _isAnimate;
 
-            Console.WriteLine("OnAnimateCameraRequest");
             CATransaction.Begin();
             CATransaction.AnimationDuration = 5;
             CATransaction.CompletionBlock = () => 
             {
-                Console.WriteLine($"OnAnimateCameraRequest - Complete({_isCancelAnimate})");
                 _isAnimate = false;
 
                 if (_isCancelAnimate)
