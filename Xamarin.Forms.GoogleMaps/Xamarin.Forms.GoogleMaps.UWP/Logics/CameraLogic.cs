@@ -48,7 +48,9 @@ namespace Xamarin.Forms.GoogleMaps.UWP.Logics
                 case CameraUpdateType.LatLngBounds:
                     _nativeMap.Heading = 0d;
                     await _nativeMap.TrySetViewBoundsAsync(
-                        m.Update.Bounds.ToGeoboundingBox(), null, MapAnimationKind.None);
+                        m.Update.Bounds.ToGeoboundingBox(),
+                        new Windows.UI.Xaml.Thickness(m.Update.Padding), 
+                        MapAnimationKind.None);
                     break;
                 case CameraUpdateType.CameraPosition:
                     await _nativeMap.TrySetViewAsync(
@@ -77,14 +79,12 @@ namespace Xamarin.Forms.GoogleMaps.UWP.Logics
                     result = await _nativeMap.TrySetViewAsync(m.Update.Position.ToGeopoint(), m.Update.Zoom);
                     break;
                 case CameraUpdateType.LatLngBounds:
-                    {
-                        _nativeMap.Heading = 0d;
-                        var result2 = await _nativeMap.TrySetViewBoundsAsync(
-                            m.Update.Bounds.ToGeoboundingBox(), null, MapAnimationKind.Bow);
-                        System.Diagnostics.Debug.WriteLine("result2 = " + result2.ToString());
-                        result = result2;
-                        break;
-                    }
+                    _nativeMap.Heading = 0d;
+                    result = await _nativeMap.TrySetViewBoundsAsync(
+                        m.Update.Bounds.ToGeoboundingBox(),
+                        new Windows.UI.Xaml.Thickness(m.Update.Padding),
+                        MapAnimationKind.Bow);
+                    break;
                 case CameraUpdateType.CameraPosition:
                     result = await _nativeMap.TrySetViewAsync(
                         m.Update.CameraPosition.Target.ToGeopoint(),
@@ -96,8 +96,6 @@ namespace Xamarin.Forms.GoogleMaps.UWP.Logics
                 default:
                     break;
             }
-
-            System.Diagnostics.Debug.WriteLine(result.ToString());
 
             if (result)
             {
