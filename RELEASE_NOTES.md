@@ -1,5 +1,16 @@
 Xamarin.Forms.GoogleMaps Release Notes
 ----
+# 1.8.0-beta4
+
+## New Features
+
+* #7 Add AnimateCamera method
+
+## Bug Fixes
+
+* #192 [UWP]Map.MoveCamera(CameraUpdateFactory.NewBounds(…)) does not reset rotation
+* #189 [iOS]CameraPositionChanged does not raise when call MoveCamera with CameraUpdate.FitBounds
+
 # 1.8.0-beta3
 
 ## New Features
