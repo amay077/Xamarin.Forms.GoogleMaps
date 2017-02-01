@@ -9,25 +9,28 @@ namespace Xamarin.Forms.GoogleMaps.Logics
 
         public float ScaledDensity { get; internal set; }
 
-        public void Register(Map map, TNativeMap nativeMap)
+        public virtual void Register(Map map, TNativeMap nativeMap)
         {
             _map = map;
             _nativeMap = nativeMap;
 
             _map.OnMoveToRegion = OnMoveToRegionRequest;
             _map.OnMoveCamera = OnMoveCameraRequest;
+            _map.OnAnimateCamera = OnAnimateCameraRequest;
         }
 
-        public void Unregister()
+        public virtual void Unregister()
         {
             if (_map != null)
             {
-                _map.OnMoveToRegion = null;
+                _map.OnAnimateCamera = null;
                 _map.OnMoveCamera = null;
+                _map.OnMoveToRegion = null;
             }
         }
 
         public abstract void OnMoveToRegionRequest(MoveToRegionMessage m);
         public abstract void OnMoveCameraRequest(CameraUpdateMessage m);
+        public abstract void OnAnimateCameraRequest(CameraUpdateMessage m);
     }
 }

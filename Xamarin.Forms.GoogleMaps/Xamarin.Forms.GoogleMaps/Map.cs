@@ -47,6 +47,8 @@ namespace Xamarin.Forms.GoogleMaps
 
         internal Action<CameraUpdateMessage> OnMoveCamera { get; set; }
 
+        internal Action<CameraUpdateMessage> OnAnimateCamera { get; set; }
+
         MapSpan _visibleRegion;
 
         public Map(MapSpan region)
@@ -181,6 +183,17 @@ namespace Xamarin.Forms.GoogleMaps
             return comp.Task;
         }
 
+        public Task<AnimationStatus> AnimateCamera(CameraUpdate cameraUpdate)
+        {
+            var comp = new TaskCompletionSource<AnimationStatus>();
+
+            SendAnimateCamera(new CameraUpdateMessage(cameraUpdate, new DelegateAnimationCallback(
+                () => comp.SetResult(AnimationStatus.Finished),
+                () => comp.SetResult(AnimationStatus.Canceled))));
+
+            return comp.Task;
+        }
+
         void PinsOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.NewItems != null && e.NewItems.Cast<Pin>().Any(pin => pin.Label == null))
@@ -279,6 +292,11 @@ namespace Xamarin.Forms.GoogleMaps
         void SendMoveCamera(CameraUpdateMessage message)
         {
             OnMoveCamera?.Invoke(message);
+        }
+    
+        void SendAnimateCamera(CameraUpdateMessage message)
+        {
+            OnAnimateCamera?.Invoke(message);
         }
     }
 }
