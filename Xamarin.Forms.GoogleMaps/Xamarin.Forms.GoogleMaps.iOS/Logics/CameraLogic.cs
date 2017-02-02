@@ -62,15 +62,19 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
 
         public override void OnMoveCameraRequest(CameraUpdateMessage m)
         {
-            _nativeMap.MoveCamera(m.Update.ToIOS());
+            MoveCamera(m.Update);
+            m.Callback.OnFinished();
+        }
+
+        internal void MoveCamera(CameraUpdate update)
+        {
+            _nativeMap.MoveCamera(update.ToIOS());
 
             // TODO WORKARROUND for CameraPositionChanged does not raise when call MoveCamera with CameraUpdate.FitBounds(issue #189)
-            if (m.Update.UpdateType == CameraUpdateType.LatLngBounds)
+            if (update.UpdateType == CameraUpdateType.LatLngBounds)
             {
                 _raiseCameraPositionChanged?.Invoke();
             }
-
-            m.Callback.OnFinished();
         }
 
         public override void OnAnimateCameraRequest(CameraUpdateMessage m)
