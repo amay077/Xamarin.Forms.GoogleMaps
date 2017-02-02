@@ -6,6 +6,7 @@ using System.Collections.Specialized;
 using System.Linq;
 using Xamarin.Forms.GoogleMaps.Internals;
 using System.Threading.Tasks;
+using Xamarin.Forms.GoogleMaps.Extensions;
 
 namespace Xamarin.Forms.GoogleMaps
 {
@@ -24,7 +25,14 @@ namespace Xamarin.Forms.GoogleMaps
         public static readonly BindableProperty IsTrafficEnabledProperty = BindableProperty.Create("IsTrafficEnabled", typeof(bool), typeof(Map), false);
 
         public static readonly BindableProperty InitialCameraUpdateProperty = BindableProperty.Create(
-            "InitialCameraUpdate", typeof(CameraUpdate), typeof(Map), CameraUpdateFactory.NewPositionZoom(new Position(31.89, 12.49), 11d)); // center on Rome by default
+            "InitialCameraUpdate", typeof(CameraUpdate), typeof(Map), 
+            CameraUpdateFactory.NewPositionZoom(new Position(41.89, 12.49), 6d),  // center on Rome by default
+            propertyChanged: (bindable, oldValue, newValue) => 
+            {
+                ((Map)bindable)._useMoveToRegisonAsInitialBounds = false;   
+            });
+
+        bool _useMoveToRegisonAsInitialBounds = true;
 
         readonly ObservableCollection<Pin> _pins = new ObservableCollection<Pin>();
         readonly ObservableCollection<Polyline> _polylines = new ObservableCollection<Polyline>();
@@ -168,6 +176,13 @@ namespace Xamarin.Forms.GoogleMaps
         {
             if (mapSpan == null)
                 throw new ArgumentNullException(nameof(mapSpan));
+
+            if (_useMoveToRegisonAsInitialBounds)
+            {
+                InitialCameraUpdate = CameraUpdateFactory.NewBounds(mapSpan.ToBounds(), 0);
+                _useMoveToRegisonAsInitialBounds = false;
+            }
+
             SendMoveToRegion(new MoveToRegionMessage(mapSpan, animate));
         }
 
