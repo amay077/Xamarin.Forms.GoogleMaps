@@ -23,6 +23,9 @@ namespace Xamarin.Forms.GoogleMaps
 
         public static readonly BindableProperty IsTrafficEnabledProperty = BindableProperty.Create("IsTrafficEnabled", typeof(bool), typeof(Map), false);
 
+        public static readonly BindableProperty InitialCameraUpdateProperty = BindableProperty.Create(
+            "InitialCameraUpdate", typeof(CameraUpdate), typeof(Map), CameraUpdateFactory.NewPositionZoom(new Position(31.89, 12.49), 11d)); // center on Rome by default
+
         readonly ObservableCollection<Pin> _pins = new ObservableCollection<Pin>();
         readonly ObservableCollection<Polyline> _polylines = new ObservableCollection<Polyline>();
         readonly ObservableCollection<Polygon> _polygons = new ObservableCollection<Polygon>();
@@ -51,10 +54,8 @@ namespace Xamarin.Forms.GoogleMaps
 
         MapSpan _visibleRegion;
 
-        public Map(MapSpan region)
+        public Map()
         {
-            LastMoveToRegion = region;
-
             VerticalOptions = HorizontalOptions = LayoutOptions.FillAndExpand;
 
             _pins.CollectionChanged += PinsOnCollectionChanged;
@@ -63,11 +64,6 @@ namespace Xamarin.Forms.GoogleMaps
             _circles.CollectionChanged += CirclesOnCollectionChanged;
             _tileLayers.CollectionChanged += TileLayersOnCollectionChanged;
             _groundOverlays.CollectionChanged += GroundOverlays_CollectionChanged;
-        }
-
-        // center on Rome by default
-        public Map() : this(new MapSpan(new Position(41.890202, 12.492049), 0.1, 0.1))
-        {
         }
 
         public bool HasScrollEnabled
@@ -105,6 +101,12 @@ namespace Xamarin.Forms.GoogleMaps
         {
             get { return (Pin)GetValue(SelectedPinProperty); }
             set { SetValue(SelectedPinProperty, value); }
+        }
+
+        public CameraUpdate InitialCameraUpdate
+        {
+            get { return (CameraUpdate)GetValue(InitialCameraUpdateProperty); }
+            set { SetValue(InitialCameraUpdateProperty, value); }
         }
 
         public IList<Pin> Pins
@@ -152,8 +154,6 @@ namespace Xamarin.Forms.GoogleMaps
             }
         }
 
-        internal MapSpan LastMoveToRegion { get; private set; }
-
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
@@ -168,7 +168,6 @@ namespace Xamarin.Forms.GoogleMaps
         {
             if (mapSpan == null)
                 throw new ArgumentNullException(nameof(mapSpan));
-            LastMoveToRegion = mapSpan;
             SendMoveToRegion(new MoveToRegionMessage(mapSpan, animate));
         }
 

@@ -11,11 +11,6 @@ namespace Xamarin.Forms.GoogleMaps
         public double Tilt { get; }
         public double Zoom { get; }
 
-        public CameraPosition(Position target)
-        {
-            Target = target;
-        }
-
         public CameraPosition(Position target, double zoom)
         {
             Target = target;
