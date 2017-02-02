@@ -11,9 +11,9 @@ namespace Xamarin.Forms.GoogleMaps.iOS.Extensions
         {
             return new CameraPosition(
                     self.Target.ToPosition(),
+                    self.Zoom,
                     self.Bearing,
-                    self.ViewingAngle,
-                    self.Zoom
+                    self.ViewingAngle
             );
         }
 
