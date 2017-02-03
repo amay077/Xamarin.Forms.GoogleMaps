@@ -111,6 +111,7 @@ namespace Xamarin.Forms.Maps.WinRT
                 camera.Roll,
                 camera.Pitch,
                 sender.ZoomLevel);
+            Map.CameraPosition = pos;
             Map.SendCameraChanged(pos);
             await UpdateVisibleRegion();
         }

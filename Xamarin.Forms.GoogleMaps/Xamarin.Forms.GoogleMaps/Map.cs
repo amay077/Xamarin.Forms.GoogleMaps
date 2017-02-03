@@ -26,13 +26,18 @@ namespace Xamarin.Forms.GoogleMaps
 
         public static readonly BindableProperty InitialCameraUpdateProperty = BindableProperty.Create(
             "InitialCameraUpdate", typeof(CameraUpdate), typeof(Map), 
-            CameraUpdateFactory.NewPosition(new Position(41.89, 12.49)),  // center on Rome by default
+            CameraUpdateFactory.NewPositionZoom(new Position(41.89, 12.49), 10),  // center on Rome by default
             propertyChanged: (bindable, oldValue, newValue) => 
             {
                 ((Map)bindable)._useMoveToRegisonAsInitialBounds = false;   
             });
 
         bool _useMoveToRegisonAsInitialBounds = true;
+
+        public static readonly BindableProperty CameraPositionProperty = BindableProperty.Create(
+            nameof(CameraPosition), typeof(CameraPosition), typeof(Map),
+            defaultValueCreator: (bindable) => new CameraPosition(((Map)bindable).InitialCameraUpdate.Position, 10),
+            defaultBindingMode: BindingMode.TwoWay);
 
         readonly ObservableCollection<Pin> _pins = new ObservableCollection<Pin>();
         readonly ObservableCollection<Polyline> _polylines = new ObservableCollection<Polyline>();
@@ -116,6 +121,12 @@ namespace Xamarin.Forms.GoogleMaps
         {
             get { return (CameraUpdate)GetValue(InitialCameraUpdateProperty); }
             set { SetValue(InitialCameraUpdateProperty, value); }
+        }
+
+        public CameraPosition CameraPosition
+        {
+            get { return (CameraPosition)GetValue(CameraPositionProperty); }
+            internal set { SetValue(CameraPositionProperty, value); }
         }
 
         public IList<Pin> Pins
