@@ -26,7 +26,7 @@ namespace Xamarin.Forms.GoogleMaps
 
         public static readonly BindableProperty InitialCameraUpdateProperty = BindableProperty.Create(
             "InitialCameraUpdate", typeof(CameraUpdate), typeof(Map), 
-            CameraUpdateFactory.NewPositionZoom(new Position(41.89, 12.49), 6d),  // center on Rome by default
+            CameraUpdateFactory.NewPosition(new Position(41.89, 12.49)),  // center on Rome by default
             propertyChanged: (bindable, oldValue, newValue) => 
             {
                 ((Map)bindable)._useMoveToRegisonAsInitialBounds = false;   
