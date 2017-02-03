@@ -15,11 +15,9 @@ namespace Xamarin.Forms.GoogleMaps.UWP.Logics
     {
         public async override void OnMoveToRegionRequest(MoveToRegionMessage m)
         {
-            await MoveToRegion(m.Span, m.Animate ? MapAnimationKind.Bow : MapAnimationKind.None);
-        }
+            MapSpan span = m.Span;
+            MapAnimationKind animation = m.Animate ? MapAnimationKind.Bow : MapAnimationKind.None;
 
-        internal async Task MoveToRegion(MapSpan span, MapAnimationKind animation = MapAnimationKind.Bow)
-        {
             var nw = new BasicGeoposition
             {
                 Latitude = span.Center.Latitude + span.LatitudeDegrees / 2,
@@ -33,38 +31,42 @@ namespace Xamarin.Forms.GoogleMaps.UWP.Logics
             var boundingBox = new GeoboundingBox(nw, se);
             await _nativeMap.TrySetViewBoundsAsync(boundingBox, null, animation);
         }
-
-        public async override void OnMoveCameraRequest(CameraUpdateMessage m)
+        
+        public override void OnMoveCameraRequest(CameraUpdateMessage m)
         {
-            switch (m.Update.UpdateType)
+            MoveCamera(m.Update);
+            m.Callback.OnFinished();
+        }
+
+        internal async void MoveCamera(CameraUpdate update)
+        {
+            switch (update.UpdateType)
             {
                 case CameraUpdateType.LatLng:
-                    _nativeMap.Center = m.Update.Position.ToGeopoint();
+                    _nativeMap.Center = update.Position.ToGeopoint();
                     break;
                 case CameraUpdateType.LatLngZoom:
-                    _nativeMap.Center = m.Update.Position.ToGeopoint();
-                    _nativeMap.ZoomLevel = m.Update.Zoom;
+                    _nativeMap.Center = update.Position.ToGeopoint();
+                    _nativeMap.ZoomLevel = update.Zoom;
                     break;
                 case CameraUpdateType.LatLngBounds:
                     _nativeMap.Heading = 0d;
                     await _nativeMap.TrySetViewBoundsAsync(
-                        m.Update.Bounds.ToGeoboundingBox(),
-                        new Windows.UI.Xaml.Thickness(m.Update.Padding), 
+                        update.Bounds.ToGeoboundingBox(),
+                        new Windows.UI.Xaml.Thickness(update.Padding),
                         MapAnimationKind.None);
                     break;
                 case CameraUpdateType.CameraPosition:
                     await _nativeMap.TrySetViewAsync(
-                        m.Update.CameraPosition.Target.ToGeopoint(),
-                        m.Update.CameraPosition.Zoom,
-                        m.Update.CameraPosition.Bearing,
-                        m.Update.CameraPosition.Tilt,
+                        update.CameraPosition.Target.ToGeopoint(),
+                        update.CameraPosition.Zoom,
+                        update.CameraPosition.Bearing,
+                        update.CameraPosition.Tilt,
                         MapAnimationKind.None);
                     break;
                 default:
                     break;
             }
-
-            m.Callback.OnFinished();
         }
 
         public async override void OnAnimateCameraRequest(CameraUpdateMessage m)
