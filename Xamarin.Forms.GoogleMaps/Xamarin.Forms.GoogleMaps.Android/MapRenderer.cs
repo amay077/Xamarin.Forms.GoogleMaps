@@ -264,7 +264,9 @@ namespace Xamarin.Forms.GoogleMaps.Android
         public void OnCameraChange(GCameraPosition pos)
         {
             UpdateVisibleRegion(pos.Target);
-            Map.SendCameraChanged(pos.ToXamarinForms());
+            var camera = pos.ToXamarinForms();
+            Map.CameraPosition = camera;
+            Map.SendCameraChanged(camera);
         }
 
         public void OnMapClick(LatLng point)
