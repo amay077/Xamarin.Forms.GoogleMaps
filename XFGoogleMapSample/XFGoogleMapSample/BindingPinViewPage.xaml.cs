@@ -9,6 +9,8 @@ namespace XFGoogleMapSample
         public BindingPinViewPage()
         {
             InitializeComponent();
+
+            map.InitialCameraUpdate = CameraUpdateFactory.NewPositionZoom(new Position(35.71d, 139.81d), 12d);
         }
 
         protected override async void OnAppearing()
@@ -26,7 +28,6 @@ namespace XFGoogleMapSample
                 Icon = BitmapDescriptorFactory.FromView(new BindingPinView(pinDisplay.Text))
             };
             map.Pins.Add(pin);
-            map.MoveToRegion(MapSpan.FromCenterAndRadius(pin.Position, Distance.FromMeters(5000)));
             pinDisplay.TextChanged += (sender, e) =>
             {
                 pin.Icon = BitmapDescriptorFactory.FromView(new BindingPinView(e.NewTextValue));

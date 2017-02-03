@@ -13,13 +13,11 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
     {
         public override void OnMoveToRegionRequest(MoveToRegionMessage m)
         {
-            MoveToRegion(m.Span, m.Animate);
-        }
-
-        internal void MoveToRegion(MapSpan span, bool animate)
-        {
             if (_nativeMap == null)
                 return;
+
+            var span = m.Span;
+            var animate = m.Animate;
 
             span = span.ClampLatitude(85, -85);
             var ne = new LatLng(span.Center.Latitude + span.LatitudeDegrees / 2, span.Center.Longitude + span.LongitudeDegrees / 2);
@@ -41,8 +39,13 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
 
         public override void OnMoveCameraRequest(CameraUpdateMessage m)
         {
-            _nativeMap.MoveCamera(m.Update.ToAndroid(ScaledDensity));
+            MoveCamera(m.Update);
             m.Callback.OnFinished();
+        }
+
+        internal void MoveCamera(CameraUpdate update)
+        {
+            _nativeMap.MoveCamera(update.ToAndroid(ScaledDensity));
         }
 
         public override void OnAnimateCameraRequest(CameraUpdateMessage m)

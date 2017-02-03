@@ -186,7 +186,8 @@ namespace Xamarin.Forms.Maps.WinRT
 
             if (!_firstZoomLevelChangeFired)
             {
-                await _cameraLogic.MoveToRegion(Element.LastMoveToRegion, MapAnimationKind.None);
+                _cameraLogic.MoveCamera(Map.InitialCameraUpdate);
+
                 _firstZoomLevelChangeFired = true;
                 return;
             }
