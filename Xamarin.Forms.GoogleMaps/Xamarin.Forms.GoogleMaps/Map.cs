@@ -111,6 +111,7 @@ namespace Xamarin.Forms.GoogleMaps
             set { SetValue(SelectedPinProperty, value); }
         }
 
+        [TypeConverter(typeof(CameraUpdateConverter))]
         public CameraUpdate InitialCameraUpdate
         {
             get { return (CameraUpdate)GetValue(InitialCameraUpdateProperty); }

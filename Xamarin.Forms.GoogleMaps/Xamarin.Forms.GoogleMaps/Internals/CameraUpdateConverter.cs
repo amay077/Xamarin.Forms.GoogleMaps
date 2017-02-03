@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Xamarin.Forms.GoogleMaps
+namespace Xamarin.Forms.GoogleMaps.Internals
 {
     internal sealed class CameraUpdateConverter : TypeConverter
     {
