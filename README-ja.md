@@ -8,7 +8,7 @@ Xamarin.Forms 用の Googleマップライブラリです。
 
 ![screenshot](screenshot01.png)
 
-### なぜこれを作った
+## なぜこれを作った
 
 Xamarin公式の地図ライブラリ [Xamarin.Forms.Maps](https://developer.xamarin.com/guides/xamarin-forms/user-interface/map/) は、非常に機能が少ないです（Googleマップ、Appleマップ、Bingマップで機能を共通化するのはとても難しいのでしょう）。
 
@@ -19,7 +19,7 @@ Xamarin公式の地図ライブラリ [Xamarin.Forms.Maps](https://developer.xam
 
 異なる地図SDKで実現可能な最小限の機能しか持たない Xamarin.Forms.Maps に対して、 **同じ Google Maps で多くの共通機能を実現できるのが Xamarin.Forms.GoogleMaps です。**
 
-### Xamarin.Forms.Maps との比較
+## Xamarin.Forms.Maps との比較
 
 |機能|X.F.Maps|X.F.GoogleMaps|
 | ------------------- | :-----------: | :-----------: |
@@ -39,12 +39,12 @@ Xamarin公式の地図ライブラリ [Xamarin.Forms.Maps](https://developer.xam
 
 詳しくは、[Xamarin.Forms.Maps との比較](https://github.com/amay077/Xamarin.Forms.GoogleMaps/wiki/Xamarin.Forms.Maps との比較) を見て下さい。
 
-### セットアップ
+## セットアップ
 
 * Available on NuGet: https://www.nuget.org/packages/Xamarin.Forms.GoogleMaps/ [![NuGet](https://img.shields.io/nuget/v/Xam.Plugin.Geolocator.svg?label=NuGet)](https://www.nuget.org/packages/Xamarin.Forms.GoogleMaps/)
 * PCLプロジェクトと各プラットフォームプロジェクトにインストールしてください
 
-### サポートするプラットフォーム
+## サポートするプラットフォーム
 
 |Platform|Supported|
 | ------------------- | :-----------: |
@@ -53,7 +53,7 @@ Xamarin公式の地図ライブラリ [Xamarin.Forms.Maps](https://developer.xam
 |Windows 10 UWP|Yes (Bing map)|
 |その他|No|
 
-### 使い方
+## 使い方
 
 * [Map Control - Xamarin](https://developer.xamarin.com/guides/xamarin-forms/user-interface/map/)
 * [Xamarin.Formsで地図を表示するには？（Xamarin.Forms.Maps使用） - Build Insider](http://www.buildinsider.net/mobile/xamarintips/0039)
@@ -86,7 +86,7 @@ public partial class AppDelegate : global::Xamarin.Forms.Platform.iOS.FormsAppli
 
 にあります。
 
-### 今後の予定
+## 今後の予定
 
 なるべく Xamarin.Forms.Maps の API に準じ、Google Maps固有の機能のみ API を追加するつもりです。 
 
@@ -101,7 +101,13 @@ public partial class AppDelegate : global::Xamarin.Forms.Platform.iOS.FormsAppli
 Windows 10 UWP 対応は「とりあえず」残しました。
 が、基本的には Android/iOS での Google Maps に最適化するので、UWP では未対応の機能が増えると予想されます。  
 
-### ライセンス
+## 開発への参加
+
+私たちは、Xamarin.Forms.GoogleMaps への、あなたの貢献に大変感謝します。
+
+開発に参加して頂ける方は、[コントリビューション ガイドライン](CONTRIBUTING-ja.md) を読んで下さい。
+
+## ライセンス
 
 [LICENSE](LICENSE) をみて下さい
 
