@@ -102,7 +102,7 @@ Because this library has been determined to optimized for Google Maps, New featu
 
 We really appreciate your contribution.
 
-Please read the [contribution guideline](CONTRIBUTION.md).
+Please read the [contribution guideline](CONTRIBUTING.md).
 
 ## License
 
