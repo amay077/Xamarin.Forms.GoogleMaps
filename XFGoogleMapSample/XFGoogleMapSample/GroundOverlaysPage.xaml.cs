@@ -30,25 +30,17 @@ namespace XFGoogleMapSample
             };
 
             // Transparency
-            entryTransparency.Text = "0.5";
-            entryTransparency.TextChanged += (sender, e) =>
+            sliderTransparency.Value = 3;
+            sliderTransparency.ValueChanged += (sender, e) =>
             {
-                var transparency = 0f;
-                if (float.TryParse(e.NewTextValue, out transparency))
-                {
-                    _overlay.Transparency = transparency;
-                }
+                _overlay.Transparency = (float)(e.NewValue / 10f);
             };
 
             // Bearing
-            entryBearing.Text = "0";
-            entryBearing.TextChanged += (sender, e) =>
+            sliderBearing.Value = 0;
+            sliderBearing.ValueChanged += (sender, e) =>
             {
-                var bearing = 0f;
-                if (float.TryParse(e.NewTextValue, out bearing))
-                {
-                    _overlay.Bearing = bearing;
-                }
+                _overlay.Bearing = (float)e.NewValue;
             };
 
             // IsClickable

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage
 	xmlns="http://xamarin.com/schemas/2014/forms"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -41,8 +41,10 @@
 					VerticalTextAlignment="Center"
 					HorizontalTextAlignment="End"
 					Text="Transparency:" />
-				<Entry 
-					x:Name="entryTransparency"
+				<Slider
+					x:Name="sliderTransparency"
+					Minimum="0"
+					Maximum="10"
 					Grid.Row="1"
 					Grid.Column="1" />
 
@@ -52,8 +54,10 @@
 					VerticalTextAlignment="Center"
 					HorizontalTextAlignment="End"
 					Text="Bearing:" />
-				<Entry 
-					x:Name="entryBearing"
+				<Slider 
+					x:Name="sliderBearing"
+					Minimum="0"
+					Maximum="360"
 					Grid.Row="2"
 					Grid.Column="1" />
 
