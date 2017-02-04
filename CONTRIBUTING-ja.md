@@ -20,7 +20,7 @@
   * 通常、これ(ベースとなるブランチ)は master ブランチです。
   * master ブランチから、トピック・ブランチを作るには： `git branch
     issue_999 master` してから `git
-    checkout missue_999`で新しいブランチに切り替えます。master ブランチ上で作業するのを避けてください。
+    checkout issue_999`で新しいブランチに切り替えます。master ブランチ上で作業するのを避けてください。
     間違って、master ブランチ上で作業しないように、[pre-commit hook で master への commit を禁止した](http://blog.n-z.jp/blog/2014-02-07-pre-commit-hook.html) のような仕掛け
     をいれるのも良いでしょう。
 * commit は合理的(ロジック単位)に分けてください。また目的と関係のないコードの変更は含めないでください(コードフォーマットの変更、不要コードの削除など)。
