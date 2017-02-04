@@ -1,5 +1,16 @@
 Xamarin.Forms.GoogleMaps Release Notes
 ----
+# 1.8.0-beta5
+
+## New Features
+
+* #196 Add Map.InitialCameraUpdate property
+* #202 Add Map.CameraPosition property
+
+## Bug Fixes
+
+* #197 [iOS]Fix GroundOverlay.Transparency is incorrect
+
 # 1.8.0-beta4
 
 ## New Features
