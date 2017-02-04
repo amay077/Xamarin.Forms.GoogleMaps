@@ -53,7 +53,7 @@ For more information, see [Comparison with Xamarin.Forms.Maps](https://github.co
 |Windows 10 UWP|Yes (Bing map)|
 |Others|No|
 
-### Usage
+## Usage
 
 Same as this
 
@@ -82,7 +82,7 @@ Sample application is here.
 
 * [XFGoogleMapSample](https://github.com/amay077/Xamarin.Forms.GoogleMaps/tree/master/XFGoogleMapSample)
 
-### Future plans
+## Future plans
 
 I will follow Xamarin.Forms.Maps API as possible. I will add new API only when I implement Google maps original feature.
 
@@ -98,27 +98,11 @@ Latest scheduled features as follows:
 You can use in Windows 10 UWP but this support is reluctant.
 Because this library has been determined to optimized for Google Maps, New features will not support in UWP.
 
-### Coding Style
+## Contribution
 
-We follow the style used by the [.NET Foundation](https://github.com/dotnet/corefx/blob/master/Documentation/coding-guidelines/coding-style.md), with one primary exception:
+We really appreciate your contribution.
 
-> We use Allman style braces, where each brace begins on a new line. ~~A single line statement block can go without braces~~
-
-We **always** need braces, you can not got without braces.
-
-**Examples:**
-
-```csharp
-// 👎🏽 DO NOT USE
-if (source == null) 
-    throw new ArgumentNullException("source");
-
-// 👍🏽 GOOD
-if (source == null)
-{
-    throw new ArgumentNullException("source");
-}
-```
+Please read the [contribution guideline](CONTRIBUTION.md).
 
 ## License
 
