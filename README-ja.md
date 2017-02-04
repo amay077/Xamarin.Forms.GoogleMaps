@@ -101,7 +101,7 @@ public partial class AppDelegate : global::Xamarin.Forms.Platform.iOS.FormsAppli
 Windows 10 UWP 対応は「とりあえず」残しました。
 が、基本的には Android/iOS での Google Maps に最適化するので、UWP では未対応の機能が増えると予想されます。  
 
-## Xamarin.Forms.GoogleMaps への貢献
+## CONTRIBUTION
 
 私たちは、Xamarin.Forms.GoogleMaps への、あなたの貢献に大変感謝します。
 
