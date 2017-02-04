@@ -171,6 +171,7 @@ namespace Xamarin.Forms.GoogleMaps
                 OnPropertyChanging();
                 _visibleRegion = value;
                 OnPropertyChanged();
+                InitialCameraUpdate = CameraUpdateFactory.NewBounds(value.ToBounds(), 0);
             }
         }
 
