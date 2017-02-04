@@ -163,7 +163,7 @@
 * Add animate parameter to Map.MoveToRegion method
 		</releaseNotes>
 		<authors>amay077</authors>
-		<copyright>amay077</copyright>
+		<copyright>Copyright 2016-2017</copyright>
 		<iconUrl>https://raw.githubusercontent.com/amay077/Xamarin.Forms.GoogleMaps/master/logo.png</iconUrl>
     <licenseUrl>https://github.com/amay077/Xamarin.Forms.GoogleMaps/blob/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/amay077/Xamarin.Forms.GoogleMaps</projectUrl>
