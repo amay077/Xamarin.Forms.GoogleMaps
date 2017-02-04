@@ -170,7 +170,7 @@
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
 		<description>Yet another Maps library for Xamarin.Forms that optimized for Google maps.</description>
 		<summary>Yet another Maps library for Xamarin.Forms that optimized for Google maps</summary>
-		<tags>xamarin forms maps xamarinforms xamarinformsmaps xamarin.forms.maps google googlemap</tags>
+		<tags>xamarin forms maps xamarinforms xamarinformsmaps xamarin.forms.maps xamarinformsgooglemaps xamarin.forms.googlemaps google googlemap</tags>
 	<dependencies>
       <group>
         <dependency id="Xamarin.Forms" version="2.1.0.6529" />
