@@ -68,7 +68,7 @@ namespace Xamarin.Forms.Maps.WinRT
 
                 if (oldMapView != null)
                 {
-                    oldMapView.ActualCameraChanged  -= OnActualCameraChanged;
+                    oldMapView.ActualCameraChanged -= OnActualCameraChanged;
                     oldMapView.ZoomLevelChanged -= OnZoomLevelChanged;
                 }
             }
@@ -190,25 +190,76 @@ namespace Xamarin.Forms.Maps.WinRT
                 _firstZoomLevelChangeFired = true;
                 return;
             }
-            Geopoint nw, se = null;
+
             try
             {
-                Control.GetLocationFromOffset(new Windows.Foundation.Point(0, 0), out nw);
-                Control.GetLocationFromOffset(new Windows.Foundation.Point(Control.ActualWidth, Control.ActualHeight), out se);
+                var boundingBox = GetBounds(this.Control);
+                if (boundingBox != null)
+                {
+                    var center = new Position(boundingBox.Center.Latitude, boundingBox.Center.Longitude);
+                    var latitudeDelta = Math.Abs(center.Latitude - boundingBox.NorthwestCorner.Latitude);
+                    var longitudeDelta = Math.Abs(center.Longitude - boundingBox.NorthwestCorner.Longitude);
+                    Element.VisibleRegion = new MapSpan(center, latitudeDelta, longitudeDelta);
+                }
             }
             catch (Exception)
             {
-                return;
+                //couldnt update visible region
+            }
+        }
+
+        private static GeoboundingBox GetBounds(MapControl map)
+        {
+            Geopoint topLeft = null;
+
+            try
+            {
+                map.GetLocationFromOffset(new Windows.Foundation.Point(0, 0), out topLeft);
+            }
+            catch
+            {
+                var topOfMap = new Geopoint(new BasicGeoposition()
+                {
+                    Latitude = 85,
+                    Longitude = 0
+                });
+
+                Windows.Foundation.Point topPoint;
+                map.GetOffsetFromLocation(topOfMap, out topPoint);
+                map.GetLocationFromOffset(new Windows.Foundation.Point(0, topPoint.Y), out topLeft);
             }
 
-            if (nw != null && se != null)
+            Geopoint bottomRight = null;
+            try
             {
-                var boundingBox = new GeoboundingBox(nw.Position, se.Position);
-                var center = new Position(boundingBox.Center.Latitude, boundingBox.Center.Longitude);
-                var latitudeDelta = Math.Abs(center.Latitude - boundingBox.NorthwestCorner.Latitude);
-                var longitudeDelta = Math.Abs(center.Longitude - boundingBox.NorthwestCorner.Longitude);
-                Element.VisibleRegion = new MapSpan(center, latitudeDelta, longitudeDelta);
+                map.GetLocationFromOffset(new Windows.Foundation.Point(map.ActualWidth, map.ActualHeight), out bottomRight);
             }
+            catch
+            {
+                var bottomOfMap = new Geopoint(new BasicGeoposition()
+                {
+                    Latitude = -85,
+                    Longitude = 0
+                });
+
+                Windows.Foundation.Point bottomPoint;
+                map.GetOffsetFromLocation(bottomOfMap, out bottomPoint);
+                map.GetLocationFromOffset(new Windows.Foundation.Point(bottomPoint.X, bottomPoint.Y), out bottomRight);
+            }
+
+            if (topLeft != null && bottomRight != null)
+            {
+                try
+                {
+                    return new GeoboundingBox(topLeft.Position, bottomRight.Position);
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+
+            return null;
         }
 
         void LoadUserPosition(Geocoordinate userCoordinate, bool center)
