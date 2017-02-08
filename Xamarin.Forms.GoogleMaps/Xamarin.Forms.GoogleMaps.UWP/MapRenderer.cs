@@ -111,7 +111,10 @@ namespace Xamarin.Forms.Maps.WinRT
                 camera.Roll,
                 camera.Pitch,
                 sender.ZoomLevel);
-            Map.SendCameraChanged(pos);
+            if (Map != null)
+            {
+                Map.SendCameraChanged(pos); 
+            }
             await UpdateVisibleRegion();
         }
 
@@ -123,7 +126,10 @@ namespace Xamarin.Forms.Maps.WinRT
                 camera.Heading,
                 camera.Pitch,
                 sender.ZoomLevel);
-            Map.SendCameraChanged(pos);
+            if (Map != null)
+            {
+                Map.SendCameraChanged(pos); 
+            }
         }
 
         protected override async void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
