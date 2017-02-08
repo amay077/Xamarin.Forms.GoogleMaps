@@ -1,5 +1,7 @@
 # How to contribute
 
+[English contribution guideline is here！](CONTRIBUTING.md)
+
 我々は皆さんの Xamarin.Forms.GoogleMaps(以下、XF.GoogleMaps) へ貢献を歓迎します。
 我々は、皆さんによる貢献を出来るだけ簡単にできるようにしたいと考えています。
 その為に、貢献しようとする人は以下の方針に従うよう、お願いします。
@@ -10,7 +12,7 @@
 * 問題や機能要望には Issue を作ってください（まだ Issue が作られていない場合）。
   * バグを issue で報告する場合、バグを再現する為の説明、エラーの情報、環境を書いてください。
   * Issue のタイトルと本文はできるだけ英語で書いてください（不可能な場合は日本語でも OK です）。
-  * Issue テンプレートが用意されているので、必要な箇所を切り取って使用してください。
+  * [Issue テンプレート](ISSUE_TEMPLATE.md) が用意されているので、必要な箇所を切り取って使用してください。
 * GitHub でリポジトリの fork を作ってください。
 * ``git clone https://github.com/[your_account]/Xamarin.Forms.GoogleMaps.git`` でローカルにクローンしたあと、 ``git config user.name yourname`` と ``git config user.email your@ema.il`` を設定してください。特に、``user.email`` は必ず GitHub のアカウントで使用している e-mail アドレスを設定してください。
 
