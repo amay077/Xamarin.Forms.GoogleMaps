@@ -39,12 +39,12 @@ Furthermore, I am using Google Maps instead of MapKit because it is easy for def
 
 For more information, see [Comparison with Xamarin.Forms.Maps](https://github.com/amay077/Xamarin.Forms.GoogleMaps/wiki/Comparison-with-Xamarin.Forms.Maps).
 
-### Setup
+## Setup
 
 * Available on NuGet: https://www.nuget.org/packages/Xamarin.Forms.GoogleMaps/ [![NuGet](https://img.shields.io/nuget/v/Xam.Plugin.Geolocator.svg?label=NuGet)](https://www.nuget.org/packages/Xamarin.Forms.GoogleMaps/)
 * Install into your PCL project and Client projects.
 
-### Platform Support
+## Platform Support
 
 |Platform|Supported|
 | ------------------- | :-----------: |
@@ -53,7 +53,7 @@ For more information, see [Comparison with Xamarin.Forms.Maps](https://github.co
 |Windows 10 UWP|Yes (Bing map)|
 |Others|No|
 
-### Usage
+## Usage
 
 Same as this
 
@@ -82,7 +82,7 @@ Sample application is here.
 
 * [XFGoogleMapSample](https://github.com/amay077/Xamarin.Forms.GoogleMaps/tree/master/XFGoogleMapSample)
 
-### Future plans
+## Future plans
 
 I will follow Xamarin.Forms.Maps API as possible. I will add new API only when I implement Google maps original feature.
 
@@ -98,7 +98,13 @@ Latest scheduled features as follows:
 You can use in Windows 10 UWP but this support is reluctant.
 Because this library has been determined to optimized for Google Maps, New features will not support in UWP.
 
-### License
+## Contribution
+
+We really appreciate your contribution.
+
+Please read the [contribution guideline](CONTRIBUTING.md).
+
+## License
 
 See [LICENSE](LICENSE).
 

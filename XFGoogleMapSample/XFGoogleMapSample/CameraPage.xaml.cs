@@ -58,9 +58,10 @@ namespace XFGoogleMapSample
                 await map.MoveCamera(CameraUpdateFactory.NewCameraPosition(
                     new CameraPosition(
                         pinTokyo.Position, // Tokyo
+                        17d, // zoom
                         45d, // bearing(rotation)
-                        60d, // tilt
-                        17d)));
+                        60d // tilt
+                        )));
             };
 
             // AnimateToCamera with Position
@@ -95,9 +96,9 @@ namespace XFGoogleMapSample
                 var animState = await map.AnimateCamera(CameraUpdateFactory.NewCameraPosition(
                     new CameraPosition(
                         pinTokyo.Position, // Tokyo
+                        17d, // zoom
                         45d, // bearing(rotation)
-                        60d, // tilt
-                        17d)), 
+                        60d)), // tilt
                     TimeSpan.FromSeconds(5));
                 Debug.WriteLine($"Animate with CameraPosition result = {animState}");
             };

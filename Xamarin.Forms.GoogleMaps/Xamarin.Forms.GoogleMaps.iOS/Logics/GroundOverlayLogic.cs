@@ -89,7 +89,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
             }
             else if (e.PropertyName == GroundOverlay.TransparencyProperty.PropertyName)
             {
-                nativeOverlay.Opacity = overlay.Transparency;
+                nativeOverlay.Opacity = 1f - overlay.Transparency;
             }
         }
     }

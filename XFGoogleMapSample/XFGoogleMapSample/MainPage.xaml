@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ContentPage
-	xmlns="http://xamarin.com/schemas/2014/forms"
-	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-	xmlns:local="clr-namespace:XFGoogleMapSample"
-	x:Class="XFGoogleMapSample.MainPage"
-	Title="Xamarin.Forms.GoogleMaps sample">
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:XFGoogleMapSample"
+    x:Class="XFGoogleMapSample.MainPage"
+    Title="Xamarin.Forms.GoogleMaps sample">
 
-	<ContentPage.Content>
-		<StackLayout
-			HorizontalOptions="Fill"
-			VerticalOptions="Fill"
-			Orientation="Vertical">
+    <ContentPage.Content>
+        <StackLayout
+            HorizontalOptions="Fill"
+            VerticalOptions="Fill"
+            Orientation="Vertical">
 
-			<Button x:Name="buttonBasicMap"
-					Text="Basic Map" />
-			<Button x:Name="buttonCamera"
-					Text="Camera Control" />
-			<Button x:Name="buttonPins"
-					Text="Pins" />
-			<Button x:Name="buttonShapes"
-					Text="Shapes" />
-			<Button x:Name="buttonTiles"
-					Text="Tiles" />
+            <Button x:Name="buttonBasicMap"
+                    Text="Basic Map" />
+            <Button x:Name="buttonCamera"
+                    Text="Camera Control" />
+            <Button x:Name="buttonPins"
+                    Text="Pins" />
+            <Button x:Name="buttonShapes"
+                    Text="Shapes" />
+            <Button x:Name="buttonTiles"
+                    Text="Tiles" />
             <Button x:Name="buttonCustomPins"
                     Text="Custom Pin" />
             <Button x:Name="buttonShapesWithInitialize"
@@ -30,6 +30,6 @@
                     Text="Binding Pin" />
             <Button x:Name="buttonGroundOverlays"
                     Text="GroundOverlays" />
-		</StackLayout>
-	</ContentPage.Content>
+        </StackLayout>
+    </ContentPage.Content>
 </ContentPage>
