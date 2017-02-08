@@ -12,7 +12,7 @@ so that we can keep on top of things.
 * Make sure you have a [GitHub account](https://github.com/signup/free).
 * Create an Issue for your problem, assuming one does not already exist.
   * Clearly describe the issue including steps to reproduce, stacktrace and environments when it is a bug.
-  * We have an issue template, you can use some part of it.
+  * We have an [issue template](ISSUE_TEMPLATE.md), you can use some part of it.
 * Fork the repository on GitHub.
 * After cloning your repogitory to local, you should set ``git config user.name`` and `` git config user.email your@ema.il`` . Especially you **MUST** set ``user.email`` as same as your GitHub account's e-mail.
 
