@@ -1,21 +1,21 @@
 (This is template for issue. Please choose from feature request or bug report or others then write.)
 
 ----
-# FEATURE REQUEST / SUGGESTION
+## FEATURE REQUEST / SUGGESTION
 
-## SUMMARY
+### SUMMARY
 
 (write summary of your feature request or suggestion)
 
-## DETAILS
+### DETAILS
 
-(write details with text, codes and images)
+(write details/usecases with text, codes and images)
 
 ```
 // usage of your requested feature to use
 ```
 
-## PLATFORMS
+### PLATFORMS
 
 which platform do you want?
 
@@ -24,42 +24,48 @@ which platform do you want?
 - [ ] UWP
 
 ----
-# BUG / PROBREM REPORT
+## BUG / PROBREM REPORT
 
-## SUMMARY
+### SUMMARY
 
 (write summary of your bug report.)
 
-## VERSION
+### VERSIONS
 
-### Xamarin.Forms.GoogleMaps
+* Xamarin.Forms.GoogleMaps - x.x.x
+* Xamarin.Forms - x.x.x
+* 
 
-* x.x.x
-
-### Xamarin.Forms
-
-* x.x.x
-
-## PLATFORMS
+### PLATFORMS
 
 - [ ] Android
 - [x] iOS
 - [ ] UWP
 
-## STEPS FOR REPRODUCE
+### HOW TO REPRODUCE
 
-(write steps for reproduce with codes, screenshots and stacktraces.)
+(Let me show how to reproduce with steps or codes)
 
 1. 
 2. 
 3. 
 
-```
+```csharp
 // code for reproduce
+```
+
+### ACTUAL IMAGES
+
+(Let me show your actual problem images/stacktrace. If you want to capture simulator screen to animation GIF, I recomend to [LICEcap](http://www.cockos.com/licecap/).)
+
+![something_image](your_image.png) 
+
+```
+// paste stacktrace
 ```
 
 ----
 
-# OTHERS
+## OTHERS
 
 (free format)
