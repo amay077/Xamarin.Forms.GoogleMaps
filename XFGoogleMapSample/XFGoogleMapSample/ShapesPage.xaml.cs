@@ -109,13 +109,8 @@ namespace XFGoogleMapSample
                 buttonAddCircle.IsEnabled = true;
             };
             buttonRemoveCircle.IsEnabled = false;
-        }
 
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
-
-            map.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(40.78d, -73.96d), Distance.FromMeters(10000)), false);
+            map.InitialCameraUpdate = CameraUpdateFactory.NewPositionZoom(new Position(40.78d, -73.96d), 11d);
         }
 
         void Polyline_Clicked(object sender, EventArgs e)

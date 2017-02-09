@@ -115,7 +115,15 @@
                 </Grid>
             </ScrollView>
 
+            <!--
+            Initial CameraUpdate
+              Location = Sao Paulo
+              Zoom = 13
+              Rotation = 30
+              Tilt = 60
+            -->
             <maps:Map Grid.Row="1" x:Name="map"
+                      InitialCameraUpdate="-23.68, -46.87, 13, 30, 60"
                       VerticalOptions="FillAndExpand" />
         </Grid>
     </ContentPage.Content>

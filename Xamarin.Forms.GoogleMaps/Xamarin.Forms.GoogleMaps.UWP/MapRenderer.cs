@@ -111,6 +111,7 @@ namespace Xamarin.Forms.Maps.WinRT
                 camera.Roll,
                 camera.Pitch,
                 sender.ZoomLevel);
+            Map.CameraPosition = pos;
             Map.SendCameraChanged(pos);
             await UpdateVisibleRegion();
         }
@@ -186,7 +187,8 @@ namespace Xamarin.Forms.Maps.WinRT
 
             if (!_firstZoomLevelChangeFired)
             {
-                await _cameraLogic.MoveToRegion(Element.LastMoveToRegion, MapAnimationKind.None);
+                _cameraLogic.MoveCamera(Map.InitialCameraUpdate);
+
                 _firstZoomLevelChangeFired = true;
                 return;
             }

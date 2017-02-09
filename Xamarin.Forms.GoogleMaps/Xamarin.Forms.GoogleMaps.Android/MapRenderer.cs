@@ -183,7 +183,8 @@ namespace Xamarin.Forms.GoogleMaps.Android
 
         void InitializeLogic()
         {
-            _cameraLogic.MoveToRegion(((Map)Element).LastMoveToRegion, false);
+            _cameraLogic.MoveCamera(Map.InitialCameraUpdate);
+            //_cameraLogic.MoveToRegion(((Map)Element).LastMoveToRegion, false);
 
             foreach (var logic in _logics)
             {
@@ -263,7 +264,9 @@ namespace Xamarin.Forms.GoogleMaps.Android
         public void OnCameraChange(GCameraPosition pos)
         {
             UpdateVisibleRegion(pos.Target);
-            Map.SendCameraChanged(pos.ToXamarinForms());
+            var camera = pos.ToXamarinForms();
+            Map.CameraPosition = camera;
+            Map.SendCameraChanged(camera);
         }
 
         public void OnMapClick(LatLng point)
