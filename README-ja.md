@@ -109,6 +109,6 @@ Windows 10 UWP 対応は「とりあえず」残しました。
 
 ## ライセンス
 
-[LICENSE](LICENSE) をみて下さい
+[LICENSE](LICENSE) をみて下さい。
 
 logo.png by [alecive](http://www.iconarchive.com/show/flatwoken-icons-by-alecive.html) - [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/deed)
