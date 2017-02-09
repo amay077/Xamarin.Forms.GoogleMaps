@@ -151,4 +151,16 @@
   <PropertyGroup Condition=" '$(OS)' != 'Windows_NT' ">
     <PreBuildEvent>rsync -u "$(ProjectDir)Variables_sample.cs" "$(ProjectDir)Variables.cs"</PreBuildEvent>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug_Android|AnyCPU' ">
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug_Android</OutputPath>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release_Android|AnyCPU' ">
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release_Android</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
 </Project>
