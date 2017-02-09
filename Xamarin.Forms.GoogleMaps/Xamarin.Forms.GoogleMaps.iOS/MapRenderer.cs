@@ -156,7 +156,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
             {
                 UpdateIsTrafficEnabled();
             }
-            else if (e.PropertyName == VisualElement.IsVisibleProperty.PropertyName &&
+            else if (e.PropertyName == VisualElement.HeightProperty.PropertyName &&
                      ((Map) Element).InitialCameraUpdate != null)
             {
                 _shouldUpdateRegion = true;
