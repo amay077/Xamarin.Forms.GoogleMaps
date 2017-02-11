@@ -6,6 +6,8 @@ Yet another maps library for Xamarin.Forms that optimized for Google maps.
 
 Usage is almost the same as [Xamarin.Forms.Maps](https://www.nuget.org/packages/Xamarin.Forms.Maps), Because this is forked from [Xamarin.Forms.Maps - github](https://github.com/xamarin/Xamarin.Forms) 
 
+[<img src="https://dply.me/sjtud9/button/large" alt="Try it on your device via DeployGate">](https://dply.me/sjtud9#install)
+
 ![screenshot](screenshot01.png)
 
 ## Motivation
