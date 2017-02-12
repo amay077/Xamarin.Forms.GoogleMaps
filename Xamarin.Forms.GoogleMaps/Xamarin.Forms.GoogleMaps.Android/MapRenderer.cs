@@ -232,6 +232,10 @@ namespace Xamarin.Forms.GoogleMaps.Android
             {
                 NativeMap.TrafficEnabled = Map.IsTrafficEnabled;
             }
+            else if (e.PropertyName == Map.IndoorEnabledProperty.PropertyName)
+            {
+                NativeMap.SetIndoorEnabled(Map.IndoorEnabled);
+            }
 
             foreach (var logic in _logics)
                 logic.OnMapPropertyChanged(e);

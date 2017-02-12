@@ -24,6 +24,8 @@ namespace Xamarin.Forms.GoogleMaps
 
         public static readonly BindableProperty IsTrafficEnabledProperty = BindableProperty.Create(nameof(IsTrafficEnabled), typeof(bool), typeof(Map), false);
 
+        public static readonly BindableProperty IndoorEnabledProperty = BindableProperty.Create(nameof(IndoorEnabled), typeof(bool), typeof(Map), true);
+
         public static readonly BindableProperty InitialCameraUpdateProperty = BindableProperty.Create(
             nameof(InitialCameraUpdate), typeof(CameraUpdate), typeof(Map),
             CameraUpdateFactory.NewPositionZoom(new Position(41.89, 12.49), 10),  // center on Rome by default
@@ -97,6 +99,11 @@ namespace Xamarin.Forms.GoogleMaps
             set { SetValue(IsTrafficEnabledProperty, value); }
         }
 
+        public bool IndoorEnabled
+        {
+            get { return (bool) GetValue(IndoorEnabledProperty); }
+            set { SetValue(IndoorEnabledProperty, value);}
+        }
 
         public bool IsShowingUser
         {

@@ -161,6 +161,10 @@ namespace Xamarin.Forms.GoogleMaps.iOS
             {
                 _shouldUpdateRegion = true;
             }
+            else if (e.PropertyName == Map.IndoorEnabledProperty.PropertyName)
+            {
+                UpdateHasIndoorEnabled();
+            }
 
 
             foreach (var logic in _logics)
@@ -246,6 +250,11 @@ namespace Xamarin.Forms.GoogleMaps.iOS
         void UpdateIsTrafficEnabled()
         {
             ((MapView)Control).TrafficEnabled = ((Map)Element).IsTrafficEnabled;
+        }
+
+        void UpdateHasIndoorEnabled()
+        {
+            ((MapView) Control).IndoorEnabled = ((Map) Element).IndoorEnabled;
         }
 
         void UpdateMapType()
