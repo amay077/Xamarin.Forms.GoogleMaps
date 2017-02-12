@@ -32,6 +32,8 @@ namespace Xamarin.Forms.GoogleMaps
                 ((Map)bindable)._useMoveToRegisonAsInitialBounds = false;   
             });
 
+        public static readonly BindableProperty PaddingProperty = BindableProperty.Create(nameof(PaddingProperty), typeof(Thickness), typeof(Map), default(Thickness));
+
         bool _useMoveToRegisonAsInitialBounds = true;
 
         public static readonly BindableProperty CameraPositionProperty = BindableProperty.Create(
@@ -127,6 +129,12 @@ namespace Xamarin.Forms.GoogleMaps
         {
             get { return (CameraPosition)GetValue(CameraPositionProperty); }
             internal set { SetValue(CameraPositionProperty, value); }
+        }
+
+        public Thickness Padding
+        {
+            get { return (Thickness)GetValue(PaddingProperty); }
+            set { SetValue(PaddingProperty, value); }
         }
 
         public IList<Pin> Pins
