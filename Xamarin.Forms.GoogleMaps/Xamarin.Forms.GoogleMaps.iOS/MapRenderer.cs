@@ -112,6 +112,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                 UpdateIsShowingUser();
                 UpdateHasScrollEnabled();
                 UpdateHasZoomEnabled();
+                UpdateHasRotationEnabled();
                 UpdateIsTrafficEnabled();
 
                 foreach (var logic in _logics)
@@ -147,6 +148,10 @@ namespace Xamarin.Forms.GoogleMaps.iOS
             else if (e.PropertyName == Map.HasScrollEnabledProperty.PropertyName)
             {
                 UpdateHasScrollEnabled();
+            }
+            else if (e.PropertyName == Map.HasRotationEnabledProperty.PropertyName)
+            {
+                UpdateHasRotationEnabled();
             }
             else if (e.PropertyName == Map.HasZoomEnabledProperty.PropertyName)
             {
@@ -235,6 +240,11 @@ namespace Xamarin.Forms.GoogleMaps.iOS
         void UpdateHasZoomEnabled()
         {
             ((MapView)Control).Settings.ZoomGestures = ((Map)Element).HasZoomEnabled;
+        }
+
+        void UpdateHasRotationEnabled()
+        {
+            ((MapView)Control).Settings.ZoomGestures = ((Map)Element).HasRotationEnabled;
         }
 
         void UpdateIsShowingUser()
