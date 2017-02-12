@@ -114,6 +114,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                 UpdateHasZoomEnabled();
                 UpdateHasRotationEnabled();
                 UpdateIsTrafficEnabled();
+                UpdatePadding();
 
                 foreach (var logic in _logics)
                 {
@@ -166,7 +167,10 @@ namespace Xamarin.Forms.GoogleMaps.iOS
             {
                 _shouldUpdateRegion = true;
             }
-
+            else if (e.PropertyName == Map.PaddingProperty.PropertyName)
+            {
+                UpdatePadding();
+            }
 
             foreach (var logic in _logics)
             {
@@ -277,6 +281,11 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+        }
+
+        void UpdatePadding()
+        {
+            ((MapView)Control).Padding = ((Map)Element).Padding.ToUIEdgeInsets();
         }
     }
 }
