@@ -5,11 +5,11 @@ namespace Xamarin.Forms.GoogleMaps
 {
     public sealed class GroundOverlay : BindableObject
     {
-        public static readonly BindableProperty IconProperty = BindableProperty.Create("Icon", typeof(BitmapDescriptor), typeof(GroundOverlay), default(BitmapDescriptor));
-        public static readonly BindableProperty TransparencyProperty = BindableProperty.Create("Transparency", typeof(float), typeof(GroundOverlay), 0f);
-        public static readonly BindableProperty BoundsProperty = BindableProperty.Create("Bounds", typeof(Bounds), typeof(GroundOverlay), default(Bounds));
-        public static readonly BindableProperty BearingProperty = BindableProperty.Create("Bearing", typeof(float), typeof(GroundOverlay), 0f);
-        public static readonly BindableProperty IsClickableProperty = BindableProperty.Create("IsClickable", typeof(bool), typeof(GroundOverlay), false);
+        public static readonly BindableProperty IconProperty = BindableProperty.Create(nameof(Icon), typeof(BitmapDescriptor), typeof(GroundOverlay), default(BitmapDescriptor));
+        public static readonly BindableProperty TransparencyProperty = BindableProperty.Create(nameof(Transparency), typeof(float), typeof(GroundOverlay), 0f);
+        public static readonly BindableProperty BoundsProperty = BindableProperty.Create(nameof(Bounds), typeof(Bounds), typeof(GroundOverlay), default(Bounds));
+        public static readonly BindableProperty BearingProperty = BindableProperty.Create(nameof(Bearing), typeof(float), typeof(GroundOverlay), 0f);
+        public static readonly BindableProperty IsClickableProperty = BindableProperty.Create(nameof(IsClickable), typeof(bool), typeof(GroundOverlay), false);
 
         public BitmapDescriptor Icon
         {
