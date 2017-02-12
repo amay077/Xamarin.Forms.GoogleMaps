@@ -145,6 +145,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 map.MyLocationEnabled = map.UiSettings.MyLocationButtonEnabled = Map.IsShowingUser;
                 map.TrafficEnabled = Map.IsTrafficEnabled;
                 SetMapType();
+                SetPadding();
             }
 
             foreach (var logic in _logics)
@@ -216,6 +217,12 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 return;
             }
 
+            if (e.PropertyName == Map.PaddingProperty.PropertyName)
+            {
+                SetPadding();
+                return;
+            }
+
             if (NativeMap == null)
                 return;
 
@@ -260,6 +267,11 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+        }
+
+        void SetPadding()
+        {
+            NativeMap?.SetPadding((int)Map.Padding.Left, (int)Map.Padding.Top, (int)Map.Padding.Right, (int)Map.Padding.Bottom);
         }
 
         public void OnCameraChange(GCameraPosition pos)
