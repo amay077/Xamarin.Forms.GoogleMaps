@@ -12,22 +12,22 @@ namespace Xamarin.Forms.GoogleMaps
 {
     public class Map : View, IEnumerable<Pin>
     {
-        public static readonly BindableProperty MapTypeProperty = BindableProperty.Create("MapType", typeof(MapType), typeof(Map), default(MapType));
+        public static readonly BindableProperty MapTypeProperty = BindableProperty.Create(nameof(MapType), typeof(MapType), typeof(Map), default(MapType));
 
-        public static readonly BindableProperty IsShowingUserProperty = BindableProperty.Create("IsShowingUser", typeof(bool), typeof(Map), default(bool));
+        public static readonly BindableProperty IsShowingUserProperty = BindableProperty.Create(nameof(IsShowingUser), typeof(bool), typeof(Map), default(bool));
 
-        public static readonly BindableProperty HasScrollEnabledProperty = BindableProperty.Create("HasScrollEnabled", typeof(bool), typeof(Map), true);
+        public static readonly BindableProperty HasScrollEnabledProperty = BindableProperty.Create(nameof(HasScrollEnabled), typeof(bool), typeof(Map), true);
 
-        public static readonly BindableProperty HasZoomEnabledProperty = BindableProperty.Create("HasZoomEnabled", typeof(bool), typeof(Map), true);
+        public static readonly BindableProperty HasZoomEnabledProperty = BindableProperty.Create(nameof(HasZoomEnabled), typeof(bool), typeof(Map), true);
 
-        public static readonly BindableProperty HasRotateEnabledProperty = BindableProperty.Create(nameof(HasRotateEnabled), typeof(bool), typeof(Map), true);
+        public static readonly BindableProperty HasRotationEnabledProperty = BindableProperty.Create(nameof(HasRotationEnabled), typeof(bool), typeof(Map), true);
 
-        public static readonly BindableProperty SelectedPinProperty = BindableProperty.Create("SelectedPin", typeof(Pin), typeof(Map), default(Pin), defaultBindingMode: BindingMode.TwoWay);
+        public static readonly BindableProperty SelectedPinProperty = BindableProperty.Create(nameof(SelectedPin), typeof(Pin), typeof(Map), default(Pin), defaultBindingMode: BindingMode.TwoWay);
 
-        public static readonly BindableProperty IsTrafficEnabledProperty = BindableProperty.Create("IsTrafficEnabled", typeof(bool), typeof(Map), false);
+        public static readonly BindableProperty IsTrafficEnabledProperty = BindableProperty.Create(nameof(IsTrafficEnabled), typeof(bool), typeof(Map), false);
 
         public static readonly BindableProperty InitialCameraUpdateProperty = BindableProperty.Create(
-            "InitialCameraUpdate", typeof(CameraUpdate), typeof(Map), 
+            nameof(InitialCameraUpdate), typeof(CameraUpdate), typeof(Map),
             CameraUpdateFactory.NewPositionZoom(new Position(41.89, 12.49), 10),  // center on Rome by default
             propertyChanged: (bindable, oldValue, newValue) => 
             {
@@ -93,10 +93,10 @@ namespace Xamarin.Forms.GoogleMaps
             set { SetValue(HasZoomEnabledProperty, value); }
         }
 
-        public bool HasRotateEnabled
+        public bool HasRotationEnabled
         {
-            get { return (bool)GetValue(HasRotateEnabledProperty); }
-            set { SetValue(HasRotateEnabledProperty, value); }
+            get { return (bool)GetValue(HasRotationEnabledProperty); }
+            set { SetValue(HasRotationEnabledProperty, value); }
         }
 
         public bool IsTrafficEnabled

@@ -149,7 +149,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
             {
                 UpdateHasScrollEnabled();
             }
-            else if (e.PropertyName == Map.HasRotateEnabledProperty.PropertyName)
+            else if (e.PropertyName == Map.HasRotationEnabledProperty.PropertyName)
             {
                 UpdateHasRotationEnabled();
             }
@@ -244,7 +244,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
 
         void UpdateHasRotationEnabled()
         {
-            ((MapView)Control).Settings.ZoomGestures = ((Map)Element).HasRotateEnabled;
+            ((MapView)Control).Settings.ZoomGestures = ((Map)Element).HasRotationEnabled;
         }
 
         void UpdateIsShowingUser()

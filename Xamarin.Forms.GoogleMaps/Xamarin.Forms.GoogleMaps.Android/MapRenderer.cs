@@ -142,7 +142,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 map.UiSettings.ZoomControlsEnabled = Map.HasZoomEnabled;
                 map.UiSettings.ZoomGesturesEnabled = Map.HasZoomEnabled;
                 map.UiSettings.ScrollGesturesEnabled = Map.HasScrollEnabled;
-                map.UiSettings.RotateGesturesEnabled = Map.HasRotateEnabled;
+                map.UiSettings.RotateGesturesEnabled = Map.HasRotationEnabled;
                 map.MyLocationEnabled = map.UiSettings.MyLocationButtonEnabled = Map.IsShowingUser;
                 map.TrafficEnabled = Map.IsTrafficEnabled;
                 SetMapType();
@@ -229,9 +229,9 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 NativeMap.UiSettings.ZoomControlsEnabled = Map.HasZoomEnabled;
                 NativeMap.UiSettings.ZoomGesturesEnabled = Map.HasZoomEnabled;
             }
-            else if (e.PropertyName == Map.HasRotateEnabledProperty.PropertyName)
+            else if (e.PropertyName == Map.HasRotationEnabledProperty.PropertyName)
             {
-                NativeMap.UiSettings.RotateGesturesEnabled = Map.HasRotateEnabled;
+                NativeMap.UiSettings.RotateGesturesEnabled = Map.HasRotationEnabled;
             }
             else if (e.PropertyName == Map.IsTrafficEnabledProperty.PropertyName)
             {
