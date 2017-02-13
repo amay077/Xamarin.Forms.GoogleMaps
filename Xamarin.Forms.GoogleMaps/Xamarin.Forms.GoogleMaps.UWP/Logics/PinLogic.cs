@@ -64,6 +64,10 @@ namespace Xamarin.Forms.GoogleMaps.Logics.UWP
             pushpin.Tapped += Pushpin_Tapped;
             pushpin.Holding += Pushpin_Holding;
 
+            pushpin.Visibility = outerItem?.IsVisible ?? false ?
+                Windows.UI.Xaml.Visibility.Visible :
+                Windows.UI.Xaml.Visibility.Collapsed;
+
             NativeMap.Children.Add(pushpin);
             return pushpin;
         }
