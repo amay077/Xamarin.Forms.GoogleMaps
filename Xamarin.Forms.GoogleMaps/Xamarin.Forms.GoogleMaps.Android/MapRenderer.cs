@@ -57,6 +57,8 @@ namespace Xamarin.Forms.GoogleMaps.Android
         bool _ready = false;
         bool _onLayout = false;
 
+        float _scaledDensity;
+
         public override SizeRequest GetDesiredSize(int widthConstraint, int heightConstraint)
         {
             return new SizeRequest(new Size(Context.ToPixels(40), Context.ToPixels(40)));
@@ -92,10 +94,13 @@ namespace Xamarin.Forms.GoogleMaps.Android
             {
                 var metrics = new DisplayMetrics();
                 activity.WindowManager.DefaultDisplay.GetMetrics(metrics);
+                _scaledDensity = metrics.ScaledDensity;
                 foreach (var logic in _logics)
-                    logic.ScaledDensity = metrics.ScaledDensity;
+                {
+                    logic.ScaledDensity = _scaledDensity;
+                }
 
-                _cameraLogic.ScaledDensity = metrics.ScaledDensity;
+                _cameraLogic.ScaledDensity = _scaledDensity;
             }
 
             if (e.OldElement != null)
@@ -276,7 +281,11 @@ namespace Xamarin.Forms.GoogleMaps.Android
 
         void SetPadding()
         {
-            NativeMap?.SetPadding((int)Map.Padding.Left, (int)Map.Padding.Top, (int)Map.Padding.Right, (int)Map.Padding.Bottom);
+            NativeMap?.SetPadding(
+                (int)(Map.Padding.Left * _scaledDensity), 
+                (int)(Map.Padding.Top * _scaledDensity), 
+                (int)(Map.Padding.Right * _scaledDensity),
+                (int)(Map.Padding.Bottom * _scaledDensity));
         }
 
         public void OnCameraChange(GCameraPosition pos)
