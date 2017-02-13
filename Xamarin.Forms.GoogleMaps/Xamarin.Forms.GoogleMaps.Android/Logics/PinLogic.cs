@@ -73,6 +73,10 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
                 marker.Visible = false; // Will become visible once the iconview is ready.
                 TransformXamarinViewToAndroidBitmap(outerItem, marker);
             }
+            else
+            {
+                marker.Visible = outerItem.IsVisible;;
+            }
 
             // associate pin with marker for later lookup in event handlers
             outerItem.NativeObject = marker;
