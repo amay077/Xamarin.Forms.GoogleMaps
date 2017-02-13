@@ -102,6 +102,21 @@ namespace XFGoogleMapSample
                     TimeSpan.FromSeconds(5));
                 Debug.WriteLine($"Animate with CameraPosition result = {animState}");
             };
+
+            // Padding for Map
+            entryPadding.TextChanged += (sender, e) =>
+            {
+                try
+                {
+                    var converter = new ThicknessTypeConverter();
+                    var padding = (Thickness)converter.ConvertFromInvariantString(entryPadding.Text);
+                    map.Padding = padding;
+                }
+                catch (Exception)
+                {
+                }
+            };
+            map.Padding = new Thickness(0, 0, 0, 0);
         }
     }
 }
