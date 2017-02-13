@@ -106,7 +106,7 @@ namespace XFGoogleMapSample
                 }
                 else
                 {
-                    this.DisplayAlert("Not found", "Geocoder returns no results", "Close");
+                    await this.DisplayAlert("Not found", "Geocoder returns no results", "Close");
                 }
             };
         }

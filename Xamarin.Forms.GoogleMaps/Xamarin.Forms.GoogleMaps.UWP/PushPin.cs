@@ -150,7 +150,7 @@ namespace Xamarin.Forms.Maps.WinRT
         }
 
         //TODO: implement xamarin view to UWP
-        private async void TransformXamarinViewToUWPBitmap(Pin outerItem, ContentControl nativeItem)
+        private void TransformXamarinViewToUWPBitmap(Pin outerItem, ContentControl nativeItem)
         {
             if (outerItem?.Icon?.Type == BitmapDescriptorType.View && outerItem?.Icon?.View != null)
             {
