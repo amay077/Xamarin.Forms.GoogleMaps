@@ -1,5 +1,18 @@
 Xamarin.Forms.GoogleMaps Release Notes
 ----
+# 1.8.0-beta6
+
+## New Features
+
+* #71 [iOS/Android]Add Map.Padding property
+* #84 [iOS/Android]Add Map.HasRotationEnabled property
+
+## Bug Fixes
+
+* #231 Fix Pin.IsVisible does not used when native marker created
+* #216 [UWP]Fix Map.VisibleRegion is null when first CameraChanged
+* #205 [iOS/Android] Move Map camera to correct region on layout change(from XF.Maps)
+
 # 1.8.0-beta5
 
 ## New Features
