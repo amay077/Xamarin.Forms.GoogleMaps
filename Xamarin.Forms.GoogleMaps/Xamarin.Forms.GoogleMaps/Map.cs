@@ -24,7 +24,7 @@ namespace Xamarin.Forms.GoogleMaps
 
         public static readonly BindableProperty IsTrafficEnabledProperty = BindableProperty.Create(nameof(IsTrafficEnabled), typeof(bool), typeof(Map), false);
 
-        public static readonly BindableProperty IndoorEnabledProperty = BindableProperty.Create(nameof(IndoorEnabled), typeof(bool), typeof(Map), true);
+        public static readonly BindableProperty IndoorEnabledProperty = BindableProperty.Create(nameof(IsIndoorEnabled), typeof(bool), typeof(Map), true);
 
         public static readonly BindableProperty InitialCameraUpdateProperty = BindableProperty.Create(
             nameof(InitialCameraUpdate), typeof(CameraUpdate), typeof(Map),
@@ -99,7 +99,7 @@ namespace Xamarin.Forms.GoogleMaps
             set { SetValue(IsTrafficEnabledProperty, value); }
         }
 
-        public bool IndoorEnabled
+        public bool IsIndoorEnabled
         {
             get { return (bool) GetValue(IndoorEnabledProperty); }
             set { SetValue(IndoorEnabledProperty, value);}

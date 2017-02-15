@@ -234,7 +234,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
             }
             else if (e.PropertyName == Map.IndoorEnabledProperty.PropertyName)
             {
-                NativeMap.SetIndoorEnabled(Map.IndoorEnabled);
+                NativeMap.SetIndoorEnabled(Map.IsIndoorEnabled);
             }
 
             foreach (var logic in _logics)

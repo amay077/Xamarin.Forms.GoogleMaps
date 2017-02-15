@@ -254,7 +254,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
 
         void UpdateHasIndoorEnabled()
         {
-            ((MapView) Control).IndoorEnabled = ((Map) Element).IndoorEnabled;
+            ((MapView) Control).IndoorEnabled = ((Map) Element).IsIndoorEnabled;
         }
 
         void UpdateMapType()
