@@ -57,6 +57,8 @@ namespace Xamarin.Forms.GoogleMaps.Android
         bool _ready = false;
         bool _onLayout = false;
 
+        float _scaledDensity;
+
         public override SizeRequest GetDesiredSize(int widthConstraint, int heightConstraint)
         {
             return new SizeRequest(new Size(Context.ToPixels(40), Context.ToPixels(40)));
@@ -92,10 +94,13 @@ namespace Xamarin.Forms.GoogleMaps.Android
             {
                 var metrics = new DisplayMetrics();
                 activity.WindowManager.DefaultDisplay.GetMetrics(metrics);
+                _scaledDensity = metrics.ScaledDensity;
                 foreach (var logic in _logics)
-                    logic.ScaledDensity = metrics.ScaledDensity;
+                {
+                    logic.ScaledDensity = _scaledDensity;
+                }
 
-                _cameraLogic.ScaledDensity = metrics.ScaledDensity;
+                _cameraLogic.ScaledDensity = _scaledDensity;
             }
 
             if (e.OldElement != null)
@@ -142,9 +147,11 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 map.UiSettings.ZoomControlsEnabled = Map.HasZoomEnabled;
                 map.UiSettings.ZoomGesturesEnabled = Map.HasZoomEnabled;
                 map.UiSettings.ScrollGesturesEnabled = Map.HasScrollEnabled;
+                map.UiSettings.RotateGesturesEnabled = Map.HasRotationEnabled;
                 map.MyLocationEnabled = map.UiSettings.MyLocationButtonEnabled = Map.IsShowingUser;
                 map.TrafficEnabled = Map.IsTrafficEnabled;
                 SetMapType();
+                SetPadding();
             }
 
             foreach (var logic in _logics)
@@ -216,6 +223,12 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 return;
             }
 
+            if (e.PropertyName == Map.PaddingProperty.PropertyName)
+            {
+                SetPadding();
+                return;
+            }
+
             if (NativeMap == null)
                 return;
 
@@ -227,6 +240,10 @@ namespace Xamarin.Forms.GoogleMaps.Android
             {
                 NativeMap.UiSettings.ZoomControlsEnabled = Map.HasZoomEnabled;
                 NativeMap.UiSettings.ZoomGesturesEnabled = Map.HasZoomEnabled;
+            }
+            else if (e.PropertyName == Map.HasRotationEnabledProperty.PropertyName)
+            {
+                NativeMap.UiSettings.RotateGesturesEnabled = Map.HasRotationEnabled;
             }
             else if (e.PropertyName == Map.IsTrafficEnabledProperty.PropertyName)
             {
@@ -264,6 +281,15 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+        }
+
+        void SetPadding()
+        {
+            NativeMap?.SetPadding(
+                (int)(Map.Padding.Left * _scaledDensity), 
+                (int)(Map.Padding.Top * _scaledDensity), 
+                (int)(Map.Padding.Right * _scaledDensity),
+                (int)(Map.Padding.Bottom * _scaledDensity));
         }
 
         public void OnCameraChange(GCameraPosition pos)

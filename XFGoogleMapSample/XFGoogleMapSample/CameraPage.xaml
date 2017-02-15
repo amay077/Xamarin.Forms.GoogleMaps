@@ -30,6 +30,15 @@
                     <Button x:Name="buttonAnimateToBounds" Text="Animate to LatLngBounds" />
                     <Button x:Name="buttonAnimateToCameraPosition" Text="Animate to CameraPosition" />
 
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Padding(L,T,R,B):" 
+                            HorizontalOptions="Start" 
+                            VerticalOptions="Center"/>
+                        <Entry x:Name="entryPadding" Text="0, 0, 0, 0" 
+                            HorizontalOptions="FillAndExpand" 
+                            VerticalOptions="Center" />
+                    </StackLayout>
+
                 </StackLayout>
             </ScrollView>
 

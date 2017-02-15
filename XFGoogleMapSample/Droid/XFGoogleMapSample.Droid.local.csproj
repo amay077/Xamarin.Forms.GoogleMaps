@@ -95,10 +95,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\XFGoogleMapSample\XFGoogleMapSample.csproj">
-      <Project>{E5FEBCA7-6127-4002-B7B3-3EE4CC362B25}</Project>
-      <Name>XFGoogleMapSample.local</Name>
-    </ProjectReference>
     <ProjectReference Include="..\XFGoogleMapSample\XFGoogleMapSample.local.csproj">
       <Project>{E5FEBCA7-6127-4002-B7B3-3EE4CC362B25}</Project>
       <Name>XFGoogleMapSample.local</Name>
@@ -122,7 +118,7 @@
     <None Include="Resources\AboutResources.txt" />
     <None Include="Properties\AndroidManifest.xml" />
     <None Include="Assets\AboutAssets.txt" />
-    <None Include="packages.config" />
+    <None Include="packages.XFGoogleMapSample.Droid.local.config" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\Tabbar.axml" />

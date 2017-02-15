@@ -82,7 +82,7 @@ namespace Xamarin.Forms.Maps.WinRT
                     Control.MapServiceToken = FormsGoogleMaps.AuthenticationToken;
                     Control.TrafficFlowVisible = Map.IsTrafficEnabled;
                     Control.ZoomLevelChanged += OnZoomLevelChanged;
-                    Control.CenterChanged += async (s, a) => await UpdateVisibleRegion();
+                    Control.CenterChanged += (s, a) => UpdateVisibleRegion();
                     Control.ActualCameraChanged += OnActualCameraChanged;
                 }
 
@@ -103,7 +103,7 @@ namespace Xamarin.Forms.Maps.WinRT
             }
         }
 
-        private async void OnZoomLevelChanged(MapControl sender, object args)
+        private void OnZoomLevelChanged(MapControl sender, object args)
         {
             var camera = sender.ActualCamera;
             var pos = new CameraPosition(
@@ -112,7 +112,7 @@ namespace Xamarin.Forms.Maps.WinRT
                 camera.Pitch,
                 sender.ZoomLevel);
             Map.CameraPosition = pos;
-            await UpdateVisibleRegion();
+            UpdateVisibleRegion();
             Map?.SendCameraChanged(pos);
         }
 
@@ -180,7 +180,7 @@ namespace Xamarin.Forms.Maps.WinRT
                 Control.Children.Remove(_userPositionCircle);
         }
 
-        async Task UpdateVisibleRegion()
+        void UpdateVisibleRegion()
         {
             if (Control == null || Element == null)
                 return;

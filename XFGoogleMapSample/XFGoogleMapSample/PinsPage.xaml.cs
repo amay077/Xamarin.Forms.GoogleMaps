@@ -25,7 +25,8 @@ namespace XFGoogleMapSample
                     Address = "Sumida-ku, Tokyo, Japan",
                     Position = new Position(35.71d, 139.81d),
                     Rotation = 33.3f,
-                    Tag = "id_tokyo"
+                    Tag = "id_tokyo",
+                    IsVisible = switchIsVisibleTokyo.IsToggled
                 };
 
                 map.Pins.Add(pinTokyo);
@@ -113,7 +114,10 @@ namespace XFGoogleMapSample
             // Visible/Invisible Pin tokyo
             switchIsVisibleTokyo.Toggled += (sender, args) =>
             {
-                pinTokyo.IsVisible = args.Value;
+                if (pinTokyo != null)
+                {
+                     pinTokyo.IsVisible = args.Value;
+                }
             };
 
             // AnchorX Pin new york

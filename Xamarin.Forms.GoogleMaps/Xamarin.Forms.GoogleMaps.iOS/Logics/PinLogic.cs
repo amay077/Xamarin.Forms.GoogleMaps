@@ -63,7 +63,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
             }
 
             outerItem.NativeObject = nativeMarker;
-            nativeMarker.Map = NativeMap;
+            nativeMarker.Map = outerItem.IsVisible ? NativeMap : null;
 
             OnUpdateIconView(outerItem, nativeMarker);
 

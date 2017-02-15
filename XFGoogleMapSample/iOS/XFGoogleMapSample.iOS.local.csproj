@@ -108,7 +108,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\XFGoogleMapSample\XFGoogleMapSample.csproj">
+    <ProjectReference Include="..\XFGoogleMapSample\XFGoogleMapSample.local.csproj">
       <Project>{E5FEBCA7-6127-4002-B7B3-3EE4CC362B25}</Project>
       <Name>XFGoogleMapSample.local</Name>
     </ProjectReference>
@@ -119,10 +119,6 @@
     <ProjectReference Include="..\..\Xamarin.Forms.GoogleMaps\Xamarin.Forms.GoogleMaps.iOS\Xamarin.Forms.GoogleMaps.iOS.csproj">
       <Project>{AB1D9407-E4B2-403C-88CD-9CAC7A6914EF}</Project>
       <Name>Xamarin.Forms.GoogleMaps.iOS</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\XFGoogleMapSample\XFGoogleMapSample.local.csproj">
-      <Project>{E5FEBCA7-6127-4002-B7B3-3EE4CC362B25}</Project>
-      <Name>XFGoogleMapSample.local</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -142,7 +138,7 @@
   <ItemGroup>
     <None Include="Info.plist" />
     <None Include="Entitlements.plist" />
-    <None Include="packages.config" />
+    <None Include="packages.XFGoogleMapSample.iOS.local.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />

@@ -29,8 +29,8 @@ Furthermore, I am using Google Maps instead of MapKit because it is easy for def
 |Map types|Yes|Yes|
 |Traffic map|-|Yes|
 |Map events|-|Yes|
-|Pannning with animation|Yes|Yes|
-|Pannning directly|-|Yes|
+|Panning with animation|Yes|Yes|
+|Panning directly|-|Yes|
 |Pins|Yes|Yes|
 |Custom Pins|-|Yes|
 |Pin drag & drop|-|Yes|

@@ -96,6 +96,7 @@
     <Compile Include="Extensions\BoundsExtensions.cs" />
     <Compile Include="Extensions\PointExtensions.cs" />
     <Compile Include="Extensions\CameraPositionExtensions.cs" />
+    <Compile Include="Extensions\ThicknessExtension.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

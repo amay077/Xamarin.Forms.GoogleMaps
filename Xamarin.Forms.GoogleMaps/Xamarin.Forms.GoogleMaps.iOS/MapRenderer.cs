@@ -112,7 +112,9 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                 UpdateIsShowingUser();
                 UpdateHasScrollEnabled();
                 UpdateHasZoomEnabled();
+                UpdateHasRotationEnabled();
                 UpdateIsTrafficEnabled();
+                UpdatePadding();
 
                 foreach (var logic in _logics)
                 {
@@ -148,6 +150,10 @@ namespace Xamarin.Forms.GoogleMaps.iOS
             {
                 UpdateHasScrollEnabled();
             }
+            else if (e.PropertyName == Map.HasRotationEnabledProperty.PropertyName)
+            {
+                UpdateHasRotationEnabled();
+            }
             else if (e.PropertyName == Map.HasZoomEnabledProperty.PropertyName)
             {
                 UpdateHasZoomEnabled();
@@ -166,6 +172,10 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                 UpdateHasIndoorEnabled();
             }
 
+            else if (e.PropertyName == Map.PaddingProperty.PropertyName)
+            {
+                UpdatePadding();
+            }
 
             foreach (var logic in _logics)
             {
@@ -241,6 +251,11 @@ namespace Xamarin.Forms.GoogleMaps.iOS
             ((MapView)Control).Settings.ZoomGestures = ((Map)Element).HasZoomEnabled;
         }
 
+        void UpdateHasRotationEnabled()
+        {
+            ((MapView)Control).Settings.ZoomGestures = ((Map)Element).HasRotationEnabled;
+        }
+
         void UpdateIsShowingUser()
         {
             ((MapView)Control).MyLocationEnabled = ((Map)Element).IsShowingUser;
@@ -276,6 +291,11 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+        }
+
+        void UpdatePadding()
+        {
+            ((MapView)Control).Padding = ((Map)Element).Padding.ToUIEdgeInsets();
         }
     }
 }

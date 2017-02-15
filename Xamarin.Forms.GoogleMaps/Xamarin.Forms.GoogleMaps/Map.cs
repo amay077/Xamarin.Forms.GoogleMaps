@@ -20,6 +20,8 @@ namespace Xamarin.Forms.GoogleMaps
 
         public static readonly BindableProperty HasZoomEnabledProperty = BindableProperty.Create(nameof(HasZoomEnabled), typeof(bool), typeof(Map), true);
 
+        public static readonly BindableProperty HasRotationEnabledProperty = BindableProperty.Create(nameof(HasRotationEnabled), typeof(bool), typeof(Map), true);
+
         public static readonly BindableProperty SelectedPinProperty = BindableProperty.Create(nameof(SelectedPin), typeof(Pin), typeof(Map), default(Pin), defaultBindingMode: BindingMode.TwoWay);
 
         public static readonly BindableProperty IsTrafficEnabledProperty = BindableProperty.Create(nameof(IsTrafficEnabled), typeof(bool), typeof(Map), false);
@@ -33,6 +35,8 @@ namespace Xamarin.Forms.GoogleMaps
             {
                 ((Map)bindable)._useMoveToRegisonAsInitialBounds = false;   
             });
+
+        public static readonly BindableProperty PaddingProperty = BindableProperty.Create(nameof(PaddingProperty), typeof(Thickness), typeof(Map), default(Thickness));
 
         bool _useMoveToRegisonAsInitialBounds = true;
 
@@ -93,6 +97,12 @@ namespace Xamarin.Forms.GoogleMaps
             set { SetValue(HasZoomEnabledProperty, value); }
         }
 
+        public bool HasRotationEnabled
+        {
+            get { return (bool)GetValue(HasRotationEnabledProperty); }
+            set { SetValue(HasRotationEnabledProperty, value); }
+        }
+
         public bool IsTrafficEnabled
         {
             get { return (bool)GetValue(IsTrafficEnabledProperty); }
@@ -134,6 +144,12 @@ namespace Xamarin.Forms.GoogleMaps
         {
             get { return (CameraPosition)GetValue(CameraPositionProperty); }
             internal set { SetValue(CameraPositionProperty, value); }
+        }
+
+        public Thickness Padding
+        {
+            get { return (Thickness)GetValue(PaddingProperty); }
+            set { SetValue(PaddingProperty, value); }
         }
 
         public IList<Pin> Pins
