@@ -82,7 +82,7 @@ namespace Xamarin.Forms.Maps.WinRT
                     Control.MapServiceToken = FormsGoogleMaps.AuthenticationToken;
                     Control.TrafficFlowVisible = Map.IsTrafficEnabled;
                     Control.ZoomLevelChanged += OnZoomLevelChanged;
-                    Control.CenterChanged += async (s, a) => await UpdateVisibleRegion();
+                    Control.CenterChanged += (s, a) => UpdateVisibleRegion();
                     Control.ActualCameraChanged += OnActualCameraChanged;
                 }
 
@@ -93,6 +93,7 @@ namespace Xamarin.Forms.Maps.WinRT
                 UpdateHasZoomEnabled();
 
                 await UpdateIsShowingUser();
+               // await Control.Dispatcher.RunIdleAsync(async (i) => await MoveToRegion(mapModel.LastMoveToRegion, MapAnimationKind.None));
 
                 foreach (var logic in _logics)
                 {
@@ -100,10 +101,12 @@ namespace Xamarin.Forms.Maps.WinRT
                     logic.RestoreItems();
                     logic.OnMapPropertyChanged(new PropertyChangedEventArgs(Map.SelectedPinProperty.PropertyName));
                 }
+
+
             }
         }
 
-        private async void OnZoomLevelChanged(MapControl sender, object args)
+        private void OnZoomLevelChanged(MapControl sender, object args)
         {
             var camera = sender.ActualCamera;
             var pos = new CameraPosition(
@@ -113,7 +116,7 @@ namespace Xamarin.Forms.Maps.WinRT
                 sender.ZoomLevel);
             Map.CameraPosition = pos;
             Map.SendCameraChanged(pos);
-            await UpdateVisibleRegion();
+            UpdateVisibleRegion();
         }
 
         private void OnActualCameraChanged(MapControl sender, MapActualCameraChangedEventArgs args)
@@ -180,7 +183,7 @@ namespace Xamarin.Forms.Maps.WinRT
                 Control.Children.Remove(_userPositionCircle);
         }
 
-        async Task UpdateVisibleRegion()
+        void UpdateVisibleRegion()
         {
             if (Control == null || Element == null)
                 return;
@@ -207,8 +210,8 @@ namespace Xamarin.Forms.Maps.WinRT
             {
                 var boundingBox = new GeoboundingBox(nw.Position, se.Position);
                 var center = new Position(boundingBox.Center.Latitude, boundingBox.Center.Longitude);
-                var latitudeDelta = Math.Abs(center.Latitude - boundingBox.NorthwestCorner.Latitude);
-                var longitudeDelta = Math.Abs(center.Longitude - boundingBox.NorthwestCorner.Longitude);
+                var latitudeDelta = Math.Abs(nw.Position.Latitude - se.Position.Latitude);
+                var longitudeDelta = Math.Abs(nw.Position.Longitude - se.Position.Longitude);
                 Element.VisibleRegion = new MapSpan(center, latitudeDelta, longitudeDelta);
             }
         }
