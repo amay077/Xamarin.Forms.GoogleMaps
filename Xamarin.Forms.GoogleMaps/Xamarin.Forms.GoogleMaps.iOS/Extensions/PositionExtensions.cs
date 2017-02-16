@@ -1,7 +1,7 @@
 ﻿using System;
 using CoreLocation;
 
-namespace Xamarin.Forms.GoogleMaps.Extensions.iOS
+namespace Xamarin.Forms.GoogleMaps.iOS.Extensions
 {
     internal static class PositionExtensions
     {

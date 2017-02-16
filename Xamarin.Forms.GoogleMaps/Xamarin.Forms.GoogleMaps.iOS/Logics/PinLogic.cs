@@ -5,7 +5,6 @@ using System.Linq;
 using CoreGraphics;
 using Google.Maps;
 using UIKit;
-using Xamarin.Forms.GoogleMaps.Extensions.iOS;
 using Xamarin.Forms.GoogleMaps.iOS.Extensions;
 namespace Xamarin.Forms.GoogleMaps.Logics.iOS
 {

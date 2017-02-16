@@ -75,6 +75,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\CameraUpdateExtensions.cs" />
+    <Compile Include="Extensions\EnumerableExtensions.cs" />
     <Compile Include="Logics\CameraLogic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="FormsGoogleMaps.cs" />
