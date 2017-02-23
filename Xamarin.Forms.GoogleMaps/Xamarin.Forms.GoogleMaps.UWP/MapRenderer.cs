@@ -105,13 +105,16 @@ namespace Xamarin.Forms.Maps.WinRT
 
         private void OnZoomLevelChanged(MapControl sender, object args)
         {
+            if (Map == null)
+                return;
+        
             var camera = sender.ActualCamera;
             var pos = new CameraPosition(
                 camera.Location.Position.ToPosition(),
                 camera.Roll,
                 camera.Pitch,
                 sender.ZoomLevel);
-            Map?.CameraPosition = pos;
+            Map.CameraPosition = pos;
             UpdateVisibleRegion();
             Map?.SendCameraChanged(pos);
         }
