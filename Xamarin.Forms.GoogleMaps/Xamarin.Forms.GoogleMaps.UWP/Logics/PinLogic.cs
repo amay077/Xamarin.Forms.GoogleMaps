@@ -118,6 +118,12 @@ namespace Xamarin.Forms.GoogleMaps.Logics.UWP
         protected override PushPin DeleteNativeItem(Pin outerItem)
         {
             var nativePushpin = outerItem.NativeObject as PushPin;
+
+            if (nativePushpin == null)
+            {
+                return;
+            }
+
             nativePushpin.Tapped -= Pushpin_Tapped;
             nativePushpin.Holding -= Pushpin_Holding;
 
