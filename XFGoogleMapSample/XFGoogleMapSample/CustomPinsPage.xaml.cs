@@ -122,6 +122,11 @@ namespace XFGoogleMapSample
                 _pinTokyo.IsDraggable = switchIsDraggable.IsToggled;
             };
 
+            switchFlat.Toggled += (sender, e) =>
+            {
+                _pinTokyo.Flat = switchFlat.IsToggled;
+            };
+
             // Pin Rotation
             sliderRotation.ValueChanged += (sender, e) =>
             {
