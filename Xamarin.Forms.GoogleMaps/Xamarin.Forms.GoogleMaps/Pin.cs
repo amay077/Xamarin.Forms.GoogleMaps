@@ -22,6 +22,8 @@ namespace Xamarin.Forms.GoogleMaps
 
         public static readonly BindableProperty AnchorProperty = BindableProperty.Create(nameof(Anchor), typeof(Point), typeof(Pin), new Point(0.5d, 1.0d));
 
+        public static readonly BindableProperty FlatProperty = BindableProperty.Create(nameof(Flat), typeof(bool), typeof(Pin), false);
+
         public string Label
         {
             get { return (string)GetValue(LabelProperty); }
@@ -74,6 +76,12 @@ namespace Xamarin.Forms.GoogleMaps
         {
             get { return (Point)GetValue(AnchorProperty); }
             set { SetValue(AnchorProperty, value); }
+        }
+
+        public bool Flat
+        {
+            get { return (bool)GetValue(FlatProperty); }
+            set { SetValue(FlatProperty, value); }
         }
 
         public object Tag { get; set; }

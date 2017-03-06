@@ -18,6 +18,7 @@ namespace Xamarin.Forms.GoogleMaps.Android.Extensions
                 case BitmapDescriptorType.Bundle:
                     return NativeBitmapDescriptorFactory.FromAsset(self.BundleName);
                 case BitmapDescriptorType.Stream:
+                    self.Stream.Position = 0;
                     return NativeBitmapDescriptorFactory.FromBitmap(BitmapFactory.DecodeStream(self.Stream));
                 case BitmapDescriptorType.AbsolutePath:
                     return NativeBitmapDescriptorFactory.FromPath(self.AbsolutePath);

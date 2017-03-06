@@ -59,7 +59,8 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
                 .SetSnippet(outerItem.Address)
                 .Draggable(outerItem.IsDraggable)
                 .SetRotation(outerItem.Rotation)
-                .Anchor((float)outerItem.Anchor.X, (float)outerItem.Anchor.Y);
+                .Anchor((float)outerItem.Anchor.X, (float)outerItem.Anchor.Y)
+                .Flat(outerItem.Flat);
 
             if (outerItem.Icon != null)
             {
@@ -75,7 +76,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
             }
             else
             {
-                marker.Visible = outerItem.IsVisible;;
+                marker.Visible = outerItem.IsVisible;
             }
 
             // associate pin with marker for later lookup in event handlers
@@ -304,6 +305,11 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
         protected override void OnUpdateAnchor(Pin outerItem, Marker nativeItem)
         {
             nativeItem.SetAnchor((float)outerItem.Anchor.X, (float)outerItem.Anchor.Y);
+        }
+
+        protected override void OnUpdateFlat(Pin outerItem, Marker nativeItem)
+        {
+            nativeItem.Flat = outerItem.Flat;
         }
     }
 }
