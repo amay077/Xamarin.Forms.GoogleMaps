@@ -91,6 +91,7 @@ namespace Xamarin.Forms.Maps.WinRT
                 UpdateMapType();
                 UpdateHasScrollEnabled();
                 UpdateHasZoomEnabled();
+                UpdateHasRotationEnabled();
 
                 await UpdateIsShowingUser();
 
@@ -146,6 +147,8 @@ namespace Xamarin.Forms.Maps.WinRT
                 UpdateHasZoomEnabled();
             else if (e.PropertyName == Map.IsTrafficEnabledProperty.PropertyName)
                 Control.TrafficFlowVisible = Map.IsTrafficEnabled;
+            else if (e.PropertyName == Map.HasRotationEnabledProperty.PropertyName)
+                UpdateHasRotationEnabled();
 
             foreach (var logic in _logics)
             {
@@ -338,12 +341,21 @@ namespace Xamarin.Forms.Maps.WinRT
         {
             Control.PanInteractionMode = Element.HasScrollEnabled ? MapPanInteractionMode.Auto : MapPanInteractionMode.Disabled;
         }
+
+        void UpdateHasRotationEnabled()
+        {
+            Control.RotateInteractionMode = Element.HasRotationEnabled ? MapInteractionMode.Auto : MapInteractionMode.Disabled;
+        }
 #else
         void UpdateHasZoomEnabled()
         {
         }
 
         void UpdateHasScrollEnabled()
+        {
+        }
+
+        void UpdateHasRotationEnabled()
         {
         }
 #endif
