@@ -311,6 +311,11 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
         {
             nativeItem.Flat = outerItem.Flat;
         }
+
+        protected override void OnUpdateInfoWindowAnchor(Pin outerItem, Marker nativeItem)
+        {
+            nativeItem.SetInfoWindowAnchor((float) outerItem.InfoWindowAnchor.X, (float) outerItem.InfoWindowAnchor.Y);
+        }
     }
 }
 

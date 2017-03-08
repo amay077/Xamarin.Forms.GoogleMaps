@@ -288,6 +288,11 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
         {
             nativeItem.Flat = outerItem.Flat;
         }
+
+        protected override void OnUpdateInfoWindowAnchor(Pin outerItem, Marker nativeItem)
+        {
+            nativeItem.InfoWindowAnchor = new CGPoint(outerItem.InfoWindowAnchor.X, outerItem.InfoWindowAnchor.Y);
+        }
     }
 }
 
