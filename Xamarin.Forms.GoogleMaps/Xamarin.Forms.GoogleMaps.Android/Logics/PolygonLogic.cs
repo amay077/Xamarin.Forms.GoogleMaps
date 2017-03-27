@@ -4,7 +4,9 @@ using System.ComponentModel;
 using System.Linq;
 using Android.Gms.Maps;
 using Android.Gms.Maps.Model;
+using Android.Runtime;
 using Xamarin.Forms.GoogleMaps.Android;
+using Xamarin.Forms.GoogleMaps.Android.Extensions;
 using Xamarin.Forms.Platform.Android;
 using NativePolygon = Android.Gms.Maps.Model.Polygon;
 
@@ -46,6 +48,11 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
             opts.InvokeFillColor(outerItem.FillColor.ToAndroid());
             opts.Clickable(outerItem.IsClickable);
 
+            foreach (var hole in outerItem.Holes)
+            {
+                opts.Holes.Add(hole.Select(x => x.ToLatLng()).ToJavaList());
+            }
+
             var nativePolygon = NativeMap.AddPolygon(opts);
 
             // associate pin with marker for later lookup in event handlers
@@ -56,11 +63,20 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
                 native.Points = polygon.Positions.ToLatLngs();
             });
 
+            outerItem.SetOnHolesChanged((polygon, e) =>
+            {
+                var native = polygon.NativeObject as NativePolygon;
+                native.Holes = (IList<IList<LatLng>>)polygon.Holes
+                    .Select(x => (IList<LatLng>)x.Select(y=>y.ToLatLng()).ToJavaList())
+                    .ToJavaList();
+            });
+
             return nativePolygon;
         }
 
         protected override NativePolygon DeleteNativeItem(Polygon outerItem)
         {
+            outerItem.SetOnHolesChanged(null);
             outerItem.SetOnPositionsChanged(null);
 
             var nativePolygon = outerItem.NativeObject as NativePolygon;

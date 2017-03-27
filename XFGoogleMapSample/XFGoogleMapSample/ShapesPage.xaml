@@ -38,7 +38,7 @@
                         Grid.Row="2"
                         Grid.Column="1"/>
                 <Button x:Name="buttonRemovePolygon"
-                        Text="Remove Polygon"
+                        Text="Add Hole"
                         Grid.Row="2"
                         Grid.Column="2"/>
 

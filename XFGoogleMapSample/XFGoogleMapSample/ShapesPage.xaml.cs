@@ -52,10 +52,22 @@ namespace XFGoogleMapSample
             buttonAddPolygon.Clicked += (sender, e) =>
             {
                 polygon = new Polygon();
-                polygon.Positions.Add(new Position(40.85d, -73.96d));
-                polygon.Positions.Add(new Position(40.87d, -74.00d));
-                polygon.Positions.Add(new Position(40.78d, -74.06d));
-                polygon.Positions.Add(new Position(40.77d, -74.02d));
+                polygon.Positions.Add(new Position(40d, -73d));
+                polygon.Positions.Add(new Position(41d, -73d));
+                polygon.Positions.Add(new Position(41d, -74d));
+                polygon.Positions.Add(new Position(40d, -74d));
+                polygon.Positions.Add(new Position(40d, -73d));
+
+                var hole = new Position[]
+                {
+                    new Position(40.5d, -73.5d),
+                    new Position(40.6d, -73.5d),
+                    new Position(40.6d, -73.6d),
+                    new Position(40.5d, -73.6d),
+                    new Position(40.5d, -73.5d),
+                };
+
+                polygon.Holes.Add(hole);
 
                 polygon.IsClickable = true;
                 polygon.StrokeColor = Color.Green;
@@ -73,12 +85,23 @@ namespace XFGoogleMapSample
 
             buttonRemovePolygon.Clicked += (sender, e) =>
             {
-                map.Polygons.Remove(polygon);
-                polygon.Clicked -= Polygon_Clicked;
-                polygon = null;
+                var hole2 = new Position[]
+                {
+                    new Position(40.7d, -73.7d),
+                    new Position(40.8d, -73.7d),
+                    new Position(40.8d, -73.8d),
+                    new Position(40.7d, -73.8d),
+                    new Position(40.7d, -73.7d),
+                };
 
-                ((Button)sender).IsEnabled = false;
-                buttonAddPolygon.IsEnabled = true;
+                polygon.Holes.Add(hole2);
+
+//                map.Polygons.Remove(polygon);
+//                polygon.Clicked -= Polygon_Clicked;
+//                polygon = null;
+//
+//                ((Button)sender).IsEnabled = false;
+//                buttonAddPolygon.IsEnabled = true;
             };
             buttonRemovePolygon.IsEnabled = false;
 
@@ -110,7 +133,7 @@ namespace XFGoogleMapSample
             };
             buttonRemoveCircle.IsEnabled = false;
 
-            map.InitialCameraUpdate = CameraUpdateFactory.NewPositionZoom(new Position(40.78d, -73.96d), 11d);
+            map.InitialCameraUpdate = CameraUpdateFactory.NewPositionZoom(new Position(41d, -74d), 8d);
         }
 
         void Polyline_Clicked(object sender, EventArgs e)
