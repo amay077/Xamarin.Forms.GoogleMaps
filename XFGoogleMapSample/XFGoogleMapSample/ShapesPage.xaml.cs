@@ -81,9 +81,24 @@ namespace XFGoogleMapSample
 
                 ((Button)sender).IsEnabled = false;
                 buttonRemovePolygon.IsEnabled = true;
+                buttonAddHole.IsEnabled = true;
+                buttonRemoveHole.IsEnabled = true;
             };
 
             buttonRemovePolygon.Clicked += (sender, e) =>
+            {
+                map.Polygons.Remove(polygon);
+                polygon.Clicked -= Polygon_Clicked;
+                polygon = null;
+
+                ((Button)sender).IsEnabled = false;
+                buttonAddPolygon.IsEnabled = true;
+                buttonAddHole.IsEnabled = false;
+                buttonRemoveHole.IsEnabled = false;
+            };
+            buttonRemovePolygon.IsEnabled = false;
+
+            buttonAddHole.Clicked += (sender, e) =>
             {
                 var hole2 = new Position[]
                 {
@@ -93,17 +108,15 @@ namespace XFGoogleMapSample
                     new Position(40.7d, -73.8d),
                     new Position(40.7d, -73.7d),
                 };
-
                 polygon.Holes.Add(hole2);
-
-//                map.Polygons.Remove(polygon);
-//                polygon.Clicked -= Polygon_Clicked;
-//                polygon = null;
-//
-//                ((Button)sender).IsEnabled = false;
-//                buttonAddPolygon.IsEnabled = true;
             };
-            buttonRemovePolygon.IsEnabled = false;
+            buttonAddHole.IsEnabled = false;
+
+            buttonRemoveHole.Clicked += (sender, e) =>
+            {
+                polygon.Holes.Clear();
+            };
+            buttonRemoveHole.IsEnabled = false;
 
             // Circle
             buttonAddCircle.Clicked += (sender, e) =>
