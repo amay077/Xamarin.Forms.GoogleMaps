@@ -102,7 +102,7 @@
                     HorizontalTextAlignment="Start"/>
               </StackLayout>
 
-              <Label  Text="Rotation:"
+              <Label  Text="Rotation with InfoWindow Anchor:"
                         HorizontalOptions="End"
                         VerticalOptions="Center"
                         Grid.Row="6"
