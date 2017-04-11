@@ -121,7 +121,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.UWP
 
             if (nativePushpin == null)
             {
-                return;
+                return null;
             }
 
             nativePushpin.Tapped -= Pushpin_Tapped;
@@ -190,6 +190,11 @@ namespace Xamarin.Forms.GoogleMaps.Logics.UWP
         }
 
         protected override void OnUpdateFlat(Pin outerItem, PushPin nativeItem)
+        {
+            //not implemented
+        }
+
+        protected override void OnUpdateInfoWindowAnchor(Pin outerItem, PushPin nativeItem)
         {
             //not implemented
         }
