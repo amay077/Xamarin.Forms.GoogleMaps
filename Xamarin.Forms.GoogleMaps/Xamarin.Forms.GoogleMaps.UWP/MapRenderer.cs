@@ -64,6 +64,7 @@ namespace Xamarin.Forms.Maps.WinRT
             if (e.OldElement != null)
             {
                 var mapModel = e.OldElement;
+                Map.OnSnapshot -= OnSnapshot;
                 _cameraLogic.Unregister();
 
                 if (oldMapView != null)
@@ -87,6 +88,7 @@ namespace Xamarin.Forms.Maps.WinRT
                 }
 
                 _cameraLogic.Register(Map, NativeMap);
+                Map.OnSnapshot += OnSnapshot;
 
                 UpdateMapType();
                 UpdateHasScrollEnabled();
@@ -102,6 +104,15 @@ namespace Xamarin.Forms.Maps.WinRT
                     logic.OnMapPropertyChanged(new PropertyChangedEventArgs(Map.SelectedPinProperty.PropertyName));
                 }
             }
+        }
+
+        private void OnSnapshot(TakeSnapshotMessage snapshotMessage)
+        {
+            Task.Run(() => 
+            {
+                // Not implemented
+                snapshotMessage?.OnSnapshot?.Invoke(null);
+            });
         }
 
         private void OnZoomLevelChanged(MapControl sender, object args)
@@ -162,6 +173,7 @@ namespace Xamarin.Forms.Maps.WinRT
             {
                 _disposed = true;
 
+                Map.OnSnapshot -= OnSnapshot;
                 _cameraLogic.Unregister();
             }
             base.Dispose(disposing);
