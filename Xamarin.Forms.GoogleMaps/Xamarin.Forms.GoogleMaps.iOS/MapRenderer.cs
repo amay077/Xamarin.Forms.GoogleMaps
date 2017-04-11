@@ -7,9 +7,10 @@ using Xamarin.Forms.GoogleMaps.Logics.iOS;
 using Xamarin.Forms.GoogleMaps.Logics;
 using Xamarin.Forms.GoogleMaps.iOS.Extensions;
 using UIKit;
-
+using Xamarin.Forms.GoogleMaps.Internals;
 using GCameraUpdate = Google.Maps.CameraUpdate;
 using GCameraPosition = Google.Maps.CameraPosition;
+using System.Threading.Tasks;
 
 namespace Xamarin.Forms.GoogleMaps.iOS
 {
@@ -51,6 +52,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
         {
             if (disposing)
             {
+                Map.OnSnapshot -= OnSnapshot;
                 _cameraLogic.Unregister();
 
                 foreach (var logic in _logics)
@@ -87,6 +89,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
             var oldMapView = (MapView)Control;
             if (e.OldElement != null)
             {
+                Map.OnSnapshot -= OnSnapshot;
                 _cameraLogic.Unregister();
             }
 
@@ -105,6 +108,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                 }
 
                 _cameraLogic.Register(Map, NativeMap);
+                Map.OnSnapshot += OnSnapshot;
 
                 _cameraLogic.MoveCamera(mapModel.InitialCameraUpdate);
 
@@ -194,6 +198,20 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                 _shouldUpdateRegion = false;
             }
 
+        }
+
+        void OnSnapshot(TakeSnapshotMessage snapshotMessage)
+        {
+            UIGraphics.BeginImageContextWithOptions(NativeMap.Frame.Size, false, 0f);
+            NativeMap.Layer.RenderInContext(UIGraphics.GetCurrentContext());
+            var snapshot = UIGraphics.GetImageFromCurrentImageContext();
+            UIGraphics.EndImageContext();
+
+            // Why using task? Because Android side is asynchronous. 
+            Task.Run(() => 
+            {
+                snapshotMessage.OnSnapshot.Invoke(snapshot.AsPNG().AsStream());
+            });
         }
 
         void CameraPositionChanged(object sender, GMSCameraEventArgs args)

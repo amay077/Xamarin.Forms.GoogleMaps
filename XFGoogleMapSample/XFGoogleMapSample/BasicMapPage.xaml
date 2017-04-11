@@ -28,6 +28,8 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
                     <Grid.ColumnDefinitions>
@@ -112,6 +114,19 @@
                            Grid.Row="7"
                            Grid.Column="0"
                            Grid.ColumnSpan="2" />
+
+                    <Image x:Name="imageSnapshot"
+                           Margin="5"
+                           Grid.Row="9"
+                           Grid.Column="0"
+                           Grid.ColumnSpan="2" />
+                    <Button x:Name="buttonTakeSnapshot"
+                            VerticalOptions="Center"
+                            Text="Take Snapshot"
+                            Grid.Row="8"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="2" />
+
                 </Grid>
             </ScrollView>
 
