@@ -171,6 +171,11 @@ namespace Xamarin.Forms.GoogleMaps.iOS
             {
                 _shouldUpdateRegion = true;
             }
+            else if (e.PropertyName == Map.IndoorEnabledProperty.PropertyName)
+            {
+                UpdateHasIndoorEnabled();
+            }
+
             else if (e.PropertyName == Map.PaddingProperty.PropertyName)
             {
                 UpdatePadding();
@@ -278,6 +283,11 @@ namespace Xamarin.Forms.GoogleMaps.iOS
         void UpdateIsTrafficEnabled()
         {
             ((MapView)Control).TrafficEnabled = ((Map)Element).IsTrafficEnabled;
+        }
+
+        void UpdateHasIndoorEnabled()
+        {
+            ((MapView) Control).IndoorEnabled = ((Map) Element).IsIndoorEnabled;
         }
 
         void UpdateMapType()

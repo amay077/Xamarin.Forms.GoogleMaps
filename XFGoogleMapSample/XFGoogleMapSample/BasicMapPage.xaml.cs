@@ -56,6 +56,12 @@ namespace XFGoogleMapSample
             };
             switchIsTrafficEnabled.IsToggled = map.IsTrafficEnabled;
 
+            SwitchIndoorEnabled.Toggled += (sender, e) =>
+            {
+                map.IsIndoorEnabled = e.Value;
+            };
+            SwitchIndoorEnabled.IsToggled = map.IsIndoorEnabled;
+
             // Map Clicked
             map.MapClicked += (sender, e) =>
             {

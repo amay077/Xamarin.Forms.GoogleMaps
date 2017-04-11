@@ -96,22 +96,31 @@
                             HorizontalOptions="Start"
                             Grid.Row="5"
                             Grid.Column="1" />
+                    <Label Text="IsIndoorEnabled"
+                           VerticalOptions="Center"
+                           Grid.Row="6"
+                           Grid.Column="0" />
+                    <Switch x:Name="SwitchIndoorEnabled"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Start"
+                            Grid.Row="6"
+                            Grid.Column="1" />
 
                     <Entry
                         x:Name="entryAddress"
                         VerticalOptions="Center"
                         Text="new york"
-                        Grid.Row="6"
+                        Grid.Row="7"
                         Grid.Column="0" />
                     <Button
                         x:Name="buttonGeocode"
                         VerticalOptions="Center"
                         Text="GEOCODE"
-                        Grid.Row="6"
+                        Grid.Row="7"
                         Grid.Column="1" />
 
                     <Label x:Name="labelStatus"
-                           Grid.Row="7"
+                           Grid.Row="8"
                            Grid.Column="0"
                            Grid.ColumnSpan="2" />
 
@@ -123,7 +132,7 @@
                     <Button x:Name="buttonTakeSnapshot"
                             VerticalOptions="Center"
                             Text="Take Snapshot"
-                            Grid.Row="8"
+                            Grid.Row="9"
                             Grid.Column="0"
                             Grid.ColumnSpan="2" />
 
