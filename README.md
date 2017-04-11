@@ -1,4 +1,4 @@
-## ![](logo.png) Xamarin.Forms.GoogleMaps [![Build Status](https://www.bitrise.io/app/57c1455061c4af11.svg?token=AzWRh4pkJvZ30qLQSY9Nqg&branch=master)](https://www.bitrise.io/app/57c1455061c4af11)
+## ![](logo.png) Xamarin.Forms.GoogleMaps [![Build Status](https://www.bitrise.io/app/57c1455061c4af11.svg?token=AzWRh4pkJvZ30qLQSY9Nqg&branch=master)](https://www.bitrise.io/app/57c1455061c4af11) [![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/Xamarin-Forms-GoogleMaps/public)
 
 [日本語の README はこちら！](README-ja.md)
 
@@ -105,6 +105,10 @@ Because this library has been determined to optimized for Google Maps, New featu
 We really appreciate your contribution.
 
 Please read the [contribution guideline](CONTRIBUTING.md).
+
+## Commmunity Chat
+
+You can join to out [gitter room](https://gitter.im/Xamarin-Forms-GoogleMaps/public)!
 
 ## License
 

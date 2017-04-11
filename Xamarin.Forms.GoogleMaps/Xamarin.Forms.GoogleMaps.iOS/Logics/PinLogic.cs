@@ -5,7 +5,6 @@ using System.Linq;
 using CoreGraphics;
 using Google.Maps;
 using UIKit;
-using Xamarin.Forms.GoogleMaps.Extensions.iOS;
 using Xamarin.Forms.GoogleMaps.iOS.Extensions;
 namespace Xamarin.Forms.GoogleMaps.Logics.iOS
 {
@@ -56,6 +55,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
             nativeMarker.Draggable = outerItem.IsDraggable;
             nativeMarker.Rotation = outerItem.Rotation;
             nativeMarker.GroundAnchor = new CGPoint(outerItem.Anchor.X, outerItem.Anchor.Y);
+            nativeMarker.Flat = outerItem.Flat;
 
             if (outerItem.Icon != null)
             {
@@ -281,6 +281,16 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
         protected override void OnUpdateAnchor(Pin outerItem, Marker nativeItem)
         {
             nativeItem.GroundAnchor = new CGPoint(outerItem.Anchor.X, outerItem.Anchor.Y);
+        }
+
+        protected override void OnUpdateFlat(Pin outerItem, Marker nativeItem)
+        {
+            nativeItem.Flat = outerItem.Flat;
+        }
+
+        protected override void OnUpdateInfoWindowAnchor(Pin outerItem, Marker nativeItem)
+        {
+            nativeItem.InfoWindowAnchor = new CGPoint(outerItem.InfoWindowAnchor.X, outerItem.InfoWindowAnchor.Y);
         }
     }
 }

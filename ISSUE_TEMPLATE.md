@@ -1,4 +1,5 @@
-(This is template for issue. Please choose from feature request or bug report or others then write.)
+(This is template for issue. Please choose from feature request or bug report or others then write.
+If you need realtime communication then you can join our [gitter room](https://gitter.im/Xamarin-Forms-GoogleMaps/public).)
 
 ----
 ## FEATURE REQUEST / SUGGESTION

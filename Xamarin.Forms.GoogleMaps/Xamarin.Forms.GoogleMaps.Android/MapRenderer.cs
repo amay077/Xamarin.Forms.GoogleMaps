@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.IO;
 using Android.Gms.Maps;
 using Android.Gms.Maps.Model;
 using Android.OS;
@@ -8,12 +9,14 @@ using Xamarin.Forms.Platform.Android;
 using Math = System.Math;
 using Android.Util;
 using Android.App;
+using Android.Graphics;
 using Xamarin.Forms.GoogleMaps.Logics.Android;
 using Xamarin.Forms.GoogleMaps.Logics;
 using Xamarin.Forms.GoogleMaps.Android.Extensions;
 using Android.Widget;
 using Android.Views;
-
+using Xamarin.Forms.GoogleMaps.Android.Logics;
+using Xamarin.Forms.GoogleMaps.Internals;
 using GCameraUpdateFactory = Android.Gms.Maps.CameraUpdateFactory;
 using GCameraPosition = Android.Gms.Maps.Model.CameraPosition;
 
@@ -107,6 +110,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
             {
                 var oldMapModel = (Map)e.OldElement;
 
+                Map.OnSnapshot -= OnSnapshot;
                 _cameraLogic.Unregister();
 
                 var oldGoogleMap = await oldMapView.GetGoogleMapAsync();
@@ -131,8 +135,20 @@ namespace Xamarin.Forms.GoogleMaps.Android
             NativeMap = await ((MapView)Control).GetGoogleMapAsync();
 
             _cameraLogic.Register(Map, NativeMap);
+            Map.OnSnapshot += OnSnapshot;
 
             OnMapReady(NativeMap);
+        }
+
+        private void OnSnapshot(TakeSnapshotMessage snapshotMessage)
+        {
+            NativeMap.Snapshot(new DelegateSnapshotReadyCallback(snapshot =>
+            {
+                var stream = new MemoryStream();
+                snapshot.Compress(Bitmap.CompressFormat.Png, 0, stream);
+                stream.Position = 0;
+                snapshotMessage?.OnSnapshot?.Invoke(stream);
+            }));
         }
 
         void OnMapReady(GoogleMap map)
@@ -346,6 +362,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
             {
                 _disposed = true;
 
+                Map.OnSnapshot -= OnSnapshot;
                 _cameraLogic.Unregister();
 
                 foreach (var logic in _logics)

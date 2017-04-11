@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.GoogleMaps;
@@ -122,10 +123,41 @@ namespace XFGoogleMapSample
                 _pinTokyo.IsDraggable = switchIsDraggable.IsToggled;
             };
 
+            switchFlat.Toggled += (sender, e) =>
+            {
+                _pinTokyo.Flat = switchFlat.IsToggled;
+            };
+
             // Pin Rotation
             sliderRotation.ValueChanged += (sender, e) =>
             {
                 _pinTokyo.Rotation = (float)e.NewValue;
+
+                if (_pinTokyo.Rotation>= 0 && _pinTokyo.Rotation <= 60)
+                {
+                    _pinTokyo.InfoWindowAnchor = new Point(0.5, 0.0);
+                }
+
+                if (_pinTokyo.Rotation > 60 && _pinTokyo.Rotation <= 120)
+                {
+                    _pinTokyo.InfoWindowAnchor = new Point(0.0, 0.5);
+                }
+
+                if (_pinTokyo.Rotation > 120 && _pinTokyo.Rotation <= 210)
+                {
+                    _pinTokyo.InfoWindowAnchor = new Point(0.5, 1.0);
+                }
+
+                if (_pinTokyo.Rotation > 210 && _pinTokyo.Rotation < 270)
+                {
+                    _pinTokyo.InfoWindowAnchor = new Point(1.0, 0.25);
+                }
+
+                if (_pinTokyo.Rotation > 270 && _pinTokyo.Rotation < 360)
+                {
+                    _pinTokyo.InfoWindowAnchor = new Point(0.5, 0.0);
+                }
+
             };
 
             map.PinDragStart += (_, e) => labelDragStatus.Text = $"DragStart - {PrintPin(e.Pin)}";

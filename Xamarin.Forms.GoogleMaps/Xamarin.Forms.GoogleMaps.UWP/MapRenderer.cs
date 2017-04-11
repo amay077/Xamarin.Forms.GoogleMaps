@@ -91,6 +91,7 @@ namespace Xamarin.Forms.Maps.WinRT
                 UpdateMapType();
                 UpdateHasScrollEnabled();
                 UpdateHasZoomEnabled();
+                UpdateHasRotationEnabled();
 
                 await UpdateIsShowingUser();
 
@@ -105,15 +106,20 @@ namespace Xamarin.Forms.Maps.WinRT
 
         private void OnZoomLevelChanged(MapControl sender, object args)
         {
+            if (Map == null)
+            {
+                return;
+            }
+        
             var camera = sender.ActualCamera;
             var pos = new CameraPosition(
                 camera.Location.Position.ToPosition(),
+                sender.ZoomLevel,
                 camera.Roll,
-                camera.Pitch,
-                sender.ZoomLevel);
+                camera.Pitch);
             Map.CameraPosition = pos;
             UpdateVisibleRegion();
-            Map?.SendCameraChanged(pos);
+            Map.SendCameraChanged(pos);
         }
 
         private void OnActualCameraChanged(MapControl sender, MapActualCameraChangedEventArgs args)
@@ -121,9 +127,9 @@ namespace Xamarin.Forms.Maps.WinRT
             var camera = args.Camera;
             var pos = new CameraPosition(
                 camera.Location.Position.ToPosition(),
+                sender.ZoomLevel,
                 camera.Heading,
-                camera.Pitch,
-                sender.ZoomLevel);
+                camera.Pitch);
             Map?.SendCameraChanged(pos);
         }
 
@@ -141,6 +147,8 @@ namespace Xamarin.Forms.Maps.WinRT
                 UpdateHasZoomEnabled();
             else if (e.PropertyName == Map.IsTrafficEnabledProperty.PropertyName)
                 Control.TrafficFlowVisible = Map.IsTrafficEnabled;
+            else if (e.PropertyName == Map.HasRotationEnabledProperty.PropertyName)
+                UpdateHasRotationEnabled();
 
             foreach (var logic in _logics)
             {
@@ -333,12 +341,21 @@ namespace Xamarin.Forms.Maps.WinRT
         {
             Control.PanInteractionMode = Element.HasScrollEnabled ? MapPanInteractionMode.Auto : MapPanInteractionMode.Disabled;
         }
+
+        void UpdateHasRotationEnabled()
+        {
+            Control.RotateInteractionMode = Element.HasRotationEnabled ? MapInteractionMode.Auto : MapInteractionMode.Disabled;
+        }
 #else
         void UpdateHasZoomEnabled()
         {
         }
 
         void UpdateHasScrollEnabled()
+        {
+        }
+
+        void UpdateHasRotationEnabled()
         {
         }
 #endif

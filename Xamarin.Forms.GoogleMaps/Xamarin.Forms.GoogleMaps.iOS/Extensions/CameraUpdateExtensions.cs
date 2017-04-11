@@ -1,5 +1,4 @@
 ﻿using System;
-using Xamarin.Forms.GoogleMaps.Extensions.iOS;
 using Xamarin.Forms.GoogleMaps.Internals;
 
 using GCameraUpdate = Google.Maps.CameraUpdate;

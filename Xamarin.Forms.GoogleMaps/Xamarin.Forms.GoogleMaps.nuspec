@@ -3,8 +3,20 @@
 	<metadata minClientVersion="2.8.3">
 		<id>Xamarin.Forms.GoogleMaps</id>
 		<title>Xamarin.Forms.GoogleMaps</title>
-		<version>1.8.0-beta6</version>
+		<version>1.8.0-beta7</version>
 		<releaseNotes>
+
+# 1.8.0-beta7
+
+## New Features
+
+* #255 [Android/iOS]Add Pin.Flat property
+* PR#257 [UWP]Support Map.HasRotationEnabled
+
+## Bug Fixes
+
+* #246 [Android]NullPointerException occurs when reused BitmapDescriptorFactory.FromStream()
+* PR#258 [UWP]CameraPosition Arguments were in wrong order
 
 # 1.8.0-beta6
 

@@ -115,6 +115,13 @@ namespace XFGoogleMapSample
                     await this.DisplayAlert("Not found", "Geocoder returns no results", "Close");
                 }
             };
+
+            // Snapshot
+            buttonTakeSnapshot.Clicked += async (sender, e) =>
+            {
+                var stream = await map.TakeSnapshot();
+                imageSnapshot.Source = ImageSource.FromStream(() => stream);
+            };
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using Google.Maps;
+using Xamarin.Forms.GoogleMaps.iOS.Extensions;
 using Xamarin.Forms.Platform.iOS;
 using NativePolygon = Google.Maps.Polygon;
 
@@ -34,23 +35,34 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
 
         protected override NativePolygon CreateNativeItem(Polygon outerItem)
         {
-            var path = new MutablePath();
-            foreach (var p in outerItem.Positions)
-                path.AddLatLon(p.Latitude, p.Longitude);
-
-            var nativePolygon = NativePolygon.FromPath(path);
+            var nativePolygon = NativePolygon.FromPath(outerItem.Positions.ToMutablePath());
             nativePolygon.StrokeWidth = outerItem.StrokeWidth;
             nativePolygon.StrokeColor = outerItem.StrokeColor.ToUIColor();
             nativePolygon.FillColor = outerItem.FillColor.ToUIColor();
             nativePolygon.Tappable = outerItem.IsClickable;
 
+            nativePolygon.Holes = outerItem.Holes
+                .Select(hole => hole.ToMutablePath())
+                .ToArray();
+
             outerItem.NativeObject = nativePolygon;
             nativePolygon.Map = NativeMap;
+
+            outerItem.SetOnHolesChanged((polygon, e) =>
+            {
+                var native = polygon.NativeObject as NativePolygon;
+                native.Holes = outerItem.Holes
+                    .Select(hole => hole.ToMutablePath())
+                    .ToArray();
+            });
+
             return nativePolygon;
         }
 
         protected override NativePolygon DeleteNativeItem(Polygon outerItem)
         {
+            outerItem.SetOnHolesChanged(null);
+
             var nativePolygon = outerItem.NativeObject as NativePolygon;
             nativePolygon.Map = null;
             return nativePolygon;

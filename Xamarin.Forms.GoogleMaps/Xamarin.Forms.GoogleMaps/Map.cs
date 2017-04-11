@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.IO;
 using System.Linq;
 using Xamarin.Forms.GoogleMaps.Internals;
 using System.Threading.Tasks;
@@ -70,6 +71,8 @@ namespace Xamarin.Forms.GoogleMaps
         internal Action<CameraUpdateMessage> OnMoveCamera { get; set; }
 
         internal Action<CameraUpdateMessage> OnAnimateCamera { get; set; }
+
+        internal Action<TakeSnapshotMessage> OnSnapshot{ get; set; }
 
         MapSpan _visibleRegion;
 
@@ -243,6 +246,16 @@ namespace Xamarin.Forms.GoogleMaps
             return comp.Task;
         }
 
+
+        public Task<Stream> TakeSnapshot()
+        {
+            var comp = new TaskCompletionSource<Stream>();
+
+            SendTakeSnapshot(new TakeSnapshotMessage(image => comp.SetResult(image)));
+
+            return comp.Task;
+        }
+
         void PinsOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.NewItems != null && e.NewItems.Cast<Pin>().Any(pin => pin.Label == null))
@@ -346,6 +359,11 @@ namespace Xamarin.Forms.GoogleMaps
         void SendAnimateCamera(CameraUpdateMessage message)
         {
             OnAnimateCamera?.Invoke(message);
+        }
+
+        void SendTakeSnapshot(TakeSnapshotMessage message)
+        {
+            OnSnapshot?.Invoke(message);
         }
     }
 }
