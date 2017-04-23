@@ -15,6 +15,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS.Extensions
                 case BitmapDescriptorType.Bundle:
                     return UIImage.FromBundle(self.BundleName);
                 case BitmapDescriptorType.Stream:
+                    self.Stream.Position = 0;
                     return UIImage.LoadFromData(NSData.FromStream(self.Stream));
                 case BitmapDescriptorType.AbsolutePath:
                     return UIImage.FromFile(self.AbsolutePath);
