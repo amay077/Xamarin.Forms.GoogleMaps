@@ -29,6 +29,12 @@ namespace Xamarin.Forms.GoogleMaps.Logics.UWP
             {
                 nativeMap.MapTapped -= NewNativeMap_MapTapped;
                 nativeMap.MapHolding -= NewNativeMap_MapHolding;
+
+                foreach (var pin in nativeMap.Children.OfType<PushPin>())
+                {
+                    pin.Tapped -= Pushpin_Tapped;
+                    pin.Holding -= Pushpin_Holding;
+                }
             }
         }
 

@@ -175,6 +175,16 @@ namespace Xamarin.Forms.Maps.WinRT
 
                 Map.OnSnapshot -= OnSnapshot;
                 _cameraLogic.Unregister();
+
+                foreach (var logic in _logics)
+                    logic.Unregister(NativeMap, Map);
+
+                var oldMapView = (MapControl)Control;
+                if (oldMapView != null)
+                {
+                    oldMapView.ActualCameraChanged -= OnActualCameraChanged;
+                    oldMapView.ZoomLevelChanged -= OnZoomLevelChanged;
+                }
             }
             base.Dispose(disposing);
         }

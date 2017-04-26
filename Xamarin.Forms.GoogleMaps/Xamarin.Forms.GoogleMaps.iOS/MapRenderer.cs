@@ -89,9 +89,17 @@ namespace Xamarin.Forms.GoogleMaps.iOS
             var oldMapView = (MapView)Control;
             if (e.OldElement != null)
             {
-                var mapModel = e.OldElement;
-                mapModel.OnSnapshot -= OnSnapshot;
+                var oldMapModel = (Map)e.OldElement;
+                oldMapModel.OnSnapshot -= OnSnapshot;
                 _cameraLogic.Unregister();
+
+                if (oldMapView != null)
+                {
+                    oldMapView.CoordinateLongPressed -= CoordinateLongPressed;
+                    oldMapView.CoordinateTapped -= CoordinateTapped;
+                    oldMapView.CameraPositionChanged -= CameraPositionChanged;
+                    oldMapView.DidTapMyLocationButton = null;
+                }
             }
 
             if (e.NewElement != null)
