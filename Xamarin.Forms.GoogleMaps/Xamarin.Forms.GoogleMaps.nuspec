@@ -3,8 +3,14 @@
 	<metadata minClientVersion="2.8.3">
 		<id>Xamarin.Forms.GoogleMaps</id>
 		<title>Xamarin.Forms.GoogleMaps</title>
-		<version>1.8.1</version>
+		<version>1.8.2-beta1</version>
 		<releaseNotes>
+# 1.8.2-beta1
+
+## Bug Fixes
+
+* #280 [Android]Omit set holes when Polygon.Holes changed
+
 # 1.8.1
 
 ## Bug Fixes
