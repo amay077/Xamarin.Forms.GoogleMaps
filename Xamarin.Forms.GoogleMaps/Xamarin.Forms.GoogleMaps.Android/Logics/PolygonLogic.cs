@@ -66,9 +66,9 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
             outerItem.SetOnHolesChanged((polygon, e) =>
             {
                 var native = polygon.NativeObject as NativePolygon;
-                native.Holes = (IList<IList<LatLng>>)polygon.Holes
+                native.SetHoles((IList<IList<LatLng>>)polygon.Holes
                     .Select(x => (IList<LatLng>)x.Select(y=>y.ToLatLng()).ToJavaList())
-                    .ToJavaList();
+                                .ToJavaList());
             });
 
             return nativePolygon;

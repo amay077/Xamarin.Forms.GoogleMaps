@@ -32,6 +32,7 @@ namespace Xamarin.Forms.GoogleMaps.Android.Extensions
             return comp.Task;
         }
 
+        [MethodImpl(MethodImplOptions.NoInlining)]
         static GoogleMap GetMap(MapView mapView)
         {
 #pragma warning disable CS0618 // Type or member is obsolete
