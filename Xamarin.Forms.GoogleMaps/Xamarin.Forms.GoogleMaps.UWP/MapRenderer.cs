@@ -71,6 +71,7 @@ namespace Xamarin.Forms.Maps.WinRT
                 {
                     oldMapView.ActualCameraChanged -= OnActualCameraChanged;
                     oldMapView.ZoomLevelChanged -= OnZoomLevelChanged;
+                    oldMapView.CenterChanged -= Control_CenterChanged;
                 }
             }
 
@@ -83,7 +84,7 @@ namespace Xamarin.Forms.Maps.WinRT
                     Control.MapServiceToken = FormsGoogleMaps.AuthenticationToken;
                     Control.TrafficFlowVisible = Map.IsTrafficEnabled;
                     Control.ZoomLevelChanged += OnZoomLevelChanged;
-                    Control.CenterChanged += (s, a) => UpdateVisibleRegion();
+                    Control.CenterChanged += Control_CenterChanged;
                     Control.ActualCameraChanged += OnActualCameraChanged;
                 }
 
@@ -104,6 +105,11 @@ namespace Xamarin.Forms.Maps.WinRT
                     logic.OnMapPropertyChanged(new PropertyChangedEventArgs(Map.SelectedPinProperty.PropertyName));
                 }
             }
+        }
+
+        private void Control_CenterChanged(MapControl sender, object args)
+        {
+            UpdateVisibleRegion();
         }
 
         private void OnSnapshot(TakeSnapshotMessage snapshotMessage)
@@ -175,6 +181,17 @@ namespace Xamarin.Forms.Maps.WinRT
 
                 Map.OnSnapshot -= OnSnapshot;
                 _cameraLogic.Unregister();
+
+                foreach (var logic in _logics)
+                    logic.Unregister(NativeMap, Map);
+
+                var oldMapView = (MapControl)Control;
+                if (oldMapView != null)
+                {
+                    oldMapView.ActualCameraChanged -= OnActualCameraChanged;
+                    oldMapView.ZoomLevelChanged -= OnZoomLevelChanged;
+                    oldMapView.CenterChanged -= Control_CenterChanged;
+                }
             }
             base.Dispose(disposing);
         }
