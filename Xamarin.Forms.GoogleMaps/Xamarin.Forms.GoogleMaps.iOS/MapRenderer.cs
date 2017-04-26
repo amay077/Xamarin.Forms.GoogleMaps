@@ -271,7 +271,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
 
         void UpdateHasRotationEnabled()
         {
-            ((MapView)Control).Settings.ZoomGestures = ((Map)Element).HasRotationEnabled;
+            ((MapView)Control).Settings.RotateGestures = ((Map)Element).HasRotationEnabled;
         }
 
         void UpdateIsShowingUser()
