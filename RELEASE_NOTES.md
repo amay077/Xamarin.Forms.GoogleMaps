@@ -1,5 +1,11 @@
 Xamarin.Forms.GoogleMaps Release Notes
 ----
+# 1.8.2-beta1
+
+## Bug Fixes
+
+* #280 [Android]Build with Link All SDK Assemblies Fails
+
 # 1.8.1
 
 ## Bug Fixes
