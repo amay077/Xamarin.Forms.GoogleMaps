@@ -63,13 +63,14 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
                 native.Points = polygon.Positions.ToLatLngs();
             });
 
-            outerItem.SetOnHolesChanged((polygon, e) =>
-            {
-                var native = polygon.NativeObject as NativePolygon;
-                native.Holes = (IList<IList<LatLng>>)polygon.Holes
-                    .Select(x => (IList<LatLng>)x.Select(y=>y.ToLatLng()).ToJavaList())
-                    .ToJavaList();
-            });
+            // FIXME workarround for #280
+            //outerItem.SetOnHolesChanged((polygon, e) =>
+            //{
+            //    var native = polygon.NativeObject as NativePolygon;
+            //    native.Holes = (IList<IList<LatLng>>)polygon.Holes
+            //        .Select(x => (IList<LatLng>)x.Select(y=>y.ToLatLng()).ToJavaList())
+            //        .ToJavaList();
+            //});
 
             return nativePolygon;
         }
