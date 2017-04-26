@@ -1,5 +1,14 @@
 Xamarin.Forms.GoogleMaps Release Notes
 ----
+# 1.8.1
+
+## Bug Fixes
+
+* #278 [iOS]HasRotationEnabled doesn't work
+* PR#286 [Android/iOS/UWP]Fix general Memory leaks
+* #281 [iOS]Fix Null Reference when navigating away from map page
+* PR#279 [iOS]Fixing stream position 
+
 # 1.8.0
 
 ## New Features
