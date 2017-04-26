@@ -89,7 +89,8 @@ namespace Xamarin.Forms.GoogleMaps.iOS
             var oldMapView = (MapView)Control;
             if (e.OldElement != null)
             {
-                Map.OnSnapshot -= OnSnapshot;
+                var mapModel = e.OldElement;
+                mapModel.OnSnapshot -= OnSnapshot;
                 _cameraLogic.Unregister();
             }
 
