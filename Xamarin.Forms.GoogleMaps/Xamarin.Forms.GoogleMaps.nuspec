@@ -9,7 +9,7 @@
 
 ## Bug Fixes
 
-* #280 [Android]Omit set holes when Polygon.Holes changed
+* #280 [Android]Build with Link All SDK Assemblies Fails
 
 # 1.8.1
 
