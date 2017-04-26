@@ -110,7 +110,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
             {
                 var oldMapModel = (Map)e.OldElement;
 
-                Map.OnSnapshot -= OnSnapshot;
+                oldMapModel.OnSnapshot -= OnSnapshot;
                 _cameraLogic.Unregister();
 
                 var oldGoogleMap = await oldMapView.GetGoogleMapAsync();
