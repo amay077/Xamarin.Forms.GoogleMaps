@@ -363,7 +363,7 @@ namespace Xamarin.Forms.Maps.WinRT
         {
             Control.ZoomInteractionMode = Element.HasZoomEnabled
                 ? MapInteractionMode.GestureAndControl
-                : MapInteractionMode.ControlOnly;
+                : MapInteractionMode.Disabled;
         }
 
         void UpdateHasScrollEnabled()
