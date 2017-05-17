@@ -128,7 +128,7 @@
       <HintPath>$(SolutionDir)\packages\Xamarin.Forms.2.3.0.49\lib\Xamarin.iOS10\Xamarin.Forms.Platform.dll</HintPath>
     </Reference>
     <Reference Include="Google.Maps">
-      <HintPath>$(SolutionDir)\packages\Xamarin.Google.iOS.Maps.1.13.1.0\lib\Xamarin.iOS10\Google.Maps.dll</HintPath>
+      <HintPath>$(SolutionDir)\packages\Xamarin.Google.iOS.Maps.2.1.0.1\lib\Xamarin.iOS10\Google.Maps.dll</HintPath>
     </Reference>
     <Reference Include="Xamarin.Forms.GoogleMaps">
       <HintPath>$(SolutionDir)\packages\Xamarin.Forms.GoogleMaps.1.8.2-beta1\lib\Xamarin.iOS10\Xamarin.Forms.GoogleMaps.dll</HintPath>
@@ -175,7 +175,7 @@
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Import Project="$(SolutionDir)\packages\Xamarin.Forms.2.3.0.49\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('$(SolutionDir)\packages\Xamarin.Forms.2.3.0.49\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
   <Import Project="$(SolutionDir)\packages\Xamarin.Build.Download.0.2.1\build\Xamarin.Build.Download.targets" Condition="Exists('$(SolutionDir)\packages\Xamarin.Build.Download.0.2.1\build\Xamarin.Build.Download.targets')" />
-  <Import Project="$(SolutionDir)\packages\Xamarin.Google.iOS.Maps.1.13.1.0\build\Xamarin.Google.iOS.Maps.targets" Condition="Exists('$(SolutionDir)\packages\Xamarin.Google.iOS.Maps.1.13.1.0\build\Xamarin.Google.iOS.Maps.targets')" />
+  <Import Project="$(SolutionDir)\packages\Xamarin.Google.iOS.Maps.2.1.0.1\build\Xamarin.Google.iOS.Maps.targets" Condition="Exists('$(SolutionDir)\packages\Xamarin.Google.iOS.Maps.2.1.0.1\build\Xamarin.Google.iOS.Maps.targets')" />
   <ProjectExtensions>
     <MonoDevelop>
       <Properties>
