@@ -10,19 +10,6 @@ namespace Xamarin.Forms.GoogleMaps.Android.Extensions
         [MethodImpl(MethodImplOptions.NoInlining)]
         internal static Task<GoogleMap> GetGoogleMapAsync(this MapView self)
         {
-            try
-            {
-                var googleMap = GetMap(self);
-
-                if (googleMap != null)
-                {
-                    return Task.FromResult(googleMap);
-                }
-            }
-            catch (MissingMethodException)
-            {
-            }
-
             var comp = new TaskCompletionSource<GoogleMap>();
             self.GetMapAsync(new OnMapReadyCallback(map =>
             {
@@ -30,13 +17,6 @@ namespace Xamarin.Forms.GoogleMaps.Android.Extensions
             }));
 
             return comp.Task;
-        }
-
-        static GoogleMap GetMap(MapView mapView)
-        {
-#pragma warning disable CS0618 // Type or member is obsolete
-            return mapView.Map;
-#pragma warning restore CS0618 // Type or member is obsolete
         }
    }
 
