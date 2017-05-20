@@ -70,13 +70,45 @@ public partial class AppDelegate : global::Xamarin.Forms.Platform.iOS.FormsAppli
     public override bool FinishedLaunching(UIApplication app, NSDictionary options)
     {
         global::Xamarin.Forms.Forms.Init();
-        Xamarin.FormsGoogleMaps.Init("your_api_key");
+        Xamarin.FormsGoogleMaps.Init("your_google_maps_ios_api_key");
         LoadApplication(new App());
 
         return base.FinishedLaunching(app, options);
     }
 }
 ``` 
+
+In UWP, you should add Xamarin.Forms.GoogleMaps.UWP.dll to rendererAssemblies with ``Xamarin.Forms.Forms.Init()``.
+
+```
+protected override void OnLaunched(LaunchActivatedEventArgs e)
+{
+    Frame rootFrame = Window.Current.Content as Frame;
+
+    if (rootFrame == null)
+    {
+        rootFrame = new Frame();
+        rootFrame.NavigationFailed += OnNavigationFailed;
+
+        // Should add UWP side assembly to rendererAssemblies
+        var rendererAssemblies = new []
+        {
+            typeof(Xamarin.Forms.GoogleMaps.UWP.MapRenderer).GetTypeInfo().Assembly
+        };
+        Xamarin.Forms.Forms.Init(e, rendererAssemblies);
+        
+        Xamarin.FormsGoogleMaps.Init("your_bing_maps_api_key");
+
+        Window.Current.Content = rootFrame;
+    }
+
+    if (rootFrame.Content == null)
+    {
+        rootFrame.Navigate(typeof(MainPage), e.Arguments);
+    }
+    Window.Current.Activate();
+}
+```
 
 Namespace is ``Xamarin.Forms.GoogleMaps`` instead of ``Xamarin.Forms.Maps``. 
 
