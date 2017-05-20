@@ -64,6 +64,7 @@ Same as this
 In iOS, get the API Key from [Google Maps API for iOS](https://developers.google.com/maps/documentation/ios-sdk/) then insert ``Init`` of ``AppDelegate.cs``.  
 
 ```csharp
+// AppDelegate.cs
 [Register("AppDelegate")]
 public partial class AppDelegate : global::Xamarin.Forms.Platform.iOS.FormsApplicationDelegate
 {
@@ -80,7 +81,8 @@ public partial class AppDelegate : global::Xamarin.Forms.Platform.iOS.FormsAppli
 
 In UWP, you should add Xamarin.Forms.GoogleMaps.UWP.dll to rendererAssemblies with ``Xamarin.Forms.Forms.Init()``.
 
-```
+```csharp
+// App.xaml.cs
 protected override void OnLaunched(LaunchActivatedEventArgs e)
 {
     Frame rootFrame = Window.Current.Content as Frame;
