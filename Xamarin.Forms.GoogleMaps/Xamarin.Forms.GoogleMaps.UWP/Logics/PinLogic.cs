@@ -204,5 +204,9 @@ namespace Xamarin.Forms.GoogleMaps.Logics.UWP
         {
             //not implemented
         }
+        protected override void OnUpdateZIndex(Pin outerItem, PushPin nativeItem)
+        {
+            //not implemented
+        }
     }
 }
