@@ -1,5 +1,4 @@
-## ![](logo.png) Xamarin.Forms.GoogleMaps ![buildstatus_by_bitrise](https://www.bitrise.io/app/57c1455061c4af11.svg?token=AzWRh4pkJvZ30qLQSY9Nqg)
-
+## ![](logo.png) Xamarin.Forms.GoogleMaps ![buildstatus_by_bitrise](https://www.bitrise.io/app/57c1455061c4af11.svg?token=AzWRh4pkJvZ30qLQSY9Nqg) [![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/Xamarin-Forms-GoogleMaps/public)
 
 [English README is here！](README.md)
 
@@ -78,6 +77,39 @@ public partial class AppDelegate : global::Xamarin.Forms.Platform.iOS.FormsAppli
     }
 }
 ``` 
+
+UWP の場合、 Xamarin.Forms.GoogleMaps.UWP.dll の Assembly を ``Xamarin.Forms.Forms.Init()`` に渡す必要があります。
+
+```csharp
+// App.xaml.cs
+protected override void OnLaunched(LaunchActivatedEventArgs e)
+{
+    Frame rootFrame = Window.Current.Content as Frame;
+
+    if (rootFrame == null)
+    {
+        rootFrame = new Frame();
+        rootFrame.NavigationFailed += OnNavigationFailed;
+
+        // Should add UWP side assembly to rendererAssemblies
+        var rendererAssemblies = new []
+        {
+            typeof(Xamarin.Forms.GoogleMaps.UWP.MapRenderer).GetTypeInfo().Assembly
+        };
+        Xamarin.Forms.Forms.Init(e, rendererAssemblies);
+        
+        Xamarin.FormsGoogleMaps.Init("your_bing_maps_api_key");
+
+        Window.Current.Content = rootFrame;
+    }
+
+    if (rootFrame.Content == null)
+    {
+        rootFrame.Navigate(typeof(MainPage), e.Arguments);
+    }
+    Window.Current.Activate();
+}
+```
 
 既定の名前空間が ``Xamarin.Forms.Maps`` から ``Xamarin.Forms.GoogleMaps`` に変更されています。他のAPIはすべて同じです。
 
