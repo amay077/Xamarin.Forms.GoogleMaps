@@ -1,5 +1,11 @@
 Xamarin.Forms.GoogleMaps Release Notes
 ----
+# 2.0.0-beta2
+
+## New Features
+
+* #264 [Android/iOS]Add Pin.ZIndex property
+
 # 2.0.0-beta1
 
 ## **Important**
