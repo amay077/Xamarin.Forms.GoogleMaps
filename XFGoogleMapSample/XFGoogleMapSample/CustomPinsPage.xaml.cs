@@ -45,6 +45,16 @@ namespace XFGoogleMapSample
             Position = new Position(35.71d, 139.81d)
         };
 
+        // The second pin
+        readonly Pin _pinTokyo2 = new Pin()
+        {
+            Icon = BitmapDescriptorFactory.DefaultMarker(Color.Gray),
+            Type = PinType.Place,
+            Label = "Second Pin",
+            Position = new Position(35.71d, 139.815d),
+            ZIndex = 5
+        };
+
         public CustomPinsPage()
         {
             InitializeComponent();
@@ -160,6 +170,18 @@ namespace XFGoogleMapSample
 
             };
 
+            // ZIndex
+            buttonMoveToFront.Clicked += (sender, e) =>
+            {
+                map.SelectedPin = null;
+                _pinTokyo.ZIndex = _pinTokyo2.ZIndex + 1;
+            };
+            buttonMoveToBack.Clicked += (sender, e) =>
+            {
+                map.SelectedPin = null;
+                _pinTokyo.ZIndex = _pinTokyo2.ZIndex - 1;
+            };
+
             map.PinDragStart += (_, e) => labelDragStatus.Text = $"DragStart - {PrintPin(e.Pin)}";
             map.PinDragging += (_, e) => labelDragStatus.Text = $"Dragging - {PrintPin(e.Pin)}";
             map.PinDragEnd += (_, e) => labelDragStatus.Text = $"DragEnd - {PrintPin(e.Pin)}";
@@ -170,6 +192,7 @@ namespace XFGoogleMapSample
 
             _pinTokyo.IsDraggable = true;
             map.Pins.Add(_pinTokyo);
+            map.Pins.Add(_pinTokyo2);
             map.SelectedPin = _pinTokyo;
             map.MoveToRegion(MapSpan.FromCenterAndRadius(_pinTokyo.Position, Distance.FromMeters(5000)), true);
         }

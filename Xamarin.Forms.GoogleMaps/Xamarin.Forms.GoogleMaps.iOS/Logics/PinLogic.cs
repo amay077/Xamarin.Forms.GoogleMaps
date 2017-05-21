@@ -56,6 +56,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
             nativeMarker.Rotation = outerItem.Rotation;
             nativeMarker.GroundAnchor = new CGPoint(outerItem.Anchor.X, outerItem.Anchor.Y);
             nativeMarker.Flat = outerItem.Flat;
+            nativeMarker.ZIndex = outerItem.ZIndex;
 
             if (outerItem.Icon != null)
             {
@@ -291,6 +292,11 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
         protected override void OnUpdateInfoWindowAnchor(Pin outerItem, Marker nativeItem)
         {
             nativeItem.InfoWindowAnchor = new CGPoint(outerItem.InfoWindowAnchor.X, outerItem.InfoWindowAnchor.Y);
+        }
+
+        protected override void OnUpdateZIndex(Pin outerItem, Marker nativeItem)
+        {
+            nativeItem.ZIndex = outerItem.ZIndex;
         }
     }
 }
