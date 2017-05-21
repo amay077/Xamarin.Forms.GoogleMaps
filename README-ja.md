@@ -1,5 +1,4 @@
-## ![](logo.png) Xamarin.Forms.GoogleMaps ![buildstatus_by_bitrise](https://www.bitrise.io/app/57c1455061c4af11.svg?token=AzWRh4pkJvZ30qLQSY9Nqg)
-
+## ![](logo.png) Xamarin.Forms.GoogleMaps ![buildstatus_by_bitrise](https://www.bitrise.io/app/57c1455061c4af11.svg?token=AzWRh4pkJvZ30qLQSY9Nqg) [![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/Xamarin-Forms-GoogleMaps/public)
 
 [English README is here！](README.md)
 
