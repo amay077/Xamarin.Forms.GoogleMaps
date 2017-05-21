@@ -26,6 +26,8 @@ namespace Xamarin.Forms.GoogleMaps
 
         public static readonly BindableProperty InfoWindowAnchorProperty = BindableProperty.Create(nameof(InfoWindowAnchor), typeof(Point), typeof(Pin), new Point(0.5d, 1.0d));
 
+        public static readonly BindableProperty ZIndexProperty = BindableProperty.Create(nameof(ZIndex), typeof(int), typeof(Pin), 0);
+
         public string Label
         {
             get { return (string)GetValue(LabelProperty); }
@@ -90,6 +92,12 @@ namespace Xamarin.Forms.GoogleMaps
         {
             get { return (Point) GetValue(InfoWindowAnchorProperty); }
             set { SetValue(InfoWindowAnchorProperty, value);}
+        }
+
+        public int ZIndex
+        {
+            get { return (int)GetValue(ZIndexProperty); }
+            set { SetValue(ZIndexProperty, value); }
         }
 
         public object Tag { get; set; }

@@ -60,6 +60,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
                 .Draggable(outerItem.IsDraggable)
                 .SetRotation(outerItem.Rotation)
                 .Anchor((float)outerItem.Anchor.X, (float)outerItem.Anchor.Y)
+                .InvokeZIndex(outerItem.ZIndex)
                 .Flat(outerItem.Flat);
 
             if (outerItem.Icon != null)
@@ -315,6 +316,11 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
         protected override void OnUpdateInfoWindowAnchor(Pin outerItem, Marker nativeItem)
         {
             nativeItem.SetInfoWindowAnchor((float) outerItem.InfoWindowAnchor.X, (float) outerItem.InfoWindowAnchor.Y);
+        }
+
+        protected override void OnUpdateZIndex(Pin outerItem, Marker nativeItem)
+        {
+            nativeItem.ZIndex = outerItem.ZIndex;
         }
     }
 }
