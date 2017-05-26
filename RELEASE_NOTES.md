@@ -1,17 +1,15 @@
 Xamarin.Forms.GoogleMaps Release Notes
 ----
-# 2.0.0-beta2
-
-## New Features
-
-* #264 [Android/iOS]Add Pin.ZIndex property
-
-# 2.0.0-beta1
+# 2.0.0
 
 ## **Important**
 
 * Support Xamarin.Forms 2.3.4+ and Xamarin.GooglePlayServices.Maps 42+
 * End of support for Xamarin.Forms 2.3.3- and Xamarin.GooglePlayServices.Maps 29-# 1.8.2-beta1
+
+## New Features
+
+* #264 [Android/iOS]Add Pin.ZIndex property
 
 ## Bug Fixes
 
