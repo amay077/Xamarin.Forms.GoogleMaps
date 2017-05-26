@@ -69,15 +69,14 @@ namespace Xamarin.Forms.Maps.WinRT
                 TextWrapping = TextWrapping.WrapWholeWords,
                 HorizontalAlignment = HorizontalAlignment.Center
             };
-            if (!string.IsNullOrEmpty(pin.Address))
+
+            Address = new TextBlock()
             {
-                Address = new TextBlock()
-                {
-                    Text = pin.Address,
-                    Foreground = new SolidColorBrush(Colors.Black),
-                    HorizontalAlignment = HorizontalAlignment.Center
-                };
-            }
+                Text = pin.Address ?? string.Empty,
+                Foreground = new SolidColorBrush(Colors.Black),
+                HorizontalAlignment = HorizontalAlignment.Center
+            };
+
             DetailsView.Children.Add(PinLabel);
             if (!string.IsNullOrEmpty(pin.Address))
             {
