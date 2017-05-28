@@ -29,6 +29,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
         GoogleMap.IOnMyLocationButtonClickListener
     {
         readonly CameraLogic _cameraLogic = new CameraLogic();
+        readonly UiSettingsLogic _uiSettingsLogic = new UiSettingsLogic();
         readonly BaseLogic<GoogleMap>[] _logics;
 
         public MapRenderer() : base()
@@ -137,6 +138,8 @@ namespace Xamarin.Forms.GoogleMaps.Android
             _cameraLogic.Register(Map, NativeMap);
             Map.OnSnapshot += OnSnapshot;
 
+            _uiSettingsLogic.Register(Map, NativeMap);
+
             OnMapReady(NativeMap);
         }
 
@@ -159,13 +162,15 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 map.SetOnMapClickListener(this);
                 map.SetOnMapLongClickListener(this);
                 map.SetOnMyLocationButtonClickListener(this);
-                map.UiSettings.MapToolbarEnabled = false;
-                map.UiSettings.ZoomControlsEnabled = Map.HasZoomEnabled;
-                map.UiSettings.ZoomGesturesEnabled = Map.HasZoomEnabled;
-                map.UiSettings.ScrollGesturesEnabled = Map.HasScrollEnabled;
-                map.UiSettings.RotateGesturesEnabled = Map.HasRotationEnabled;
-                map.MyLocationEnabled = map.UiSettings.MyLocationButtonEnabled = Map.IsShowingUser;
-                map.TrafficEnabled = Map.IsTrafficEnabled;
+
+                _uiSettingsLogic.Initialize();
+                UpdateIsShowingUser();
+                UpdateHasScrollEnabled();
+                UpdateHasZoomEnabled();
+                UpdateHasRotationEnabled();
+                UpdateIsTrafficEnabled();
+                UpdateIndoorEnabled();
+
                 SetMapType();
                 SetPadding();
             }
@@ -246,32 +251,79 @@ namespace Xamarin.Forms.GoogleMaps.Android
             }
 
             if (NativeMap == null)
+            {
                 return;
+            }
 
             if (e.PropertyName == Map.IsShowingUserProperty.PropertyName)
-                NativeMap.MyLocationEnabled = NativeMap.UiSettings.MyLocationButtonEnabled = Map.IsShowingUser;
+            {
+                UpdateIsShowingUser();
+            }
+            else if (e.PropertyName == Map.MyLocationEnabledProperty.PropertyName)
+            {
+                UpdateMyLocationEnabled();
+            }
             else if (e.PropertyName == Map.HasScrollEnabledProperty.PropertyName)
-                NativeMap.UiSettings.ScrollGesturesEnabled = Map.HasScrollEnabled;
+            {
+                UpdateHasScrollEnabled();
+            }
             else if (e.PropertyName == Map.HasZoomEnabledProperty.PropertyName)
             {
-                NativeMap.UiSettings.ZoomControlsEnabled = Map.HasZoomEnabled;
-                NativeMap.UiSettings.ZoomGesturesEnabled = Map.HasZoomEnabled;
+                UpdateHasZoomEnabled();
             }
             else if (e.PropertyName == Map.HasRotationEnabledProperty.PropertyName)
             {
-                NativeMap.UiSettings.RotateGesturesEnabled = Map.HasRotationEnabled;
+                UpdateHasRotationEnabled();
             }
             else if (e.PropertyName == Map.IsTrafficEnabledProperty.PropertyName)
             {
-                NativeMap.TrafficEnabled = Map.IsTrafficEnabled;
+                UpdateIsTrafficEnabled();
             }
             else if (e.PropertyName == Map.IndoorEnabledProperty.PropertyName)
             {
-                NativeMap.SetIndoorEnabled(Map.IsIndoorEnabled);
+                UpdateIndoorEnabled();
             }
 
             foreach (var logic in _logics)
+            {
                 logic.OnMapPropertyChanged(e);
+            }
+        }
+
+        private void UpdateIsShowingUser()
+        {
+            NativeMap.MyLocationEnabled = NativeMap.UiSettings.MyLocationButtonEnabled = Map.IsShowingUser;
+        }
+
+        private void UpdateMyLocationEnabled()
+        {
+            NativeMap.MyLocationEnabled = Map.MyLocationEnabled;
+        }
+
+        private void UpdateHasScrollEnabled()
+        {
+            Map.UiSettings.ScrollGesturesEnabled = Map.HasScrollEnabled;
+        }
+
+        private void UpdateHasZoomEnabled()
+        {
+            NativeMap.UiSettings.ZoomControlsEnabled = Map.HasZoomEnabled;
+            NativeMap.UiSettings.ZoomGesturesEnabled = Map.HasZoomEnabled;
+        }
+
+        private void UpdateHasRotationEnabled()
+        {
+            Map.UiSettings.RotateGesturesEnabled = Map.HasRotationEnabled;
+        }
+
+        private void UpdateIsTrafficEnabled()
+        {
+            NativeMap.TrafficEnabled = Map.IsTrafficEnabled;
+        }
+
+        private void UpdateIndoorEnabled()
+        {
+            NativeMap.SetIndoorEnabled(Map.IsIndoorEnabled);
         }
 
         void SetMapType()
@@ -361,6 +413,8 @@ namespace Xamarin.Forms.GoogleMaps.Android
             if (disposing && !_disposed)
             {
                 _disposed = true;
+
+                _uiSettingsLogic.Unregister();
 
                 Map.OnSnapshot -= OnSnapshot;
                 _cameraLogic.Unregister();

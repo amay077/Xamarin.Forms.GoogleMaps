@@ -17,6 +17,8 @@ namespace Xamarin.Forms.GoogleMaps
 
         public static readonly BindableProperty IsShowingUserProperty = BindableProperty.Create(nameof(IsShowingUser), typeof(bool), typeof(Map), default(bool));
 
+        public static readonly BindableProperty MyLocationEnabledProperty = BindableProperty.Create(nameof(MyLocationEnabled), typeof(bool), typeof(Map), default(bool));
+
         public static readonly BindableProperty HasScrollEnabledProperty = BindableProperty.Create(nameof(HasScrollEnabled), typeof(bool), typeof(Map), true);
 
         public static readonly BindableProperty HasZoomEnabledProperty = BindableProperty.Create(nameof(HasZoomEnabled), typeof(bool), typeof(Map), true);
@@ -124,6 +126,12 @@ namespace Xamarin.Forms.GoogleMaps
             set { SetValue(IsShowingUserProperty, value); }
         }
 
+        public bool MyLocationEnabled
+        {
+            get { return (bool)GetValue(MyLocationEnabledProperty); }
+            set { SetValue(MyLocationEnabledProperty, value); }
+        }
+
         public MapType MapType
         {
             get { return (MapType)GetValue(MapTypeProperty); }
@@ -199,6 +207,8 @@ namespace Xamarin.Forms.GoogleMaps
                 OnPropertyChanged();
             }
         }
+
+        public UiSettings UiSettings { get; } = new UiSettings();
 
         IEnumerator IEnumerable.GetEnumerator()
         {

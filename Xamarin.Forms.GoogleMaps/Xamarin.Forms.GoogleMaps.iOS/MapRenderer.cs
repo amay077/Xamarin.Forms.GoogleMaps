@@ -21,6 +21,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
         protected MapView NativeMap => (MapView)Control;
         protected Map Map => (Map)Element;
 
+        readonly UiSettingsLogic _uiSettingsLogic = new UiSettingsLogic();
         readonly CameraLogic _cameraLogic;
 
         readonly BaseLogic<MapView>[] _logics;
@@ -121,6 +122,8 @@ namespace Xamarin.Forms.GoogleMaps.iOS
 
                 _cameraLogic.MoveCamera(mapModel.InitialCameraUpdate);
 
+                _uiSettingsLogic.Register(Map, NativeMap);
+                _uiSettingsLogic.Initialize();
                 UpdateMapType();
                 UpdateIsShowingUser();
                 UpdateHasScrollEnabled();
@@ -158,6 +161,10 @@ namespace Xamarin.Forms.GoogleMaps.iOS
             else if (e.PropertyName == Map.IsShowingUserProperty.PropertyName)
             {
                 UpdateIsShowingUser();
+            }
+            else if (e.PropertyName == Map.MyLocationEnabledProperty.PropertyName)
+            {
+                UpdateMyLocationEnabled();
             }
             else if (e.PropertyName == Map.HasScrollEnabledProperty.PropertyName)
             {
@@ -270,23 +277,30 @@ namespace Xamarin.Forms.GoogleMaps.iOS
 
         void UpdateHasScrollEnabled()
         {
-            ((MapView)Control).Settings.ScrollGestures = ((Map)Element).HasScrollEnabled;
+            Map.UiSettings.ScrollGesturesEnabled = ((Map)Element).HasScrollEnabled;
         }
 
         void UpdateHasZoomEnabled()
         {
-            ((MapView)Control).Settings.ZoomGestures = ((Map)Element).HasZoomEnabled;
+            Map.UiSettings.ZoomGesturesEnabled = ((Map)Element).HasZoomEnabled;
         }
 
         void UpdateHasRotationEnabled()
         {
-            ((MapView)Control).Settings.RotateGestures = ((Map)Element).HasRotationEnabled;
+            Map.UiSettings.RotateGesturesEnabled = ((Map)Element).HasRotationEnabled;
         }
 
         void UpdateIsShowingUser()
         {
             ((MapView)Control).MyLocationEnabled = ((Map)Element).IsShowingUser;
             ((MapView)Control).Settings.MyLocationButton = ((Map)Element).IsShowingUser;
+
+            ((Map)Element).UiSettings.MyLocationButtonEnabled = ((Map)Element).IsShowingUser;
+        }
+
+        void UpdateMyLocationEnabled()
+        {
+            ((MapView)Control).MyLocationEnabled = ((Map)Element).MyLocationEnabled;
         }
 
         void UpdateIsTrafficEnabled()
@@ -296,7 +310,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
 
         void UpdateHasIndoorEnabled()
         {
-            ((MapView) Control).IndoorEnabled = ((Map) Element).IsIndoorEnabled;
+            ((MapView) Control).IndoorEnabled = ((Map)Element).IsIndoorEnabled;
         }
 
         void UpdateMapType()
