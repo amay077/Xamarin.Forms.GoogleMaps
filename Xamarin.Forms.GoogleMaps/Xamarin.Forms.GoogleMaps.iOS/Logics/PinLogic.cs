@@ -23,6 +23,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
             if (newNativeMap != null)
             {
                 newNativeMap.InfoTapped += OnInfoTapped;
+                newNativeMap.InfoLongPressed += OnInfoLongPressed;
                 newNativeMap.TappedMarker = HandleGMSTappedMarker;
                 newNativeMap.InfoClosed += InfoWindowClosed;
                 newNativeMap.DraggingMarkerStarted += DraggingMarkerStarted;
@@ -42,6 +43,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
                 nativeMap.InfoClosed -= InfoWindowClosed;
                 nativeMap.TappedMarker = null;
                 nativeMap.InfoTapped -= OnInfoTapped;
+                nativeMap.InfoLongPressed -= OnInfoLongPressed;
             }
 
             base.Unregister(nativeMap, map);
@@ -114,6 +116,17 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
             // Else allow default behavior of displaying an info window.
             targetPin?.SendTap();
 
+            if (targetPin != null)
+            {
+                Map.SendInfoWindowClicked(targetPin);
+            }
+        }
+
+        private void OnInfoLongPressed(object sender, GMSMarkerEventEventArgs e)
+        {
+            // lookup pin
+            var targetPin = LookupPin(e.Marker);
+            
             if (targetPin != null)
             {
                 Map.SendInfoWindowClicked(targetPin);

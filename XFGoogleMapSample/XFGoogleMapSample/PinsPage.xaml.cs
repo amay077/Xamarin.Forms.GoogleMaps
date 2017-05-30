@@ -138,6 +138,15 @@ namespace XFGoogleMapSample
             map.SelectedPinChanged += SelectedPin_Changed;
 
             map.InfoWindowClicked += InfoWindow_Clicked;
+
+            map.InfoWindowLongPressed += InfoWindow_LongPressed;
+        }
+
+        private void InfoWindow_LongPressed(object sender, InfoWindowLongPressedEventArgs e)
+        {
+           
+            var time = DateTime.Now.ToString("hh:mm:ss");
+            labelStatus.Text = $"[{time}]InfoWindow Long Pressed - {e?.Pin?.Tag.ToString() ?? "nothing"}";
         }
 
         private void InfoWindow_Clicked(object sender, InfoWindowClickedEventArgs e)

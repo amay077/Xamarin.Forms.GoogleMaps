@@ -27,6 +27,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
             if (newNativeMap != null)
             {
                 newNativeMap.InfoWindowClick += OnInfoWindowClick;
+                newNativeMap.InfoWindowLongClick += OnInfoWindowLongClick;
                 newNativeMap.MarkerClick += OnMakerClick;
                 newNativeMap.InfoWindowClose += OnInfoWindowClose;
                 newNativeMap.MarkerDragStart += OnMarkerDragStart;
@@ -45,6 +46,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
                 nativeMap.MarkerClick -= OnMakerClick;
                 nativeMap.InfoWindowClose -= OnInfoWindowClose;
                 nativeMap.InfoWindowClick -= OnInfoWindowClick;
+                nativeMap.InfoWindowLongClick -= OnInfoWindowLongClick;
             }
 
             base.Unregister(nativeMap, map);
@@ -116,6 +118,19 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
             if (targetPin != null)
             {
                 Map.SendInfoWindowClicked(targetPin);
+            }
+        }
+
+        private void OnInfoWindowLongClick(object sender, GoogleMap.InfoWindowLongClickEventArgs e)
+        {
+            // lookup pin
+            var targetPin = LookupPin(e.Marker);
+
+            // only consider event handled if a handler is present.
+            // Else allow default behavior of displaying an info window.
+            if (targetPin != null)
+            {
+                Map.SendInfoWindowLongPressed(targetPin);
             }
         }
 
