@@ -145,7 +145,8 @@ namespace XFGoogleMapSample
         private void InfoWindow_LongPressed(object sender, InfoWindowLongPressedEventArgs e)
         {
            
-            await DisplayAlert("InfoWindow Long Pressed", $"{e?.Pin?.Label} Long Pressed.", "Close");
+            var time = DateTime.Now.ToString("hh:mm:ss");
+            labelStatus.Text = $"[{time}]InfoWindow Long Pressed - {e?.Pin?.Tag.ToString() ?? "nothing"}";
         }
 
         private void InfoWindow_Clicked(object sender, InfoWindowClickedEventArgs e)
