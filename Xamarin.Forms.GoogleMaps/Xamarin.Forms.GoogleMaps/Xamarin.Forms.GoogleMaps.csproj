@@ -31,6 +31,7 @@
     <NoStdLib>false</NoStdLib>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="InfoWindowLongPressedEventArgs.cs" />
     <Compile Include="Internals\TakeSnapshotMessage.cs" />
     <Compile Include="Logics\BaseCameraLogic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -90,9 +91,7 @@
       <HintPath>$(SolutionDir)\packages\Xamarin.Forms.2.3.4.247\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.Xaml.dll</HintPath>
     </Reference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Extensions\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
