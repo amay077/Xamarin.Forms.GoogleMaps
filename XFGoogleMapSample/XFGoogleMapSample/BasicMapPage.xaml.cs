@@ -98,6 +98,27 @@ namespace XFGoogleMapSample
             };
             switchScrollGesturesEnabled.IsToggled = map.UiSettings.ScrollGesturesEnabled;
 
+            // TiltGesturesEnabled
+            switchTiltGesturesEnabled.Toggled += (sender, e) =>
+            {
+                map.UiSettings.TiltGesturesEnabled = e.Value;
+            };
+            switchTiltGesturesEnabled.IsToggled = map.UiSettings.TiltGesturesEnabled;
+
+            // ZoomControlsEnabled
+            switchZoomControlsEnabled.Toggled += (sender, e) =>
+            {
+                map.UiSettings.ZoomControlsEnabled = e.Value;
+            };
+            switchZoomControlsEnabled.IsToggled = map.UiSettings.ZoomControlsEnabled;
+
+            // ZoomGesturesEnabled
+            switchZoomGesturesEnabled.Toggled += (sender, e) =>
+            {
+                map.UiSettings.ZoomGesturesEnabled = e.Value;
+            };
+            switchZoomGesturesEnabled.IsToggled = map.UiSettings.ZoomGesturesEnabled;
+
             // Map Clicked
             map.MapClicked += (sender, e) =>
             {
