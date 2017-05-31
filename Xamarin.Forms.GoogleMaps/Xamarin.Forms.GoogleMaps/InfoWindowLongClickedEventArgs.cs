@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Xamarin.Forms.GoogleMaps
 {
-    public sealed class InfoWindowLongPressedEventArgs : EventArgs
+    public sealed class InfoWindowLongClickedEventArgs : EventArgs
     {
         public Pin Pin { get; }
 
-        internal InfoWindowLongPressedEventArgs(Pin pin)
+        internal InfoWindowLongClickedEventArgs(Pin pin)
         {
             this.Pin = pin;
         }

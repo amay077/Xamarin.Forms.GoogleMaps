@@ -31,7 +31,7 @@
     <NoStdLib>false</NoStdLib>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="InfoWindowLongPressedEventArgs.cs" />
+    <Compile Include="InfoWindowLongClickedEventArgs.cs" />
     <Compile Include="Internals\TakeSnapshotMessage.cs" />
     <Compile Include="Logics\BaseCameraLogic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

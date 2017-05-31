@@ -130,7 +130,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
             // Else allow default behavior of displaying an info window.
             if (targetPin != null)
             {
-                Map.SendInfoWindowLongPressed(targetPin);
+                Map.SendInfoWindowLongClicked(targetPin);
             }
         }
 
