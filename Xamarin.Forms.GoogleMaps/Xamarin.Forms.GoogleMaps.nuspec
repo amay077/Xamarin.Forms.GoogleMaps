@@ -3,8 +3,14 @@
 	<metadata minClientVersion="2.8.3">
 		<id>Xamarin.Forms.GoogleMaps</id>
 		<title>Xamarin.Forms.GoogleMaps</title>
-		<version>2.0.0</version>
+		<version>2.1.0-beta1</version>
 		<releaseNotes>
+
+# 2.1.0-beta1
+
+## New Features
+
+* #308 [Android/iOS]Map.InfoWindowLongClicked event
 
 # 2.0.0
 
