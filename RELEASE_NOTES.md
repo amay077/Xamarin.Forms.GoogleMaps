@@ -1,5 +1,11 @@
 Xamarin.Forms.GoogleMaps Release Notes
 ----
+# 2.1.0-beta1
+
+## New Features
+
+* #308 [Android/iOS]Map.InfoWindowLongClicked event
+
 # 2.0.0
 
 ## **Important**
