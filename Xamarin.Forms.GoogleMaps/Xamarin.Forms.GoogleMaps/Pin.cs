@@ -104,8 +104,7 @@ namespace Xamarin.Forms.GoogleMaps
 
         public object NativeObject { get; internal set; }
 
-        [Obsolete("Please use Map.PinClicked instead of this")]
-        public event EventHandler Clicked;
+        public event EventHandler<PinClickedEventArgs> PinClicked;
 
         public override bool Equals(object obj)
         {
@@ -142,11 +141,8 @@ namespace Xamarin.Forms.GoogleMaps
 
         internal bool SendTap()
         {
-            EventHandler handler = Clicked;
-            if (handler == null)
-                return false;
+            PinClicked?.Invoke(this, new PinClickedEventArgs(this));
 
-            handler(this, EventArgs.Empty);
             return true;
         }
 
