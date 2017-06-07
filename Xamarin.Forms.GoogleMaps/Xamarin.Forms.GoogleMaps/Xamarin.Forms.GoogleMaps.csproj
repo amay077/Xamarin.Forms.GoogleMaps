@@ -78,6 +78,8 @@
     <Compile Include="Internals\CameraUpdateType.cs" />
     <Compile Include="Extensions\MapSpanExtensions.cs" />
     <Compile Include="Internals\CameraUpdateConverter.cs" />
+    <Compile Include="UiSettings.cs" />
+    <Compile Include="Logics\BaseUiSettingsLogic.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

@@ -32,6 +32,7 @@ namespace Xamarin.Forms.Maps.WinRT
 {
     public class MapRenderer : ViewRenderer<Map, MapControl>
     {
+        private readonly UiSettingsLogic _uiSettingsLogic = new UiSettingsLogic();
         private readonly CameraLogic _cameraLogic = new CameraLogic();
 
         private Map Map
@@ -91,12 +92,14 @@ namespace Xamarin.Forms.Maps.WinRT
                 _cameraLogic.Register(Map, NativeMap);
                 Map.OnSnapshot += OnSnapshot;
 
+                _uiSettingsLogic.Register(Map, NativeMap);
+                _uiSettingsLogic.Initialize();
                 UpdateMapType();
                 UpdateHasScrollEnabled();
                 UpdateHasZoomEnabled();
                 UpdateHasRotationEnabled();
 
-                await UpdateIsShowingUser();
+                await UpdateIsShowingUser(Element.IsShowingUser);
 
                 foreach (var logic in _logics)
                 {
@@ -157,7 +160,9 @@ namespace Xamarin.Forms.Maps.WinRT
             if (e.PropertyName == Map.MapTypeProperty.PropertyName)
                 UpdateMapType();
             else if (e.PropertyName == Map.IsShowingUserProperty.PropertyName)
-                await UpdateIsShowingUser();
+                await UpdateIsShowingUser(Element.IsShowingUser);
+            else if (e.PropertyName == Map.MyLocationEnabledProperty.PropertyName)
+                await UpdateIsShowingUser(Element.MyLocationEnabled);
             else if (e.PropertyName == Map.HasScrollEnabledProperty.PropertyName)
                 UpdateHasScrollEnabled();
             else if (e.PropertyName == Map.HasZoomEnabledProperty.PropertyName)
@@ -179,6 +184,7 @@ namespace Xamarin.Forms.Maps.WinRT
             {
                 _disposed = true;
 
+                _uiSettingsLogic.Unregister();
                 Map.OnSnapshot -= OnSnapshot;
                 _cameraLogic.Unregister();
 
@@ -200,9 +206,9 @@ namespace Xamarin.Forms.Maps.WinRT
         bool _firstZoomLevelChangeFired;
         Ellipse _userPositionCircle;
 
-        async Task UpdateIsShowingUser()
+        async Task UpdateIsShowingUser(bool enabled)
         {
-            if (Element.IsShowingUser)
+            if (enabled)
             {
                 var myGeolocator = new Geolocator();
                 if (myGeolocator.LocationStatus != PositionStatus.NotAvailable &&
@@ -214,7 +220,9 @@ namespace Xamarin.Forms.Maps.WinRT
                 }
             }
             else if (_userPositionCircle != null && Control.Children.Contains(_userPositionCircle))
+            {
                 Control.Children.Remove(_userPositionCircle);
+            }
         }
 
         void UpdateVisibleRegion()
@@ -301,16 +309,8 @@ namespace Xamarin.Forms.Maps.WinRT
             return null;
         }
 
-        void LoadUserPosition(Geocoordinate userCoordinate, bool center)
+        private void CreateCircle()
         {
-            var userPosition = new BasicGeoposition
-            {
-                Latitude = userCoordinate.Point.Position.Latitude,
-                Longitude = userCoordinate.Point.Position.Longitude
-            };
-
-            var point = new Geopoint(userPosition);
-
             if (_userPositionCircle == null)
             {
                 _userPositionCircle = new Ellipse
@@ -323,6 +323,19 @@ namespace Xamarin.Forms.Maps.WinRT
                     Opacity = 50
                 };
             }
+        }
+
+        void LoadUserPosition(Geocoordinate userCoordinate, bool center)
+        {
+            var userPosition = new BasicGeoposition
+            {
+                Latitude = userCoordinate.Point.Position.Latitude,
+                Longitude = userCoordinate.Point.Position.Longitude
+            };
+
+            var point = new Geopoint(userPosition);
+
+            CreateCircle();
 
             if (Control.Children.Contains(_userPositionCircle))
                 Control.Children.Remove(_userPositionCircle);
@@ -373,7 +386,7 @@ namespace Xamarin.Forms.Maps.WinRT
 
         void UpdateHasRotationEnabled()
         {
-            Control.RotateInteractionMode = Element.HasRotationEnabled ? MapInteractionMode.Auto : MapInteractionMode.Disabled;
+            Map.UiSettings.RotateGesturesEnabled = Map.HasRotationEnabled;
         }
 #else
         void UpdateHasZoomEnabled()

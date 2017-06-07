@@ -116,6 +116,7 @@
     <Compile Include="Logics\CameraLogic.cs" />
     <Compile Include="Logics\PinLogic.cs" />
     <Compile Include="Logics\TileLayerLogic.cs" />
+    <Compile Include="Logics\UiSettingsLogic.cs" />
     <Compile Include="MapRenderer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PushPin.cs" />
