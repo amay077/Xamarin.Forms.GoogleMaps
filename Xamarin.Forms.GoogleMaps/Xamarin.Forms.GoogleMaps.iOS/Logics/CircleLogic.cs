@@ -75,6 +75,9 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
 
         protected override void OnUpdateRadius(Circle outerItem, NativeCircle nativeItem)
             => nativeItem.Radius = outerItem.Radius.Meters;
+
+        protected override void OnUpdateIsClickable(Circle outerItem, NativeCircle nativeItem)
+            => nativeItem.Tappable = outerItem.IsClickable;
     }
 }
 
