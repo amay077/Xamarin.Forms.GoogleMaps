@@ -3,8 +3,14 @@
 	<metadata minClientVersion="2.8.3">
 		<id>Xamarin.Forms.GoogleMaps</id>
 		<title>Xamarin.Forms.GoogleMaps</title>
-		<version>2.1.0-beta3</version>
+		<version>2.1.0-beta4</version>
 		<releaseNotes>
+
+# 2.1.0-beta4
+
+## New Features
+
+* #17 [Android/iOS]Add Circle.Clicked event(Fix missing some implementations)
 
 # 2.1.0-beta3
 
