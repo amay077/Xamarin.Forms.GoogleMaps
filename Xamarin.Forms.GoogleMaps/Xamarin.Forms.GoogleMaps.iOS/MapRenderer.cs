@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.ComponentModel;
 using Xamarin.Forms.Platform.iOS;
 using Google.Maps;
@@ -132,7 +132,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                 UpdateHasRotationEnabled();
                 UpdateIsTrafficEnabled();
                 UpdatePadding();
-                UpdateMaStyle();
+                UpdateMapStyle();
 
                 foreach (var logic in _logics)
                 {
@@ -344,7 +344,8 @@ namespace Xamarin.Forms.GoogleMaps.iOS
             ((MapView)Control).Padding = ((Map)Element).Padding.ToUIEdgeInsets();
         }
 
-        void UpdateMaStyle()
+        private Google.Maps.MapStyle _mapStyle = null;
+        void UpdateMapStyle()
         {
             if (Map.MapStyle == null)
             {
@@ -352,8 +353,9 @@ namespace Xamarin.Forms.GoogleMaps.iOS
             }
             else
             {
-                NSError err = new NSError();
-                ((MapView)Control).MapStyle = Google.Maps.MapStyle.FromJson(Map.MapStyle.JsonStyle, err);
+                NSError err = null;
+                var mapStyle = Google.Maps.MapStyle.FromJson(Map.MapStyle.JsonStyle, err);
+                ((MapView)Control).MapStyle = mapStyle;
             }
         }
     }
