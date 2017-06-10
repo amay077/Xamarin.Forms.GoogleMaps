@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 
 namespace Xamarin.Forms.GoogleMaps
 {
-    public class Circle : BindableObject
+    public sealed class Circle : BindableObject
     {
         public static readonly BindableProperty StrokeWidthProperty = BindableProperty.Create(nameof(StrokeWidth) , typeof(float), typeof(float), 1f);
         public static readonly BindableProperty StrokeColorProperty = BindableProperty.Create(nameof(StrokeColor), typeof(Color), typeof(Color), Color.Blue);
