@@ -122,6 +122,7 @@ namespace XFGoogleMapSample
             buttonAddCircle.Clicked += (sender, e) =>
             {
                 circle = new Circle();
+                circle.IsClickable = true;
                 circle.Center = new Position(40.72d, -73.89d);
                 circle.Radius = Distance.FromMeters(3000f);
 
@@ -129,6 +130,8 @@ namespace XFGoogleMapSample
                 circle.StrokeWidth = 6f;
                 circle.FillColor = Color.FromRgba(0, 0, 255, 32);
                 circle.Tag = "CIRCLE"; // Can set any object
+
+                circle.Clicked += Circle_Clicked;
 
                 map.Circles.Add(circle);
 
@@ -159,6 +162,12 @@ namespace XFGoogleMapSample
         {
             var polygon = (Polygon)sender;
             DisplayAlert("Polygon", $"{(string)polygon.Tag} Clicked!", "Close");
+        }
+
+        private void Circle_Clicked(object sender, EventArgs e)
+        {
+            var circle = (Circle)sender;
+            DisplayAlert("Circle", $"{(string)circle.Tag} Clicked!", "Close");
         }
     }
 }
