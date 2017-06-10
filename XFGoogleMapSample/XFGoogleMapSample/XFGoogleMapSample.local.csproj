@@ -65,6 +65,9 @@
     <EmbeddedResource Include="CameraPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Include="MapStylePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -105,6 +108,9 @@
     <Compile Include="Variables.cs" />
     <Compile Include="CameraPage.xaml.cs">
       <DependentUpon>CameraPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MapStylePage.xaml.cs">
+      <DependentUpon>MapStylePage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
