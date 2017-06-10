@@ -1,5 +1,17 @@
 Xamarin.Forms.GoogleMaps Release Notes
 ----
+# 2.1.0-beta3
+
+## New Features
+
+* #17 [Android/iOS]Add Circle.Clicked event 
+
+# 2.1.0-beta2
+
+## New Features
+
+* #8 Add UiSettings class
+
 # 2.1.0-beta1
 
 ## New Features
