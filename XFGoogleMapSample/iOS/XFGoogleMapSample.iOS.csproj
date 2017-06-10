@@ -121,10 +121,10 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="Xamarin.Forms.GoogleMaps">
-      <HintPath>$(SolutionDir)\packages\Xamarin.Forms.GoogleMaps.2.1.0-beta2\lib\Xamarin.iOS10\Xamarin.Forms.GoogleMaps.dll</HintPath>
+      <HintPath>$(SolutionDir)\packages\Xamarin.Forms.GoogleMaps.2.1.0-beta3\lib\Xamarin.iOS10\Xamarin.Forms.GoogleMaps.dll</HintPath>
     </Reference>
     <Reference Include="Xamarin.Forms.GoogleMaps.iOS">
-      <HintPath>$(SolutionDir)\packages\Xamarin.Forms.GoogleMaps.2.1.0-beta2\lib\Xamarin.iOS10\Xamarin.Forms.GoogleMaps.iOS.dll</HintPath>
+      <HintPath>$(SolutionDir)\packages\Xamarin.Forms.GoogleMaps.2.1.0-beta3\lib\Xamarin.iOS10\Xamarin.Forms.GoogleMaps.iOS.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
