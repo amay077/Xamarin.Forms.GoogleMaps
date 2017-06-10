@@ -11,6 +11,7 @@ using Xamarin.Forms.GoogleMaps.Internals;
 using GCameraUpdate = Google.Maps.CameraUpdate;
 using GCameraPosition = Google.Maps.CameraPosition;
 using System.Threading.Tasks;
+using Foundation;
 
 namespace Xamarin.Forms.GoogleMaps.iOS
 {
@@ -131,6 +132,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                 UpdateHasRotationEnabled();
                 UpdateIsTrafficEnabled();
                 UpdatePadding();
+                UpdateMaStyle();
 
                 foreach (var logic in _logics)
                 {
@@ -191,10 +193,13 @@ namespace Xamarin.Forms.GoogleMaps.iOS
             {
                 UpdateHasIndoorEnabled();
             }
-
             else if (e.PropertyName == Map.PaddingProperty.PropertyName)
             {
                 UpdatePadding();
+            }
+            else if (e.PropertyName == Map.MapStyleProperty.PropertyName)
+            {
+                UpdateMapStyle();
             }
 
             foreach (var logic in _logics)
@@ -337,6 +342,19 @@ namespace Xamarin.Forms.GoogleMaps.iOS
         void UpdatePadding()
         {
             ((MapView)Control).Padding = ((Map)Element).Padding.ToUIEdgeInsets();
+        }
+
+        void UpdateMaStyle()
+        {
+            if (Map.MapStyle == null)
+            {
+                ((MapView)Control).MapStyle = null;
+            }
+            else
+            {
+                NSError err = new NSError();
+                ((MapView)Control).MapStyle = Google.Maps.MapStyle.FromJson(Map.MapStyle.JsonStyle, err);
+            }
         }
     }
 }

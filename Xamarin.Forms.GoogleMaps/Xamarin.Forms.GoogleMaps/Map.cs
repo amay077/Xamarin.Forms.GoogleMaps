@@ -48,6 +48,8 @@ namespace Xamarin.Forms.GoogleMaps
             defaultValueCreator: (bindable) => new CameraPosition(((Map)bindable).InitialCameraUpdate.Position, 10),
             defaultBindingMode: BindingMode.TwoWay);
 
+        public static readonly BindableProperty MapStyleProperty = BindableProperty.Create(nameof(MapStyle), typeof(MapStyle), typeof(Map), null);
+
         readonly ObservableCollection<Pin> _pins = new ObservableCollection<Pin>();
         readonly ObservableCollection<Polyline> _polylines = new ObservableCollection<Polyline>();
         readonly ObservableCollection<Polygon> _polygons = new ObservableCollection<Polygon>();
@@ -162,6 +164,12 @@ namespace Xamarin.Forms.GoogleMaps
         {
             get { return (Thickness)GetValue(PaddingProperty); }
             set { SetValue(PaddingProperty, value); }
+        }
+
+        public MapStyle MapStyle
+        {
+            get { return (MapStyle)GetValue(MapStyleProperty); }
+            set { SetValue(MapStyleProperty, value); }
         }
 
         public IList<Pin> Pins

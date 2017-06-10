@@ -80,6 +80,7 @@
     <Compile Include="Internals\CameraUpdateConverter.cs" />
     <Compile Include="UiSettings.cs" />
     <Compile Include="Logics\BaseUiSettingsLogic.cs" />
+    <Compile Include="MapStyle.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
