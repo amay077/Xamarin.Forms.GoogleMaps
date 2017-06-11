@@ -7,29 +7,36 @@
     Title="Xamarin.Forms.GoogleMaps sample">
 
     <ContentPage.Content>
-        <StackLayout
-            HorizontalOptions="Fill"
-            VerticalOptions="Fill"
-            Orientation="Vertical">
+        <ScrollView Orientation="Vertical"
+                HorizontalOptions="Fill"
+                VerticalOptions="Fill">
+            
+            <StackLayout
+                HorizontalOptions="Fill"
+                VerticalOptions="Start"
+                Orientation="Vertical">
 
-            <Button x:Name="buttonBasicMap"
-                    Text="Basic Map" />
-            <Button x:Name="buttonCamera"
-                    Text="Camera Control" />
-            <Button x:Name="buttonPins"
-                    Text="Pins" />
-            <Button x:Name="buttonShapes"
-                    Text="Shapes" />
-            <Button x:Name="buttonTiles"
-                    Text="Tiles" />
-            <Button x:Name="buttonCustomPins"
-                    Text="Custom Pin" />
-            <Button x:Name="buttonShapesWithInitialize"
-                    Text="Shapes with initialize" />
-            <Button x:Name="buttonBindingPin"
-                    Text="Binding Pin" />
-            <Button x:Name="buttonGroundOverlays"
-                    Text="GroundOverlays" />
-        </StackLayout>
+                <Button x:Name="buttonBasicMap"
+                        Text="Basic Map" />
+                <Button x:Name="buttonCamera"
+                        Text="Camera Control" />
+                <Button x:Name="buttonPins"
+                        Text="Pins" />
+                <Button x:Name="buttonShapes"
+                        Text="Shapes" />
+                <Button x:Name="buttonTiles"
+                        Text="Tiles" />
+                <Button x:Name="buttonCustomPins"
+                        Text="Custom Pin" />
+                <Button x:Name="buttonShapesWithInitialize"
+                        Text="Shapes with initialize" />
+                <Button x:Name="buttonBindingPin"
+                        Text="Binding Pin" />
+                <Button x:Name="buttonGroundOverlays"
+                        Text="GroundOverlays" />
+                <Button x:Name="buttonMapStyles"
+                        Text="Map Styles" />
+            </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

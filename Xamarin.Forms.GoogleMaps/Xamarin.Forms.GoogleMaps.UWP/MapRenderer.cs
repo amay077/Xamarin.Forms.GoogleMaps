@@ -357,16 +357,16 @@ namespace Xamarin.Forms.Maps.WinRT
             switch (Element.MapType)
             {
                 case MapType.Street:
-                    Control.Style = MapStyle.Road;
+                    Control.Style = Windows.UI.Xaml.Controls.Maps.MapStyle.Road;
                     break;
                 case MapType.Satellite:
-                    Control.Style = MapStyle.Aerial;
+                    Control.Style = Windows.UI.Xaml.Controls.Maps.MapStyle.Aerial;
                     break;
                 case MapType.Hybrid:
-                    Control.Style = MapStyle.AerialWithRoads;
+                    Control.Style = Windows.UI.Xaml.Controls.Maps.MapStyle.AerialWithRoads;
                     break;
                 case MapType.None:
-                    Control.Style = MapStyle.None;
+                    Control.Style = Windows.UI.Xaml.Controls.Maps.MapStyle.None;
                     break;
             }
         }

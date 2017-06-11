@@ -65,6 +65,9 @@
     <EmbeddedResource Include="CameraPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Include="MapStylePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -106,6 +109,9 @@
     </Compile>
     <Compile Include="Extensions\ListExtensions.cs" />
     <Compile Include="Variables.cs" />
+    <Compile Include="MapStylePage.xaml.cs">
+      <DependentUpon>MapStylePage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">

@@ -170,6 +170,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 UpdateHasRotationEnabled();
                 UpdateIsTrafficEnabled();
                 UpdateIndoorEnabled();
+                UpdateMapStyle();
 
                 SetMapType();
                 SetPadding();
@@ -283,6 +284,10 @@ namespace Xamarin.Forms.GoogleMaps.Android
             {
                 UpdateIndoorEnabled();
             }
+            else if (e.PropertyName == Map.MapStyleProperty.PropertyName)
+            {
+                UpdateMapStyle();
+            }
 
             foreach (var logic in _logics)
             {
@@ -324,6 +329,13 @@ namespace Xamarin.Forms.GoogleMaps.Android
         private void UpdateIndoorEnabled()
         {
             NativeMap.SetIndoorEnabled(Map.IsIndoorEnabled);
+        }
+
+        private void UpdateMapStyle()
+        {
+            NativeMap.SetMapStyle(Map.MapStyle != null ?
+                new MapStyleOptions(Map.MapStyle.JsonStyle) : 
+                null);
         }
 
         void SetMapType()
