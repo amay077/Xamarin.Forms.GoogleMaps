@@ -1,5 +1,11 @@
 Xamarin.Forms.GoogleMaps Release Notes
 ----
+# 2.1.0-beta5
+
+## New Features
+
+* #117 [Android/iOS]Support map styling
+
 # 2.1.0-beta4
 
 ## New Features
