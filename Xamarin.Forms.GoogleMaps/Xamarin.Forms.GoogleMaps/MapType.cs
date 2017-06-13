@@ -5,6 +5,7 @@
         Street,
         Satellite,
         Hybrid,
+        Terrain,
         None
     }
 }
