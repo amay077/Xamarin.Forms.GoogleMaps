@@ -365,6 +365,9 @@ namespace Xamarin.Forms.Maps.WinRT
                 case MapType.Hybrid:
                     Control.Style = Windows.UI.Xaml.Controls.Maps.MapStyle.AerialWithRoads;
                     break;
+                case MapType.Terrain:
+                    Control.Style = Windows.UI.Xaml.Controls.Maps.MapStyle.Terrain;
+                    break;
                 case MapType.None:
                     Control.Style = Windows.UI.Xaml.Controls.Maps.MapStyle.None;
                     break;
