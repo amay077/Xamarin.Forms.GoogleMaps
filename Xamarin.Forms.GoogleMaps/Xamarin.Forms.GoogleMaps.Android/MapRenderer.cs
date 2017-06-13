@@ -355,6 +355,9 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 case MapType.Hybrid:
                     map.MapType = GoogleMap.MapTypeHybrid;
                     break;
+                case MapType.Terrain:
+                    map.MapType = GoogleMap.MapTypeTerrain;
+                    break;
                 case MapType.None:
                     map.MapType = GoogleMap.MapTypeNone;
                     break;
