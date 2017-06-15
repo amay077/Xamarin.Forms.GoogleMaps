@@ -54,7 +54,10 @@ namespace Xamarin.Forms.GoogleMaps.Logics
         protected override void ResetItems()
         {
             foreach (var outerShape in _outerItems)
+            {
+                outerShape.PropertyChanged -= OnItemPropertyChanged;
                 DeleteNativeItem(outerShape);
+            }
 
             _outerItems.Clear();
         }
