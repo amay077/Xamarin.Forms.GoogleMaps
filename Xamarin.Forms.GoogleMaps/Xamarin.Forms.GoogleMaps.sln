@@ -10,7 +10,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Forms.GoogleMaps.iO
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Forms.GoogleMaps.UWP", "Xamarin.Forms.GoogleMaps.UWP\Xamarin.Forms.GoogleMaps.UWP.csproj", "{C62FCB91-7D10-4665-912C-B7CCEC9535D7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Forms.GoogleMaps.Android.Utils", "..\..\Xamarin.Forms.GoogleMaps-master\Xamarin.Forms.GoogleMaps\Xamarin.Forms.GoogleMaps.Android.Utils\Xamarin.Forms.GoogleMaps.Android.Utils.csproj", "{F38A2B58-0051-4E72-ADF9-9305AD4274A8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Forms.GoogleMaps.Android.Utils", "Xamarin.Forms.GoogleMaps.Android.Utils\Xamarin.Forms.GoogleMaps.Android.Utils.csproj", "{F38A2B58-0051-4E72-ADF9-9305AD4274A8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
