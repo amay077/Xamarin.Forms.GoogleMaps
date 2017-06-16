@@ -41,7 +41,9 @@ namespace Xamarin.Forms.GoogleMaps
 
         public static readonly BindableProperty PaddingProperty = BindableProperty.Create(nameof(PaddingProperty), typeof(Thickness), typeof(Map), default(Thickness));
 
-        bool _useMoveToRegisonAsInitialBounds = true;
+	    public static readonly BindableProperty ClusterOptionsProperty = BindableProperty.Create(nameof(ClusterOptionsProperty), typeof(ClusterOptions), typeof(Map), default(ClusterOptions));
+
+		bool _useMoveToRegisonAsInitialBounds = true;
 
         public static readonly BindableProperty CameraPositionProperty = BindableProperty.Create(
             nameof(CameraPosition), typeof(CameraPosition), typeof(Map),
@@ -51,7 +53,8 @@ namespace Xamarin.Forms.GoogleMaps
         public static readonly BindableProperty MapStyleProperty = BindableProperty.Create(nameof(MapStyle), typeof(MapStyle), typeof(Map), null);
 
         readonly ObservableCollection<Pin> _pins = new ObservableCollection<Pin>();
-        readonly ObservableCollection<Polyline> _polylines = new ObservableCollection<Polyline>();
+	    readonly ObservableCollection<Pin> _clusteredPins = new ObservableCollection<Pin>();
+		readonly ObservableCollection<Polyline> _polylines = new ObservableCollection<Polyline>();
         readonly ObservableCollection<Polygon> _polygons = new ObservableCollection<Polygon>();
         readonly ObservableCollection<Circle> _circles = new ObservableCollection<Circle>();
         readonly ObservableCollection<TileLayer> _tileLayers = new ObservableCollection<TileLayer>();
@@ -77,15 +80,19 @@ namespace Xamarin.Forms.GoogleMaps
 
         internal Action<CameraUpdateMessage> OnAnimateCamera { get; set; }
 
-        internal Action<TakeSnapshotMessage> OnSnapshot{ get; set; }
+	    internal bool PendingClusterRequest { get; set; }
+
+	    internal Action OnCluster { get; set; }
+
+		internal Action<TakeSnapshotMessage> OnSnapshot{ get; set; }
 
         MapSpan _visibleRegion;
 
         public Map()
         {
             VerticalOptions = HorizontalOptions = LayoutOptions.FillAndExpand;
-
-            _pins.CollectionChanged += PinsOnCollectionChanged;
+	        ClusterOptions = new ClusterOptions();
+			_pins.CollectionChanged += PinsOnCollectionChanged;
             _polylines.CollectionChanged += PolylinesOnCollectionChanged;
             _polygons.CollectionChanged += PolygonsOnCollectionChanged;
             _circles.CollectionChanged += CirclesOnCollectionChanged;
@@ -128,6 +135,12 @@ namespace Xamarin.Forms.GoogleMaps
             get { return (bool)GetValue(IsShowingUserProperty); }
             set { SetValue(IsShowingUserProperty, value); }
         }
+
+	    public ClusterOptions ClusterOptions
+	    {
+		    get { return (ClusterOptions) GetValue(ClusterOptionsProperty); }
+			set { SetValue(ClusterOptionsProperty, value); }
+		}
 
         public bool MyLocationEnabled
         {
@@ -177,7 +190,12 @@ namespace Xamarin.Forms.GoogleMaps
             get { return _pins; }
         }
 
-        public IList<Polyline> Polylines
+	    public IList<Pin> ClusteredPins
+	    {
+		    get { return _clusteredPins; }
+	    }
+
+		public IList<Polyline> Polylines
         {
             get { return _polylines; }
         }
@@ -229,7 +247,12 @@ namespace Xamarin.Forms.GoogleMaps
             return _pins.GetEnumerator();
         }
 
-        public void MoveToRegion(MapSpan mapSpan, bool animate = true)
+	    public void Cluster()
+	    {
+		    this.SendCluster();
+	    }
+
+		public void MoveToRegion(MapSpan mapSpan, bool animate = true)
         {
             if (mapSpan == null)
                 throw new ArgumentNullException(nameof(mapSpan));
@@ -366,7 +389,19 @@ namespace Xamarin.Forms.GoogleMaps
             return args.Handled;
         }
 
-        internal void SendCameraChanged(CameraPosition position)
+	    private void SendCluster()
+	    {
+		    if (OnCluster != null)
+		    {
+			    OnCluster.Invoke();
+		    }
+		    else
+		    {
+			    PendingClusterRequest = true;
+		    }
+	    }
+
+		internal void SendCameraChanged(CameraPosition position)
         {
             CameraChanged?.Invoke(this, new CameraChangedEventArgs(position));
         }

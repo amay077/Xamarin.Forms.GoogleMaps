@@ -22,6 +22,8 @@
                         Text="Camera Control" />
                 <Button x:Name="buttonPins"
                         Text="Pins" />
+                <Button x:Name="buttonCluster"
+                        Text="Pins Clustering" />
                 <Button x:Name="buttonShapes"
                         Text="Shapes" />
                 <Button x:Name="buttonTiles"

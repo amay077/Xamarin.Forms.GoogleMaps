@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.13
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Forms.GoogleMaps", "Xamarin.Forms.GoogleMaps\Xamarin.Forms.GoogleMaps.csproj", "{F1C8F5A0-A55D-4C7D-9737-472F7AC222D4}"
 EndProject
@@ -9,6 +9,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Forms.GoogleMaps.iOS", "Xamarin.Forms.GoogleMaps.iOS\Xamarin.Forms.GoogleMaps.iOS.csproj", "{AB1D9407-E4B2-403C-88CD-9CAC7A6914EF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Forms.GoogleMaps.UWP", "Xamarin.Forms.GoogleMaps.UWP\Xamarin.Forms.GoogleMaps.UWP.csproj", "{C62FCB91-7D10-4665-912C-B7CCEC9535D7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Forms.GoogleMaps.Android.Utils", "..\..\Xamarin.Forms.GoogleMaps-master\Xamarin.Forms.GoogleMaps\Xamarin.Forms.GoogleMaps.Android.Utils\Xamarin.Forms.GoogleMaps.Android.Utils.csproj", "{F38A2B58-0051-4E72-ADF9-9305AD4274A8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -86,6 +88,22 @@ Global
 		{C62FCB91-7D10-4665-912C-B7CCEC9535D7}.Release|x64.Build.0 = Release|x64
 		{C62FCB91-7D10-4665-912C-B7CCEC9535D7}.Release|x86.ActiveCfg = Release|x86
 		{C62FCB91-7D10-4665-912C-B7CCEC9535D7}.Release|x86.Build.0 = Release|x86
+		{F38A2B58-0051-4E72-ADF9-9305AD4274A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F38A2B58-0051-4E72-ADF9-9305AD4274A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F38A2B58-0051-4E72-ADF9-9305AD4274A8}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{F38A2B58-0051-4E72-ADF9-9305AD4274A8}.Debug|ARM.Build.0 = Debug|Any CPU
+		{F38A2B58-0051-4E72-ADF9-9305AD4274A8}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{F38A2B58-0051-4E72-ADF9-9305AD4274A8}.Debug|x64.Build.0 = Debug|Any CPU
+		{F38A2B58-0051-4E72-ADF9-9305AD4274A8}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F38A2B58-0051-4E72-ADF9-9305AD4274A8}.Debug|x86.Build.0 = Debug|Any CPU
+		{F38A2B58-0051-4E72-ADF9-9305AD4274A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F38A2B58-0051-4E72-ADF9-9305AD4274A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F38A2B58-0051-4E72-ADF9-9305AD4274A8}.Release|ARM.ActiveCfg = Release|Any CPU
+		{F38A2B58-0051-4E72-ADF9-9305AD4274A8}.Release|ARM.Build.0 = Release|Any CPU
+		{F38A2B58-0051-4E72-ADF9-9305AD4274A8}.Release|x64.ActiveCfg = Release|Any CPU
+		{F38A2B58-0051-4E72-ADF9-9305AD4274A8}.Release|x64.Build.0 = Release|Any CPU
+		{F38A2B58-0051-4E72-ADF9-9305AD4274A8}.Release|x86.ActiveCfg = Release|Any CPU
+		{F38A2B58-0051-4E72-ADF9-9305AD4274A8}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
