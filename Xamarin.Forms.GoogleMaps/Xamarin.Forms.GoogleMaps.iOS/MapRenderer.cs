@@ -12,6 +12,7 @@ using GCameraUpdate = Google.Maps.CameraUpdate;
 using GCameraPosition = Google.Maps.CameraPosition;
 using System.Threading.Tasks;
 using Foundation;
+using GMCluster;
 
 namespace Xamarin.Forms.GoogleMaps.iOS
 {
@@ -34,7 +35,8 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                 new PolylineLogic(),
                 new PolygonLogic(),
                 new CircleLogic(),
-                new PinLogic(),
+	            new ClusterLogic(),
+				new PinLogic(),
                 new TileLayerLogic(),
                 new GroundOverlayLogic()
             };
