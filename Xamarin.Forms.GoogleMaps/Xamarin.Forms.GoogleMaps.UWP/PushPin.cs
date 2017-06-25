@@ -32,6 +32,8 @@ namespace Xamarin.Forms.Maps.WinRT
         public TextBlock Address { get; set; }
         public FrameworkElement Icon { get; set; }
 
+        public event EventHandler<TappedRoutedEventArgs> InfoWindowClicked;
+
         internal PushPin(Pin pin)
         {
             if (pin == null)
@@ -87,6 +89,7 @@ namespace Xamarin.Forms.Maps.WinRT
                 DetailsView.Height = 35;
             }
             DetailsView.Visibility = Visibility.Collapsed;
+            DetailsView.Tapped += DetailsViewOnTapped;
             Root.Children.Add(DetailsView);
         }
 
@@ -155,6 +158,11 @@ namespace Xamarin.Forms.Maps.WinRT
             {
 
             }
+        }
+
+        private void DetailsViewOnTapped(object sender, TappedRoutedEventArgs tappedRoutedEventArgs)
+        {
+            InfoWindowClicked?.Invoke(_pin, tappedRoutedEventArgs);
         }
     }
 }

@@ -42,6 +42,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
             nativePolyline.StrokeWidth = outerItem.StrokeWidth;
             nativePolyline.StrokeColor = outerItem.StrokeColor.ToUIColor();
             nativePolyline.Tappable = outerItem.IsClickable;
+            nativePolyline.ZIndex = outerItem.ZIndex;
 
             outerItem.NativeObject = nativePolyline;
             nativePolyline.Map = NativeMap;

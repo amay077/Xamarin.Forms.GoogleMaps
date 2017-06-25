@@ -44,6 +44,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
             opts.InvokeWidth(outerItem.StrokeWidth * this.ScaledDensity); // TODO: convert from px to pt. Is this collect? (looks like same iOS Maps)
             opts.InvokeColor(outerItem.StrokeColor.ToAndroid());
             opts.Clickable(outerItem.IsClickable);
+            opts.InvokeZIndex(outerItem.ZIndex);
 
             var nativePolyline = NativeMap.AddPolyline(opts);
 
@@ -105,6 +106,10 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
             else if (e.PropertyName == Polyline.IsClickableProperty.PropertyName)
             {
                 nativePolyline.Clickable = polyline.IsClickable;
+            }
+            else if (e.PropertyName == Polyline.ZIndexProperty.PropertyName)
+            {
+                nativePolyline.ZIndex = polyline.ZIndex;
             }
         }
     }
