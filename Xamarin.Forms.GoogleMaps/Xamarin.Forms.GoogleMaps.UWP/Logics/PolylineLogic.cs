@@ -20,6 +20,16 @@ namespace Xamarin.Forms.GoogleMaps.Logics.UWP
             }
         }
 
+        internal override void Unregister(MapControl nativeMap, Map map)
+        {
+            base.Unregister(nativeMap, map);
+
+            if (nativeMap != null)
+            {
+                nativeMap.MapElementClick -= NewNativeMapOnMapElementClick;
+            }
+        }
+
         private void NewNativeMapOnMapElementClick(MapControl sender, MapElementClickEventArgs args)
         {
             var nativeItem = args.MapElements.FirstOrDefault(e => e is MapPolyline) as MapPolyline;
