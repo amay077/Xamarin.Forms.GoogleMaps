@@ -51,6 +51,7 @@ namespace XFGoogleMapSample
             map.Circles.Add(CreateShiftedCircle(circle1, 0d, 0.05d, Color.Yellow));
             map.Circles.Add(CreateShiftedCircle(circle1, 0d, 0.10d, Color.Green));
 
+            // Fit to all shapes
             var bounds = Xamarin.Forms.GoogleMaps.Bounds.FromPositions(map.Polygons.SelectMany(poly => poly.Positions));
             bounds = bounds.Including(Xamarin.Forms.GoogleMaps.Bounds.FromPositions(map.Polylines.SelectMany(poly => poly.Positions)));
             bounds = bounds.Including(Xamarin.Forms.GoogleMaps.Bounds.FromPositions(map.Circles.Select(cir => cir.Center)));
