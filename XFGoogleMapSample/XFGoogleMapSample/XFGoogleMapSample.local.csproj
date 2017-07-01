@@ -68,6 +68,9 @@
     <EmbeddedResource Include="MapStylePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Include="Shapes2Page.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -111,6 +114,9 @@
     </Compile>
     <Compile Include="MapStylePage.xaml.cs">
       <DependentUpon>MapStylePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Shapes2Page.xaml.cs">
+      <DependentUpon>Shapes2Page.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

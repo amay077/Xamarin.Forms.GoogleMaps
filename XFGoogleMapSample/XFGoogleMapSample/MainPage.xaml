@@ -24,6 +24,8 @@
                         Text="Pins" />
                 <Button x:Name="buttonShapes"
                         Text="Shapes" />
+                <Button x:Name="buttonShapes2"
+                        Text="Shapes2" />
                 <Button x:Name="buttonTiles"
                         Text="Tiles" />
                 <Button x:Name="buttonCustomPins"

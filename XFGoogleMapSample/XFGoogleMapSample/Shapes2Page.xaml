@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:maps="clr-namespace:Xamarin.Forms.GoogleMaps;assembly=Xamarin.Forms.GoogleMaps"
+    x:Class="XFGoogleMapSample.Shapes2Page"
+    Title="Shapes2">
+    <ContentPage.Content>
+
+        <StackLayout
+            VerticalOptions="Fill"
+            Orientation="Vertical">
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+             
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Label Text="Move to Front:" 
+                    VerticalTextAlignment="Center"
+                    HorizontalTextAlignment="End"
+                    Grid.Row="0"
+                    Grid.Column="0"/>
+
+                <Picker x:Name="pickerZIndex"
+                    Grid.Row="0"
+                    Grid.Column="1"/>
+
+            </Grid>         
+            <maps:Map x:Name="map" 
+                    VerticalOptions="FillAndExpand"/>
+            
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
