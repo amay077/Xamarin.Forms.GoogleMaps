@@ -1,5 +1,19 @@
 Xamarin.Forms.GoogleMaps Release Notes
 ----
+# 2.1.0-beta6
+
+## New Features
+
+* #313 [Android/iOS/UWP]Add MapType Terrain
+* #325 [Android/iOS/UWP]Add Polyline.ZIndex property
+* #327 [UWP]Support Pin.InfoWindowClicked event
+* #326 [UWP]Support Polyline
+
+## Bug Fixes
+
+* PR#318 [UWP]Fix memory leak when remove pins
+* #332 [iOS]Changes Polyline and Polygon property does not work at after added
+
 # 2.1.0-beta5
 
 ## New Features
