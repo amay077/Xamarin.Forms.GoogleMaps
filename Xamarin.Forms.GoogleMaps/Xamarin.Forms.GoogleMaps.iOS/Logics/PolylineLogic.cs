@@ -8,7 +8,7 @@ using NativePolyline = Google.Maps.Polyline;
 
 namespace Xamarin.Forms.GoogleMaps.Logics.iOS
 {
-    internal class PolylineLogic : DefaultLogic<Polyline, NativePolyline, MapView>
+    internal class PolylineLogic : DefaultPolylineLogic<NativePolyline, MapView>
     {
         protected override IList<Polyline> GetItems(Map map) => map.Polylines;
 
@@ -62,6 +62,26 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
             var targetOuterItem = GetItems(Map).FirstOrDefault(
                 outerItem => object.ReferenceEquals(outerItem.NativeObject, e.Overlay));
             targetOuterItem?.SendTap();
+        }
+
+        internal override void OnUpdateIsClickable(Polyline outerItem, NativePolyline nativeItem)
+        {
+            nativeItem.Tappable = outerItem.IsClickable;
+        }
+
+        internal override void OnUpdateStrokeColor(Polyline outerItem, NativePolyline nativeItem)
+        {
+            nativeItem.StrokeColor = outerItem.StrokeColor.ToUIColor();
+        }
+
+        internal override void OnUpdateStrokeWidth(Polyline outerItem, NativePolyline nativeItem)
+        {
+            nativeItem.StrokeWidth = outerItem.StrokeWidth;
+        }
+
+        internal override void OnUpdateZIndex(Polyline outerItem, NativePolyline nativeItem)
+        {
+            nativeItem.ZIndex = outerItem.ZIndex;
         }
     }
 }

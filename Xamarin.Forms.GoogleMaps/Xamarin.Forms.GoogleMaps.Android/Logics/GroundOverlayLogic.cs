@@ -10,7 +10,7 @@ using System.Linq;
 
 namespace Xamarin.Forms.GoogleMaps.Logics.Android
 {
-    internal class GroundOverlayLogic : DefaultLogic<GroundOverlay, NativeGroundOverlay, GoogleMap>
+    internal class GroundOverlayLogic : DefaultGroundOverlayLogic<NativeGroundOverlay, GoogleMap>
     {
         protected override IList<GroundOverlay> GetItems(Map map) => map.GroundOverlays;
 
@@ -75,36 +75,29 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
             targetOuterItem?.SendTap();
         }
 
-        protected override void OnItemPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        internal override void OnUpdateBearing(GroundOverlay outerItem, NativeGroundOverlay nativeItem)
         {
-            base.OnItemPropertyChanged(sender, e);
+            nativeItem.Bearing = outerItem.Bearing;
+        }
 
-            var overlay = sender as GroundOverlay;
-            var nativeOverlay = overlay?.NativeObject as NativeGroundOverlay;
+        internal override void OnUpdateBounds(GroundOverlay outerItem, NativeGroundOverlay nativeItem)
+        {
+            nativeItem.SetPositionFromBounds(outerItem.Bounds.ToLatLngBounds()); 
+        }
 
-            if (nativeOverlay == null)
-                return;
+        internal override void OnUpdateIcon(GroundOverlay outerItem, NativeGroundOverlay nativeItem)
+        {
+            nativeItem.SetImage(outerItem.Icon.ToBitmapDescriptor());
+        }
 
-            if (e.PropertyName == GroundOverlay.BearingProperty.PropertyName)
-            {
-                nativeOverlay.Bearing = overlay.Bearing;
-            }
-            else if (e.PropertyName == GroundOverlay.BoundsProperty.PropertyName)
-            {
-                nativeOverlay.SetPositionFromBounds(overlay.Bounds.ToLatLngBounds());
-            }
-            else if (e.PropertyName == GroundOverlay.IconProperty.PropertyName)
-            {
-                nativeOverlay.SetImage(overlay.Icon.ToBitmapDescriptor());
-            }
-            else if (e.PropertyName == GroundOverlay.IsClickableProperty.PropertyName)
-            {
-                nativeOverlay.Clickable = overlay.IsClickable;
-            }
-            else if (e.PropertyName == GroundOverlay.TransparencyProperty.PropertyName)
-            {
-                nativeOverlay.Transparency = overlay.Transparency;
-            }
+        internal override void OnUpdateIsClickable(GroundOverlay outerItem, NativeGroundOverlay nativeItem)
+        {
+            nativeItem.Clickable = outerItem.IsClickable;
+        }
+
+        internal override void OnUpdateTransparency(GroundOverlay outerItem, NativeGroundOverlay nativeItem)
+        {
+            nativeItem.Transparency = outerItem.Transparency;
         }
     }
 }

@@ -12,7 +12,7 @@ using NativePolygon = Android.Gms.Maps.Model.Polygon;
 
 namespace Xamarin.Forms.GoogleMaps.Logics.Android
 {
-    internal class PolygonLogic : DefaultLogic<Polygon, NativePolygon, GoogleMap>
+    internal class PolygonLogic : DefaultPolygonLogic<NativePolygon, GoogleMap>
     {
         protected override IList<Polygon> GetItems(Map map) => map.Polygons;
 
@@ -103,31 +103,25 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
             targetOuterItem?.SendTap();
         }
 
-        protected override void OnItemPropertyChanged(object sender, PropertyChangedEventArgs e)
+        internal override void OnUpdateIsClickable(Polygon outerItem, NativePolygon nativeItem)
         {
-            base.OnItemPropertyChanged(sender, e);
-            var polygon = sender as Polygon;
-            var nativePolygon = polygon?.NativeObject as NativePolygon;
+            nativeItem.Clickable = outerItem.IsClickable;
+        }
 
-            if (nativePolygon == null)
-                return;
+        internal override void OnUpdateStrokeColor(Polygon outerItem, NativePolygon nativeItem)
+        {
+            nativeItem.StrokeColor = outerItem.StrokeColor.ToAndroid();
+        }
 
-            if (e.PropertyName == Polygon.StrokeWidthProperty.PropertyName)
-            {
-                nativePolygon.StrokeWidth = polygon.StrokeWidth;
-            }
-            else if (e.PropertyName == Polygon.StrokeColorProperty.PropertyName)
-            {
-                nativePolygon.StrokeColor = polygon.StrokeColor.ToAndroid();
-            }
-            else if (e.PropertyName == Polygon.FillColorProperty.PropertyName)
-            {
-                nativePolygon.FillColor = polygon.FillColor.ToAndroid();
-            }
-            else if (e.PropertyName == Polygon.IsClickableProperty.PropertyName)
-            {
-                nativePolygon.Clickable = polygon.IsClickable;
-            }
+        internal override void OnUpdateStrokeWidth(Polygon outerItem, NativePolygon nativeItem)
+        {
+            // TODO: convert from px to pt. Is this collect? (looks like same iOS Maps)
+            nativeItem.StrokeWidth = outerItem.StrokeWidth * this.ScaledDensity;
+        }
+
+        internal override void OnUpdateFillColor(Polygon outerItem, NativePolygon nativeItem)
+        {
+            nativeItem.FillColor = outerItem.FillColor.ToAndroid();
         }
     }
 }

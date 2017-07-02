@@ -81,6 +81,9 @@
     <Compile Include="UiSettings.cs" />
     <Compile Include="Logics\BaseUiSettingsLogic.cs" />
     <Compile Include="MapStyle.cs" />
+    <Compile Include="Logics\DefaultPolylineLogic.cs" />
+    <Compile Include="Logics\DefaultPolygonLogic.cs" />
+    <Compile Include="Logics\DefaultGroundOverlayLogic.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
