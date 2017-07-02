@@ -115,6 +115,7 @@
     <Compile Include="GeocoderBackend.cs" />
     <Compile Include="Logics\CameraLogic.cs" />
     <Compile Include="Logics\PinLogic.cs" />
+    <Compile Include="Logics\PolylineLogic.cs" />
     <Compile Include="Logics\TileLayerLogic.cs" />
     <Compile Include="Logics\UiSettingsLogic.cs" />
     <Compile Include="MapRenderer.cs" />
