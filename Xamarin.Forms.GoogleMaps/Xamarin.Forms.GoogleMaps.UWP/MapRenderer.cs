@@ -52,6 +52,7 @@ namespace Xamarin.Forms.Maps.WinRT
             _logics = new BaseLogic<MapControl>[]
             {
                 new PinLogic(),
+                new PolylineLogic(),
                 new TileLayerLogic(),
             };
         }
