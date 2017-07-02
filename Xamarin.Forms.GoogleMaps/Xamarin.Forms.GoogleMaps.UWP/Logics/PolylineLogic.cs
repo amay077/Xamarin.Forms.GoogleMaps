@@ -8,7 +8,7 @@ using Xamarin.Forms.Platform.UWP;
 
 namespace Xamarin.Forms.GoogleMaps.Logics.UWP
 {
-    internal class PolylineLogic : DefaultLogic<Polyline, MapPolyline, MapControl>
+    internal class PolylineLogic : DefaultPolylineLogic<MapPolyline, MapControl>
     {
         internal override void Register(MapControl oldNativeMap, Map oldMap, MapControl newNativeMap, Map newMap)
         {
@@ -85,33 +85,29 @@ namespace Xamarin.Forms.GoogleMaps.Logics.UWP
             return polyline;
         }
 
-        protected override void OnItemPropertyChanged(object sender, PropertyChangedEventArgs e)
+        internal override void OnUpdateIsClickable(Polyline outerItem, MapPolyline nativeItem)
         {
-            base.OnItemPropertyChanged(sender, e);
-            var polyline = sender as Polyline;
-            var nativePolyline = polyline?.NativeObject as MapPolyline;
+        }
 
-            if (nativePolyline == null)
-                return;
+        internal override void OnUpdateStrokeColor(Polyline outerItem, MapPolyline nativeItem)
+        {
+            var color = outerItem.StrokeColor;
 
-            if (e.PropertyName == Polyline.StrokeWidthProperty.PropertyName)
-            {
-                nativePolyline.StrokeThickness = polyline.StrokeWidth;
-            }
-            else if (e.PropertyName == Polyline.StrokeColorProperty.PropertyName)
-            {
-                var color = polyline.StrokeColor;
+            nativeItem.StrokeColor = Windows.UI.Color.FromArgb(
+                (byte)(color.A * 255),
+                (byte)(color.R * 255),
+                (byte)(color.G * 255),
+                (byte)(color.B * 255));
+        }
 
-                nativePolyline.StrokeColor = Windows.UI.Color.FromArgb(
-                    (byte)(color.A * 255),
-                    (byte)(color.R * 255),
-                    (byte)(color.G * 255),
-                    (byte)(color.B * 255));
-            }
-            else if (e.PropertyName == Polyline.ZIndexProperty.PropertyName)
-            {
-                nativePolyline.ZIndex = polyline.ZIndex;
-            }
+        internal override void OnUpdateStrokeWidth(Polyline outerItem, MapPolyline nativeItem)
+        {
+            nativeItem.StrokeThickness = outerItem.StrokeWidth;
+        }
+
+        internal override void OnUpdateZIndex(Polyline outerItem, MapPolyline nativeItem)
+        {
+            nativeItem.ZIndex = outerItem.ZIndex;
         }
     }
 }
