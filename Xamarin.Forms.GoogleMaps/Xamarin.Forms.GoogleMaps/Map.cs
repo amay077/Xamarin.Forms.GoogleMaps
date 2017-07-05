@@ -16,6 +16,7 @@ namespace Xamarin.Forms.GoogleMaps
     {
         public static readonly BindableProperty MapTypeProperty = BindableProperty.Create(nameof(MapType), typeof(MapType), typeof(Map), default(MapType));
 
+#pragma warning disable CS0618 // Type or member is obsolete
         public static readonly BindableProperty IsShowingUserProperty = BindableProperty.Create(nameof(IsShowingUser), typeof(bool), typeof(Map), default(bool));
 
         public static readonly BindableProperty MyLocationEnabledProperty = BindableProperty.Create(nameof(MyLocationEnabled), typeof(bool), typeof(Map), default(bool));
@@ -25,6 +26,7 @@ namespace Xamarin.Forms.GoogleMaps
         public static readonly BindableProperty HasZoomEnabledProperty = BindableProperty.Create(nameof(HasZoomEnabled), typeof(bool), typeof(Map), true);
 
         public static readonly BindableProperty HasRotationEnabledProperty = BindableProperty.Create(nameof(HasRotationEnabled), typeof(bool), typeof(Map), true);
+#pragma warning restore CS0618 // Type or member is obsolete
 
         public static readonly BindableProperty SelectedPinProperty = BindableProperty.Create(nameof(SelectedPin), typeof(Pin), typeof(Map), default(Pin), defaultBindingMode: BindingMode.TwoWay);
 
@@ -94,18 +96,21 @@ namespace Xamarin.Forms.GoogleMaps
             _groundOverlays.CollectionChanged += GroundOverlays_CollectionChanged;
         }
 
+        [Obsolete("Please use Map.UiSettings.ScrollGesturesEnabled instead of this")]
         public bool HasScrollEnabled
         {
             get { return (bool)GetValue(HasScrollEnabledProperty); }
             set { SetValue(HasScrollEnabledProperty, value); }
         }
 
+        [Obsolete("Please use Map.UiSettings.ZoomGesturesEnabled and ZoomControlsEnabled instead of this")]
         public bool HasZoomEnabled
         {
             get { return (bool)GetValue(HasZoomEnabledProperty); }
             set { SetValue(HasZoomEnabledProperty, value); }
         }
 
+        [Obsolete("Please use Map.UiSettings.RotateGesturesEnabled instead of this")]
         public bool HasRotationEnabled
         {
             get { return (bool)GetValue(HasRotationEnabledProperty); }
@@ -124,6 +129,7 @@ namespace Xamarin.Forms.GoogleMaps
             set { SetValue(IndoorEnabledProperty, value);}
         }
 
+        [Obsolete("Please use Map.MyLocationEnabled and Map.UiSettings.MyLocationButtonEnabled instead of this")]
         public bool IsShowingUser
         {
             get { return (bool)GetValue(IsShowingUserProperty); }
