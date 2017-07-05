@@ -1,10 +1,14 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 
-namespace Xamarin.Forms.GoogleMaps.Internals
+namespace Xamarin.Forms.GoogleMaps.Helpers
 {
-    internal sealed class CameraUpdateConverter : TypeConverter
+    public sealed class CameraUpdateConverter : TypeConverter
     {
+        internal CameraUpdateConverter()
+        {
+        }
+
         public override bool CanConvertFrom(Type sourceType)
         {
             return sourceType == typeof(CameraUpdate);
