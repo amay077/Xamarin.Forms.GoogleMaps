@@ -13,11 +13,6 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
         protected override void OnUpdateRotateGesturesEnabled()
         {
             NativeMap.Settings.RotateGestures = Map.UiSettings.RotateGesturesEnabled;
-
-            if (Map.HasRotationEnabled != Map.UiSettings.RotateGesturesEnabled)
-            {
-                Map.HasRotationEnabled = Map.UiSettings.RotateGesturesEnabled;
-            }
         }
 
         protected override void OnUpdateMyLocationButtonEnabled()
@@ -33,11 +28,6 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
         protected override void OnUpdateScrollGesturesEnabled()
         {
             NativeMap.Settings.ScrollGestures = Map.UiSettings.ScrollGesturesEnabled;
-
-            if (Map.HasScrollEnabled != Map.UiSettings.ScrollGesturesEnabled)
-            {
-                Map.HasScrollEnabled = Map.UiSettings.ScrollGesturesEnabled;
-            }
         }
 
         protected override void OnUpdateTiltGesturesEnabled()

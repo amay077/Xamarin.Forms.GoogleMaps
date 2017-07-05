@@ -14,11 +14,6 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
         protected override void OnUpdateRotateGesturesEnabled()
         {
             NativeMap.UiSettings.RotateGesturesEnabled = Map.UiSettings.RotateGesturesEnabled;
-
-            if (Map.HasRotationEnabled != Map.UiSettings.RotateGesturesEnabled)
-            {
-                Map.HasRotationEnabled = Map.UiSettings.RotateGesturesEnabled;
-            }
         }
 
         protected override void OnUpdateMyLocationButtonEnabled()
@@ -34,11 +29,6 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
         protected override void OnUpdateScrollGesturesEnabled()
         {
             NativeMap.UiSettings.ScrollGesturesEnabled = Map.UiSettings.ScrollGesturesEnabled;
-
-            if (Map.HasScrollEnabled != Map.UiSettings.ScrollGesturesEnabled)
-            {
-                Map.HasScrollEnabled = Map.UiSettings.ScrollGesturesEnabled;
-            }
         }
 
         protected override void OnUpdateTiltGesturesEnabled()
