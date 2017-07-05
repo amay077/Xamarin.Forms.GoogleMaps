@@ -77,13 +77,13 @@
     <Compile Include="Internals\DelegateAnimationCallback.cs" />
     <Compile Include="Internals\CameraUpdateType.cs" />
     <Compile Include="Extensions\MapSpanExtensions.cs" />
-    <Compile Include="Internals\CameraUpdateConverter.cs" />
     <Compile Include="UiSettings.cs" />
     <Compile Include="Logics\BaseUiSettingsLogic.cs" />
     <Compile Include="MapStyle.cs" />
     <Compile Include="Logics\DefaultPolylineLogic.cs" />
     <Compile Include="Logics\DefaultPolygonLogic.cs" />
     <Compile Include="Logics\DefaultGroundOverlayLogic.cs" />
+    <Compile Include="Helpers\CameraUpdateConverter.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
@@ -100,6 +100,9 @@
   <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Helpers\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="$(SolutionDir)\packages\Xamarin.Forms.2.3.4.247\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('$(SolutionDir)\packages\Xamarin.Forms.2.3.4.247\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
