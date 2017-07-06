@@ -94,6 +94,11 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
         {
             nativeItem.FillColor = outerItem.FillColor.ToUIColor();
         }
+
+        internal override void OnUpdateZIndex(Polygon outerItem, NativePolygon nativeItem)
+        {
+            nativeItem.ZIndex = outerItem.ZIndex;
+        }
     }
 }
 

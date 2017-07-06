@@ -20,11 +20,13 @@ namespace Xamarin.Forms.GoogleMaps.Logics
             else if (e.PropertyName == Polygon.StrokeColorProperty.PropertyName) OnUpdateStrokeColor(outerItem, nativeItem);
             else if (e.PropertyName == Polygon.StrokeWidthProperty.PropertyName) OnUpdateStrokeWidth(outerItem, nativeItem);
             else if (e.PropertyName == Polygon.FillColorProperty.PropertyName) OnUpdateFillColor(outerItem, nativeItem);
+            else if (e.PropertyName == Polygon.ZIndexProperty.PropertyName) OnUpdateZIndex(outerItem, nativeItem);
         }
 
         internal abstract void OnUpdateIsClickable(Polygon outerItem, TNative nativeItem);
         internal abstract void OnUpdateStrokeColor(Polygon outerItem, TNative nativeItem);
         internal abstract void OnUpdateStrokeWidth(Polygon outerItem, TNative nativeItem);
         internal abstract void OnUpdateFillColor(Polygon outerItem, TNative nativeItem);
+        internal abstract void OnUpdateZIndex(Polygon outerItem, TNative nativeItem);
     }
 }

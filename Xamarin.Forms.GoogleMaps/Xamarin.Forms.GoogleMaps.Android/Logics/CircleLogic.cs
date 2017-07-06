@@ -92,6 +92,9 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
 
         protected override void OnUpdateIsClickable(Circle outerItem, NativeCircle nativeItem)
             => nativeItem.Clickable = outerItem.IsClickable;
+
+        protected override void OnUpdateZIndex(Circle outerItem, NativeCircle nativeItem)
+            => nativeItem.ZIndex = outerItem.ZIndex;
     }
 }
 
