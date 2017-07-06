@@ -13,6 +13,7 @@ namespace Xamarin.Forms.GoogleMaps
 
         public static readonly BindableProperty CenterProperty = BindableProperty.Create(nameof(Center), typeof(Position), typeof(Circle), default(Position));
         public static readonly BindableProperty RadiusProperty = BindableProperty.Create(nameof(Radius), typeof(Distance), typeof(Circle), Distance.FromMeters(1));
+        public static readonly BindableProperty ZIndexProperty = BindableProperty.Create(nameof(ZIndex), typeof(int), typeof(Circle), 0);
 
         public float StrokeWidth
         {
@@ -48,6 +49,12 @@ namespace Xamarin.Forms.GoogleMaps
         {
             get { return (Distance)GetValue(RadiusProperty); }
             set { SetValue(RadiusProperty, value); }
+        }
+
+        public int ZIndex
+        {
+            get { return (int)GetValue(ZIndexProperty); }
+            set { SetValue(ZIndexProperty, value); }
         }
 
         public object Tag { get; set; }

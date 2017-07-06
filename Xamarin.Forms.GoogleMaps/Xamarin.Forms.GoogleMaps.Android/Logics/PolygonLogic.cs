@@ -123,6 +123,11 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
         {
             nativeItem.FillColor = outerItem.FillColor.ToAndroid();
         }
+
+        internal override void OnUpdateZIndex(Polygon outerItem, NativePolygon nativeItem)
+        {
+            nativeItem.ZIndex = outerItem.ZIndex;
+        }
     }
 }
 
