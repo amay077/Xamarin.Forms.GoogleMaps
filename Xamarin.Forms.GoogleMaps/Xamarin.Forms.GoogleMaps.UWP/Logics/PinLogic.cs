@@ -57,6 +57,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.UWP
             if (Map.SelectedPin != null)
             {
                 Map.SelectedPin = null;
+                Map.SendSelectedPinChanged(null);
             }
         }
 
@@ -115,12 +116,17 @@ namespace Xamarin.Forms.GoogleMaps.Logics.UWP
 
             if (targetPin != null && !ReferenceEquals(targetPin, Map.SelectedPin))
             {
+                if (Map.SelectedPin != null)
+                {
+                    Map.SendSelectedPinChanged(null);
+                }
                 Map.SelectedPin = targetPin;
             }
             else
             {
                 Map.SelectedPin = null;
             }
+            Map.SendSelectedPinChanged(Map.SelectedPin);
         }
 
         Pin LookupPin(PushPin marker)
