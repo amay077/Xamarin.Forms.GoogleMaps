@@ -1,5 +1,17 @@
 Xamarin.Forms.GoogleMaps Release Notes
 ----
+# 2.1.0-beta7
+
+## New Features
+
+* #331 [Android/iOS]Add Polygon.ZIndex and Circle.ZIndex property 
+* PR#342 [UWP]Support SelectedPinChanged
+
+## Bug Fixes
+
+* #310 [Android/iOS]Fix MethodAccessException in CameraUpdateConverter
+* #335 [Android/iOS]Fix HasScrollEnabled not working correctly
+
 # 2.1.0-beta6
 
 ## New Features
