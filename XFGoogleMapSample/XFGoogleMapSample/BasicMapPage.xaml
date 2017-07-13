@@ -36,8 +36,6 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
                     <Grid.ColumnDefinitions>
@@ -55,173 +53,153 @@
                             Grid.Row="0"
                             Grid.Column="1" />
 
-                    <Label Text="HasZoomEnabled"
+                    <Label Text="MyLocationEnabled"
                            VerticalOptions="Center"
                            Grid.Row="1"
                            Grid.Column="0" />
-                    <Switch x:Name="switchHasZoomEnabled"
+                    <Switch x:Name="switchMyLocationEnabled"
                             VerticalOptions="Center"
                             HorizontalOptions="Start"
                             Grid.Row="1"
                             Grid.Column="1" />
 
-                    <Label Text="HasScrollEnabled"
+                    <Label Text="UiSettings.MyLocationButtonEnabled"
                            VerticalOptions="Center"
                            Grid.Row="2"
                            Grid.Column="0" />
-                    <Switch x:Name="switchHasScrollEnabled"
+                    <Switch x:Name="switchMyLocationButtonEnabled"
                             VerticalOptions="Center"
                             HorizontalOptions="Start"
                             Grid.Row="2"
                             Grid.Column="1" />
 
-                    <Label Text="MyLocationEnabled"
+                    <Label Text="Handle MyLocationButton"
                            VerticalOptions="Center"
                            Grid.Row="3"
                            Grid.Column="0" />
-                    <Switch x:Name="switchMyLocationEnabled"
+                    <Switch x:Name="switchHandleMyLocationButton"
                             VerticalOptions="Center"
                             HorizontalOptions="Start"
                             Grid.Row="3"
                             Grid.Column="1" />
 
-                    <Label Text="Handle MyLocationButton"
+                    <Label Text="UiSettings.ScrollGesturesEnabled"
                            VerticalOptions="Center"
                            Grid.Row="4"
                            Grid.Column="0" />
-                    <Switch x:Name="switchHandleMyLocationButton"
+                    <Switch x:Name="switchScrollGesturesEnabled"
                             VerticalOptions="Center"
                             HorizontalOptions="Start"
                             Grid.Row="4"
                             Grid.Column="1" />
 
-                    <Label Text="IsTrafficEnabled"
+                    <Label Text="UiSettings.ZoomGesturesEnabled"
                            VerticalOptions="Center"
                            Grid.Row="5"
                            Grid.Column="0" />
-                    <Switch x:Name="switchIsTrafficEnabled"
+                    <Switch x:Name="switchZoomGesturesEnabled"
                             VerticalOptions="Center"
                             HorizontalOptions="Start"
                             Grid.Row="5"
                             Grid.Column="1" />
                     
-                    <Label Text="IsIndoorEnabled"
+                    <Label Text="UiSettings.ZoomControlsEnabled"
                            VerticalOptions="Center"
                            Grid.Row="6"
                            Grid.Column="0" />
-                    <Switch x:Name="switchIndoorEnabled"
+                    <Switch x:Name="switchZoomControlsEnabled"
                             VerticalOptions="Center"
                             HorizontalOptions="Start"
                             Grid.Row="6"
                             Grid.Column="1" />
 
-                    <Label Text="UiSettings.CompassEnabled"
+                    <Label Text="UiSettings.RotateGesturesEnabled"
                            VerticalOptions="Center"
                            Grid.Row="7"
                            Grid.Column="0" />
-                    <Switch x:Name="switchCompassEnabled"
+                    <Switch x:Name="switchRotateGesturesEnabled"
                             VerticalOptions="Center"
                             HorizontalOptions="Start"
                             Grid.Row="7"
                             Grid.Column="1" />
 
-                    <Label Text="UiSettings.RotateGesturesEnabled"
+                    <Label Text="UiSettings.CompassEnabled"
                            VerticalOptions="Center"
                            Grid.Row="8"
                            Grid.Column="0" />
-                    <Switch x:Name="switchRotateGesturesEnabled"
+                    <Switch x:Name="switchCompassEnabled"
                             VerticalOptions="Center"
                             HorizontalOptions="Start"
                             Grid.Row="8"
                             Grid.Column="1" />
 
-                    <Label Text="UiSettings.MyLocationButtonEnabled"
+                    <Label Text="UiSettings.TiltGesturesEnabled"
                            VerticalOptions="Center"
                            Grid.Row="9"
                            Grid.Column="0" />
-                    <Switch x:Name="switchMyLocationButtonEnabled"
+                    <Switch x:Name="switchTiltGesturesEnabled"
                             VerticalOptions="Center"
                             HorizontalOptions="Start"
                             Grid.Row="9"
                             Grid.Column="1" />
 
-                    <Label Text="UiSettings.IndoorLevelPickerEnabled"
+                    <Label Text="IsIndoorEnabled"
                            VerticalOptions="Center"
                            Grid.Row="10"
                            Grid.Column="0" />
-                    <Switch x:Name="switchIndoorLevelPickerEnabled"
+                    <Switch x:Name="switchIndoorEnabled"
                             VerticalOptions="Center"
                             HorizontalOptions="Start"
                             Grid.Row="10"
                             Grid.Column="1" />
 
-                    <Label Text="UiSettings.ScrollGesturesEnabled"
+                    <Label Text="UiSettings.IndoorLevelPickerEnabled"
                            VerticalOptions="Center"
                            Grid.Row="11"
                            Grid.Column="0" />
-                    <Switch x:Name="switchScrollGesturesEnabled"
+                    <Switch x:Name="switchIndoorLevelPickerEnabled"
                             VerticalOptions="Center"
                             HorizontalOptions="Start"
                             Grid.Row="11"
                             Grid.Column="1" />
 
-                    <Label Text="UiSettings.TiltGesturesEnabled"
+                    <Label Text="IsTrafficEnabled"
                            VerticalOptions="Center"
                            Grid.Row="12"
                            Grid.Column="0" />
-                    <Switch x:Name="switchTiltGesturesEnabled"
+                    <Switch x:Name="switchIsTrafficEnabled"
                             VerticalOptions="Center"
                             HorizontalOptions="Start"
                             Grid.Row="12"
                             Grid.Column="1" />
 
-                    <Label Text="UiSettings.ZoomControlsEnabled"
-                           VerticalOptions="Center"
-                           Grid.Row="13"
-                           Grid.Column="0" />
-                    <Switch x:Name="switchZoomControlsEnabled"
-                            VerticalOptions="Center"
-                            HorizontalOptions="Start"
-                            Grid.Row="13"
-                            Grid.Column="1" />
-
-                    <Label Text="UiSettings.ZoomGesturesEnabled"
-                           VerticalOptions="Center"
-                           Grid.Row="14"
-                           Grid.Column="0" />
-                    <Switch x:Name="switchZoomGesturesEnabled"
-                            VerticalOptions="Center"
-                            HorizontalOptions="Start"
-                            Grid.Row="14"
-                            Grid.Column="1" />
-                    
                     <Entry
                         x:Name="entryAddress"
                         VerticalOptions="Center"
                         Text="new york"
-                        Grid.Row="15"
+                        Grid.Row="13"
                         Grid.Column="0" />
                     <Button
                         x:Name="buttonGeocode"
                         VerticalOptions="Center"
                         Text="GEOCODE"
-                        Grid.Row="15"
+                        Grid.Row="13"
                         Grid.Column="1" />
 
                     <Label x:Name="labelStatus"
-                           Grid.Row="16"
+                           Grid.Row="14"
                            Grid.Column="0"
                            Grid.ColumnSpan="2" />
 
                     <Image x:Name="imageSnapshot"
                            Margin="5"
-                           Grid.Row="17"
+                           Grid.Row="15"
                            Grid.Column="0"
                            Grid.ColumnSpan="2" />
                     <Button x:Name="buttonTakeSnapshot"
                             VerticalOptions="Center"
                             Text="Take Snapshot"
-                            Grid.Row="17"
+                            Grid.Row="15"
                             Grid.Column="0"
                             Grid.ColumnSpan="2" />
 
