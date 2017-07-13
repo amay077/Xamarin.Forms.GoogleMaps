@@ -3,8 +3,20 @@
 	<metadata minClientVersion="2.8.3">
 		<id>Xamarin.Forms.GoogleMaps</id>
 		<title>Xamarin.Forms.GoogleMaps</title>
-		<version>2.1.0-beta6</version>
+		<version>2.1.0-beta7</version>
 		<releaseNotes>
+
+# 2.1.0-beta7
+
+## New Features
+
+* #331 [Android/iOS]Add Polygon.ZIndex and Circle.ZIndex property 
+* PR#342 [UWP]Support SelectedPinChanged
+
+## Bug Fixes
+
+* #310 [Android/iOS]Fix MethodAccessException in CameraUpdateConverter
+* #335 [Android/iOS]Fix HasScrollEnabled not working correctly
 
 # 2.1.0-beta6
 
