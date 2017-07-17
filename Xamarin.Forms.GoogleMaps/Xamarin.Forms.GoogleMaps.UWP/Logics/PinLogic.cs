@@ -35,6 +35,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.UWP
                 {
                     pin.Tapped -= Pushpin_Tapped;
                     pin.Holding -= Pushpin_Holding;
+                    pin.InfoWindowClicked -= PushpinOnInfoWindowClicked;
                 }
             }
         }
@@ -145,6 +146,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.UWP
 
             nativePushpin.Tapped -= Pushpin_Tapped;
             nativePushpin.Holding -= Pushpin_Holding;
+            nativePushpin.InfoWindowClicked -= PushpinOnInfoWindowClicked;
 
             NativeMap.Children.Remove(nativePushpin);
 
