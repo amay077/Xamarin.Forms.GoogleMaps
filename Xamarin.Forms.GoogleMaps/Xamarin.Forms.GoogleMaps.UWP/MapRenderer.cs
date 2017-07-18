@@ -68,6 +68,7 @@ namespace Xamarin.Forms.Maps.WinRT
                 var mapModel = e.OldElement;
                 mapModel.OnSnapshot -= OnSnapshot;
                 _cameraLogic.Unregister();
+                _uiSettingsLogic.Unregister();
 
                 if (oldMapView != null)
                 {
