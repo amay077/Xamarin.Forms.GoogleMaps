@@ -61,6 +61,8 @@ namespace XFGoogleMapSample
             {
                 var i = pickerZIndex.SelectedIndex;
                 map.Polylines[i].ZIndex = map.Polylines.Max(p => p.ZIndex) + 1;
+                map.Polygons[i].ZIndex = map.Polygons.Max(p => p.ZIndex) + 1;
+                map.Circles[i].ZIndex = map.Circles.Max(p => p.ZIndex) + 1;
             };
             pickerZIndex.SelectedIndex = 0;
 
