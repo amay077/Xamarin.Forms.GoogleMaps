@@ -1,60 +1,27 @@
 Xamarin.Forms.GoogleMaps Release Notes
 ----
-# 2.1.0-beta7
+# 2.1.0
 
 ## New Features
 
+* #308 [Android/iOS]Add Map.InfoWindowLongClicked event
+* #8 Add UiSettings class
+* #17 [Android/iOS]Add Circle.Clicked event 
+* #117 [Android/iOS]Support map styling
+* #313 [Android/iOS/UWP]Add MapType Terrain
+* #325 [Android/iOS/UWP]Add Polyline.ZIndex property
+* #327 [UWP]Support Pin.InfoWindowClicked event
+* #326 [UWP]Support Polyline
 * #331 [Android/iOS]Add Polygon.ZIndex and Circle.ZIndex property 
 * PR#342 [UWP]Support SelectedPinChanged
 
 ## Bug Fixes
 
-* #310 [Android/iOS]Fix MethodAccessException in CameraUpdateConverter
-* #335 [Android/iOS]Fix HasScrollEnabled not working correctly
-
-# 2.1.0-beta6
-
-## New Features
-
-* #313 [Android/iOS/UWP]Add MapType Terrain
-* #325 [Android/iOS/UWP]Add Polyline.ZIndex property
-* #327 [UWP]Support Pin.InfoWindowClicked event
-* #326 [UWP]Support Polyline
-
-## Bug Fixes
-
 * PR#318 [UWP]Fix memory leak when remove pins
 * #332 [iOS]Changes Polyline and Polygon property does not work at after added
-
-# 2.1.0-beta5
-
-## New Features
-
-* #117 [Android/iOS]Support map styling
-
-# 2.1.0-beta4
-
-## New Features
-
-* #17 [Android/iOS]Add Circle.Clicked event(Fix missing some implementations)
-
-# 2.1.0-beta3
-
-## New Features
-
-* #17 [Android/iOS]Add Circle.Clicked event 
-
-# 2.1.0-beta2
-
-## New Features
-
-* #8 Add UiSettings class
-
-# 2.1.0-beta1
-
-## New Features
-
-* #308 [Android/iOS]Map.InfoWindowLongClicked event
+* #310 [Android/iOS]Fix MethodAccessException in CameraUpdateConverter
+* #335 [Android/iOS]Fix HasScrollEnabled not working correctly
+* PR#350 [UWP]Fix small memory leaks
 
 # 2.0.0
 
