@@ -312,7 +312,6 @@ namespace Xamarin.Forms.GoogleMaps.Android
 
         private void UpdateHasZoomEnabled()
         {
-            NativeMap.UiSettings.ZoomControlsEnabled = Map.HasZoomEnabled;
             NativeMap.UiSettings.ZoomGesturesEnabled = Map.HasZoomEnabled;
         }
 
