@@ -6,6 +6,12 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
 {
     internal sealed class UiSettingsLogic : BaseUiSettingsLogic<GoogleMap>
     {
+        public override void Initialize()
+        {
+            base.Initialize();
+            NativeMap.UiSettings.MapToolbarEnabled = false;
+        }
+
         protected override void OnUpdateCompassEnabled()
         {
             NativeMap.UiSettings.CompassEnabled = Map.UiSettings.CompassEnabled;
