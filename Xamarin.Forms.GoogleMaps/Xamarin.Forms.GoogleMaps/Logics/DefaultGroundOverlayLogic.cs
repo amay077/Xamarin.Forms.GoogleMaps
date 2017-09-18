@@ -21,6 +21,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics
             else if (e.PropertyName == GroundOverlay.IconProperty.PropertyName) OnUpdateIcon(outerItem, nativeItem);
             else if (e.PropertyName == GroundOverlay.IsClickableProperty.PropertyName) OnUpdateIsClickable(outerItem, nativeItem);
             else if (e.PropertyName == GroundOverlay.TransparencyProperty.PropertyName) OnUpdateTransparency(outerItem, nativeItem);
+            else if (e.PropertyName == GroundOverlay.ZIndexProperty.PropertyName) OnUpdateZIndex(outerItem, nativeItem);
         }
 
         internal abstract void OnUpdateBearing(GroundOverlay outerItem, TNative nativeItem);
@@ -28,5 +29,6 @@ namespace Xamarin.Forms.GoogleMaps.Logics
         internal abstract void OnUpdateIcon(GroundOverlay outerItem, TNative nativeItem);
         internal abstract void OnUpdateIsClickable(GroundOverlay outerItem, TNative nativeItem);
         internal abstract void OnUpdateTransparency(GroundOverlay outerItem, TNative nativeItem);
+        internal abstract void OnUpdateZIndex(Polygon outerItem, TNative nativeItem);
     }
 }

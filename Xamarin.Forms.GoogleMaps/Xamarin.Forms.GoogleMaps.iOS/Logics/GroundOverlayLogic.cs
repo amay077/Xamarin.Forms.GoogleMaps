@@ -85,6 +85,11 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
         {
             nativeItem.Opacity = 1f - outerItem.Transparency;
         }
+
+        internal override void OnUpdateZIndex(Polygon outerItem, NativeGroundOverlay nativeItem)
+        {
+            nativeItem.ZIndex = outerItem.ZIndex;
+        }
     }
 }
 
