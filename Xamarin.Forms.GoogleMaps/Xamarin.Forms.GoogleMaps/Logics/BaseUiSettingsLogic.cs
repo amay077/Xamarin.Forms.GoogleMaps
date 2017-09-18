@@ -64,7 +64,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics
             this.Map.UiSettings.PropertyChanged -= UiSettings_PropertyChanged;
         }
 
-        public void Initialize()
+        public virtual void Initialize()
         {
             OnUpdateCompassEnabled();
             OnUpdateRotateGesturesEnabled();
