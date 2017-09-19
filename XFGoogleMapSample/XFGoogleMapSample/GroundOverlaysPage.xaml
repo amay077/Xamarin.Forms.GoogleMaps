@@ -18,6 +18,7 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
              
                 <Grid.ColumnDefinitions>
@@ -72,6 +73,29 @@
                     Grid.Row="3"
                     Grid.Column="1" />
                 
+                <Label
+                    Grid.Row="4"
+                    Grid.Column="0"
+                    VerticalTextAlignment="Center"
+                    HorizontalTextAlignment="End"
+                    Text="ZIndex:" />
+                <StackLayout
+                    Grid.Row="4"
+                    Grid.Column="1"
+                    Orientation="Horizontal"
+                    VerticalOptions="Start"
+                    HorizontalOptions="FillAndExpand">
+                    <Button
+                        x:Name="buttonToFront"
+                        VerticalOptions="Start"
+                        HorizontalOptions="FillAndExpand"
+                        Text="To Front"/>
+                    <Button
+                        x:Name="buttonToBack"
+                        VerticalOptions="Start"
+                        HorizontalOptions="FillAndExpand"
+                        Text="To Back"/>
+                </StackLayout>
             </Grid>         
             <maps:Map x:Name="map" 
                     VerticalOptions="FillAndExpand"/>

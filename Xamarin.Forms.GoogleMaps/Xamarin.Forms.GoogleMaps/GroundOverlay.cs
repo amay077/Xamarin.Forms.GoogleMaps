@@ -10,6 +10,7 @@ namespace Xamarin.Forms.GoogleMaps
         public static readonly BindableProperty BoundsProperty = BindableProperty.Create(nameof(Bounds), typeof(Bounds), typeof(GroundOverlay), default(Bounds));
         public static readonly BindableProperty BearingProperty = BindableProperty.Create(nameof(Bearing), typeof(float), typeof(GroundOverlay), 0f);
         public static readonly BindableProperty IsClickableProperty = BindableProperty.Create(nameof(IsClickable), typeof(bool), typeof(GroundOverlay), false);
+        public static readonly BindableProperty ZIndexProperty = BindableProperty.Create(nameof(ZIndex), typeof(int), typeof(GroundOverlay), 0);
 
         public BitmapDescriptor Icon
         {
@@ -39,6 +40,12 @@ namespace Xamarin.Forms.GoogleMaps
         {
             get { return (bool)GetValue(IsClickableProperty); }
             set { SetValue(IsClickableProperty, value); }
+        }
+
+        public int ZIndex
+        {
+            get { return (int)GetValue(ZIndexProperty); }
+            set { SetValue(ZIndexProperty, value); }
         }
 
         public object Tag { get; set; }

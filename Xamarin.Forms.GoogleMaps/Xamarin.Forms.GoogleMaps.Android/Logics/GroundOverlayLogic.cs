@@ -41,7 +41,8 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
                 .Clickable(outerItem.IsClickable)
                 .InvokeBearing(outerItem.Bearing)
                 .InvokeImage(outerItem.Icon.ToBitmapDescriptor())
-                .InvokeTransparency(outerItem.Transparency);
+                .InvokeTransparency(outerItem.Transparency)
+                .InvokeZIndex(outerItem.ZIndex);
 
             var overlay = NativeMap.AddGroundOverlay(opts);
 
@@ -98,6 +99,11 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
         internal override void OnUpdateTransparency(GroundOverlay outerItem, NativeGroundOverlay nativeItem)
         {
             nativeItem.Transparency = outerItem.Transparency;
+        }
+
+        internal override void OnUpdateZIndex(GroundOverlay outerItem, NativeGroundOverlay nativeItem)
+        {
+            nativeItem.ZIndex = outerItem.ZIndex;
         }
     }
 }
