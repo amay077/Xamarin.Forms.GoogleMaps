@@ -38,8 +38,9 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
             var nativeOverlay = NativeGroundOverlay.GetGroundOverlay(
                 outerItem.Bounds.ToCoordinateBounds(), outerItem.Icon.ToUIImage());
             nativeOverlay.Bearing = outerItem.Bearing;
-            nativeOverlay.Opacity = outerItem.Transparency;
+            nativeOverlay.Opacity = 1 - outerItem.Transparency;
             nativeOverlay.Tappable = outerItem.IsClickable;
+            nativeOverlay.ZIndex = outerItem.ZIndex;
 
             outerItem.NativeObject = nativeOverlay;
             nativeOverlay.Map = NativeMap;
