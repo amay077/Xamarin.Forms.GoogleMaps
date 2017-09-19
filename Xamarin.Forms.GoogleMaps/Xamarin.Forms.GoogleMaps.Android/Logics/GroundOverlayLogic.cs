@@ -100,7 +100,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
             nativeItem.Transparency = outerItem.Transparency;
         }
 
-        internal override void OnUpdateZIndex(Polygon outerItem, NativeGroundOverlay nativeItem)
+        internal override void OnUpdateZIndex(GroundOverlay outerItem, NativeGroundOverlay nativeItem)
         {
             nativeItem.ZIndex = outerItem.ZIndex;
         }

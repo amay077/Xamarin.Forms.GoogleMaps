@@ -29,6 +29,6 @@ namespace Xamarin.Forms.GoogleMaps.Logics
         internal abstract void OnUpdateIcon(GroundOverlay outerItem, TNative nativeItem);
         internal abstract void OnUpdateIsClickable(GroundOverlay outerItem, TNative nativeItem);
         internal abstract void OnUpdateTransparency(GroundOverlay outerItem, TNative nativeItem);
-        internal abstract void OnUpdateZIndex(Polygon outerItem, TNative nativeItem);
+        internal abstract void OnUpdateZIndex(GroundOverlay outerItem, TNative nativeItem);
     }
 }
