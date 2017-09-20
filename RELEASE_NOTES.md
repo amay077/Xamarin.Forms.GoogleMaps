@@ -1,5 +1,16 @@
 Xamarin.Forms.GoogleMaps Release Notes
 ----
+# 2.1.1-beta1
+
+## New Features
+
+* #361 [Android/iOS]Add ZIndex property to GroundOverlay
+
+## Bug Fixes
+
+* #374 [Android]MapToolbar is not disappear
+* #378 [iOS]Ground Overlay not shown when added 
+
 # 2.1.0
 
 ## New Features
