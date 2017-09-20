@@ -5,10 +5,6 @@ namespace Xamarin.Forms.GoogleMaps.Helpers
 {
     public sealed class CameraUpdateConverter : TypeConverter
     {
-        internal CameraUpdateConverter()
-        {
-        }
-
         public override bool CanConvertFrom(Type sourceType)
         {
             return sourceType == typeof(CameraUpdate);
