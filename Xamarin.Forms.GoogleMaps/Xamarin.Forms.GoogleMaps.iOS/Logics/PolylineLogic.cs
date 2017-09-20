@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using Google.Maps;
+using Xamarin.Forms.GoogleMaps.iOS.Extensions;
 using Xamarin.Forms.Platform.iOS;
 using NativePolyline = Google.Maps.Polyline;
 
@@ -46,6 +47,12 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
 
             outerItem.NativeObject = nativePolyline;
             nativePolyline.Map = NativeMap;
+
+            outerItem.SetOnPositionsChanged((polyline, e) =>
+            {
+                var native = polyline.NativeObject as NativePolyline;
+                native.Path = polyline.Positions.ToMutablePath();
+            });
 
             return nativePolyline;
         }

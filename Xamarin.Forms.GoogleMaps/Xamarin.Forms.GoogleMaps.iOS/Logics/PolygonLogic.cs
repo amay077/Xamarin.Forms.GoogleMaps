@@ -48,6 +48,12 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
             outerItem.NativeObject = nativePolygon;
             nativePolygon.Map = NativeMap;
 
+            outerItem.SetOnPositionsChanged((polygon, e) =>
+            {
+                var native = polygon.NativeObject as NativePolygon;
+                native.Path = polygon.Positions.ToMutablePath();
+            });
+
             outerItem.SetOnHolesChanged((polygon, e) =>
             {
                 var native = polygon.NativeObject as NativePolygon;
