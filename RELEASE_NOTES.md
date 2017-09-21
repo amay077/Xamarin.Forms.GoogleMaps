@@ -1,5 +1,12 @@
 Xamarin.Forms.GoogleMaps Release Notes
 ----
+# 2.1.1-beta2
+
+## Bug Fixes
+
+* #237 [iOS]Fix Modifying Positions doesn't work when after added polyline or polygon
+* #379 Default Constructor not found for CameraUpdateConverter
+
 # 2.1.1-beta1
 
 ## New Features
