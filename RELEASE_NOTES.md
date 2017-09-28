@@ -1,5 +1,11 @@
 Xamarin.Forms.GoogleMaps Release Notes
 ----
+# 2.1.1-beta3
+
+## Bug Fixes
+
+* #352 [Android]NullReferenceException when page closing
+
 # 2.1.1-beta2
 
 ## Bug Fixes
