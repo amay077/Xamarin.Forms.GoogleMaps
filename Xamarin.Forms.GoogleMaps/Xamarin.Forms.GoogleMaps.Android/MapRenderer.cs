@@ -439,6 +439,11 @@ namespace Xamarin.Forms.GoogleMaps.Android
 
                 if (NativeMap != null)
                 {
+                    NativeMap.SetOnCameraChangeListener(null);
+                    NativeMap.SetOnMapClickListener(null);
+                    NativeMap.SetOnMapLongClickListener(null);
+                    NativeMap.SetOnMyLocationButtonClickListener(null);
+
                     NativeMap.MyLocationEnabled = false;
                     NativeMap.Dispose();
                 }
