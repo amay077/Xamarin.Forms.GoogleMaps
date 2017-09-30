@@ -100,18 +100,18 @@
                             HorizontalTextAlignment="Start"/>
                     </StackLayout>
 
-                  <StackLayout
+                    <StackLayout
                           Orientation="Horizontal"
                           Grid.Row="4"
                           Grid.Column="2">
-                    <Switch x:Name="switchFlat"
-                        VerticalOptions="Center"/>
-                    <Label  Text="Flat"
-                        VerticalOptions="Center"
-                        HorizontalTextAlignment="Start"/>
-                  </StackLayout>
+                        <Switch x:Name="switchFlat"
+                            VerticalOptions="Center"/>
+                        <Label  Text="Flat"
+                            VerticalOptions="Center"
+                            HorizontalTextAlignment="Start"/>
+                    </StackLayout>
 
-                  <Label  Text="Rotation with InfoWindow Anchor:"
+                    <Label  Text="Rotation with InfoWindow Anchor:"
                             HorizontalOptions="End"
                             VerticalOptions="Center"
                             Grid.Row="6"
@@ -123,7 +123,7 @@
                             Grid.Row="6"
                             Grid.Column="2" />
 
-                  <Label  Text="ZIndex:"
+                    <Label  Text="ZIndex:"
                             HorizontalOptions="End"
                             VerticalOptions="Center"
                             Grid.Row="7"
@@ -133,12 +133,12 @@
                             Text="Move to Front"
                             Grid.Row="7"
                             Grid.Column="1" />
-                    
+
                     <Button x:Name="buttonMoveToBack"
                             Text="Move to Back"
                             Grid.Row="7"
                             Grid.Column="2" />
-                    
+
                     <Label  x:Name="labelDragStatus"
                             Text="Show status when Pin drag."
                             Grid.Row="8"
