@@ -28,9 +28,10 @@ namespace Xamarin.Forms.GoogleMaps.Logics
             else if (e.PropertyName == Pin.FlatProperty.PropertyName) OnUpdateFlat(outerItem, nativeItem);
             else if (e.PropertyName == Pin.InfoWindowAnchorProperty.PropertyName) OnUpdateInfoWindowAnchor(outerItem, nativeItem);
             else if (e.PropertyName == Pin.ZIndexProperty.PropertyName) OnUpdateZIndex(outerItem, nativeItem);
+            else if (e.PropertyName == Pin.TransparencyProperty.PropertyName) OnUpdateTransparency(outerItem, nativeItem);
         }
 
-       protected abstract void OnUpdateAddress(Pin outerItem, TNative nativeItem);
+        protected abstract void OnUpdateAddress(Pin outerItem, TNative nativeItem);
 
         protected abstract void OnUpdateLabel(Pin outerItem, TNative nativeItem);
 
@@ -53,6 +54,8 @@ namespace Xamarin.Forms.GoogleMaps.Logics
         protected abstract void OnUpdateInfoWindowAnchor(Pin outerItem, TNative nativeItem);
 
         protected abstract void OnUpdateZIndex(Pin outerItem, TNative nativeItem);
+
+        protected abstract void OnUpdateTransparency(Pin outerItem, TNative nativeItem);
     }
 }
 

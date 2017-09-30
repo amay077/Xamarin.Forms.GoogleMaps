@@ -59,6 +59,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
             nativeMarker.GroundAnchor = new CGPoint(outerItem.Anchor.X, outerItem.Anchor.Y);
             nativeMarker.Flat = outerItem.Flat;
             nativeMarker.ZIndex = outerItem.ZIndex;
+            nativeMarker.Opacity = 1 - outerItem.Transparency;
 
             if (outerItem.Icon != null)
             {
@@ -310,6 +311,11 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
         protected override void OnUpdateZIndex(Pin outerItem, Marker nativeItem)
         {
             nativeItem.ZIndex = outerItem.ZIndex;
+        }
+
+        protected override void OnUpdateTransparency(Pin outerItem, Marker nativeItem)
+        {
+            nativeItem.Opacity = 1f - outerItem.Transparency;
         }
     }
 }

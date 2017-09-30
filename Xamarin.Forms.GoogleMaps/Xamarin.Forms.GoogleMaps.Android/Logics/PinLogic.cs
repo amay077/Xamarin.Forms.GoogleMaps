@@ -63,7 +63,8 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
                 .SetRotation(outerItem.Rotation)
                 .Anchor((float)outerItem.Anchor.X, (float)outerItem.Anchor.Y)
                 .InvokeZIndex(outerItem.ZIndex)
-                .Flat(outerItem.Flat);
+                .Flat(outerItem.Flat)
+                .SetAlpha(outerItem.Transparency);
 
             if (outerItem.Icon != null)
             {
@@ -336,6 +337,11 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
         protected override void OnUpdateZIndex(Pin outerItem, Marker nativeItem)
         {
             nativeItem.ZIndex = outerItem.ZIndex;
+        }
+
+        protected override void OnUpdateTransparency(Pin outerItem, Marker nativeItem)
+        {
+            nativeItem.Alpha = outerItem.Transparency;
         }
     }
 }
