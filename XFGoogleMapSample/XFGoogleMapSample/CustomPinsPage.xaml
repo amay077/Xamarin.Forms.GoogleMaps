@@ -133,7 +133,7 @@
                     <Slider x:Name="sliderTransparency"
                             Minimum="0"
                             Maximum="10"
-                            Value="10"
+                            Value="0"
                             Grid.Row="7"
                             Grid.Column="2" />
 

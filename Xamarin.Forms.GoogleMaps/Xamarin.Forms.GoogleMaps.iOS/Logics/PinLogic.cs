@@ -59,7 +59,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
             nativeMarker.GroundAnchor = new CGPoint(outerItem.Anchor.X, outerItem.Anchor.Y);
             nativeMarker.Flat = outerItem.Flat;
             nativeMarker.ZIndex = outerItem.ZIndex;
-            nativeMarker.Opacity = 1 - outerItem.Transparency;
+            nativeMarker.Opacity = 1f - outerItem.Transparency;
 
             if (outerItem.Icon != null)
             {
