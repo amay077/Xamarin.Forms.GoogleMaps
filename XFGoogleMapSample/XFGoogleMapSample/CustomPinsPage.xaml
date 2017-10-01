@@ -29,6 +29,7 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
                     <Grid.ColumnDefinitions>
@@ -100,18 +101,18 @@
                             HorizontalTextAlignment="Start"/>
                     </StackLayout>
 
-                  <StackLayout
+                    <StackLayout
                           Orientation="Horizontal"
                           Grid.Row="4"
                           Grid.Column="2">
-                    <Switch x:Name="switchFlat"
-                        VerticalOptions="Center"/>
-                    <Label  Text="Flat"
-                        VerticalOptions="Center"
-                        HorizontalTextAlignment="Start"/>
-                  </StackLayout>
+                        <Switch x:Name="switchFlat"
+                            VerticalOptions="Center"/>
+                        <Label  Text="Flat"
+                            VerticalOptions="Center"
+                            HorizontalTextAlignment="Start"/>
+                    </StackLayout>
 
-                  <Label  Text="Rotation with InfoWindow Anchor:"
+                    <Label  Text="Rotation with InfoWindow Anchor:"
                             HorizontalOptions="End"
                             VerticalOptions="Center"
                             Grid.Row="6"
@@ -123,25 +124,38 @@
                             Grid.Row="6"
                             Grid.Column="2" />
 
-                  <Label  Text="ZIndex:"
+                    <Label  Text="Transparency:"
                             HorizontalOptions="End"
                             VerticalOptions="Center"
                             Grid.Row="7"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="2"/>
+                    <Slider x:Name="sliderTransparency"
+                            Minimum="0"
+                            Maximum="10"
+                            Value="10"
+                            Grid.Row="7"
+                            Grid.Column="2" />
+
+                    <Label  Text="ZIndex:"
+                            HorizontalOptions="End"
+                            VerticalOptions="Center"
+                            Grid.Row="8"
                             Grid.Column="0" />
 
                     <Button x:Name="buttonMoveToFront"
                             Text="Move to Front"
-                            Grid.Row="7"
+                            Grid.Row="8"
                             Grid.Column="1" />
-                    
+
                     <Button x:Name="buttonMoveToBack"
                             Text="Move to Back"
-                            Grid.Row="7"
+                            Grid.Row="8"
                             Grid.Column="2" />
-                    
+
                     <Label  x:Name="labelDragStatus"
                             Text="Show status when Pin drag."
-                            Grid.Row="8"
+                            Grid.Row="9"
                             Grid.Column="0"
                             Grid.ColumnSpan="3"/>
                 </Grid>
