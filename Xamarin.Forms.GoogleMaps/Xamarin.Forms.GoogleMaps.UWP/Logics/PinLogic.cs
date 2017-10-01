@@ -223,7 +223,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.UWP
         {
             //not implemented
         }
-        protected override void OnUpdateTransparency(Pin outerItem, Marker nativeItem)
+        protected override void OnUpdateTransparency(Pin outerItem, PushPin nativeItem)
         {
             //not implemented
         }
