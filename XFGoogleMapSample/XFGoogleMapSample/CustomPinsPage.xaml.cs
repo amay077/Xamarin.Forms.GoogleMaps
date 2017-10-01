@@ -167,8 +167,14 @@ namespace XFGoogleMapSample
                 {
                     _pinTokyo.InfoWindowAnchor = new Point(0.5, 0.0);
                 }
-
             };
+
+            // Pin Transparency
+            sliderTransparency.ValueChanged += (sender, e) => 
+            {
+                _pinTokyo.Transparency = (float)(e.NewValue / 10f);
+            };
+            _pinTokyo.Transparency = (float)(sliderTransparency.Value / 10f);
 
             // ZIndex
             buttonMoveToFront.Clicked += (sender, e) =>
