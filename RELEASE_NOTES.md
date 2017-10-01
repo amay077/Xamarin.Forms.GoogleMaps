@@ -1,5 +1,11 @@
 Xamarin.Forms.GoogleMaps Release Notes
 ----
+# 2.1.1-beta4
+
+## New Features
+
+* #386 [Android/iOS]Add Pin.Transparency property
+
 # 2.1.1-beta3
 
 ## Bug Fixes
