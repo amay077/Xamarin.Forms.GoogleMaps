@@ -1,32 +1,19 @@
 Xamarin.Forms.GoogleMaps Release Notes
 ----
-# 2.1.1-beta4
+# 2.1.1
 
 ## New Features
 
 * #386 [Android/iOS]Add Pin.Transparency property
+* #361 [Android/iOS]Add ZIndex property to GroundOverlay
 
 # 2.1.1-beta3
 
 ## Bug Fixes
 
 * #352 [Android]NullReferenceException when page closing
-
-# 2.1.1-beta2
-
-## Bug Fixes
-
 * #237 [iOS]Fix Modifying Positions doesn't work when after added polyline or polygon
 * #379 Default Constructor not found for CameraUpdateConverter
-
-# 2.1.1-beta1
-
-## New Features
-
-* #361 [Android/iOS]Add ZIndex property to GroundOverlay
-
-## Bug Fixes
-
 * #374 [Android]MapToolbar is not disappear
 * #378 [iOS]Ground Overlay not shown when added 
 
