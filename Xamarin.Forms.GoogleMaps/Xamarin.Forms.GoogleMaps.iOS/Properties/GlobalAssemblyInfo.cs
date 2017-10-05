@@ -4,5 +4,5 @@
 [assembly: AssemblyProduct("Xamarin.Forms.GoogleMaps")]
 [assembly: AssemblyCopyright("Copyright © amay077. 2016 - 2017")]
 [assembly: AssemblyTrademark("")]
-[assembly: AssemblyVersion("2.1.0.4")]
-[assembly: AssemblyFileVersion("2.1.0.4")]
+[assembly: AssemblyVersion("2.1.1.0")]
+[assembly: AssemblyFileVersion("2.1.1.0")]
