@@ -7,8 +7,6 @@ Xamarin.Forms.GoogleMaps Release Notes
 * #386 [Android/iOS]Add Pin.Transparency property
 * #361 [Android/iOS]Add ZIndex property to GroundOverlay
 
-# 2.1.1-beta3
-
 ## Bug Fixes
 
 * #352 [Android]NullReferenceException when page closing
