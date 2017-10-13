@@ -97,7 +97,6 @@ Global
 		{A931BE17-CE63-48CF-8EB0-C29E16AB658C}.Release|ARM.Build.0 = Release|Any CPU
 		{A931BE17-CE63-48CF-8EB0-C29E16AB658C}.Release|ARM.Deploy.0 = Release|Any CPU
 		{A931BE17-CE63-48CF-8EB0-C29E16AB658C}.Release|iPhone.ActiveCfg = Release|Any CPU
-		{A931BE17-CE63-48CF-8EB0-C29E16AB658C}.Release|iPhone.Build.0 = Release|Any CPU
 		{A931BE17-CE63-48CF-8EB0-C29E16AB658C}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{A931BE17-CE63-48CF-8EB0-C29E16AB658C}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 		{A931BE17-CE63-48CF-8EB0-C29E16AB658C}.Release|x64.ActiveCfg = Release|Any CPU
