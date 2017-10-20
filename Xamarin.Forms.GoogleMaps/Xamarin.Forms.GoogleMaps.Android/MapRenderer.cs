@@ -19,11 +19,15 @@ using Xamarin.Forms.GoogleMaps.Android.Logics;
 using Xamarin.Forms.GoogleMaps.Internals;
 using GCameraUpdateFactory = Android.Gms.Maps.CameraUpdateFactory;
 using GCameraPosition = Android.Gms.Maps.Model.CameraPosition;
+using static Android.Gms.Maps.GoogleMap;
 
 namespace Xamarin.Forms.GoogleMaps.Android
 {
     public class MapRenderer : ViewRenderer,
         GoogleMap.IOnCameraChangeListener,
+        GoogleMap.IOnCameraMoveStartedListener,
+        GoogleMap.IOnCameraIdleListener,
+        GoogleMap.IOnCameraMoveListener,
         GoogleMap.IOnMapClickListener,
         GoogleMap.IOnMapLongClickListener,
         GoogleMap.IOnMyLocationButtonClickListener
@@ -119,6 +123,9 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 {
 
                     oldGoogleMap.SetOnCameraChangeListener(null);
+                    oldGoogleMap.SetOnCameraMoveStartedListener(null);
+                    oldGoogleMap.SetOnCameraMoveListener(null);
+                    oldGoogleMap.SetOnCameraIdleListener(null);
                     oldGoogleMap.SetOnMapClickListener(null);
                     oldGoogleMap.SetOnMapLongClickListener(null);
                     oldGoogleMap.SetOnMyLocationButtonClickListener(null);
@@ -159,6 +166,9 @@ namespace Xamarin.Forms.GoogleMaps.Android
             if (map != null)
             {
                 map.SetOnCameraChangeListener(this);
+                map.SetOnCameraMoveStartedListener(this);
+                map.SetOnCameraMoveListener(this);
+                map.SetOnCameraIdleListener(this);
                 map.SetOnMapClickListener(this);
                 map.SetOnMapLongClickListener(this);
                 map.SetOnMyLocationButtonClickListener(this);
@@ -375,12 +385,28 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 (int)(Map.Padding.Bottom * _scaledDensity));
         }
 
-        public void OnCameraChange(GCameraPosition pos)
+        void GoogleMap.IOnCameraChangeListener.OnCameraChange(GCameraPosition position)
         {
-            UpdateVisibleRegion(pos.Target);
-            var camera = pos.ToXamarinForms();
+            UpdateVisibleRegion(position.Target);
+            var camera = position.ToXamarinForms();
             Map.CameraPosition = camera;
             Map.SendCameraChanged(camera);
+        }
+
+        void GoogleMap.IOnCameraMoveStartedListener.OnCameraMoveStarted(int reason)
+        {
+            // see https://developers.google.com/maps/documentation/android-api/events#camera_change_events
+            Map.SendCameraMoveStarted(reason == OnCameraMoveStartedListener.ReasonGesture); 
+        }
+
+        void GoogleMap.IOnCameraMoveListener.OnCameraMove()
+        {
+            Map.SendCameraMoving(NativeMap.CameraPosition.ToXamarinForms());
+        }
+
+        void GoogleMap.IOnCameraIdleListener.OnCameraIdle()
+        {
+            Map.SendCameraIdled(NativeMap.CameraPosition.ToXamarinForms());
         }
 
         public void OnMapClick(LatLng point)
@@ -440,6 +466,9 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 if (NativeMap != null)
                 {
                     NativeMap.SetOnCameraChangeListener(null);
+                    NativeMap.SetOnCameraMoveStartedListener(null);
+                    NativeMap.SetOnCameraMoveListener(null);
+                    NativeMap.SetOnCameraIdleListener(null);
                     NativeMap.SetOnMapClickListener(null);
                     NativeMap.SetOnMapLongClickListener(null);
                     NativeMap.SetOnMyLocationButtonClickListener(null);

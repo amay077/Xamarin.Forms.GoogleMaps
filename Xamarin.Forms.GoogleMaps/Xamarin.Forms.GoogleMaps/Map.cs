@@ -72,7 +72,12 @@ namespace Xamarin.Forms.GoogleMaps
         public event EventHandler<MapClickedEventArgs> MapClicked;
         public event EventHandler<MapLongClickedEventArgs> MapLongClicked;
         public event EventHandler<MyLocationButtonClickedEventArgs> MyLocationButtonClicked;
+
+        [Obsolete("Please use Map.CameraIdled instead of this")]
         public event EventHandler<CameraChangedEventArgs> CameraChanged;
+        public event EventHandler<CameraMoveStartedEventArgs> CameraMoveStarted;
+        public event EventHandler<CameraMovingEventArgs> CameraMoving;
+        public event EventHandler<CameraIdledEventArgs> CameraIdled;
 
         internal Action<MoveToRegionMessage> OnMoveToRegion { get; set; }
 
@@ -376,6 +381,21 @@ namespace Xamarin.Forms.GoogleMaps
         internal void SendCameraChanged(CameraPosition position)
         {
             CameraChanged?.Invoke(this, new CameraChangedEventArgs(position));
+        }
+
+        internal void SendCameraMoveStarted(bool isGesture)
+        {
+            CameraMoveStarted?.Invoke(this, new CameraMoveStartedEventArgs(isGesture));
+        }
+
+        internal void SendCameraMoving(CameraPosition position)
+        {
+            CameraMoving?.Invoke(this, new CameraMovingEventArgs(position));
+        }
+
+        internal void SendCameraIdled(CameraPosition position)
+        {
+            CameraIdled?.Invoke(this, new CameraIdledEventArgs(position));
         }
 
         private void SendMoveToRegion(MoveToRegionMessage message)
