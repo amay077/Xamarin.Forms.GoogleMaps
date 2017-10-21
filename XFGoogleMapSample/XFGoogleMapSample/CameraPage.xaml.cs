@@ -23,10 +23,11 @@ namespace XFGoogleMapSample
             map.Pins.Add(pinParis);
             map.Pins.Add(pinTokyo);
 
+            // CameraChanged is obsolete, please use CameraIdled
             map.CameraChanged += (sender, e) => 
             {
                 var p = e.Position;
-                var text = $"Lat={p.Target.Latitude:0.00}, Long={p.Target.Longitude:0.00}, Zoom={p.Zoom:0.00}, Bearing={p.Bearing:0.00}, Tilt={p.Tilt:0.00}";
+                var text = $"CameraChanged:Lat={p.Target.Latitude:0.00}, Long={p.Target.Longitude:0.00}, Zoom={p.Zoom:0.00}, Bearing={p.Bearing:0.00}, Tilt={p.Tilt:0.00}";
                 labelStatus.Text = text;
                 Debug.WriteLine(text);
             };

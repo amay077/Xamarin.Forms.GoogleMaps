@@ -1,9 +1,12 @@
-﻿using Android.Gms.Maps;
+﻿using System;
+using Android.Gms.Maps;
 using Android.Gms.Maps.Model;
 using Java.Lang;
 using Xamarin.Forms.GoogleMaps.Android.Extensions;
 using Xamarin.Forms.GoogleMaps.Android.Logics;
 using Xamarin.Forms.GoogleMaps.Internals;
+using static Android.Gms.Maps.GoogleMap;
+using GCameraPosition = Android.Gms.Maps.Model.CameraPosition;
 
 using GCameraUpdateFactory = Android.Gms.Maps.CameraUpdateFactory;
 
@@ -11,6 +14,45 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
 {
     internal sealed class CameraLogic : BaseCameraLogic<GoogleMap>
     {
+        private readonly Action<LatLng> _updateVisibleRegion;
+
+        public CameraLogic(Action<LatLng> updateVisibleRegion)
+        {
+            _updateVisibleRegion = updateVisibleRegion;
+        }
+
+        public override void Register(Map map, GoogleMap nativeMap)
+        {
+            base.Register(map, nativeMap);
+
+            UnsubscribeCameraEvents(_nativeMap);
+
+            nativeMap.CameraChange += NativeMap_CameraChange;
+            nativeMap.CameraMoveStarted += NativeMap_CameraMoveStarted;
+            nativeMap.CameraMove += NativeMap_CameraMove;
+            nativeMap.CameraIdle += NativeMap_CameraIdle;
+        }
+
+        public override void Unregister()
+        {
+            UnsubscribeCameraEvents(_nativeMap);
+            base.Unregister();
+        }
+
+        private void UnsubscribeCameraEvents(GoogleMap nativeMap)
+        {
+            if (nativeMap == null)
+            {
+                return;
+            }
+                
+            
+            nativeMap.CameraChange -= NativeMap_CameraChange;
+            nativeMap.CameraMoveStarted -= NativeMap_CameraMoveStarted;
+            nativeMap.CameraMove -= NativeMap_CameraMove;
+            nativeMap.CameraIdle -= NativeMap_CameraIdle;
+        }
+
         public override void OnMoveToRegionRequest(MoveToRegionMessage m)
         {
             if (_nativeMap == null)
@@ -63,6 +105,30 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
             {
                 _nativeMap.AnimateCamera(update, callback);
             }
+        }
+
+        void NativeMap_CameraChange(object sender, CameraChangeEventArgs e)
+        {
+            _updateVisibleRegion?.Invoke(e.Position.Target);
+            var camera = e.Position.ToXamarinForms();
+            _map.CameraPosition = camera;
+            _map.SendCameraChanged(camera);
+        }
+
+        void NativeMap_CameraMoveStarted(object sender, GoogleMap.CameraMoveStartedEventArgs e)
+        {
+            // see https://developers.google.com/maps/documentation/android-api/events#camera_change_events
+            _map.SendCameraMoveStarted(e.Reason == OnCameraMoveStartedListener.ReasonGesture);
+        }
+
+        void NativeMap_CameraMove(object sender, System.EventArgs e)
+        {
+            _map.SendCameraMoving(_nativeMap.CameraPosition.ToXamarinForms());
+        }
+
+        void NativeMap_CameraIdle(object sender, System.EventArgs e)
+        {
+            _map.SendCameraIdled(_nativeMap.CameraPosition.ToXamarinForms());
         }
     }
 }
