@@ -152,14 +152,14 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 map.SetOnMapLongClickListener(this);
                 map.SetOnMyLocationButtonClickListener(this);
 
-                _uiSettingsLogic.Initialize();
-                UpdateIsShowingUser();
-                UpdateHasScrollEnabled();
-                UpdateHasZoomEnabled();
-                UpdateHasRotationEnabled();
+                UpdateIsShowingUser(_uiSettingsLogic.MyLocationButtonEnabled);
+                UpdateHasScrollEnabled(_uiSettingsLogic.ScrollGesturesEnabled);
+                UpdateHasZoomEnabled(_uiSettingsLogic.ZoomControlsEnabled, _uiSettingsLogic.ZoomGesturesEnabled);
+                UpdateHasRotationEnabled(_uiSettingsLogic.RotateGesturesEnabled);
                 UpdateIsTrafficEnabled();
                 UpdateIndoorEnabled();
                 UpdateMapStyle();
+                _uiSettingsLogic.Initialize();
 
                 SetMapType();
                 SetPadding();
@@ -284,30 +284,33 @@ namespace Xamarin.Forms.GoogleMaps.Android
             }
         }
 
-        private void UpdateIsShowingUser()
+        private void UpdateIsShowingUser(bool? initialMyLocationButtonEnabled = null)
         {
-            NativeMap.MyLocationEnabled = NativeMap.UiSettings.MyLocationButtonEnabled = Map.IsShowingUser;
+            NativeMap.MyLocationEnabled = Map.IsShowingUser;
+            NativeMap.UiSettings.MyLocationButtonEnabled = initialMyLocationButtonEnabled ?? Map.IsShowingUser;
         }
 
-        private void UpdateMyLocationEnabled()
+        private void UpdateMyLocationEnabled(bool? initialMyLocationEnabled = null)
         {
-            NativeMap.MyLocationEnabled = Map.MyLocationEnabled;
+            NativeMap.MyLocationEnabled = initialMyLocationEnabled ?? Map.MyLocationEnabled;
         }
 
-        private void UpdateHasScrollEnabled()
+        private void UpdateHasScrollEnabled(bool? initialScrollGesturesEnabled = null)
         {
-            NativeMap.UiSettings.ScrollGesturesEnabled = Map.HasScrollEnabled;
+            NativeMap.UiSettings.ScrollGesturesEnabled = initialScrollGesturesEnabled ?? Map.HasScrollEnabled;
         }
 
-        private void UpdateHasZoomEnabled()
+        private void UpdateHasZoomEnabled(
+            bool? initialZoomControlsEnabled = null, 
+            bool? initialZoomGesturesEnabled = null)
         {
-            NativeMap.UiSettings.ZoomControlsEnabled = Map.HasZoomEnabled;
-            NativeMap.UiSettings.ZoomGesturesEnabled = Map.HasZoomEnabled;
+            NativeMap.UiSettings.ZoomControlsEnabled = initialZoomControlsEnabled ?? Map.HasZoomEnabled;
+            NativeMap.UiSettings.ZoomGesturesEnabled = initialZoomGesturesEnabled ?? Map.HasZoomEnabled;
         }
 
-        private void UpdateHasRotationEnabled()
+        private void UpdateHasRotationEnabled(bool? initialRotateGesturesEnabled = null)
         {
-            NativeMap.UiSettings.RotateGesturesEnabled = Map.HasRotationEnabled;
+            NativeMap.UiSettings.RotateGesturesEnabled = initialRotateGesturesEnabled ?? Map.HasRotationEnabled;
         }
 
         private void UpdateIsTrafficEnabled()
