@@ -1,5 +1,17 @@
 Xamarin.Forms.GoogleMaps Release Notes
 ----
+# 2.2.0-beta2
+
+## Bug Fixes
+
+* #371 [Android]UiSettings.ZoomControls enabled not processed in page constructor
+
+# 2.2.0-beta1
+
+## New Features
+
+* #195 [Android/iOS]Add CameraMoveStarted, CameraMoving, CameraIdled event
+
 # 2.1.1
 
 ## New Features
