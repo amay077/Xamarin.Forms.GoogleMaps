@@ -123,6 +123,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
 
             NativeMap = await ((MapView)Control).GetGoogleMapAsync();
 
+            if (Map == null) return;
             _cameraLogic.Register(Map, NativeMap);
             Map.OnSnapshot += OnSnapshot;
 
