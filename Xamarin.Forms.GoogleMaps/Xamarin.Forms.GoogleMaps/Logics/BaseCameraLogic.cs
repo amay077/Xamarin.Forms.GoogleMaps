@@ -2,7 +2,7 @@
 
 namespace Xamarin.Forms.GoogleMaps.Logics
 {
-    internal abstract class BaseCameraLogic<TNativeMap> : IMapRequestDelegate
+    internal abstract class BaseCameraLogic<TNativeMap> : IMapRequestDelegate where TNativeMap:class
     {
         protected Map _map;
         protected TNativeMap _nativeMap;
@@ -11,6 +11,16 @@ namespace Xamarin.Forms.GoogleMaps.Logics
 
         public virtual void Register(Map map, TNativeMap nativeMap)
         {
+            if (map == null)
+            {
+                throw new System.ArgumentNullException(nameof(map));
+            }
+
+            if (nativeMap == null)
+            {
+                throw new System.ArgumentNullException(nameof(nativeMap));
+            }
+
             _map = map;
             _nativeMap = nativeMap;
 
