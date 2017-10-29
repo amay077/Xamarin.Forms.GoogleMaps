@@ -124,15 +124,15 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                 _cameraLogic.MoveCamera(mapModel.InitialCameraUpdate);
 
                 _uiSettingsLogic.Register(Map, NativeMap);
-                _uiSettingsLogic.Initialize();
                 UpdateMapType();
-                UpdateIsShowingUser();
-                UpdateHasScrollEnabled();
-                UpdateHasZoomEnabled();
-                UpdateHasRotationEnabled();
+                UpdateIsShowingUser(_uiSettingsLogic.MyLocationButtonEnabled);
+                UpdateHasScrollEnabled(_uiSettingsLogic.ScrollGesturesEnabled);
+                UpdateHasZoomEnabled(_uiSettingsLogic.ZoomGesturesEnabled);
+                UpdateHasRotationEnabled(_uiSettingsLogic.RotateGesturesEnabled);
                 UpdateIsTrafficEnabled();
                 UpdatePadding();
                 UpdateMapStyle();
+                _uiSettingsLogic.Initialize();
 
                 foreach (var logic in _logics)
                 {
@@ -280,25 +280,25 @@ namespace Xamarin.Forms.GoogleMaps.iOS
             return Map.SendMyLocationClicked();
         }
 
-        void UpdateHasScrollEnabled()
+        private void UpdateHasScrollEnabled(bool? initialScrollGesturesEnabled = null)
         {
-            NativeMap.Settings.ScrollGestures = ((Map)Element).HasScrollEnabled;
+            NativeMap.Settings.ScrollGestures = initialScrollGesturesEnabled ?? ((Map)Element).HasScrollEnabled;
         }
 
-        void UpdateHasZoomEnabled()
+        private void UpdateHasZoomEnabled(bool? initialZoomGesturesEnabled = null)
         {
-            NativeMap.Settings.ZoomGestures = ((Map)Element).HasZoomEnabled;
+            NativeMap.Settings.ZoomGestures = initialZoomGesturesEnabled ?? ((Map)Element).HasZoomEnabled;
         }
 
-        void UpdateHasRotationEnabled()
+        private void UpdateHasRotationEnabled(bool? initialRotateGesturesEnabled = null)
         {
-            NativeMap.Settings.RotateGestures = ((Map)Element).HasRotationEnabled;
+            NativeMap.Settings.RotateGestures = initialRotateGesturesEnabled ?? ((Map)Element).HasRotationEnabled;
         }
 
-        void UpdateIsShowingUser()
+        private void UpdateIsShowingUser(bool? initialMyLocationButtonEnabled = null)
         {
-            ((MapView)Control).MyLocationEnabled = ((Map)Element).IsShowingUser;
-            ((MapView)Control).Settings.MyLocationButton = ((Map)Element).IsShowingUser;
+            ((MapView)Control).MyLocationEnabled = initialMyLocationButtonEnabled ?? ((Map)Element).IsShowingUser;
+            ((MapView)Control).Settings.MyLocationButton = initialMyLocationButtonEnabled ?? ((Map)Element).IsShowingUser;
         }
 
         void UpdateMyLocationEnabled()
