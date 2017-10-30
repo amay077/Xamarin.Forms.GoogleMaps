@@ -159,6 +159,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 UpdateIsTrafficEnabled();
                 UpdateIndoorEnabled();
                 UpdateMapStyle();
+                UpdateMyLocationEnabled();
                 _uiSettingsLogic.Initialize();
 
                 SetMapType();
@@ -290,9 +291,9 @@ namespace Xamarin.Forms.GoogleMaps.Android
             NativeMap.UiSettings.MyLocationButtonEnabled = initialMyLocationButtonEnabled ?? Map.IsShowingUser;
         }
 
-        private void UpdateMyLocationEnabled(bool? initialMyLocationEnabled = null)
+        private void UpdateMyLocationEnabled()
         {
-            NativeMap.MyLocationEnabled = initialMyLocationEnabled ?? Map.MyLocationEnabled;
+            NativeMap.MyLocationEnabled = Map.MyLocationEnabled;
         }
 
         private void UpdateHasScrollEnabled(bool? initialScrollGesturesEnabled = null)
