@@ -8,6 +8,9 @@ Usage is almost the same as [Xamarin.Forms.Maps](https://www.nuget.org/packages/
 
 ## DEMO Apps
 
+You can try DEMO Apps for Android/iOS that includes all this library features.
+[DEMO Apps source code is here](https://github.com/amay077/Xamarin.Forms.GoogleMaps/tree/master/XFGoogleMapSample).
+
 * [Android DEMO Apps](https://install.mobile.azure.com/users/okuokuoku/apps/xfgooglemapsample/distribution_groups/trial) - Open this link in your Android browser
 * iOS DEMO Apps - Please request in [Gitter](https://gitter.im/Xamarin-Forms-GoogleMaps/public)
 
