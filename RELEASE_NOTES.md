@@ -1,15 +1,10 @@
 Xamarin.Forms.GoogleMaps Release Notes
 ----
-# 2.2.1-beta2
+# 2.2.1
 
 ## Bug Fixes
 
 * #400 [iOS]Fix Map.MyLocationEnabled in page constructor doesn't work
-
-# 2.2.1-beta1
-
-## Bug Fixes
-
 * #400 [iOS]Fix Direct assign 'MyLocationButtonEnabled' value / result = no show
 
 # 2.2.0
