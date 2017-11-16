@@ -39,7 +39,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 new PolylineLogic(),
                 new PolygonLogic(),
                 new CircleLogic(),
-                new PinLogic(OnMarkerAdded, OnMarkerRemoving),
+                new PinLogic(OnMarkerCreating, OnMarkerCreated, OnMarkerDeleting, OnMarkerDeleted),
                 new TileLayerLogic(),
                 new GroundOverlayLogic()
             };
@@ -383,16 +383,25 @@ namespace Xamarin.Forms.GoogleMaps.Android
             return Map.SendMyLocationClicked();
         }
 
-        protected void OnMarkerAdded(Pin outerItem, Marker innerItem)
-        {
-            
-        }
-
-        protected void OnMarkerRemoving(Pin outerItem, Marker innerItem)
+        protected void OnMarkerCreating(Pin outerItem, MarkerOptions innerItem)
         {
 
         }
 
+        protected void OnMarkerCreated(Pin outerItem, Marker innerItem)
+        {
+
+        }
+
+        protected void OnMarkerDeleting(Pin outerItem, Marker innerItem)
+        {
+
+        }
+
+        protected void OnMarkerDeleted(Pin outerItem, Marker innerItem)
+        {
+
+        }
 
         void UpdateVisibleRegion(LatLng pos)
         {
