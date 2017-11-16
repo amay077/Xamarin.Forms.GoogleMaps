@@ -19,6 +19,14 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
         private Pin _draggingPin;
         private volatile bool _withoutUpdateNative = false;
 
+        private readonly Action<Pin, Marker> _onMarkerCreated;
+        private readonly Action<Pin, Marker> _onMarkerDeleting;
+
+        public PinLogic(Action<Pin, Marker> onMarkerCreated, Action<Pin, Marker> onMarkerDeleting)
+        {
+            _onMarkerCreated = onMarkerCreated;
+            _onMarkerDeleting = onMarkerDeleting;
+        }
 
         internal override void Register(GoogleMap oldNativeMap, Map oldMap, GoogleMap newNativeMap, Map newMap)
         {
@@ -85,6 +93,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
 
             // associate pin with marker for later lookup in event handlers
             outerItem.NativeObject = marker;
+            _onMarkerCreated(outerItem, marker);
             return marker;
         }
 
@@ -93,6 +102,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
             var marker = outerItem.NativeObject as Marker;
             if (marker == null)
                 return null;
+            _onMarkerDeleting(outerItem, marker);
             marker.Remove();
             outerItem.NativeObject = null;
 
