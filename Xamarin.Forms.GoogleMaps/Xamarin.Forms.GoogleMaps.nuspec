@@ -256,7 +256,7 @@
 		<tags>xamarin forms maps xamarinforms xamarinformsmaps xamarin.forms.maps xamarinformsgooglemaps xamarin.forms.googlemaps google googlemap</tags>
 	<dependencies>
       <group>
-        <dependency id="Xamarin.Forms" version="2.3.4.247" />
+        <dependency id="Xamarin.Forms" version="2.4.0.280" />
       </group>
       <group targetFramework="MonoAndroid70">
         <dependency id="Xamarin.GooglePlayServices.Maps" version="42.1021.1"/>
