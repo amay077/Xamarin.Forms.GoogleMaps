@@ -1,5 +1,15 @@
 Xamarin.Forms.GoogleMaps Release Notes
 ----
+# 2.3.0-beta1
+
+## New Features
+
+* #29 [Android/iOS]Add OnMarkerCreating, OnMarkerCreated, OnMarkerDeleting and OnMarkerDeleted callback methods for custom renderer
+
+## Bug Fixes
+
+* #40 [iOS]Fix icon size is bigger than Android when load from bundle or stream
+
 # 2.2.1
 
 ## Bug Fixes
