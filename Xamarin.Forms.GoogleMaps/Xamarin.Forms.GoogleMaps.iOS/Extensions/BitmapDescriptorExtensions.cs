@@ -2,6 +2,8 @@
 using UIKit;
 using Xamarin.Forms.Platform.iOS;
 using Foundation;
+using CoreImage;
+
 namespace Xamarin.Forms.GoogleMaps.iOS.Extensions
 {
     internal static class BitmapDescriptorExtensions
@@ -13,10 +15,14 @@ namespace Xamarin.Forms.GoogleMaps.iOS.Extensions
                 case BitmapDescriptorType.Default:
                     return Google.Maps.Marker.MarkerImage(self.Color.ToUIColor());
                 case BitmapDescriptorType.Bundle:
-                    return UIImage.FromBundle(self.BundleName);
+                    // Resize to screen scale
+                    var path = NSBundle.MainBundle.PathForResource(self.BundleName, "");
+                    var data = NSData.FromFile(path);
+                    return UIImage.LoadFromData(data, UIScreen.MainScreen.Scale);
                 case BitmapDescriptorType.Stream:
                     self.Stream.Position = 0;
-                    return UIImage.LoadFromData(NSData.FromStream(self.Stream));
+                    // Resize to screen scale
+                    return UIImage.LoadFromData(NSData.FromStream(self.Stream), UIScreen.MainScreen.Scale);
                 case BitmapDescriptorType.AbsolutePath:
                     return UIImage.FromFile(self.AbsolutePath);
                 default:
