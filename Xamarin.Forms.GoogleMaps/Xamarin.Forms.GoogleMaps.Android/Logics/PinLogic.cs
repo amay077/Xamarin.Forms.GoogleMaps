@@ -19,6 +19,22 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
         private Pin _draggingPin;
         private volatile bool _withoutUpdateNative = false;
 
+        private readonly Action<Pin, MarkerOptions> _onMarkerCreating;
+        private readonly Action<Pin, Marker> _onMarkerCreated;
+        private readonly Action<Pin, Marker> _onMarkerDeleting;
+        private readonly Action<Pin, Marker> _onMarkerDeleted;
+
+        public PinLogic(
+            Action<Pin, MarkerOptions> onMarkerCreating,
+            Action<Pin, Marker> onMarkerCreated, 
+            Action<Pin, Marker> onMarkerDeleting,
+            Action<Pin, Marker> onMarkerDeleted)
+        {
+            _onMarkerCreating = onMarkerCreating;
+            _onMarkerCreated = onMarkerCreated;
+            _onMarkerDeleting = onMarkerDeleting;
+            _onMarkerDeleted = onMarkerDeleted;
+        }
 
         internal override void Register(GoogleMap oldNativeMap, Map oldMap, GoogleMap newNativeMap, Map newMap)
         {
@@ -71,6 +87,8 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
                 opts.SetIcon(outerItem.Icon.ToBitmapDescriptor());
             }
 
+            _onMarkerCreating(outerItem, opts);
+
             var marker = NativeMap.AddMarker(opts);
             // If the pin has an IconView set this method will convert it into an icon for the marker
             if (outerItem?.Icon?.Type == BitmapDescriptorType.View)
@@ -85,6 +103,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
 
             // associate pin with marker for later lookup in event handlers
             outerItem.NativeObject = marker;
+            _onMarkerCreated(outerItem, marker);
             return marker;
         }
 
@@ -93,12 +112,14 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
             var marker = outerItem.NativeObject as Marker;
             if (marker == null)
                 return null;
+            _onMarkerDeleting(outerItem, marker);
             marker.Remove();
             outerItem.NativeObject = null;
 
             if (ReferenceEquals(Map.SelectedPin, outerItem))
                 Map.SelectedPin = null;
 
+            _onMarkerDeleted(outerItem, marker);
             return marker;
         }
 
