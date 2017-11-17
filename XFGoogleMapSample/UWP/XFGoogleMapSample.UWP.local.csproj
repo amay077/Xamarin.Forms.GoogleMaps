@@ -133,7 +133,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Xamarin.Forms.GoogleMaps\Xamarin.Forms.GoogleMaps.UWP\Xamarin.Forms.GoogleMaps.UWP.csproj">
+    <ProjectReference Include="$(SolutionDir)\Xamarin.Forms.GoogleMaps.UWP\Xamarin.Forms.GoogleMaps.UWP.csproj">
       <Project>{c62fcb91-7d10-4665-912c-b7ccec9535d7}</Project>
       <Name>Xamarin.Forms.GoogleMaps.UWP</Name>
     </ProjectReference>
