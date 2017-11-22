@@ -1,5 +1,12 @@
 Xamarin.Forms.GoogleMaps Release Notes
 ----
+# 2.3.0-beta2
+
+## Bug Fixes
+
+* #367 [iOS]Fix MyLocationEnabled doesn't work 
+* #421 [iOS/Android/UWP]Fix InitialCameraUpdate parsing failed
+
 # 2.3.0-beta1
 
 ## New Features
