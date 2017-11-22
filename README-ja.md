@@ -127,6 +127,10 @@ protected override void OnLaunched(LaunchActivatedEventArgs e)
 
 にあります。
 
+## リリースノーツ
+
+[Releases](https://github.com/amay077/Xamarin.Forms.GoogleMaps/releases) または [RELEASE_NOTES](RELEASE_NOTES.md) を見てください。
+
 ## 今後の予定
 
 なるべく Xamarin.Forms.Maps の API に準じ、Google Maps固有の機能のみ API を追加するつもりです。 
