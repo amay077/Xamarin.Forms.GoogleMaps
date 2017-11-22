@@ -23,7 +23,7 @@ namespace Xamarin.Forms.GoogleMaps.Helpers
             foreach (var v in values)
             {
                 double ret;
-                if (!double.TryParse(v, out ret))
+                if (!double.TryParse(v, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out ret))
                 {
                     throw new ArgumentException(err);
                 }
