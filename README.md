@@ -124,6 +124,10 @@ Sample application is here.
 
 * [XFGoogleMapSample](https://github.com/amay077/Xamarin.Forms.GoogleMaps/tree/master/XFGoogleMapSample)
 
+## Releases
+
+See [Releases](https://github.com/amay077/Xamarin.Forms.GoogleMaps/releases) or [RELEASE_NOTES](RELEASE_NOTES.md).
+
 ## Future plans
 
 I will follow Xamarin.Forms.Maps API as possible. I will add new API only when I implement Google maps original feature.
