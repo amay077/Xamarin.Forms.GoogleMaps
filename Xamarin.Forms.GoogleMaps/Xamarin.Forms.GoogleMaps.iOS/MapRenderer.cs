@@ -132,6 +132,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                 UpdateIsTrafficEnabled();
                 UpdatePadding();
                 UpdateMapStyle();
+                UpdateMyLocationEnabled();
                 _uiSettingsLogic.Initialize();
 
                 foreach (var logic in _logics)
@@ -297,7 +298,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
 
         private void UpdateIsShowingUser(bool? initialMyLocationButtonEnabled = null)
         {
-            ((MapView)Control).MyLocationEnabled = initialMyLocationButtonEnabled ?? ((Map)Element).IsShowingUser;
+            ((MapView)Control).MyLocationEnabled = ((Map)Element).IsShowingUser;
             ((MapView)Control).Settings.MyLocationButton = initialMyLocationButtonEnabled ?? ((Map)Element).IsShowingUser;
         }
 
