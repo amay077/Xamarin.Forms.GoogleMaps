@@ -71,6 +71,11 @@ namespace Xamarin.Forms.GoogleMaps.Android
         {
             base.OnElementChanged(e);
 
+            if (e.OldElement == e.NewElement)
+            {
+                return;
+            }
+
             // For XAML Previewer or FormsGoogleMaps.Init not called.
             if (!FormsGoogleMaps.IsInitialized)
             {
@@ -112,7 +117,6 @@ namespace Xamarin.Forms.GoogleMaps.Android
 
                 oldMapModel.OnSnapshot -= OnSnapshot;
                 _cameraLogic.Unregister();
-                oldMapView.Dispose();
             }
 
             if (oldMapView != null)
