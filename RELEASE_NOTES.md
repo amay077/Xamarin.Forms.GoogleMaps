@@ -1,5 +1,11 @@
 Xamarin.Forms.GoogleMaps Release Notes
 ----
+# 2.3.0-beta3
+
+## Bug Fixes
+
+* #431 [iOS]Fix doesn't work with Xamarin.Google.iOS.Maps 2.4.0+
+
 # 2.3.0-beta2
 
 ## Bug Fixes
