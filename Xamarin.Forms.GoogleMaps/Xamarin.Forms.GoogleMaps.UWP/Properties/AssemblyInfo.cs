@@ -3,6 +3,7 @@ using System.Runtime.InteropServices;
 using Xamarin.Forms.GoogleMaps;
 using Xamarin.Forms.GoogleMaps.UWP;
 using Xamarin.Forms.Platform.UWP;
+using Xamarin.Forms.GoogleMaps.Internals;
 
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
@@ -23,7 +24,7 @@ using Xamarin.Forms.Platform.UWP;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 
-[assembly: AssemblyVersion("2.2.1.3")]
-[assembly: AssemblyFileVersion("2.2.1.3")]
+[assembly: AssemblyVersion(ProductInformation.Version)]
+[assembly: AssemblyFileVersion(ProductInformation.Version)]
 [assembly: ComVisible(false)]
 [assembly: ExportRenderer(typeof(Map), typeof(MapRenderer))]

@@ -87,6 +87,7 @@
     <Compile Include="CameraMoveStartedEventArgs.cs" />
     <Compile Include="CameraIdledEventArgs.cs" />
     <Compile Include="CameraMovingEventArgs.cs" />
+    <Compile Include="Internals\ProductInformation.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
