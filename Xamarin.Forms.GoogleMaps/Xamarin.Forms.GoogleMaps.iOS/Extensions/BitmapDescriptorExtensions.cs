@@ -15,10 +15,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS.Extensions
                 case BitmapDescriptorType.Default:
                     return Google.Maps.Marker.MarkerImage(self.Color.ToUIColor());
                 case BitmapDescriptorType.Bundle:
-                    // Resize to screen scale
-                    var path = NSBundle.MainBundle.PathForResource(self.BundleName, "");
-                    var data = NSData.FromFile(path);
-                    return UIImage.LoadFromData(data, UIScreen.MainScreen.Scale);
+                    return UIImage.FromBundle(self.BundleName);
                 case BitmapDescriptorType.Stream:
                     self.Stream.Position = 0;
                     // Resize to screen scale
