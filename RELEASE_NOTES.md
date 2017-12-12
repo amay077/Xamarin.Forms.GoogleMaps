@@ -1,5 +1,11 @@
 Xamarin.Forms.GoogleMaps Release Notes
 ----
+# 2.3.0-beta4
+
+## Bug Fixes
+
+* #40 [iOS]Fix bundle xxx@1x.png, xxx@2x.png, xxx@3x.png does not work for marker icon.
+
 # 2.3.0-beta3
 
 ## Bug Fixes
