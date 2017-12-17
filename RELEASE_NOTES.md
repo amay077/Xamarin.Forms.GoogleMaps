@@ -1,5 +1,11 @@
 Xamarin.Forms.GoogleMaps Release Notes
 ----
+# 2.3.0-beta5
+
+## Bug Fixes
+
+* #373 [Android]Improve view initialization and uninitialization
+
 # 2.3.0-beta4
 
 ## Bug Fixes
