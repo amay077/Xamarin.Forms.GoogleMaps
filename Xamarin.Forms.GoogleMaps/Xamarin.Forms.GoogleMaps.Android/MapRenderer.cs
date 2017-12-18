@@ -51,7 +51,19 @@ namespace Xamarin.Forms.GoogleMaps.Android
 
         protected GoogleMap NativeMap { get; private set; }
 
-        protected Map Map => Element;
+        private Map map;
+        protected Map Map
+        {
+            get { return map ?? Element; }
+            set { map = value; }
+        }
+
+        MapView mapView;
+        public MapView MapView
+        {
+            get { return mapView ?? (MapView)Control; }
+            set { mapView = value; }
+        }
 
         private bool _ready = false;
         private bool _onLayout = false;
@@ -91,28 +103,26 @@ namespace Xamarin.Forms.GoogleMaps.Android
             {
                 try
                 {
-                    var oldNativeView = Control as MapView;
+                    var oldNativeView = MapView;
                     var oldNativeMap = await oldNativeView?.GetGoogleMapAsync();
                     var oldMap = e.OldElement;
                     Uninitialize(oldNativeMap, oldMap);
                     oldNativeView?.Dispose();
-                } 
-                catch (System.Exception ex) 
+                }
+                catch (System.Exception ex)
                 {
                     var message = ex.Message;
-                    System.Diagnostics.Debug.WriteLine($"Uninitialize old view failed. - {message}");
+                    System.Diagnostics.Debug.WriteLine(ex);
                 }
             }
 
             if (e.NewElement == null)
-            {
                 return;
-            }
 
-            var mapView = new MapView(Context);
-            mapView.OnCreate(s_bundle);
-            mapView.OnResume();
-            SetNativeControl(mapView);
+            MapView = new MapView(Context);
+            MapView.OnCreate(s_bundle);
+            MapView.OnResume();
+            SetNativeControl(MapView);
 
             var activity = Context as Activity;
             if (activity != null)
@@ -125,9 +135,9 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 }
             }
 
-            var newMap = e.NewElement;
-            NativeMap = await mapView.GetGoogleMapAsync();
-            OnMapReady(NativeMap, newMap);
+            Map = e.NewElement;
+            NativeMap = await MapView.GetGoogleMapAsync();
+            OnMapReady(NativeMap, Map);
         }
 
         private void OnSnapshot(TakeSnapshotMessage snapshotMessage)
@@ -298,7 +308,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
         }
 
         private void UpdateHasZoomEnabled(
-            bool? initialZoomControlsEnabled = null, 
+            bool? initialZoomControlsEnabled = null,
             bool? initialZoomGesturesEnabled = null)
         {
             NativeMap.UiSettings.ZoomControlsEnabled = initialZoomControlsEnabled ?? Map.HasZoomEnabled;
@@ -323,7 +333,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
         private void UpdateMapStyle()
         {
             NativeMap.SetMapStyle(Map.MapStyle != null ?
-                new MapStyleOptions(Map.MapStyle.JsonStyle) : 
+                new MapStyleOptions(Map.MapStyle.JsonStyle) :
                 null);
         }
 
@@ -358,8 +368,8 @@ namespace Xamarin.Forms.GoogleMaps.Android
         void SetPadding()
         {
             NativeMap?.SetPadding(
-                (int)(Map.Padding.Left * _scaledDensity), 
-                (int)(Map.Padding.Top * _scaledDensity), 
+                (int)(Map.Padding.Left * _scaledDensity),
+                (int)(Map.Padding.Top * _scaledDensity),
                 (int)(Map.Padding.Right * _scaledDensity),
                 (int)(Map.Padding.Bottom * _scaledDensity));
         }
@@ -381,26 +391,34 @@ namespace Xamarin.Forms.GoogleMaps.Android
 
         void UpdateVisibleRegion(LatLng pos)
         {
-            var map = NativeMap;
-            if (map == null)
-                return;
-            var projection = map.Projection;
-            var width = Control.Width;
-            var height = Control.Height;
-            var ul = projection.FromScreenLocation(new global::Android.Graphics.Point(0, 0));
-            var ur = projection.FromScreenLocation(new global::Android.Graphics.Point(width, 0));
-            var ll = projection.FromScreenLocation(new global::Android.Graphics.Point(0, height));
-            var lr = projection.FromScreenLocation(new global::Android.Graphics.Point(width, height));
-            var dlat = Math.Max(Math.Abs(ul.Latitude - lr.Latitude), Math.Abs(ur.Latitude - ll.Latitude));
-            var dlong = Math.Max(Math.Abs(ul.Longitude - lr.Longitude), Math.Abs(ur.Longitude - ll.Longitude));
-            ((Map)Element).VisibleRegion = new MapSpan(
-                    new Position(
-                        pos.Latitude,
-                        pos.Longitude
-                    ),
-                dlat,
-                dlong
-            );
+            try
+            {
+                var map = NativeMap;
+                if (map == null)
+                    return;
+                var projection = map.Projection;
+                var width = MapView.Width;
+                var height = MapView.Height;
+                var ul = projection.FromScreenLocation(new global::Android.Graphics.Point(0, 0));
+                var ur = projection.FromScreenLocation(new global::Android.Graphics.Point(width, 0));
+                var ll = projection.FromScreenLocation(new global::Android.Graphics.Point(0, height));
+                var lr = projection.FromScreenLocation(new global::Android.Graphics.Point(width, height));
+                var dlat = Math.Max(Math.Abs(ul.Latitude - lr.Latitude), Math.Abs(ur.Latitude - ll.Latitude));
+                var dlong = Math.Max(Math.Abs(ul.Longitude - lr.Longitude), Math.Abs(ur.Longitude - ll.Longitude));
+                Map.VisibleRegion = new MapSpan(
+                     new Position(
+                         pos.Latitude,
+                         pos.Longitude
+                     ),
+                 dlat,
+                 dlong
+             );
+
+            }
+            catch (System.Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex);
+            }
         }
 
         #region Overridable Members
@@ -447,7 +465,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
 
         #endregion
 
-        private void Uninitialize(GoogleMap nativeMap, Map map) 
+        private void Uninitialize(GoogleMap nativeMap, Map map)
         {
             try
             {
@@ -482,8 +500,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
             }
             catch (System.Exception ex)
             {
-                var message = ex.Message;
-                System.Diagnostics.Debug.WriteLine($"Uninitialize failed. - {message}");
+                System.Diagnostics.Debug.WriteLine(ex);
             }
         }
 
