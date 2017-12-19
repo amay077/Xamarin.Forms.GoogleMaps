@@ -87,13 +87,15 @@ namespace Xamarin.Forms.GoogleMaps.Android
             }
 
             // Uninitialize old view
+            GoogleMap oldNativeMap = null;
+            Map oldMap = null;
             if (e.OldElement != null)
             {
                 try
                 {
                     var oldNativeView = Control as MapView;
-                    var oldNativeMap = await oldNativeView?.GetGoogleMapAsync();
-                    var oldMap = e.OldElement;
+                    oldNativeMap = await oldNativeView?.GetGoogleMapAsync();
+                    oldMap = e.OldElement;
                     Uninitialize(oldNativeMap, oldMap);
                     oldNativeView?.Dispose();
                 } 
@@ -127,6 +129,13 @@ namespace Xamarin.Forms.GoogleMaps.Android
 
             var newMap = e.NewElement;
             NativeMap = await mapView.GetGoogleMapAsync();
+
+            foreach (var logic in _logics)
+            {
+                logic.Register(oldNativeMap, oldMap, NativeMap, newMap);
+                logic.ScaledDensity = _scaledDensity;
+            }
+
             OnMapReady(NativeMap, newMap);
         }
 
