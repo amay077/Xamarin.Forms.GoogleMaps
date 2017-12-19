@@ -1,5 +1,11 @@
 Xamarin.Forms.GoogleMaps Release Notes
 ----
+# 2.3.0-beta6
+
+## Bug Fixes
+
+* #[Android]Fix Polygon, Polyline, Circle, Pin, GroundOverlays does not work
+
 # 2.3.0-beta5
 
 ## Bug Fixes
