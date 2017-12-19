@@ -40,6 +40,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
             nativePolygon.StrokeColor = outerItem.StrokeColor.ToUIColor();
             nativePolygon.FillColor = outerItem.FillColor.ToUIColor();
             nativePolygon.Tappable = outerItem.IsClickable;
+            nativePolygon.ZIndex = outerItem.ZIndex;
 
             nativePolygon.Holes = outerItem.Holes
                 .Select(hole => hole.ToMutablePath())

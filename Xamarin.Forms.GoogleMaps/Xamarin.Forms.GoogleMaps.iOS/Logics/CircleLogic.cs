@@ -41,6 +41,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
             nativeCircle.StrokeColor = outerItem.StrokeColor.ToUIColor();
             nativeCircle.FillColor = outerItem.FillColor.ToUIColor();
             nativeCircle.Tappable = outerItem.IsClickable;
+            nativeCircle.ZIndex = outerItem.ZIndex;
 
             outerItem.NativeObject = nativeCircle;
             nativeCircle.Map = NativeMap;
