@@ -7,6 +7,6 @@ namespace Xamarin.Forms.GoogleMaps.Internals
         public const string Name = "Xamarin.Forms.GoogleMaps";
         public const string Copyright = "Copyright © amay077. 2016 - 2017";
         public const string Trademark = "";
-        public const string Version = "2.2.1.5";
+        public const string Version = "2.2.1.6";
     }
 }
