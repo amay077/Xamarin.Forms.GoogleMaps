@@ -171,10 +171,16 @@
     <Compile Include="AppDelegate.cs" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="image01.png" />
-    <BundleResource Include="image02.png" />
-    <BundleResource Include="image03.png" />
     <BundleResource Include="pin_red.png" />
+    <BundleResource Include="image01%401x.png" />
+    <BundleResource Include="image01%402x.png" />
+    <BundleResource Include="image01%403x.png" />
+    <BundleResource Include="image02%401x.png" />
+    <BundleResource Include="image02%402x.png" />
+    <BundleResource Include="image02%403x.png" />
+    <BundleResource Include="image03%401x.png" />
+    <BundleResource Include="image03%402x.png" />
+    <BundleResource Include="image03%403x.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Import Project="$(SolutionDir)\packages\Xamarin.Forms.2.3.4.247\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('$(SolutionDir)\packages\Xamarin.Forms.2.3.4.247\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
