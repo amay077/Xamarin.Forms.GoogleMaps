@@ -54,17 +54,24 @@ namespace Xamarin.Forms.GoogleMaps.iOS
         {
             if (disposing)
             {
-                Map.OnSnapshot -= OnSnapshot;
-                _cameraLogic.Unregister();
-
-                foreach (var logic in _logics)
-                    logic.Unregister(NativeMap, Map);
+                if(Map!=null)
+                {
+                    Map.OnSnapshot -= OnSnapshot;
+                    foreach (var logic in _logics)
+                    {
+                        logic.Unregister(NativeMap, Map);
+                    }
+                }               
+                _cameraLogic.Unregister();              
 
                 var mkMapView = (MapView)Control;
-                mkMapView.CoordinateLongPressed -= CoordinateLongPressed;
-                mkMapView.CoordinateTapped -= CoordinateTapped;
-                mkMapView.CameraPositionChanged -= CameraPositionChanged;
-                mkMapView.DidTapMyLocationButton = null;
+                if(mkMapView!=null)
+                {
+                    mkMapView.CoordinateLongPressed -= CoordinateLongPressed;
+                    mkMapView.CoordinateTapped -= CoordinateTapped;
+                    mkMapView.CameraPositionChanged -= CameraPositionChanged;
+                    mkMapView.DidTapMyLocationButton = null;
+                }
             }
 
             base.Dispose(disposing);
