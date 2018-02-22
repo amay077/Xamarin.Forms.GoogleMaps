@@ -52,6 +52,10 @@ namespace Xamarin.Forms.GoogleMaps.Logics
             {
                 OnUpdateZoomGesturesEnabled();
             }
+            else if (e.PropertyName == UiSettings.MapToolbarEnabledProperty.PropertyName)
+            {
+                OnUpdateMapToolbarEnabled();
+            }
         }
 
         public void Unregister()
@@ -74,6 +78,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics
             OnUpdateTiltGesturesEnabled();
             OnUpdateZoomControlsEnabled();
             OnUpdateZoomGesturesEnabled();
+            OnUpdateMapToolbarEnabled();
         }
 
         abstract protected void OnUpdateCompassEnabled();
@@ -84,5 +89,6 @@ namespace Xamarin.Forms.GoogleMaps.Logics
         abstract protected void OnUpdateTiltGesturesEnabled();
         abstract protected void OnUpdateZoomControlsEnabled();
         abstract protected void OnUpdateZoomGesturesEnabled();
+        abstract protected void OnUpdateMapToolbarEnabled();
     }
 }
