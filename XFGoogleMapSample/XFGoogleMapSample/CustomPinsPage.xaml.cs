@@ -188,6 +188,14 @@ namespace XFGoogleMapSample
                 _pinTokyo.ZIndex = _pinTokyo2.ZIndex - 1;
             };
 
+            // MapToolbarEnabled
+            map.UiSettings.MapToolbarEnabled = true;
+            switchMapToolbarEnabled.Toggled += (sender, e) =>
+            {
+                map.UiSettings.MapToolbarEnabled = e.Value;
+            };
+            switchMapToolbarEnabled.IsToggled = map.UiSettings.MapToolbarEnabled;
+
             map.PinDragStart += (_, e) => labelDragStatus.Text = $"DragStart - {PrintPin(e.Pin)}";
             map.PinDragging += (_, e) => labelDragStatus.Text = $"Dragging - {PrintPin(e.Pin)}";
             map.PinDragEnd += (_, e) => labelDragStatus.Text = $"DragEnd - {PrintPin(e.Pin)}";
