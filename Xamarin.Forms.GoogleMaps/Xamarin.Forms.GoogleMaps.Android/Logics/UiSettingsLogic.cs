@@ -17,7 +17,6 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
         public override void Initialize()
         {
             base.Initialize();
-            NativeMap.UiSettings.MapToolbarEnabled = false;
         }
 
         protected override void OnUpdateCompassEnabled()
@@ -63,6 +62,11 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
         {
             NativeMap.UiSettings.ZoomGesturesEnabled = Map.UiSettings.ZoomGesturesEnabled;
             ZoomGesturesEnabled = Map.UiSettings.ZoomGesturesEnabled;
+        }
+
+        protected override void OnUpdateMapToolbarEnabled()
+        {
+            NativeMap.UiSettings.MapToolbarEnabled = Map.UiSettings.MapToolbarEnabled;
         }
     }
 }
