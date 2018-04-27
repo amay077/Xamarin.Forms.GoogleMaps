@@ -83,6 +83,23 @@ namespace Xamarin.Forms.GoogleMaps
         {
             _positionsChangedHandler?.Invoke(this, e);
         }
+
+        public static Polyline FromEncodedString(string encodedPolyline)
+        {
+            if (String.IsNullOrEmpty(encodedPolyline))
+                return null;
+
+            var positions = Helpers.PolylineConverter.DecodePolyline(encodedPolyline);
+            if (positions != null)
+            {
+                var polyline = new Polyline();
+                foreach (var pos in positions)
+                    polyline.Positions.Add(pos);
+                return polyline;
+            }
+            else
+                return null;
+        }
     }
 }
 
