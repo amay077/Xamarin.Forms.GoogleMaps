@@ -156,6 +156,12 @@ Please read the [contribution guideline](CONTRIBUTING.md).
 
 You can join to out [gitter room](https://gitter.im/Xamarin-Forms-GoogleMaps/public)!
 
+## Donation
+
+I will continue to work hard with your support!
+Donate through [Gumroad](https://gum.co/xfgmdnate).
+Your donation will up to my motivation. :sushi:
+
 ## License
 
 See [LICENSE](LICENSE).
