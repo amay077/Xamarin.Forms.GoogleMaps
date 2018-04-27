@@ -159,7 +159,9 @@ You can join to out [gitter room](https://gitter.im/Xamarin-Forms-GoogleMaps/pub
 ## Donation
 
 I will continue to work hard with your support!
+
 Donate through [Gumroad](https://gum.co/xfgmdnate).
+
 Your donation will up to my motivation. :sushi:
 
 ## License
