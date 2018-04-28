@@ -3,10 +3,10 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <Authors>amay077</Authors>
-    <Product>Xamarin.Forms.GoogleMaps</Product>
-    <FileVersion>2.3.0.1</FileVersion>
-    <AssemblyVersion>2.3.0.1</AssemblyVersion>
-    <Version>1.1.0</Version>
+    <Product>XFGoogleMapSample</Product>
+    <FileVersion>2.0.0.1</FileVersion>
+    <AssemblyVersion>2.0.0.1</AssemblyVersion>
+    <Version>2.0.1</Version>
     <Copyright>Copyright © amay077. 2016 - 2018</Copyright>
   </PropertyGroup>
 
