@@ -60,7 +60,7 @@ namespace XFGoogleMapSample
             InitializeComponent();
 
             // Switch contols as toggle
-            var switches = new Switch[] { switchPinColor, switchPinBundle, switchPinStream };
+            var switches = new Xamarin.Forms.Switch[] { switchPinColor, switchPinBundle, switchPinStream };
             foreach (var sw in switches)
             {
                 sw.Toggled += (sender, e) =>
