@@ -44,3 +44,5 @@ Thumbs.db
 *.lock.json
 .idea/
 UserPrefs.xml
+
+.vs/
