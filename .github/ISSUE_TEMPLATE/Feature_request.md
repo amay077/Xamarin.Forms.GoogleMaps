@@ -6,19 +6,19 @@ about: Suggest an idea for this project
 
 ### SUMMARY
 
-(write summary of your feature request or suggestion)
+<!-- write summary of your feature request or suggestion -->
 
 ### DETAILS
 
-(write details/usecases with text, codes and images)
+<!-- write details/usecases with text, codes and images -->
 
 ```
-// usage of your requested feature to use
+// How to use of your requested feature
 ```
 
 ### PLATFORMS
 
-which platform do you want?
+<!-- which platform do you want? -->
 
 - [x] Android
 - [ ] iOS

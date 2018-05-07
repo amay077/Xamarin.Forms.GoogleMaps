@@ -4,32 +4,40 @@ about: Create a report to help us improve
 
 ---
 
-**Describe the bug**
-A clear and concise description of what the bug is.
+### SUMMARY
 
-**To Reproduce**
-Steps to reproduce the behavior:
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
+<!-- write summary of your bug report. -->
 
-**Expected behavior**
-A clear and concise description of what you expected to happen.
+### VERSIONS
 
-**Screenshots**
-If applicable, add screenshots to help explain your problem.
+* Xamarin.Forms.GoogleMaps - x.x.x
+* Xamarin.Forms - x.x.x
+* 
 
-**Desktop (please complete the following information):**
- - OS: [e.g. iOS]
- - Browser [e.g. chrome, safari]
- - Version [e.g. 22]
+### PLATFORMS
 
-**Smartphone (please complete the following information):**
- - Device: [e.g. iPhone6]
- - OS: [e.g. iOS8.1]
- - Browser [e.g. stock browser, safari]
- - Version [e.g. 22]
+- [ ] Android
+- [x] iOS
+- [ ] UWP
 
-**Additional context**
-Add any other context about the problem here.
+### HOW TO REPRODUCE
+
+<!-- Let me show how to reproduce with steps or codes) -->
+
+1. 
+2. 
+3. 
+
+```csharp
+// code for reproduce
+```
+
+### SCREENSHOTS
+
+<!-- Let me show your actual  screenshots or stacktrace. If you want to capture simulator screen to animation GIF, I recomend to [LICEcap](http://www.cockos.com/licecap/). -->
+
+![something_image](your_image.png) 
+
+```
+// paste stacktrace
+```
