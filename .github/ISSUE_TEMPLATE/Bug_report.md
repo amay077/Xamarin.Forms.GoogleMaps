@@ -4,10 +4,6 @@ about: Create a report to help us improve
 
 ---
 
-### SUMMARY
-
-<!-- write summary of your bug report. -->
-
 ### VERSIONS
 
 * Xamarin.Forms.GoogleMaps - x.x.x
@@ -20,6 +16,24 @@ about: Create a report to help us improve
 - [x] iOS
 - [ ] UWP
 
+### ACTUAL BEHAVIOR
+
+<!-- write about of your problem. -->
+
+### ACTUAL SCREENSHOTS/STACKTRACE
+
+<!-- Let me show your actual  screenshots or stacktrace. If you want to capture simulator screen to animation GIF, I recomend to [LICEcap](http://www.cockos.com/licecap/). -->
+
+![something_image](your_image.png) 
+
+```
+// paste stacktrace
+```
+
+### EXPECTED BEHAVIOR
+
+<!-- write about behavior what you expected -->
+
 ### HOW TO REPRODUCE
 
 <!-- Let me show how to reproduce with steps or codes) -->
@@ -30,14 +44,4 @@ about: Create a report to help us improve
 
 ```csharp
 // code for reproduce
-```
-
-### SCREENSHOTS
-
-<!-- Let me show your actual  screenshots or stacktrace. If you want to capture simulator screen to animation GIF, I recomend to [LICEcap](http://www.cockos.com/licecap/). -->
-
-![something_image](your_image.png) 
-
-```
-// paste stacktrace
 ```
