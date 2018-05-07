@@ -4,14 +4,22 @@ about: Suggest an idea for this project
 
 ---
 
-**Is your feature request related to a problem? Please describe.**
-A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+### SUMMARY
 
-**Describe the solution you'd like**
-A clear and concise description of what you want to happen.
+(write summary of your feature request or suggestion)
 
-**Describe alternatives you've considered**
-A clear and concise description of any alternative solutions or features you've considered.
+### DETAILS
 
-**Additional context**
-Add any other context or screenshots about the feature request here.
+(write details/usecases with text, codes and images)
+
+```
+// usage of your requested feature to use
+```
+
+### PLATFORMS
+
+which platform do you want?
+
+- [x] Android
+- [ ] iOS
+- [ ] UWP
