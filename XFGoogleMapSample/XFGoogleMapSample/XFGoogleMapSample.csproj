@@ -13,10 +13,6 @@
   <Import Project="$(ProjectDir)XFGoogleMapSample.CopyFile.targets" />
 
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="2.5.1.444934" />
-    <PackageReference Include="Xamarin.Forms.GoogleMaps" Version="3.0.0-beta1" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Remove="Properties\AssemblyInfo.cs" />
     <Compile Remove="Variables_sample.cs" />
   </ItemGroup>
@@ -29,5 +25,9 @@
     <EmbeddedResource Include="marker01.png" />
     <EmbeddedResource Include="marker02.png" />
     <EmbeddedResource Include="marker03.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Xamarin.Forms" Version="3.0.0.446417" />
+    <PackageReference Include="Xamarin.Forms.GoogleMaps" Version="3.0.0-beta2" />
   </ItemGroup>
 </Project>
