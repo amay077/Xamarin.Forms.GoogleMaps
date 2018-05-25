@@ -410,6 +410,12 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 dlat,
                 dlong
             );
+            // Simone Marra
+            ((Map)Element).TopLeft = new Position(ul.Latitude, ul.Longitude);
+            ((Map)Element).TopRight = new Position(ur.Latitude, ur.Longitude);
+            ((Map)Element).BottomLeft = new Position(ll.Latitude, ll.Longitude);
+            ((Map)Element).BottomRight = new Position(lr.Latitude, lr.Longitude);
+            // End Simone Marra
         }
 
         #region Overridable Members

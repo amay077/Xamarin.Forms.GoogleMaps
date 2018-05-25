@@ -268,6 +268,31 @@ namespace Xamarin.Forms.GoogleMaps.iOS
             var maxLon = Math.Max(Math.Max(Math.Max(region.NearLeft.Longitude, region.NearRight.Longitude), region.FarLeft.Longitude), region.FarRight.Longitude);
             mapModel.VisibleRegion = new MapSpan(pos.Target.ToPosition(), maxLat - minLat, maxLon - minLon);
 
+            // Simone Marra
+            CoreGraphics.CGPoint topLeftPoint = new CoreGraphics.CGPoint(0, 0);
+            CoreLocation.CLLocationCoordinate2D topLeftLocation = mkMapView.Projection.CoordinateForPoint(topLeftPoint);
+
+            CoreGraphics.CGPoint bottomRightPoint = new CoreGraphics.CGPoint(mkMapView.Frame.Size.Width, mkMapView.Frame.Size.Height);
+            CoreLocation.CLLocationCoordinate2D bottomRightLocation = mkMapView.Projection.CoordinateForPoint(bottomRightPoint);
+
+            CoreGraphics.CGPoint topRightPoint = new CoreGraphics.CGPoint(mkMapView.Frame.Size.Width, 0);
+            CoreLocation.CLLocationCoordinate2D topRightLocation = mkMapView.Projection.CoordinateForPoint(topRightPoint);
+
+            CoreGraphics.CGPoint bottomLeftPoint = new CoreGraphics.CGPoint(0, mkMapView.Frame.Size.Height);
+            CoreLocation.CLLocationCoordinate2D bottomLeftLocation = mkMapView.Projection.CoordinateForPoint(bottomLeftPoint);
+
+            VisibleRegion realVisibleRegion = new VisibleRegion();
+            realVisibleRegion.FarLeft = topLeftLocation;
+            realVisibleRegion.FarRight = topRightLocation;
+            realVisibleRegion.NearLeft = bottomLeftLocation;
+            realVisibleRegion.NearRight = bottomRightLocation;
+
+            ((Map)Element).TopLeft = new Position(topLeftLocation.Latitude, topLeftLocation.Longitude);
+            ((Map)Element).TopRight = new Position(topRightLocation.Latitude, topRightLocation.Longitude);
+            ((Map)Element).BottomLeft = new Position(bottomLeftLocation.Latitude, bottomLeftLocation.Longitude);
+            ((Map)Element).BottomRight = new Position(bottomRightLocation.Latitude, bottomRightLocation.Longitude);
+            // End Simone Marra
+
             var camera = pos.ToXamarinForms();
             Map.CameraPosition = camera;
             Map.SendCameraChanged(camera);
