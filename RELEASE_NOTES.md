@@ -1,37 +1,32 @@
 Xamarin.Forms.GoogleMaps Release Notes
 ----
-# 2.3.0-beta6
+# 3.0.0-beta3
 
 ## Bug Fixes
 
-* #[Android]Fix Polygon, Polyline, Circle, Pin, GroundOverlays does not work
+* #491 [Android/iOS]Causes NotSupportedException when using stream via URL
 
-# 2.3.0-beta5
+# 3.0.0-beta2
 
-## Bug Fixes
+## New Features
 
-* #373 [Android]Improve view initialization and uninitialization
+* PR#483 [Android]Update reference GooglePlayServices.Maps package to 60.1142.1
 
-# 2.3.0-beta4
+# 3.0.0-beta1
 
-## Bug Fixes
+## New Features
 
-* #40 [iOS]Fix bundle xxx@1x.png, xxx@2x.png, xxx@3x.png does not work for marker icon.
+* #355 Support .NET Standard 2.0
+	* Now depends Xamarin.Forms 2.5.1.444934+
+	* [UWP]Now depends Windows 10 Fall Creators Update(build 16299)
 
-# 2.3.0-beta3
+# 2.3.1-beta1
 
-## Bug Fixes
+## New Features
 
-* #431 [iOS]Fix doesn't work with Xamarin.Google.iOS.Maps 2.4.0+
+* #406 [Android]Add UiSettings.MapToolbarEnabled property
 
-# 2.3.0-beta2
-
-## Bug Fixes
-
-* #367 [iOS]Fix MyLocationEnabled doesn't work 
-* #421 [iOS/Android/UWP]Fix InitialCameraUpdate parsing failed
-
-# 2.3.0-beta1
+# 2.3.0
 
 ## New Features
 
@@ -39,6 +34,12 @@ Xamarin.Forms.GoogleMaps Release Notes
 
 ## Bug Fixes
 
+* #[Android]Fix Polygon, Polyline, Circle, Pin, GroundOverlays does not work
+* #373 [Android]Improve view initialization and uninitialization
+* #40 [iOS]Fix bundle xxx@1x.png, xxx@2x.png, xxx@3x.png does not work for marker icon.
+* #431 [iOS]Fix doesn't work with Xamarin.Google.iOS.Maps 2.4.0+
+* #367 [iOS]Fix MyLocationEnabled doesn't work 
+* #421 [iOS/Android/UWP]Fix InitialCameraUpdate parsing failed
 * #40 [iOS]Fix icon size is bigger than Android when load from bundle or stream
 
 # 2.2.1
