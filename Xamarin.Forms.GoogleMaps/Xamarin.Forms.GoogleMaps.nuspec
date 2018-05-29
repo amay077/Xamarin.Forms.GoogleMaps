@@ -291,7 +291,7 @@
       <group>
         <dependency id="Xamarin.Forms" version="2.5.1.444934" />
       </group>
-      <group targetFramework="MonoAndroid70">
+      <group targetFramework="MonoAndroid80">
         <dependency id="Xamarin.GooglePlayServices.Maps" version="60.1142.1"/>
         <dependency id="Xamarin.Android.Support.v7.AppCompat" version="25.1.0"/>
       </group>
