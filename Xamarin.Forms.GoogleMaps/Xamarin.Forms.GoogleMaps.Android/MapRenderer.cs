@@ -150,7 +150,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
             }));
         }
 
-        private void OnMapReady(GoogleMap nativeMap, Map map)
+        protected void OnMapReady(GoogleMap nativeMap, Map map)
         {
             if (nativeMap != null)
             {
