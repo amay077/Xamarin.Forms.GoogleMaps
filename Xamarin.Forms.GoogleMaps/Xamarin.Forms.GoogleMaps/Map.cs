@@ -88,13 +88,14 @@ namespace Xamarin.Forms.GoogleMaps
         internal Action<TakeSnapshotMessage> OnSnapshot{ get; set; }
 
         MapSpan _visibleRegion;
+        MapRegion _region;
 
-        // Simone Marra
-        public static Position _TopLeft = new Position();
-        public static Position _TopRight = new Position();
-        public static Position _BottomLeft = new Position();
-        public static Position _BottomRight = new Position();
-        // End Simone Marra
+        //// Simone Marra
+        //public static Position _TopLeft = new Position();
+        //public static Position _TopRight = new Position();
+        //public static Position _BottomLeft = new Position();
+        //public static Position _BottomRight = new Position();
+        //// End Simone Marra
 
         public Map()
         {
@@ -236,28 +237,20 @@ namespace Xamarin.Forms.GoogleMaps
             }
         }
 
-        // Simone Marra
-        public Position TopLeft
+        public MapRegion Region
         {
-            get { return _TopLeft; }
-            internal set { _TopLeft = value; }
+            get { return _region; }
+            internal set
+            {
+                if (_region == value)
+                    return;
+                if (value == null)
+                    throw new ArgumentNullException(nameof(value));
+                OnPropertyChanging();
+                _region = value;
+                OnPropertyChanged();
+            }
         }
-        public Position TopRight
-        {
-            get { return _TopRight; }
-            internal set { _TopRight = value; }
-        }
-        public Position BottomLeft
-        {
-            get { return _BottomLeft; }
-            internal set { _BottomLeft = value; }
-        }
-        public Position BottomRight
-        {
-            get { return _BottomRight; }
-            internal set { _BottomRight = value; }
-        }
-        // End Simone Marra
 
         public UiSettings UiSettings { get; } = new UiSettings();
 

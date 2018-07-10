@@ -146,6 +146,7 @@
     <Compile Include="Logics\DelegateCancelableCallback.cs" />
     <Compile Include="Logics\UiSettingsLogic.cs" />
     <Compile Include="Extensions\ActivityExtensions.cs" />
+    <Compile Include="Extensions\VisibleRegionExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
