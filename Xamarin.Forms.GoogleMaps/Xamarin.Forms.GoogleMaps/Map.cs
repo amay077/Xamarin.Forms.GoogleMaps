@@ -89,6 +89,13 @@ namespace Xamarin.Forms.GoogleMaps
 
         MapSpan _visibleRegion;
 
+        // Simone Marra
+        public static Position _TopLeft = new Position();
+        public static Position _TopRight = new Position();
+        public static Position _BottomLeft = new Position();
+        public static Position _BottomRight = new Position();
+        // End Simone Marra
+
         public Map()
         {
             VerticalOptions = HorizontalOptions = LayoutOptions.FillAndExpand;
@@ -228,6 +235,29 @@ namespace Xamarin.Forms.GoogleMaps
                 OnPropertyChanged();
             }
         }
+
+        // Simone Marra
+        public Position TopLeft
+        {
+            get { return _TopLeft; }
+            internal set { _TopLeft = value; }
+        }
+        public Position TopRight
+        {
+            get { return _TopRight; }
+            internal set { _TopRight = value; }
+        }
+        public Position BottomLeft
+        {
+            get { return _BottomLeft; }
+            internal set { _BottomLeft = value; }
+        }
+        public Position BottomRight
+        {
+            get { return _BottomRight; }
+            internal set { _BottomRight = value; }
+        }
+        // End Simone Marra
 
         public UiSettings UiSettings { get; } = new UiSettings();
 

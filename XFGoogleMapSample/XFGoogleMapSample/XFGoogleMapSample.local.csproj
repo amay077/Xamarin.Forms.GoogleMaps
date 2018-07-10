@@ -32,4 +32,9 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Xamarin.Forms.GoogleMaps\Xamarin.Forms.GoogleMaps\Xamarin.Forms.GoogleMaps.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="BoundsTestPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
 </Project>

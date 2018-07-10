@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:maps="clr-namespace:Xamarin.Forms.GoogleMaps;assembly=Xamarin.Forms.GoogleMaps"
+             x:Class="XFGoogleMapSample.local.BoundsTestPage"
+             Title="Bounds Test Page">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Search" Priority="0" />
+        <ToolbarItem Text="Sync" Priority="1" />
+    </ContentPage.ToolbarItems>
+    <!--<ContentPage.Padding>
+        <OnPlatform x:TypeArguments="Thickness">
+            <OnPlatform.Platforms>
+                <On Platform="iOS" Value="0, 20, 0, 0" />
+                <On Platform="Android" Value="0, 0, 0, 0" />
+                <On Platform="UWP" Value="0, 0, 0, 0" />
+            </OnPlatform.Platforms>
+        </OnPlatform>
+    </ContentPage.Padding>-->
+    <ContentPage.Content>
+        <AbsoluteLayout 
+            x:Name="navLayoutPage" 
+            VerticalOptions="FillAndExpand" 
+            HorizontalOptions="FillAndExpand"
+            Margin="0,0,0,0"
+            >
+            <maps:Map
+                    x:Name="mainMap"
+                    IsShowingUser="False"
+                    MapType="Satellite" 
+                    AbsoluteLayout.LayoutBounds="0,0,1,1"
+                    AbsoluteLayout.LayoutFlags="All"
+                    />
+            <!--<skiaSharp:SKCanvasView
+                x:Name="canvasView" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" 
+                BackgroundColor="Transparent"
+                InputTransparent="True"
+                AbsoluteLayout.LayoutBounds="0,0,1,1"
+                AbsoluteLayout.LayoutFlags="All"/> -->
+            </AbsoluteLayout>
+    </ContentPage.Content>
+</ContentPage>
