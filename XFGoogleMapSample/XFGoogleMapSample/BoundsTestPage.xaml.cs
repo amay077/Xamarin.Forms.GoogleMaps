@@ -11,12 +11,12 @@ using Xamarin.Forms.Xaml;
 
 namespace XFGoogleMapSample.local
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class BoundsTestPage : ContentPage
-	{
-		public BoundsTestPage ()
-		{
-			InitializeComponent ();
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class BoundsTestPage : ContentPage
+    {
+        public BoundsTestPage ()
+        {
+            InitializeComponent ();
 
             // Colosseum of Rome: 41.890251, 12.492373
             var center = new Position(41.890251, 12.492373);
