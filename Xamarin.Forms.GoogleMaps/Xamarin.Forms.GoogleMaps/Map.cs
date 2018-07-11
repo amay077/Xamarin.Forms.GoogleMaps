@@ -222,6 +222,7 @@ namespace Xamarin.Forms.GoogleMaps
             get { return _groundOverlays; }
         }
 
+        [Obsolete("Please use Map.Region instead of this")]
         public MapSpan VisibleRegion
         {
             get { return _visibleRegion; }
