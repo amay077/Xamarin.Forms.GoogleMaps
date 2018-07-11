@@ -153,6 +153,20 @@ Windows 10 UWP 対応は「とりあえず」残しました。
 
 開発に参加して頂ける方は、[コントリビューション ガイドライン](CONTRIBUTING-ja.md) を読んで下さい。
 
+## 寄付
+
+開発の継続のため、寄付を募集しています。
+
+**Gumroad**
+
+* [Gumroad](https://gum.co/xfgmdnate)
+
+**Kyash**
+
+![kyash](kyash_qr.jpg)
+
+あなたの寄付で開発者のモチベーションが上がります、どうかよろしくおねがいします :sushi:
+
 ## ライセンス
 
 [LICENSE](LICENSE) をみて下さい。
