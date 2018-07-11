@@ -91,6 +91,7 @@
     <Compile Include="Extensions\PointExtensions.cs" />
     <Compile Include="Extensions\CameraPositionExtensions.cs" />
     <Compile Include="Extensions\ThicknessExtension.cs" />
+    <Compile Include="Extensions\VisibleRegionExtensions.cs" />
     <Compile Include="Logics\UiSettingsLogic.cs" />
   </ItemGroup>
   <ItemGroup>

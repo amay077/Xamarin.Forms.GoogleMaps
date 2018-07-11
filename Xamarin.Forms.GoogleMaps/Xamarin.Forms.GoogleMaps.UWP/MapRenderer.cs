@@ -340,10 +340,12 @@ namespace Xamarin.Forms.Maps.WinRT
 
             if((topLeft != null) && (topRight != null) && (bottomLeft != null) && (bottomRight != null))
             {
-                Element.TopLeft = new Position(topLeft.Position.Latitude, topLeft.Position.Longitude);
-                Element.TopRight = new Position(topRight.Position.Latitude, topRight.Position.Longitude);
-                Element.BottomLeft = new Position(bottomLeft.Position.Latitude, bottomLeft.Position.Longitude);
-                Element.BottomRight = new Position(bottomRight.Position.Latitude, bottomRight.Position.Longitude);
+                var farLeft = new Position(topLeft.Position.Latitude, topLeft.Position.Longitude);
+                var farRight = new Position(topRight.Position.Latitude, topRight.Position.Longitude);
+                var nearLeft = new Position(bottomLeft.Position.Latitude, bottomLeft.Position.Longitude);
+                var nearRight = new Position(bottomRight.Position.Latitude, bottomRight.Position.Longitude);
+
+                Element.Region = new MapRegion(nearLeft, nearRight, farLeft, farRight);
             }
         }
         // End Simone Marra

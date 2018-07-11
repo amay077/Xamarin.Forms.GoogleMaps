@@ -79,28 +79,28 @@ namespace XFGoogleMapSample.local
             _map.Pins.Add(new Pin()
             {
                 Label = "TL",
-                Position = _map.TopLeft,
+                Position = _map.Region.FarLeft,
                 Rotation = 135f
             });
 
             _map.Pins.Add(new Pin()
             {
                 Label = "TR",
-                Position = _map.TopRight,
+                Position = _map.Region.FarRight,
                 Rotation = -135f
             });
 
             _map.Pins.Add(new Pin()
             {
                 Label = "BL",
-                Position = _map.BottomLeft,
+                Position = _map.Region.NearLeft,
                 Rotation = 45f
             });
 
             _map.Pins.Add(new Pin()
             {
                 Label = "BR",
-                Position = _map.BottomRight,
+                Position = _map.Region.NearRight,
                 Rotation = -45f
             });
 
@@ -114,11 +114,11 @@ namespace XFGoogleMapSample.local
                 Icon = BitmapDescriptorFactory.DefaultMarker(Color.Blue)
             });
 
-            double yMerTl = MercatorProjection.latToY(_map.TopLeft.Latitude);
-            double xMerTl = MercatorProjection.lonToX(_map.TopLeft.Longitude);
+            double yMerTl = MercatorProjection.latToY(_map.Region.FarLeft.Latitude);
+            double xMerTl = MercatorProjection.lonToX(_map.Region.FarLeft.Longitude);
 
-            double yMerBr = MercatorProjection.latToY(_map.BottomRight.Latitude);
-            double xMerBr = MercatorProjection.lonToX(_map.BottomRight.Longitude);
+            double yMerBr = MercatorProjection.latToY(_map.Region.NearRight.Latitude);
+            double xMerBr = MercatorProjection.lonToX(_map.Region.NearRight.Longitude);
 
             double xRome = MercatorProjection.lonToX(Rome.Longitude);
             double yRome = MercatorProjection.latToY(Rome.Latitude);
