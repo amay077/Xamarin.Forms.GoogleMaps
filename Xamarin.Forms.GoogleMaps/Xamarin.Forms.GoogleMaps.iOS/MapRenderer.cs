@@ -62,7 +62,8 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                         logic.Unregister(NativeMap, Map);
                     }
                 }               
-                _cameraLogic.Unregister();              
+                _cameraLogic.Unregister();
+                _uiSettingsLogic.Unregister();
 
                 var mkMapView = (MapView)Control;
                 if(mkMapView!=null)
