@@ -1,5 +1,16 @@
 Xamarin.Forms.GoogleMaps Release Notes
 ----
+# 3.0.0-beta4
+
+## New Features
+
+* #452 [Android]Change MapRenderer.OnMapReady's accesibility from private to protected
+* #487 [Android/iOS]Add Map.Region property what can get correct screen corner latitude/longitude
+
+## Bug Fixes
+
+* #504 [iOS]Fix NullPointerException when Page popped
+
 # 3.0.0-beta3
 
 ## Bug Fixes
