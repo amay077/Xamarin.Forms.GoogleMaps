@@ -1,5 +1,12 @@
 Xamarin.Forms.GoogleMaps Release Notes
 ----
+# 3.0.0-beta5
+
+## New Features
+
+* #509 Now depends Xamarin.Forms 3.0.0.482510+
+* #499 Add TileLayer.ZIndex property
+
 # 3.0.0-beta4
 
 ## New Features
