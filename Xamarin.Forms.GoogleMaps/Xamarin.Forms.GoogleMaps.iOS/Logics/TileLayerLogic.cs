@@ -37,6 +37,8 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
                 nativeTileLayer.TileSize = (nint)outerItem.TileSize;
             }
 
+            nativeTileLayer.ZIndex = outerItem.ZIndex;
+
             outerItem.NativeObject = nativeTileLayer;
             nativeTileLayer.Map = NativeMap;
 
@@ -49,6 +51,24 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
             nativeTileLayer.Map = null;
             return nativeTileLayer;
         }
+
+        protected override void OnItemPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            base.OnItemPropertyChanged(sender, e);
+            var outerItem = sender as TileLayer;
+            var nativeItem = outerItem?.NativeObject as NativeTileLayer;
+
+            if (nativeItem == null)
+                return;
+
+            if (e.PropertyName == TileLayer.ZIndexProperty.PropertyName) OnUpdateZIndex(outerItem, nativeItem);
+        }
+
+        private void OnUpdateZIndex(TileLayer outerItem, NativeTileLayer nativeItem)
+        {
+            nativeItem.ZIndex = outerItem.ZIndex;
+        }
+
     }
 }
 

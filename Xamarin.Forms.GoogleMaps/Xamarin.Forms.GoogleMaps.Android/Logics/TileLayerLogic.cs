@@ -30,7 +30,9 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
             {
                 nativeTileProvider = new DroidAsyncTileLayer(outerItem.TileImageAsync, outerItem.TileSize);
             }
-            var nativeTileOverlay = NativeMap.AddTileOverlay(opts.InvokeTileProvider(nativeTileProvider));
+            var nativeTileOverlay = NativeMap.AddTileOverlay(
+                opts.InvokeTileProvider(nativeTileProvider)
+                    .InvokeZIndex(outerItem.ZIndex));
 
             // associate pin with marker for later lookup in event handlers
             outerItem.NativeObject = nativeTileOverlay;
@@ -44,6 +46,23 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
                 return null;
             nativeTileOverlay.Remove();
             return nativeTileOverlay;
+        }
+
+        protected override void OnItemPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            base.OnItemPropertyChanged(sender, e);
+            var outerItem = sender as TileLayer;
+            var nativeItem = outerItem?.NativeObject as NativeTileOverlay;
+
+            if (nativeItem == null)
+                return;
+
+            if (e.PropertyName == TileLayer.ZIndexProperty.PropertyName) OnUpdateZIndex(outerItem, nativeItem);
+        }
+
+        private void OnUpdateZIndex(TileLayer outerItem, NativeTileOverlay nativeItem)
+        {
+            nativeItem.ZIndex = outerItem.ZIndex;
         }
     }
 }
