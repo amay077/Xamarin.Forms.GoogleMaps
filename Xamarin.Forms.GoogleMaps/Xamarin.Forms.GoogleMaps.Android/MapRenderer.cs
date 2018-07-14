@@ -49,8 +49,10 @@ namespace Xamarin.Forms.GoogleMaps.Android
         static Bundle s_bundle;
         internal static Bundle Bundle { set { s_bundle = value; } }
 
+        // ReSharper disable once MemberCanBePrivate.Global
         protected GoogleMap NativeMap { get; private set; }
 
+        // ReSharper disable once MemberCanBePrivate.Global
         protected Map Map => Element;
 
         private bool _ready = false;
@@ -94,6 +96,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 try
                 {
                     var oldNativeView = Control as MapView;
+                    // ReSharper disable once PossibleNullReferenceException
                     oldNativeMap = await oldNativeView?.GetGoogleMapAsync();
                     oldMap = e.OldElement;
                     Uninitialize(oldNativeMap, oldMap);
@@ -292,8 +295,10 @@ namespace Xamarin.Forms.GoogleMaps.Android
 
         private void UpdateIsShowingUser(bool? initialMyLocationButtonEnabled = null)
         {
+#pragma warning disable 618
             NativeMap.MyLocationEnabled = Map.IsShowingUser;
             NativeMap.UiSettings.MyLocationButtonEnabled = initialMyLocationButtonEnabled ?? Map.IsShowingUser;
+#pragma warning restore 618
         }
 
         private void UpdateMyLocationEnabled()
@@ -303,20 +308,26 @@ namespace Xamarin.Forms.GoogleMaps.Android
 
         private void UpdateHasScrollEnabled(bool? initialScrollGesturesEnabled = null)
         {
+#pragma warning disable 618
             NativeMap.UiSettings.ScrollGesturesEnabled = initialScrollGesturesEnabled ?? Map.HasScrollEnabled;
+#pragma warning restore 618
         }
 
         private void UpdateHasZoomEnabled(
             bool? initialZoomControlsEnabled = null, 
             bool? initialZoomGesturesEnabled = null)
         {
+#pragma warning disable 618
             NativeMap.UiSettings.ZoomControlsEnabled = initialZoomControlsEnabled ?? Map.HasZoomEnabled;
             NativeMap.UiSettings.ZoomGesturesEnabled = initialZoomGesturesEnabled ?? Map.HasZoomEnabled;
+#pragma warning restore 618
         }
 
         private void UpdateHasRotationEnabled(bool? initialRotateGesturesEnabled = null)
         {
+#pragma warning disable 618
             NativeMap.UiSettings.RotateGesturesEnabled = initialRotateGesturesEnabled ?? Map.HasRotationEnabled;
+#pragma warning restore 618
         }
 
         private void UpdateIsTrafficEnabled()
@@ -402,7 +413,8 @@ namespace Xamarin.Forms.GoogleMaps.Android
             var lr = projection.FromScreenLocation(new global::Android.Graphics.Point(width, height));
             var dlat = Math.Max(Math.Abs(ul.Latitude - lr.Latitude), Math.Abs(ur.Latitude - ll.Latitude));
             var dlong = Math.Max(Math.Abs(ul.Longitude - lr.Longitude), Math.Abs(ur.Longitude - ll.Longitude));
-            ((Map)Element).VisibleRegion = new MapSpan(
+#pragma warning disable 618
+            Element.VisibleRegion = new MapSpan(
                     new Position(
                         pos.Latitude,
                         pos.Longitude
@@ -410,14 +422,8 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 dlat,
                 dlong
             );
-            //// Simone Marra
-            //((Map)Element).TopLeft = new Position(ul.Latitude, ul.Longitude);
-            //((Map)Element).TopRight = new Position(ur.Latitude, ur.Longitude);
-            //((Map)Element).BottomLeft = new Position(ll.Latitude, ll.Longitude);
-            //((Map)Element).BottomRight = new Position(lr.Latitude, lr.Longitude);
-            //// End Simone Marra
-            /// 
-            ((Map)Element).Region = projection.VisibleRegion.ToRegion();
+#pragma warning restore 618
+            Element.Region = projection.VisibleRegion.ToRegion();
         }
 
         #region Overridable Members

@@ -19,7 +19,9 @@ namespace Xamarin.Forms.GoogleMaps.iOS
     {
         bool _shouldUpdateRegion = true;
 
+        // ReSharper disable once MemberCanBePrivate.Global
         protected MapView NativeMap => (MapView)Control;
+        // ReSharper disable once MemberCanBePrivate.Global
         protected Map Map => (Map)Element;
 
         readonly UiSettingsLogic _uiSettingsLogic = new UiSettingsLogic();
@@ -163,8 +165,6 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                 return;
             }
 
-            var mapModel = (Map)Element;
-
             if (e.PropertyName == Map.MapTypeProperty.PropertyName)
             {
                 UpdateMapType();
@@ -267,32 +267,10 @@ namespace Xamarin.Forms.GoogleMaps.iOS
             var minLon = Math.Min(Math.Min(Math.Min(region.NearLeft.Longitude, region.NearRight.Longitude), region.FarLeft.Longitude), region.FarRight.Longitude);
             var maxLat = Math.Max(Math.Max(Math.Max(region.NearLeft.Latitude, region.NearRight.Latitude), region.FarLeft.Latitude), region.FarRight.Latitude);
             var maxLon = Math.Max(Math.Max(Math.Max(region.NearLeft.Longitude, region.NearRight.Longitude), region.FarLeft.Longitude), region.FarRight.Longitude);
+            
+#pragma warning disable 618
             mapModel.VisibleRegion = new MapSpan(pos.Target.ToPosition(), maxLat - minLat, maxLon - minLon);
-
-            //// Simone Marra
-            //CoreGraphics.CGPoint topLeftPoint = new CoreGraphics.CGPoint(0, 0);
-            //CoreLocation.CLLocationCoordinate2D topLeftLocation = mkMapView.Projection.CoordinateForPoint(topLeftPoint);
-
-            //CoreGraphics.CGPoint bottomRightPoint = new CoreGraphics.CGPoint(mkMapView.Frame.Size.Width, mkMapView.Frame.Size.Height);
-            //CoreLocation.CLLocationCoordinate2D bottomRightLocation = mkMapView.Projection.CoordinateForPoint(bottomRightPoint);
-
-            //CoreGraphics.CGPoint topRightPoint = new CoreGraphics.CGPoint(mkMapView.Frame.Size.Width, 0);
-            //CoreLocation.CLLocationCoordinate2D topRightLocation = mkMapView.Projection.CoordinateForPoint(topRightPoint);
-
-            //CoreGraphics.CGPoint bottomLeftPoint = new CoreGraphics.CGPoint(0, mkMapView.Frame.Size.Height);
-            //CoreLocation.CLLocationCoordinate2D bottomLeftLocation = mkMapView.Projection.CoordinateForPoint(bottomLeftPoint);
-
-            //VisibleRegion realVisibleRegion = new VisibleRegion();
-            //realVisibleRegion.FarLeft = topLeftLocation;
-            //realVisibleRegion.FarRight = topRightLocation;
-            //realVisibleRegion.NearLeft = bottomLeftLocation;
-            //realVisibleRegion.NearRight = bottomRightLocation;
-
-            //((Map)Element).TopLeft = new Position(topLeftLocation.Latitude, topLeftLocation.Longitude);
-            //((Map)Element).TopRight = new Position(topRightLocation.Latitude, topRightLocation.Longitude);
-            //((Map)Element).BottomLeft = new Position(bottomLeftLocation.Latitude, bottomLeftLocation.Longitude);
-            //((Map)Element).BottomRight = new Position(bottomRightLocation.Latitude, bottomRightLocation.Longitude);
-            //// End Simone Marra
+#pragma warning restore 618
 
             Map.Region = mkMapView.Projection.VisibleRegion.ToRegion();
 
@@ -318,23 +296,31 @@ namespace Xamarin.Forms.GoogleMaps.iOS
 
         private void UpdateHasScrollEnabled(bool? initialScrollGesturesEnabled = null)
         {
+#pragma warning disable 618
             NativeMap.Settings.ScrollGestures = initialScrollGesturesEnabled ?? ((Map)Element).HasScrollEnabled;
+#pragma warning restore 618
         }
 
         private void UpdateHasZoomEnabled(bool? initialZoomGesturesEnabled = null)
         {
+#pragma warning disable 618
             NativeMap.Settings.ZoomGestures = initialZoomGesturesEnabled ?? ((Map)Element).HasZoomEnabled;
+#pragma warning restore 618
         }
 
         private void UpdateHasRotationEnabled(bool? initialRotateGesturesEnabled = null)
         {
+#pragma warning disable 618
             NativeMap.Settings.RotateGestures = initialRotateGesturesEnabled ?? ((Map)Element).HasRotationEnabled;
+#pragma warning restore 618
         }
 
         private void UpdateIsShowingUser(bool? initialMyLocationButtonEnabled = null)
         {
+#pragma warning disable 618
             ((MapView)Control).MyLocationEnabled = ((Map)Element).IsShowingUser;
             ((MapView)Control).Settings.MyLocationButton = initialMyLocationButtonEnabled ?? ((Map)Element).IsShowingUser;
+#pragma warning restore 618
         }
 
         void UpdateMyLocationEnabled()
@@ -381,7 +367,6 @@ namespace Xamarin.Forms.GoogleMaps.iOS
             ((MapView)Control).Padding = ((Map)Element).Padding.ToUIEdgeInsets();
         }
 
-        private Google.Maps.MapStyle _mapStyle = null;
         void UpdateMapStyle()
         {
             if (Map.MapStyle == null)
@@ -390,7 +375,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
             }
             else
             {
-                NSError err = null;
+                var err = new NSError();
                 var mapStyle = Google.Maps.MapStyle.FromJson(Map.MapStyle.JsonStyle, err);
                 ((MapView)Control).MapStyle = mapStyle;
             }
