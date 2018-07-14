@@ -8,6 +8,7 @@ using Java.Lang;
 using Xamarin.Forms.Platform.Android;
 using Math = System.Math;
 using Android.App;
+using Android.Content;
 using Android.Graphics;
 using Xamarin.Forms.GoogleMaps.Logics.Android;
 using Xamarin.Forms.GoogleMaps.Logics;
@@ -28,7 +29,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
         readonly UiSettingsLogic _uiSettingsLogic = new UiSettingsLogic();
         readonly BaseLogic<GoogleMap>[] _logics;
 
-        public MapRenderer() : base()
+        public MapRenderer(Context context) : base(context)
         {
             _cameraLogic = new CameraLogic(UpdateVisibleRegion);
 
@@ -38,13 +39,11 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 new PolylineLogic(),
                 new PolygonLogic(),
                 new CircleLogic(),
-                new PinLogic(OnMarkerCreating, OnMarkerCreated, OnMarkerDeleting, OnMarkerDeleted),
+                new PinLogic(context, OnMarkerCreating, OnMarkerCreated, OnMarkerDeleting, OnMarkerDeleted),
                 new TileLayerLogic(),
                 new GroundOverlayLogic()
             };
         }
-
-        public MapRenderer(IntPtr javaReference, global::Android.Runtime.JniHandleOwnership transfer) : this() { }
 
         static Bundle s_bundle;
         internal static Bundle Bundle { set { s_bundle = value; } }

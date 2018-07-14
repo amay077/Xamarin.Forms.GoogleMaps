@@ -8,6 +8,7 @@ using Xamarin.Forms.GoogleMaps.Android.Extensions;
 using NativeBitmapDescriptorFactory = Android.Gms.Maps.Model.BitmapDescriptorFactory;
 using Android.Widget;
 using System;
+using Android.Content;
 
 namespace Xamarin.Forms.GoogleMaps.Logics.Android
 {
@@ -19,17 +20,20 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
         private Pin _draggingPin;
         private volatile bool _withoutUpdateNative = false;
 
+        private readonly Context _context;
         private readonly Action<Pin, MarkerOptions> _onMarkerCreating;
         private readonly Action<Pin, Marker> _onMarkerCreated;
         private readonly Action<Pin, Marker> _onMarkerDeleting;
         private readonly Action<Pin, Marker> _onMarkerDeleted;
-
+        
         public PinLogic(
+            Context context,
             Action<Pin, MarkerOptions> onMarkerCreating,
             Action<Pin, Marker> onMarkerCreated, 
             Action<Pin, Marker> onMarkerDeleting,
             Action<Pin, Marker> onMarkerDeleted)
         {
+            _context = context;
             _onMarkerCreating = onMarkerCreating;
             _onMarkerCreated = onMarkerCreated;
             _onMarkerDeleting = onMarkerDeleting;
@@ -299,7 +303,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
             }
             else
             {
-                nativeItem.SetIcon(outerItem?.Icon?.ToBitmapDescriptor() ?? NativeBitmapDescriptorFactory.DefaultMarker());
+                nativeItem.SetIcon(outerItem.Icon?.ToBitmapDescriptor() ?? NativeBitmapDescriptorFactory.DefaultMarker());
                 nativeItem.SetAnchor(0.5f, 1f);
                 nativeItem.SetInfoWindowAnchor(0.5f, 0f);
             }
@@ -307,10 +311,13 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
 
         private async void TransformXamarinViewToAndroidBitmap(Pin outerItem, Marker nativeItem)
         {
-            if (outerItem?.Icon?.Type == BitmapDescriptorType.View && outerItem?.Icon?.View != null)
+            if (outerItem?.Icon?.Type == BitmapDescriptorType.View && outerItem.Icon?.View != null)
             {
                 var iconView = outerItem.Icon.View;
-                var nativeView = await Utils.ConvertFormsToNative(iconView, new Rectangle(0, 0, (double)Utils.DpToPx((float)iconView.WidthRequest), (double)Utils.DpToPx((float)iconView.HeightRequest)), Platform.Android.Platform.CreateRenderer(iconView));
+                var nativeView = await Utils.ConvertFormsToNative(
+                    iconView, 
+                    new Rectangle(0, 0, (double)Utils.DpToPx((float)iconView.WidthRequest), (double)Utils.DpToPx((float)iconView.HeightRequest)), 
+                    Platform.Android.Platform.CreateRendererWithContext(iconView, _context));
                 var otherView = new FrameLayout(nativeView.Context);
                 nativeView.LayoutParameters = new FrameLayout.LayoutParams(Utils.DpToPx((float)iconView.WidthRequest), Utils.DpToPx((float)iconView.HeightRequest));
                 otherView.AddView(nativeView);
