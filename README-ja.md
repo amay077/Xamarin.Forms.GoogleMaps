@@ -155,7 +155,7 @@ Windows 10 UWP 対応は「とりあえず」残しました。
 
 ## 寄付
 
-開発の継続のため、寄付を募集しています。
+Xamarin.Forms.GoogleMaps 開発の継続のため、寄付を募集しています。
 
 **Gumroad**
 
