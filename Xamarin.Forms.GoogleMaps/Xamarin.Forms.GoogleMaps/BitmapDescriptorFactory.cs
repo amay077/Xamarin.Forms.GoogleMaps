@@ -7,22 +7,22 @@ namespace Xamarin.Forms.GoogleMaps
     {
         public static BitmapDescriptor DefaultMarker(Color color)
         {
-            return BitmapDescriptor.DefaultMarker(color);
+            return BitmapDescriptor.DefaultMarker(color, color.GetHashCode().ToString());
         }
 
         public static BitmapDescriptor FromBundle(string bundleName)
         {
-            return BitmapDescriptor.FromBundle(bundleName);
+            return BitmapDescriptor.FromBundle(bundleName, bundleName);
         }
 
-        public static BitmapDescriptor FromStream(Stream stream)
+        public static BitmapDescriptor FromStream(Stream stream, string id = null)
         {
-            return BitmapDescriptor.FromStream(stream);
+            return BitmapDescriptor.FromStream(stream, id);
         }
 
-        public static BitmapDescriptor FromView(View view)
+        public static BitmapDescriptor FromView(View view, string id = null)
         {
-            return BitmapDescriptor.FromView(view);
+            return BitmapDescriptor.FromView(view, id);
         }
 
         //public static BitmapDescriptor FromPath(string absolutePath)

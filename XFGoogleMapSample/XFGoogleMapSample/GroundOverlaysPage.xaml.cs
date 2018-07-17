@@ -115,7 +115,7 @@ namespace XFGoogleMapSample
                 case 1: // Stream
                     var assembly = typeof(GroundOverlaysPage).GetTypeInfo().Assembly;
                     var stream = assembly.GetManifestResourceStream($"XFGoogleMapSample.marker01.png");
-                    _overlay.Icon = BitmapDescriptorFactory.FromStream(stream);
+                    _overlay.Icon = BitmapDescriptorFactory.FromStream(stream, id: "1"); // id is used for caching purposes
                     break;
                 case 2: // DefaultMarker
                     _overlay.Icon = BitmapDescriptorFactory.DefaultMarker(Color.Blue);

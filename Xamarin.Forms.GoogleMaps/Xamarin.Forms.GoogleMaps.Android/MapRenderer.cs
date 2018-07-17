@@ -39,14 +39,17 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 new PolylineLogic(),
                 new PolygonLogic(),
                 new CircleLogic(),
-                new PinLogic(context, OnMarkerCreating, OnMarkerCreated, OnMarkerDeleting, OnMarkerDeleted),
+                new PinLogic(context, () => Config.BitmapDescriptorFactory, 
+                    OnMarkerCreating, OnMarkerCreated, OnMarkerDeleting, OnMarkerDeleted),
                 new TileLayerLogic(),
-                new GroundOverlayLogic()
+                new GroundOverlayLogic(() => Config.BitmapDescriptorFactory)
             };
         }
 
         static Bundle s_bundle;
         internal static Bundle Bundle { set { s_bundle = value; } }
+
+        internal static PlatformConfig Config { private get; set; }
 
         // ReSharper disable once MemberCanBePrivate.Global
         protected GoogleMap NativeMap { get; private set; }
