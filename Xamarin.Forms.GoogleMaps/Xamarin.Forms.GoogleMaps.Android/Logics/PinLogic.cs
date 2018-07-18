@@ -29,13 +29,13 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
 
         public PinLogic(
             Context context,
-            Func<IBitmapDescriptorFactory> bitmapDescriptorFactoryF,
+            IBitmapDescriptorFactory bitmapDescriptorFactory,
             Action<Pin, MarkerOptions> onMarkerCreating,
             Action<Pin, Marker> onMarkerCreated, 
             Action<Pin, Marker> onMarkerDeleting,
             Action<Pin, Marker> onMarkerDeleted)
         {
-            _bitmapDescriptorFactory = bitmapDescriptorFactoryF();
+            _bitmapDescriptorFactory = bitmapDescriptorFactory;
             _context = context;
             _onMarkerCreating = onMarkerCreating;
             _onMarkerCreated = onMarkerCreated;

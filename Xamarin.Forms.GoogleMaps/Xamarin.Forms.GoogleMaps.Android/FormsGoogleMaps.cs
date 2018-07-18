@@ -23,7 +23,7 @@ namespace Xamarin
             Context = activity;
 
             MapRenderer.Bundle = bundle;
-            MapRenderer.Config = config;
+            MapRenderer.Config = config ?? new PlatformConfig();
 
 #pragma warning disable 618
             if (GooglePlayServicesUtil.IsGooglePlayServicesAvailable(Context) == ConnectionResult.Success)

@@ -15,9 +15,9 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
 
         private readonly IBitmapDescriptorFactory _bitmapDescriptorFactory;
 
-        public GroundOverlayLogic(Func<IBitmapDescriptorFactory> bitmapDescriptorFactoryF)
+        public GroundOverlayLogic(IBitmapDescriptorFactory bitmapDescriptorFactory)
         {
-            _bitmapDescriptorFactory = bitmapDescriptorFactoryF();
+            _bitmapDescriptorFactory = bitmapDescriptorFactory;
         }
 
         internal override void Register(GoogleMap oldNativeMap, Map oldMap, GoogleMap newNativeMap, Map newMap)

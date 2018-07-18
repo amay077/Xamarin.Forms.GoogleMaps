@@ -39,10 +39,10 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 new PolylineLogic(),
                 new PolygonLogic(),
                 new CircleLogic(),
-                new PinLogic(context, () => Config.BitmapDescriptorFactory, 
+                new PinLogic(context, Config.BitmapDescriptorFactory, 
                     OnMarkerCreating, OnMarkerCreated, OnMarkerDeleting, OnMarkerDeleted),
                 new TileLayerLogic(),
-                new GroundOverlayLogic(() => Config.BitmapDescriptorFactory)
+                new GroundOverlayLogic(Config.BitmapDescriptorFactory)
             };
         }
 
