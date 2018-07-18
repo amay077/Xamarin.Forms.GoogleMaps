@@ -8,10 +8,11 @@ namespace Xamarin
     {
         public static bool IsInitialized { get; private set; }
 
-        public static void Init(string apiKey)
+        public static void Init(string apiKey, PlatformConfig config = null)
         {
             MapServices.ProvideAPIKey(apiKey);
             GeocoderBackend.Register();
+            MapRenderer.Config = config ?? new PlatformConfig();
             IsInitialized = true;
         }
     }

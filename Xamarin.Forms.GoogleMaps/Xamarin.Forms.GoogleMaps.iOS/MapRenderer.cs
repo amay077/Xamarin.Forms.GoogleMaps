@@ -24,6 +24,8 @@ namespace Xamarin.Forms.GoogleMaps.iOS
         // ReSharper disable once MemberCanBePrivate.Global
         protected Map Map => (Map)Element;
 
+        internal static PlatformConfig Config { private get; set; }
+
         readonly UiSettingsLogic _uiSettingsLogic = new UiSettingsLogic();
         readonly CameraLogic _cameraLogic;
 
@@ -36,9 +38,9 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                 new PolylineLogic(),
                 new PolygonLogic(),
                 new CircleLogic(),
-                new PinLogic(OnMarkerCreating, OnMarkerCreated, OnMarkerDeleting, OnMarkerDeleted),
+                new PinLogic(Config.ImageFactory, OnMarkerCreating, OnMarkerCreated, OnMarkerDeleting, OnMarkerDeleted),
                 new TileLayerLogic(),
-                new GroundOverlayLogic()
+                new GroundOverlayLogic(Config.ImageFactory)
             };
 
             _cameraLogic = new CameraLogic(() =>
