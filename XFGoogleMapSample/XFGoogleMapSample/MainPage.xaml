@@ -38,6 +38,8 @@
                         Text="GroundOverlays" />
                 <Button x:Name="buttonMapStyles"
                         Text="Map Styles" />
+                <Button x:Name="buttonPinIconsCaching"
+                        Text="Pins icons caching" />
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

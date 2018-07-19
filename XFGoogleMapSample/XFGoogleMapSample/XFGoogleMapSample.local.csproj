@@ -17,7 +17,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Properties\AssemblyInfo.cs" />
-    <Compile Remove="Variables_sample.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="marker01.png" />
@@ -31,6 +30,11 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Xamarin.Forms.GoogleMaps\Xamarin.Forms.GoogleMaps\Xamarin.Forms.GoogleMaps.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="MultiplePinsIconsCaching.xaml.cs">
+      <DependentUpon>MultiplePinsIconsCaching.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Update="BoundsTestPage.xaml">

@@ -235,8 +235,8 @@ namespace XFGoogleMapSample
             {
                 var assembly = typeof(CustomPinsPage).GetTypeInfo().Assembly;
                 var file = buttonPinStream.Items[buttonPinStream.SelectedIndex];
-                var stream = assembly.GetManifestResourceStream($"XFGoogleMapSample.{file}");
-                _pinTokyo.Icon = BitmapDescriptorFactory.FromStream(stream);
+                var stream = assembly.GetManifestResourceStream($"XFGoogleMapSample.{file}") ?? assembly.GetManifestResourceStream($"XFGoogleMapSample.local.{file}");
+                _pinTokyo.Icon = BitmapDescriptorFactory.FromStream(stream, id: file);
             }
         }
    }
