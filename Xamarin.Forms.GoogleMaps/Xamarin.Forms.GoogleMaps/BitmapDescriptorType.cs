@@ -1,7 +1,7 @@
 ﻿using System;
 namespace Xamarin.Forms.GoogleMaps
 {
-    internal enum BitmapDescriptorType
+    public enum BitmapDescriptorType
     {
         Default,
         Bundle,
