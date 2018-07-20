@@ -128,6 +128,20 @@ protected override void OnLaunched(LaunchActivatedEventArgs e)
 
 にあります。
 
+## 採用事例
+
+Xamarin.Forms.GoogleMaps が使われているアプリを紹介します(他にもあったら [教えてください](https://github.com/amay077/Xamarin.Forms.GoogleMaps/issues/512))。
+
+<table>
+  <tr>
+    <td align="center">
+      <h3><a href="https://www.herenow.city/">HereNow</a></h3>
+      <img src="showcase_herenow.jpg" width="200" width="200" style="max-width:100%;">
+      <p>by <a href="https://www.cinra.co.jp/">CINRA, Inc.</a></p>
+    </td>
+  </tr>
+</table>
+
 ## リリースノーツ
 
 [Releases](https://github.com/amay077/Xamarin.Forms.GoogleMaps/releases) または [RELEASE_NOTES](RELEASE_NOTES.md) を見てください。
