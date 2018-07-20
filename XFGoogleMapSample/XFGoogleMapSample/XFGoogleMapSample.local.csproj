@@ -17,6 +17,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Properties\AssemblyInfo.cs" />
+    <Compile Remove="Variables_sample.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="marker01.png" />
