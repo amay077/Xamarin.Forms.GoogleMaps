@@ -124,10 +124,10 @@
       <HintPath>..\packages\Xamarin.GooglePlayServices.Maps.60.1142.1\lib\MonoAndroid80\Xamarin.GooglePlayServices.Maps.dll</HintPath>
     </Reference>
     <Reference Include="Xamarin.Forms.GoogleMaps.Android">
-      <HintPath>..\packages\Xamarin.Forms.GoogleMaps.3.0.0-beta5\lib\MonoAndroid70\Xamarin.Forms.GoogleMaps.Android.dll</HintPath>
+      <HintPath>..\packages\Xamarin.Forms.GoogleMaps.3.0.0-beta6\lib\MonoAndroid70\Xamarin.Forms.GoogleMaps.Android.dll</HintPath>
     </Reference>
     <Reference Include="Xamarin.Forms.GoogleMaps">
-      <HintPath>..\packages\Xamarin.Forms.GoogleMaps.3.0.0-beta5\lib\MonoAndroid70\Xamarin.Forms.GoogleMaps.dll</HintPath>
+      <HintPath>..\packages\Xamarin.Forms.GoogleMaps.3.0.0-beta6\lib\MonoAndroid70\Xamarin.Forms.GoogleMaps.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
