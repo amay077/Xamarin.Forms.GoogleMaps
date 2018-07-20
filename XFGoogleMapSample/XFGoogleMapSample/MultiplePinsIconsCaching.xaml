@@ -7,15 +7,8 @@
     Title="Custom Pin">
     <ContentPage.Content>
         <StackLayout>
-            <Label>
-                Android results: Without caching - 263MB, with caching - 170MB
-            </Label>
-            <Label>
-                Pin count:
-            </Label>
-            <Label x:Name="lblPinCount">
-                -
-            </Label>
+            <Label>Pin count:</Label>
+            <Label x:Name="lblPinCount">-</Label>
             <maps:Map x:Name="map"
                       Grid.Row="1"
                       VerticalOptions="FillAndExpand" />
