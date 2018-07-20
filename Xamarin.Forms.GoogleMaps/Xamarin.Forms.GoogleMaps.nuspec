@@ -3,14 +3,13 @@
 	<metadata minClientVersion="2.8.3">
 		<id>Xamarin.Forms.GoogleMaps</id>
 		<title>Xamarin.Forms.GoogleMaps</title>
-		<version>3.0.0-beta5</version>
+		<version>3.0.0-beta6</version>
 		<releaseNotes>
-# 3.0.0-beta5
+# 3.0.0-beta6
 
 ## New Features
 
-* #509 Now depends Xamarin.Forms 3.0.0.482510+
-* #499 Add TileLayer.ZIndex property
+* #497 [Android/iOS]Support Caching BitmapDescriptors(Android) or UIImages(iOS)
 
 full release notes is here - https://github.com/amay077/Xamarin.Forms.GoogleMaps/blob/master/RELEASE_NOTES.md
 		</releaseNotes>

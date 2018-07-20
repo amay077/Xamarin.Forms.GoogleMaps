@@ -1,5 +1,11 @@
 Xamarin.Forms.GoogleMaps Release Notes
 ----
+# 3.0.0-beta6
+
+## New Features
+
+* #497 [Android/iOS]Support Caching BitmapDescriptors(Android) or UIImages(iOS)
+
 # 3.0.0-beta5
 
 ## New Features
