@@ -130,19 +130,14 @@ protected override void OnLaunched(LaunchActivatedEventArgs e)
 
 ## 採用事例
 
-Xamarin.Forms.GoogleMaps が使われているアプリを紹介します(他にもあったら教えてください)。
+Xamarin.Forms.GoogleMaps が使われているアプリを紹介します(他にもあったら [教えてください](https://github.com/amay077/Xamarin.Forms.GoogleMaps/issues/512))。
 
 <table>
   <tr>
     <td align="center">
       <h3><a href="https://www.herenow.city/">HereNow</a></h3>
-      <img src="https://pbs.twimg.com/profile_images/854910205980680192/MH_4pst0_400x400.jpg" width="200" width="200" style="max-width:100%;">
+      <img src="showcase_herenow.jpg" width="200" width="200" style="max-width:100%;">
       <p>by <a href="https://www.cinra.co.jp/">CINRA, Inc.</a></p>
-    </td>
-    <td align="center">
-      <h3><a href="">{AppName}</a></h3>
-      <img src="https://raw.githubusercontent.com/amay077/Xamarin.Forms.GoogleMaps/master/logo.png" width="200" width="200" style="max-width:100%;">
-      <p>by <a href="">{Company}</a></p>
     </td>
   </tr>
 </table>

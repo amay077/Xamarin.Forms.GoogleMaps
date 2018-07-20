@@ -126,6 +126,20 @@ Sample application is here.
 
 * [XFGoogleMapSample](https://github.com/amay077/Xamarin.Forms.GoogleMaps/tree/master/XFGoogleMapSample)
 
+## Who uses it?
+
+This is just a short list of apps and projects that use Xamarin.Forms.GoogleMaps. If you've used Xamarin.Forms.GoogleMaps in a apps and would like it listed on this page, [**Please report it**](https://github.com/amay077/Xamarin.Forms.GoogleMaps/issues/512). 
+
+<table>
+  <tr>
+    <td align="center">
+      <h3><a href="https://www.herenow.city/">HereNow</a></h3>
+      <img src="showcase_herenow.jpg" width="200" width="200" style="max-width:100%;">
+      <p>by <a href="https://www.cinra.co.jp/">CINRA, Inc.</a></p>
+    </td>
+  </tr>
+</table>
+
 ## Releases
 
 See [Releases](https://github.com/amay077/Xamarin.Forms.GoogleMaps/releases) or [RELEASE_NOTES](RELEASE_NOTES.md).
