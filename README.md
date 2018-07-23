@@ -144,7 +144,7 @@ This is just a short list of apps and projects that use Xamarin.Forms.GoogleMaps
     </td>
     <td align="center">
       <h3><a target="_blank" href="https://itunes.apple.com/tr/app/rentacarss-ara%C3%A7-takip/id1276280125">Rentacarss Araç Takip</a></h3>
-      <img src="showcase_rentacarss.png" width="200" width="200" style="max-width:100%;">
+      <img src="showcase_rentacarss.jpg" width="200" width="200" style="max-width:100%;">
       <p>&nbsp;</p>
     </td>
   </tr>
