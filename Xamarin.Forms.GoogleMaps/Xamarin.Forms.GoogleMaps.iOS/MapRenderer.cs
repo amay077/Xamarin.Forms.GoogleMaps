@@ -377,8 +377,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
             }
             else
             {
-                var err = new NSError();
-                var mapStyle = Google.Maps.MapStyle.FromJson(Map.MapStyle.JsonStyle, err);
+                var mapStyle = Google.Maps.MapStyle.FromJson(Map.MapStyle.JsonStyle, null);
                 ((MapView)Control).MapStyle = mapStyle;
             }
         }
