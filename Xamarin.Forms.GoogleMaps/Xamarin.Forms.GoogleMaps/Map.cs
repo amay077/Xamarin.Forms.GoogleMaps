@@ -9,11 +9,19 @@ using Xamarin.Forms.GoogleMaps.Internals;
 using Xamarin.Forms.GoogleMaps.Helpers;
 using System.Threading.Tasks;
 using Xamarin.Forms.GoogleMaps.Extensions;
+using System.ComponentModel;
+using System.Windows.Input;
 
 namespace Xamarin.Forms.GoogleMaps
 {
     public class Map : View, IEnumerable<Pin>
     {
+        public static readonly BindableProperty ItemsSourceProperty = BindableProperty.Create(nameof(ItemsSource), typeof(IEnumerable), typeof(Map), null, propertyChanged: OnItemsSourcePropertyChanged);
+
+        public static readonly BindableProperty ItemTemplateProperty = BindableProperty.Create(nameof(ItemTemplate), typeof(DataTemplate), null);
+
+        public static readonly BindableProperty ItemSelectedCommandProperty = BindableProperty.Create(nameof(ItemSelectedCommand), typeof(ICommand), typeof(Map), null);
+
         public static readonly BindableProperty MapTypeProperty = BindableProperty.Create(nameof(MapType), typeof(MapType), typeof(Map), default(MapType));
 
 #pragma warning disable CS0618 // Type or member is obsolete
@@ -62,6 +70,7 @@ namespace Xamarin.Forms.GoogleMaps
 
         public event EventHandler<PinClickedEventArgs> PinClicked;
         public event EventHandler<SelectedPinChangedEventArgs> SelectedPinChanged;
+        public event EventHandler<SelectedItemChangedEventArgs> SelectedItemChanged;
         public event EventHandler<InfoWindowClickedEventArgs> InfoWindowClicked;
         public event EventHandler<InfoWindowLongClickedEventArgs> InfoWindowLongClicked;
 
@@ -190,6 +199,24 @@ namespace Xamarin.Forms.GoogleMaps
         {
             get { return (MapStyle)GetValue(MapStyleProperty); }
             set { SetValue(MapStyleProperty, value); }
+        }
+
+        public IEnumerable ItemsSource
+        {
+            get => (IEnumerable)GetValue(ItemsSourceProperty);
+            set => SetValue(ItemsSourceProperty, value);
+        }
+
+        public DataTemplate ItemTemplate
+        {
+            get => (DataTemplate)GetValue(ItemTemplateProperty);
+            set => SetValue(ItemTemplateProperty, value);
+        }
+
+        public ICommand ItemSelectedCommand
+        {
+            get => (ICommand)GetValue(ItemSelectedCommandProperty);
+            set => SetValue(ItemSelectedCommandProperty, value);
         }
 
         public IList<Pin> Pins
@@ -349,6 +376,16 @@ namespace Xamarin.Forms.GoogleMaps
         internal void SendSelectedPinChanged(Pin selectedPin)
         {
             SelectedPinChanged?.Invoke(this, new SelectedPinChangedEventArgs(selectedPin));
+            SendSelectedItemChanged(selectedPin.BindingContext);
+        }
+
+        internal void SendSelectedItemChanged(object item)
+        {
+            SelectedItemChanged?.Invoke(this, new SelectedItemChangedEventArgs(item));
+            if(ItemSelectedCommand?.CanExecute(item) ?? false)
+            {
+                ItemSelectedCommand.Execute(item);
+            }
         }
 
         internal bool SendPinClicked(Pin pin)
@@ -440,6 +477,82 @@ namespace Xamarin.Forms.GoogleMaps
         void SendTakeSnapshot(TakeSnapshotMessage message)
         {
             OnSnapshot?.Invoke(message);
+        }
+
+        static void OnItemsSourcePropertyChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            var map = bindable as Map;
+            if(oldValue is INotifyCollectionChanged oldObservableCollection)
+            {
+                oldObservableCollection
+                    .CollectionChanged -= map.ItemsSourceChanged;
+            }
+
+            if(newValue is INotifyCollectionChanged observableCollection)
+            {
+                observableCollection.CollectionChanged += map.ItemsSourceChanged;
+            }
+
+            if(map.ItemTemplate != null)
+            {
+                map.AddNewPins(map.ItemsSource);
+            }
+        }
+
+        static void OnItemTemplateChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            var map = bindable as Map;
+            if(map.ItemsSource.Cast<object>().Any())
+            {
+                map.Pins.Clear();
+                map.AddNewPins(map.ItemsSource);
+            }
+        }
+
+        private void ItemsSourceChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            switch(e.Action)
+            {
+                case NotifyCollectionChangedAction.Add:
+                    AddNewPins(e.NewItems);
+                    break;
+                default:
+                    Pins.Clear();
+                    AddNewPins(ItemsSource);
+                    break;
+            }
+        }
+
+        private void AddNewPins(IEnumerable items)
+        {
+            foreach (var item in items)
+            {
+                CreatePinFor(item);
+            }
+        }
+
+        private void CreatePinFor(object item)
+        {
+            object content = null;
+            switch(ItemTemplate)
+            {
+                case DataTemplateSelector selector:
+                    var template = selector.SelectTemplate(item, this);
+                    content = template.CreateContent();
+                    break;
+                case DataTemplate dataTemplate:
+                    content = dataTemplate.CreateContent();
+                    break;
+            }
+
+            if (content is Pin pin)
+            {
+                Pins.Add(pin);
+            }
+            else
+            {
+                Forms.Internals.Log.Warning("ERROR", $"The DataTemplate returned a '{content.GetType().Name}' instead of expected type 'Pin'.");
+            }
         }
     }
 }
