@@ -176,6 +176,7 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
+    <Compile Include="CachingImageFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="pin_red.png" />
