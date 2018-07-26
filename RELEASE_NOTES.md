@@ -1,48 +1,26 @@
 Xamarin.Forms.GoogleMaps Release Notes
 ----
-# 3.0.0-beta6
-
-## New Features
-
-* #497 [Android/iOS]Support Caching BitmapDescriptors(Android) or UIImages(iOS)
-
-# 3.0.0-beta5
-
-## New Features
-
-* #509 Now depends Xamarin.Forms 3.0.0.482510+
-* #499 Add TileLayer.ZIndex property
-
-# 3.0.0-beta4
-
-## New Features
-
-* #452 [Android]Change MapRenderer.OnMapReady's accesibility from private to protected
-* #487 [Android/iOS]Add Map.Region property what can get correct screen corner latitude/longitude
-
-## Bug Fixes
-
-* #504 [iOS]Fix NullPointerException when Page popped
-
-# 3.0.0-beta3
-
-## Bug Fixes
-
-* #491 [Android/iOS]Causes NotSupportedException when using stream via URL
-
-# 3.0.0-beta2
-
-## New Features
-
-* PR#483 [Android]Update reference GooglePlayServices.Maps package to 60.1142.1
-
-# 3.0.0-beta1
+# 3.0.0
 
 ## New Features
 
 * #355 Support .NET Standard 2.0
-	* Now depends Xamarin.Forms 2.5.1.444934+
+	* Now depends Xamarin.Forms 3.0.0.482510+
 	* [UWP]Now depends Windows 10 Fall Creators Update(build 16299)
+
+* PR#483 [Android]Update reference GooglePlayServices.Maps package to 60.1142.1
+* #452 [Android]Change MapRenderer.OnMapReady's accesibility from private to protected
+* #487 [Android/iOS]Add Map.Region property what can get correct screen corner latitude/longitude
+* #509 Now depends Xamarin.Forms 3.0.0.482510+
+* #499 Add TileLayer.ZIndex property
+* #497 [Android/iOS]Support Caching BitmapDescriptors(Android) or UIImages(iOS)
+
+## Bug Fixes
+
+* #452 [Android]Fix MapRenderer.OnMapReady accesibility
+* #517 [iOS]iOS 10.0+ native crash when setting a value to the Map.MapStyle property.
+* #491 [Android/iOS]Causes NotSupportedException when using stream via URL
+* #504 [iOS]Fix NullPointerException when Page popped
 
 # 2.3.1-beta1
 
