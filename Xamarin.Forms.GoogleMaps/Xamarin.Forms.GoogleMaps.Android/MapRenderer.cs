@@ -519,6 +519,14 @@ namespace Xamarin.Forms.GoogleMaps.Android
             {
                 _disposed = true;
                 Uninitialize(NativeMap, Map);
+
+                if (NativeMap != null)
+                {
+                    NativeMap.Dispose();
+                    NativeMap = null;
+                }
+
+                (Control as MapView)?.OnDestroy();
             }
 
             base.Dispose(disposing);
