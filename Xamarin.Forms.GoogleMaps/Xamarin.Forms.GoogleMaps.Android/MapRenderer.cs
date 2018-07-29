@@ -208,7 +208,6 @@ namespace Xamarin.Forms.GoogleMaps.Android
             else if (changed && NativeMap != null)
             {
                 UpdateVisibleRegion(NativeMap.CameraPosition.Target);
-                _cameraLogic.MoveCamera(Map.InitialCameraUpdate);
             }
         }
 
