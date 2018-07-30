@@ -1,5 +1,12 @@
 Xamarin.Forms.GoogleMaps Release Notes
 ----
+# 3.0.1
+
+## Bug Fixes
+
+* #466 [Android]Fix memory leak when Map disposed
+* #413 [Android]Fix resets camera when device rotating
+
 # 3.0.0
 
 ## New Features
