@@ -3,8 +3,14 @@
 	<metadata minClientVersion="2.8.3">
 		<id>Xamarin.Forms.GoogleMaps</id>
 		<title>Xamarin.Forms.GoogleMaps</title>
-		<version>3.0.0</version>
+		<version>3.0.1</version>
 		<releaseNotes>
+# 3.0.1
+
+## Bug Fixes
+
+* #466 [Android]Fix memory leak when Map disposed
+* #413 [Android]Fix resets camera when device rotating
 
 # 3.0.0
 
