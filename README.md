@@ -147,6 +147,11 @@ This is just a short list of apps and projects that use Xamarin.Forms.GoogleMaps
       <img src="showcase_rentacarss.jpg" width="200" width="200" style="max-width:100%;">
       <p>&nbsp;</p>
     </td>
+    <td align="center">
+      <h3><a target="_blank" href="https://www.uspace.city/">UPSPACE</a></h3>
+      <img src="showcase_upspace.png" width="200" width="200" style="max-width:100%;">
+      <p>&nbsp;</p>
+    </td>
   </tr>
 </table>
 
