@@ -140,13 +140,18 @@ Xamarin.Forms.GoogleMaps が使われているアプリを紹介します(他に
       <p>by <a target="_blank" href="https://www.cinra.co.jp/">CINRA, Inc.</a></p>
     </td>
     <td align="center">
-      <h3><a target="_blank" href="https://www.citybee.lt/">CityBee</a></h3>
+      <h3><a target="_new" href="https://www.citybee.lt/">CityBee</a></h3>
       <img src="showcase_citybee.png" width="200" width="200" style="max-width:100%;">
       <p>&nbsp;</p>
     </td>
     <td align="center">
-      <h3><a target="_blank" href="https://itunes.apple.com/tr/app/rentacarss-ara%C3%A7-takip/id1276280125">Rentacarss Araç Takip</a></h3>
+      <h3><a target="_new" href="https://itunes.apple.com/tr/app/rentacarss-ara%C3%A7-takip/id1276280125">Rentacarss Araç Takip</a></h3>
       <img src="showcase_rentacarss.jpg" width="200" width="200" style="max-width:100%;">
+      <p>&nbsp;</p>
+    </td>
+    <td align="center">
+      <h3><a target="_new" href="https://www.uspace.city/">UPSPACE</a></h3>
+      <img src="showcase_upspace.png" width="200" width="200" style="max-width:100%;">
       <p>&nbsp;</p>
     </td>
   </tr>
