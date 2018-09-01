@@ -19,6 +19,5 @@ using Xamarin.Forms.GoogleMaps.Android;
 // Add some common permissions, these can be removed if not needed
 
 [assembly: UsesPermission(Manifest.Permission.Internet)]
-[assembly: UsesPermission(Manifest.Permission.WriteExternalStorage)]
 [assembly: ExportRenderer(typeof(Map), typeof(MapRenderer))]
 [assembly: Preserve]
