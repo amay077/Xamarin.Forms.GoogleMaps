@@ -162,7 +162,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
             
             if (targetPin != null)
             {
-                Map.SendInfoWindowClicked(targetPin);
+                Map.SendInfoWindowLongClicked(targetPin);
             }
         }
 
