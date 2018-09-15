@@ -1,5 +1,11 @@
 Xamarin.Forms.GoogleMaps Release Notes
 ----
+# 3.0.3
+
+## Bug Fixes
+
+* #413 [iOS]Fix resets camera when device rotating
+
 # 3.0.2
 
 ## New Features
@@ -8,8 +14,8 @@ Xamarin.Forms.GoogleMaps Release Notes
 
 ## Bug Fixes
 
-* #413 [Android]Fix resets camera when device rotating
-* #549 InfoWindowLongClicked does not work
+* #413 [iOS]Fix resets camera when device rotating
+* #549 [iOS]InfoWindowLongClicked does not work
 
 # 3.0.1
 
