@@ -1,5 +1,16 @@
 Xamarin.Forms.GoogleMaps Release Notes
 ----
+# 3.0.2
+
+## New Features
+
+* #535 [Android]No longer need WriteExternalStorage permission
+
+## Bug Fixes
+
+* #413 [Android]Fix resets camera when device rotating
+* #549 InfoWindowLongClicked does not work
+
 # 3.0.1
 
 ## Bug Fixes
