@@ -3,18 +3,13 @@
 	<metadata minClientVersion="2.8.3">
 		<id>Xamarin.Forms.GoogleMaps</id>
 		<title>Xamarin.Forms.GoogleMaps</title>
-		<version>3.0.2</version>
+		<version>3.0.3</version>
 		<releaseNotes>
-# 3.0.2
-
-## New Features
-
-* #535 [Android]No longer need WriteExternalStorage permission
+# 3.0.3
 
 ## Bug Fixes
 
-* #413 [Android]Fix resets camera when device rotating
-* #549 InfoWindowLongClicked does not work
+* #413 [iOS]Fix resets camera when device rotating
 
 full release notes is here - https://github.com/amay077/Xamarin.Forms.GoogleMaps/blob/master/RELEASE_NOTES.md
 		</releaseNotes>
