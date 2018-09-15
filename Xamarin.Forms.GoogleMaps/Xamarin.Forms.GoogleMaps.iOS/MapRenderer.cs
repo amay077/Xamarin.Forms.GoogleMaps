@@ -135,8 +135,8 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                 _cameraLogic.Register(Map, NativeMap);
                 Map.OnSnapshot += OnSnapshot;
 
-                _cameraLogic.MoveCamera(mapModel.InitialCameraUpdate);
-                _ready = true;
+                //_cameraLogic.MoveCamera(mapModel.InitialCameraUpdate);
+                //_ready = true;
 
                 _uiSettingsLogic.Register(Map, NativeMap);
                 UpdateMapType();
