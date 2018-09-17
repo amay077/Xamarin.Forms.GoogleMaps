@@ -4,6 +4,9 @@ echo "Replace $(SolutionDir) to .. in .csproj"
 perl -pi -e 's/\$\(SolutionDir\)/../g' ./XFGoogleMapSample.iOS.csproj
 perl -pi -e 's/\$\(SolutionDir\)/../g' ../XFGoogleMapSample/XFGoogleMapSample.csproj
 
+echo "Remove _dev from bundle id in .plist"
+perl -pi -e 's/_dev//g' ./info.plist
+
 echo "Copy Variables_sample.cs to Variables.cs"
 cp ../XFGoogleMapSample/Variables_sample.cs ../XFGoogleMapSample/Variables.cs
 
