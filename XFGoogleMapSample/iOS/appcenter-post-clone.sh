@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 echo "Remove _dev from bundle id in .plist"
-perl -pi -e 's/_dev//g' ./info.plist
+perl -pi -e 's/_dev//g' ./Info.plist
 
 echo "Copy Variables_sample.cs to Variables.cs"
 cp ../XFGoogleMapSample/Variables_sample.cs ../XFGoogleMapSample/Variables.cs
