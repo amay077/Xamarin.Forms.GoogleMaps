@@ -8,4 +8,4 @@ echo "Copy Variables_sample.cs to Variables.cs"
 cp ../XFGoogleMapSample/Variables_sample.cs ../XFGoogleMapSample/Variables.cs
 
 echo "Inject Google Maps Android API Key"
-perl -pi -e "s/your_google_maps_android_api_v2_api_key/$GOOGLEMAPS_ANDROID_API_KEY/g" ../XFGoogleMapSample/Variables.cs
+perl -pi -e "s/your_google_maps_android_sdk_api_key/$GOOGLEMAPS_ANDROID_API_KEY/g" ../XFGoogleMapSample/Variables.cs
