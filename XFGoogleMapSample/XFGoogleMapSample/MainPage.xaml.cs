@@ -19,7 +19,7 @@ namespace XFGoogleMapSample
             buttonBindingPin.Clicked += (_, e) => Navigation.PushAsync(new BindingPinViewPage());
             buttonGroundOverlays.Clicked += (_, e) => Navigation.PushAsync(new GroundOverlaysPage());
             buttonMapStyles.Clicked += (_, e) => Navigation.PushAsync(new MapStylePage());
-            buttonPinIconsCaching.Clicked += async (_, e) => await this.DisplayAlert(Variables.GOOGLE_MAPS_IOS_API_KEY);
+            buttonPinIconsCaching.Clicked += async (_, e) => await this.DisplayAlert("key", Variables.GOOGLE_MAPS_IOS_API_KEY, "close");
         }
     }
 }
