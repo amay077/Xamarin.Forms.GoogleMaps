@@ -1,4 +1,6 @@
-## ![](logo.png) Xamarin.Forms.GoogleMaps [![Build status](https://build.mobile.azure.com/v0.1/apps/99e6fb9e-fe8c-49df-b190-8aa1732a0ad2/branches/master/badge)](https://mobile.azure.com) [![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/Xamarin-Forms-GoogleMaps/public)
+## ![](logo.png) Xamarin.Forms.GoogleMaps 
+
+![](https://img.shields.io/nuget/v/Xamarin.Forms.GoogleMaps.svg) ![](https://img.shields.io/nuget/dt/Xamarin.Forms.GoogleMaps.svg) [![Build status](https://build.appcenter.ms/v0.1/apps/99e6fb9e-fe8c-49df-b190-8aa1732a0ad2/branches/master/badge)](https://appcenter.ms) [![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/Xamarin-Forms-GoogleMaps/public) [![donate/gumload](https://img.shields.io/badge/donate-gumload-orange.svg)](#donation)
 
 [日本語の README はこちら！](README-ja.md)
 
@@ -124,6 +126,35 @@ Sample application is here.
 
 * [XFGoogleMapSample](https://github.com/amay077/Xamarin.Forms.GoogleMaps/tree/master/XFGoogleMapSample)
 
+## Who uses it?
+
+This is just a short list of apps and projects that use Xamarin.Forms.GoogleMaps. If you've used Xamarin.Forms.GoogleMaps in a apps and would like it listed on this page, [**Please report it**](https://github.com/amay077/Xamarin.Forms.GoogleMaps/issues/512). 
+
+<table>
+  <tr>
+    <td align="center">
+      <h3><a target="_blank" href="https://www.herenow.city/">HereNow</a></h3>
+      <img src="showcase_herenow.jpg" width="200" width="200" style="max-width:100%;">
+      <p>by <a target="_blank" href="https://www.cinra.co.jp/">CINRA, Inc.</a></p>
+    </td>
+    <td align="center">
+      <h3><a target="_new" href="https://www.citybee.lt/">CityBee</a></h3>
+      <img src="showcase_citybee.png" width="200" width="200" style="max-width:100%;">
+      <p>&nbsp;</p>
+    </td>
+    <td align="center">
+      <h3><a target="_new" href="https://itunes.apple.com/tr/app/rentacarss-ara%C3%A7-takip/id1276280125">Rentacarss Araç Takip</a></h3>
+      <img src="showcase_rentacarss.jpg" width="200" width="200" style="max-width:100%;">
+      <p>&nbsp;</p>
+    </td>
+    <td align="center">
+      <h3><a target="_new" href="https://www.uspace.city/">UPSPACE</a></h3>
+      <img src="showcase_upspace.png" width="200" width="200" style="max-width:100%;">
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+</table>
+
 ## Releases
 
 See [Releases](https://github.com/amay077/Xamarin.Forms.GoogleMaps/releases) or [RELEASE_NOTES](RELEASE_NOTES.md).
@@ -154,9 +185,17 @@ Please read the [contribution guideline](CONTRIBUTING.md).
 
 You can join to out [gitter room](https://gitter.im/Xamarin-Forms-GoogleMaps/public)!
 
+## Donation
+
+I will continue to work hard with your support!
+
+Donate through [Gumroad](https://gum.co/xfgmdnate).
+
+If this project help you reduce time to develop, you can give me a :sushi: :)
+
 ## License
 
-See [LICENSE](LICENSE).
+See [LICENSE](LICENSE) .
 
 * logo.png by [alecive](http://www.iconarchive.com/show/flatwoken-icons-by-alecive.html) - [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/deed)
 * Android Icon made by [Hanan](http://www.flaticon.com/free-icon/android_109464) from www.flaticon.com

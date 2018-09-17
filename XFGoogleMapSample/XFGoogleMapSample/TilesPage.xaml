@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -26,8 +26,8 @@
                         Text="OpenRailwayMap (512px)"
                         Grid.Row="1"
                         Grid.Column="1"/>
-                <Button x:Name="buttonJGSITile"
-                        Text="Japan GSI"
+                <Button x:Name="buttonOSMITile"
+                        Text="OpenStreetMap"
                         Grid.Row="1"
                         Grid.Column="2"/>
                 
@@ -43,8 +43,12 @@
                 <Button x:Name="buttonRemove"
                         Text="Remove Tile"
                         Grid.Row="3"
-                        Grid.Column="1"
-                        Grid.ColumnSpan="2"/>               
+                        Grid.Column="1"/>               
+
+                <Button x:Name="buttonZIndex"
+                        Text="Tile ZIndex(-1 to 1)"
+                        Grid.Row="3"
+                        Grid.Column="2"/>               
             </Grid>
 
             <maps:Map x:Name="map" 

@@ -6,6 +6,8 @@ using CoreGraphics;
 using Google.Maps;
 using UIKit;
 using Xamarin.Forms.GoogleMaps.iOS.Extensions;
+using Xamarin.Forms.GoogleMaps.iOS.Factories;
+
 namespace Xamarin.Forms.GoogleMaps.Logics.iOS
 {
     internal class PinLogic : DefaultPinLogic<Marker, MapView>
@@ -20,13 +22,16 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
         private readonly Action<Pin, Marker> _onMarkerCreated;
         private readonly Action<Pin, Marker> _onMarkerDeleting;
         private readonly Action<Pin, Marker> _onMarkerDeleted;
+        private readonly IImageFactory _imageFactory;
 
         public PinLogic(
+            IImageFactory imageFactory,
             Action<Pin, Marker> onMarkerCreating,
             Action<Pin, Marker> onMarkerCreated,
             Action<Pin, Marker> onMarkerDeleting,
             Action<Pin, Marker> onMarkerDeleted)
         {
+            _imageFactory = imageFactory;
             _onMarkerCreating = onMarkerCreating;
             _onMarkerCreated = onMarkerCreated;
             _onMarkerDeleting = onMarkerDeleting;
@@ -80,7 +85,8 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
 
             if (outerItem.Icon != null)
             {
-                nativeMarker.Icon = outerItem.Icon.ToUIImage();
+                var factory = _imageFactory ?? DefaultImageFactory.Instance;
+                nativeMarker.Icon = factory.ToUIImage(outerItem.Icon);
             }
 
             _onMarkerCreating(outerItem, nativeMarker);
@@ -156,7 +162,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
             
             if (targetPin != null)
             {
-                Map.SendInfoWindowClicked(targetPin);
+                Map.SendInfoWindowLongClicked(targetPin);
             }
         }
 
@@ -273,7 +279,8 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
             }
             else
             {
-                nativeItem.Icon = outerItem?.Icon?.ToUIImage();
+                var factory = _imageFactory ?? DefaultImageFactory.Instance;
+                nativeItem.Icon = factory.ToUIImage(outerItem.Icon);
             }
         }
 

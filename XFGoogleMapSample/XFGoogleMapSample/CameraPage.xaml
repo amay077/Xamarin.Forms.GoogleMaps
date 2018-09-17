@@ -42,7 +42,7 @@
                 </StackLayout>
             </ScrollView>
 
-            <Label Grid.Row="1" x:Name="labelStatus" />
+            <Label Grid.Row="1" x:Name="labelStatus" HeightRequest="40" />
 
             <maps:Map Grid.Row="2" x:Name="map"
                       VerticalOptions="FillAndExpand" />

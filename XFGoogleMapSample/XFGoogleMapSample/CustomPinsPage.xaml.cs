@@ -60,7 +60,7 @@ namespace XFGoogleMapSample
             InitializeComponent();
 
             // Switch contols as toggle
-            var switches = new Switch[] { switchPinColor, switchPinBundle, switchPinStream };
+            var switches = new Xamarin.Forms.Switch[] { switchPinColor, switchPinBundle, switchPinStream };
             foreach (var sw in switches)
             {
                 sw.Toggled += (sender, e) =>
@@ -188,6 +188,14 @@ namespace XFGoogleMapSample
                 _pinTokyo.ZIndex = _pinTokyo2.ZIndex - 1;
             };
 
+            // MapToolbarEnabled
+            map.UiSettings.MapToolbarEnabled = true;
+            switchMapToolbarEnabled.Toggled += (sender, e) =>
+            {
+                map.UiSettings.MapToolbarEnabled = e.Value;
+            };
+            switchMapToolbarEnabled.IsToggled = map.UiSettings.MapToolbarEnabled;
+
             map.PinDragStart += (_, e) => labelDragStatus.Text = $"DragStart - {PrintPin(e.Pin)}";
             map.PinDragging += (_, e) => labelDragStatus.Text = $"Dragging - {PrintPin(e.Pin)}";
             map.PinDragEnd += (_, e) => labelDragStatus.Text = $"DragEnd - {PrintPin(e.Pin)}";
@@ -227,8 +235,8 @@ namespace XFGoogleMapSample
             {
                 var assembly = typeof(CustomPinsPage).GetTypeInfo().Assembly;
                 var file = buttonPinStream.Items[buttonPinStream.SelectedIndex];
-                var stream = assembly.GetManifestResourceStream($"XFGoogleMapSample.{file}");
-                _pinTokyo.Icon = BitmapDescriptorFactory.FromStream(stream);
+                var stream = assembly.GetManifestResourceStream($"XFGoogleMapSample.{file}") ?? assembly.GetManifestResourceStream($"XFGoogleMapSample.local.{file}");
+                _pinTokyo.Icon = BitmapDescriptorFactory.FromStream(stream, id: file);
             }
         }
    }

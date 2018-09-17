@@ -63,6 +63,11 @@ namespace Xamarin.Forms.GoogleMaps.Logics.UWP
             UpdateZoomControlAndGesturesEnabled();
         }
 
+        protected override void OnUpdateMapToolbarEnabled()
+        {
+            // no-op
+        }
+
         private void UpdateZoomControlAndGesturesEnabled()
         {
             if (Map.UiSettings.ZoomControlsEnabled && Map.UiSettings.ZoomGesturesEnabled)

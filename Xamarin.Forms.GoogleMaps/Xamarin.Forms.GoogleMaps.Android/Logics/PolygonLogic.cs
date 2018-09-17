@@ -47,6 +47,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
             opts.InvokeStrokeColor(outerItem.StrokeColor.ToAndroid());
             opts.InvokeFillColor(outerItem.FillColor.ToAndroid());
             opts.Clickable(outerItem.IsClickable);
+            opts.InvokeZIndex(outerItem.ZIndex);
 
             foreach (var hole in outerItem.Holes)
             {
@@ -63,14 +64,13 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
                 native.Points = polygon.Positions.ToLatLngs();
             });
 
-            // FIXME workarround for #280
-            //outerItem.SetOnHolesChanged((polygon, e) =>
-            //{
-            //    var native = polygon.NativeObject as NativePolygon;
-            //    native.Holes = (IList<IList<LatLng>>)polygon.Holes
-            //        .Select(x => (IList<LatLng>)x.Select(y=>y.ToLatLng()).ToJavaList())
-            //        .ToJavaList();
-            //});
+            outerItem.SetOnHolesChanged((polygon, e) =>
+            {
+                var native = polygon.NativeObject as NativePolygon;
+                native.SetHoles((IList<IList<LatLng>>)polygon.Holes
+                    .Select(x => (IList<LatLng>)x.Select(y=>y.ToLatLng()).ToJavaList())
+                                .ToJavaList());
+            });
 
             return nativePolygon;
         }

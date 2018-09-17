@@ -1,25 +1,58 @@
 Xamarin.Forms.GoogleMaps Release Notes
 ----
-# 2.3.0-beta4
+# 3.0.3
 
 ## Bug Fixes
 
-* #40 [iOS]Fix bundle xxx@1x.png, xxx@2x.png, xxx@3x.png does not work for marker icon.
+* #413 [iOS]Fix resets camera when device rotating
 
-# 2.3.0-beta3
+# 3.0.2
 
-## Bug Fixes
+## New Features
 
-* #431 [iOS]Fix doesn't work with Xamarin.Google.iOS.Maps 2.4.0+
-
-# 2.3.0-beta2
+* #535 [Android]No longer need WriteExternalStorage permission
 
 ## Bug Fixes
 
-* #367 [iOS]Fix MyLocationEnabled doesn't work 
-* #421 [iOS/Android/UWP]Fix InitialCameraUpdate parsing failed
+* #413 [iOS]Fix resets camera when device rotating
+* #549 [iOS]InfoWindowLongClicked does not work
 
-# 2.3.0-beta1
+# 3.0.1
+
+## Bug Fixes
+
+* #466 [Android]Fix memory leak when Map disposed
+* #413 [Android]Fix resets camera when device rotating
+
+# 3.0.0
+
+## New Features
+
+* #355 Support .NET Standard 2.0
+	* Now depends Xamarin.Forms 3.0.0.482510+
+	* [UWP]Now depends Windows 10 Fall Creators Update(build 16299)
+
+* PR#483 [Android]Update reference GooglePlayServices.Maps package to 60.1142.1
+* #452 [Android]Change MapRenderer.OnMapReady's accesibility from private to protected
+* #487 [Android/iOS]Add Map.Region property what can get correct screen corner latitude/longitude
+* #509 Now depends Xamarin.Forms 3.0.0.482510+
+* #499 Add TileLayer.ZIndex property
+* #497 [Android/iOS]Support Caching BitmapDescriptors(Android) or UIImages(iOS)
+
+## Bug Fixes
+
+* #452 [Android]Fix MapRenderer.OnMapReady accesibility
+* #517 [iOS]iOS 10.0+ native crash when setting a value to the Map.MapStyle property.
+* #491 [Android/iOS]Causes NotSupportedException when using stream via URL
+* #504 [iOS]Fix NullPointerException when Page popped
+
+# 2.3.1-beta1
+
+## New Features
+
+* #406 [Android]Add UiSettings.MapToolbarEnabled property
+
+# 2.3.0
 
 ## New Features
 
@@ -27,6 +60,12 @@ Xamarin.Forms.GoogleMaps Release Notes
 
 ## Bug Fixes
 
+* #[Android]Fix Polygon, Polyline, Circle, Pin, GroundOverlays does not work
+* #373 [Android]Improve view initialization and uninitialization
+* #40 [iOS]Fix bundle xxx@1x.png, xxx@2x.png, xxx@3x.png does not work for marker icon.
+* #431 [iOS]Fix doesn't work with Xamarin.Google.iOS.Maps 2.4.0+
+* #367 [iOS]Fix MyLocationEnabled doesn't work 
+* #421 [iOS/Android/UWP]Fix InitialCameraUpdate parsing failed
 * #40 [iOS]Fix icon size is bigger than Android when load from bundle or stream
 
 # 2.2.1

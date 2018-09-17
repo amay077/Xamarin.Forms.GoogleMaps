@@ -6,12 +6,20 @@ using NativeGroundOverlay = Google.Maps.GroundOverlay;
 using Xamarin.Forms.GoogleMaps.iOS.Extensions;
 using CoreGraphics;
 using System.Linq;
+using Xamarin.Forms.GoogleMaps.iOS.Factories;
 
 namespace Xamarin.Forms.GoogleMaps.Logics.iOS
 {
     internal class GroundOverlayLogic : DefaultGroundOverlayLogic<NativeGroundOverlay, MapView>
     {
+        private readonly IImageFactory _imageFactory;
+        
         protected override IList<GroundOverlay> GetItems(Map map) => map.GroundOverlays;
+
+        public GroundOverlayLogic(IImageFactory imageFactory)
+        {
+            _imageFactory = imageFactory;
+        }
 
         internal override void Register(MapView oldNativeMap, Map oldMap, MapView newNativeMap, Map newMap)
         {
@@ -35,8 +43,9 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
 
         protected override NativeGroundOverlay CreateNativeItem(GroundOverlay outerItem)
         {
+            var factory = _imageFactory ?? DefaultImageFactory.Instance;
             var nativeOverlay = NativeGroundOverlay.GetGroundOverlay(
-                outerItem.Bounds.ToCoordinateBounds(), outerItem.Icon.ToUIImage());
+                outerItem.Bounds.ToCoordinateBounds(), factory.ToUIImage(outerItem.Icon));
             nativeOverlay.Bearing = outerItem.Bearing;
             nativeOverlay.Opacity = 1 - outerItem.Transparency;
             nativeOverlay.Tappable = outerItem.IsClickable;
@@ -74,7 +83,8 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
 
         internal override void OnUpdateIcon(GroundOverlay outerItem, NativeGroundOverlay nativeItem)
         {
-            nativeItem.Icon = outerItem.Icon.ToUIImage();
+            var factory = _imageFactory ?? DefaultImageFactory.Instance;
+            nativeItem.Icon = factory.ToUIImage(outerItem.Icon);
         }
 
         internal override void OnUpdateIsClickable(GroundOverlay outerItem, NativeGroundOverlay nativeItem)

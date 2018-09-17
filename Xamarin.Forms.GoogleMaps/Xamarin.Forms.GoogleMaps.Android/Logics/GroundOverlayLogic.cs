@@ -1,18 +1,24 @@
 using System;
 using System.Collections.Generic;
 using Android.Gms.Maps;
-using Xamarin.Forms.GoogleMaps.Logics;
 using NativeGroundOverlay = Android.Gms.Maps.Model.GroundOverlay;
 using Android.Gms.Maps.Model;
 using Xamarin.Forms.GoogleMaps.Android.Extensions;
-using Xamarin.Forms.GoogleMaps.Android;
 using System.Linq;
+using Xamarin.Forms.GoogleMaps.Android.Factories;
 
 namespace Xamarin.Forms.GoogleMaps.Logics.Android
 {
     internal class GroundOverlayLogic : DefaultGroundOverlayLogic<NativeGroundOverlay, GoogleMap>
     {
         protected override IList<GroundOverlay> GetItems(Map map) => map.GroundOverlays;
+
+        private readonly IBitmapDescriptorFactory _bitmapDescriptorFactory;
+
+        public GroundOverlayLogic(IBitmapDescriptorFactory bitmapDescriptorFactory)
+        {
+            _bitmapDescriptorFactory = bitmapDescriptorFactory;
+        }
 
         internal override void Register(GoogleMap oldNativeMap, Map oldMap, GoogleMap newNativeMap, Map newMap)
         {
@@ -36,11 +42,14 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
 
         protected override NativeGroundOverlay CreateNativeItem(GroundOverlay outerItem)
         {
+            var factory = _bitmapDescriptorFactory ?? DefaultBitmapDescriptorFactory.Instance;
+            var nativeDescriptor = factory.ToNative(outerItem.Icon);
+
             var opts = new GroundOverlayOptions()
                 .PositionFromBounds(outerItem.Bounds.ToLatLngBounds())
                 .Clickable(outerItem.IsClickable)
                 .InvokeBearing(outerItem.Bearing)
-                .InvokeImage(outerItem.Icon.ToBitmapDescriptor())
+                .InvokeImage(nativeDescriptor)
                 .InvokeTransparency(outerItem.Transparency)
                 .InvokeZIndex(outerItem.ZIndex);
 
@@ -88,7 +97,9 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
 
         internal override void OnUpdateIcon(GroundOverlay outerItem, NativeGroundOverlay nativeItem)
         {
-            nativeItem.SetImage(outerItem.Icon.ToBitmapDescriptor());
+            var factory = _bitmapDescriptorFactory ?? DefaultBitmapDescriptorFactory.Instance;
+            var nativeDescriptor = factory.ToNative(outerItem.Icon);
+            nativeItem.SetImage(nativeDescriptor);
         }
 
         internal override void OnUpdateIsClickable(GroundOverlay outerItem, NativeGroundOverlay nativeItem)

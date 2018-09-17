@@ -30,6 +30,7 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
                     <Grid.ColumnDefinitions>
@@ -158,6 +159,19 @@
                             Grid.Row="9"
                             Grid.Column="0"
                             Grid.ColumnSpan="3"/>
+
+                    <StackLayout
+                            Orientation="Horizontal"
+                            Grid.Row="10"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="3">
+                        <Switch x:Name="switchMapToolbarEnabled"
+                            VerticalOptions="Center"/>
+                        <Label Text="UiSettings.MapToolbarEnabled"
+                            VerticalOptions="Center"
+                            HorizontalTextAlignment="Start"/>
+                    </StackLayout>
+
                 </Grid>
             </ScrollView>   
                 

@@ -67,6 +67,14 @@ namespace Xamarin.Forms.GoogleMaps
             set { SetValue(ZoomGesturesEnabledProperty, value); }
         }
 
+        public static readonly BindableProperty MapToolbarEnabledProperty = BindableProperty.Create(
+            nameof(MapToolbarEnabled), typeof(bool), typeof(UiSettings), false);
+        public bool MapToolbarEnabled
+        {
+            get { return (bool)GetValue(MapToolbarEnabledProperty); }
+            set { SetValue(MapToolbarEnabledProperty, value); }
+        }
+
         internal UiSettings()
         {
         }

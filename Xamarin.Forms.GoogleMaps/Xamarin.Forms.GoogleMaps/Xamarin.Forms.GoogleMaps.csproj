@@ -1,129 +1,16 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F1C8F5A0-A55D-4C7D-9737-472F7AC222D4}</ProjectGuid>
-    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <OutputType>Library</OutputType>
-    <RootNamespace>Xamarin.Forms.GoogleMaps</RootNamespace>
-    <AssemblyName>Xamarin.Forms.GoogleMaps</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Profile259</TargetFrameworkProfile>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>amay077</Authors>
+    <Product>Xamarin.Forms.GoogleMaps</Product>
+    <FileVersion>3.0.1.0</FileVersion>
+    <AssemblyVersion>3.0.1.0</AssemblyVersion>
+    <Version>3.0.1</Version>
+    <Copyright>Copyright © amay077. 2016 - 2018</Copyright>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug</OutputPath>
-    <DefineConstants>DEBUG;</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <ConsolePause>false</ConsolePause>
-    <NoStdLib>false</NoStdLib>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release</OutputPath>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <ConsolePause>false</ConsolePause>
-    <NoStdLib>false</NoStdLib>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Compile Include="InfoWindowLongClickedEventArgs.cs" />
-    <Compile Include="Internals\TakeSnapshotMessage.cs" />
-    <Compile Include="Logics\BaseCameraLogic.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Distance.cs" />
-    <Compile Include="Geocoder.cs" />
-    <Compile Include="Position.cs" />
-    <Compile Include="PinType.cs" />
-    <Compile Include="Pin.cs" />
-    <Compile Include="MapType.cs" />
-    <Compile Include="MapSpan.cs" />
-    <Compile Include="Map.cs" />
-    <Compile Include="Properties\GlobalAssemblyInfo.cs" />
-    <Compile Include="Polyline.cs" />
-    <Compile Include="Polygon.cs" />
-    <Compile Include="Circle.cs" />
-    <Compile Include="Internals\MoveToRegionMessage.cs" />
-    <Compile Include="SelectedPinChangedEventArgs.cs" />
-    <Compile Include="TileLayer.cs" />
-    <Compile Include="Logics\BaseLogic.cs" />
-    <Compile Include="Logics\DefaultLogic.cs" />
-    <Compile Include="Logics\DefaultCircleLogic.cs" />
-    <Compile Include="Logics\DefaultPinLogic.cs" />
-    <Compile Include="BitmapDescriptor.cs" />
-    <Compile Include="BitmapDescriptorFactory.cs" />
-    <Compile Include="BitmapDescriptorType.cs" />
-    <Compile Include="PinDragEventArgs.cs" />
-    <Compile Include="MapClickedEventArgs.cs" />
-    <Compile Include="MapLongClickedEventArgs.cs" />
-    <Compile Include="GroundOverlay.cs" />
-    <Compile Include="Bounds.cs" />
-    <Compile Include="PinClickedEventArgs.cs" />
-    <Compile Include="InfoWindowClickedEventArgs.cs" />
-    <Compile Include="MyLocationButtonClickedEventArgs.cs" />
-    <Compile Include="CameraPosition.cs" />
-    <Compile Include="CameraChangedEventArgs.cs" />
-    <Compile Include="Internals\GeoConstants.cs" />
-    <Compile Include="Internals\IMapRequestDelegate.cs" />
-    <Compile Include="CameraUpdateFactory.cs" />
-    <Compile Include="CameraUpdate.cs" />
-    <Compile Include="Internals\CameraUpdateMessage.cs" />
-    <Compile Include="Internals\IAnimationCallback.cs" />
-    <Compile Include="AnimationStatus.cs" />
-    <Compile Include="Internals\DelegateAnimationCallback.cs" />
-    <Compile Include="Internals\CameraUpdateType.cs" />
-    <Compile Include="Extensions\MapSpanExtensions.cs" />
-    <Compile Include="UiSettings.cs" />
-    <Compile Include="Logics\BaseUiSettingsLogic.cs" />
-    <Compile Include="MapStyle.cs" />
-    <Compile Include="Logics\DefaultPolylineLogic.cs" />
-    <Compile Include="Logics\DefaultPolygonLogic.cs" />
-    <Compile Include="Logics\DefaultGroundOverlayLogic.cs" />
-    <Compile Include="Helpers\CameraUpdateConverter.cs" />
-    <Compile Include="CameraMoveStartedEventArgs.cs" />
-    <Compile Include="CameraIdledEventArgs.cs" />
-    <Compile Include="CameraMovingEventArgs.cs" />
-    <Compile Include="Internals\ProductInformation.cs" />
+    <PackageReference Include="Xamarin.Forms" Version="3.0.0.482510" />
   </ItemGroup>
-  <ItemGroup />
-  <ItemGroup>
-    <Reference Include="Xamarin.Forms.Core">
-      <HintPath>$(SolutionDir)\packages\Xamarin.Forms.2.3.4.247\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Xamarin.Forms.Platform">
-      <HintPath>$(SolutionDir)\packages\Xamarin.Forms.2.3.4.247\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.Platform.dll</HintPath>
-    </Reference>
-    <Reference Include="Xamarin.Forms.Xaml">
-      <HintPath>$(SolutionDir)\packages\Xamarin.Forms.2.3.4.247\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.Xaml.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup />
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Helpers\" />
-  </ItemGroup>
-  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
-  <Import Project="$(SolutionDir)\packages\Xamarin.Forms.2.3.4.247\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('$(SolutionDir)\packages\Xamarin.Forms.2.3.4.247\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
-  <ProjectExtensions>
-    <MonoDevelop>
-      <Properties>
-        <Policies>
-          <DotNetNamingPolicy ResourceNamePolicy="FileFormatDefault" DirectoryNamespaceAssociation="PrefixedHierarchical" />
-          <TextStylePolicy TabWidth="4" IndentWidth="4" RemoveTrailingWhitespace="True" NoTabsAfterNonTabs="False" EolMarker="Native" FileWidth="80" TabsToSpaces="True" scope="text/x-csharp" />
-          <CSharpFormattingPolicy IndentBlock="True" IndentBraces="False" IndentSwitchSection="True" IndentSwitchCaseSection="True" LabelPositioning="OneLess" NewLinesForBracesInTypes="True" NewLinesForBracesInMethods="True" NewLinesForBracesInProperties="True" NewLinesForBracesInAccessors="True" NewLinesForBracesInAnonymousMethods="True" NewLinesForBracesInControlBlocks="True" NewLinesForBracesInAnonymousTypes="True" NewLinesForBracesInObjectCollectionArrayInitializers="True" NewLinesForBracesInLambdaExpressionBody="True" NewLineForElse="True" NewLineForCatch="True" NewLineForFinally="True" NewLineForMembersInObjectInit="True" NewLineForMembersInAnonymousTypes="True" NewLineForClausesInQuery="True" SpacingAfterMethodDeclarationName="False" SpaceWithinMethodDeclarationParenthesis="False" SpaceBetweenEmptyMethodDeclarationParentheses="False" SpaceAfterMethodCallName="False" SpaceWithinMethodCallParentheses="False" SpaceBetweenEmptyMethodCallParentheses="False" SpaceAfterControlFlowStatementKeyword="True" SpaceWithinExpressionParentheses="False" SpaceWithinCastParentheses="False" SpaceWithinOtherParentheses="False" SpaceAfterCast="False" SpacesIgnoreAroundVariableDeclaration="False" SpaceBeforeOpenSquareBracket="False" SpaceBetweenEmptySquareBrackets="False" SpaceWithinSquareBrackets="False" SpaceAfterColonInBaseTypeDeclaration="True" SpaceAfterComma="True" SpaceAfterDot="False" SpaceAfterSemicolonsInForStatement="True" SpaceBeforeColonInBaseTypeDeclaration="True" SpaceBeforeComma="False" SpaceBeforeDot="False" SpaceBeforeSemicolonsInForStatement="False" SpacingAroundBinaryOperator="Single" WrappingPreserveSingleLine="True" WrappingKeepStatementsOnSingleLine="True" PlaceSystemDirectiveFirst="True" scope="text/x-csharp" />
-          <TextStylePolicy TabsToSpaces="False" RemoveTrailingWhitespace="True" NoTabsAfterNonTabs="False" EolMarker="Native" FileWidth="80" TabWidth="8" IndentWidth="8" scope="application/xml" />
-          <XmlFormattingPolicy scope="application/xml">
-            <DefaultFormat AttributesInNewLine="True" />
-          </XmlFormattingPolicy>
-        </Policies>
-      </Properties>
-    </MonoDevelop>
-  </ProjectExtensions>
-  <Import Project="$(SolutionDir)\packages\Xamarin.Forms.2.3.4.247\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets" Condition="Exists('$(SolutionDir)\packages\Xamarin.Forms.2.3.4.247\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets')" />
 </Project>

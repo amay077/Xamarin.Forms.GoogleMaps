@@ -5,6 +5,8 @@ namespace Xamarin.Forms.GoogleMaps
 {
     public sealed class TileLayer : BindableObject
     {
+        public static readonly BindableProperty ZIndexProperty = BindableProperty.Create(nameof(ZIndex), typeof(int), typeof(TileLayer), -1);
+
         // For URI specific SyncTileLayer
         internal Func<int, int, int, Uri> MakeTileUri { get; }
 
@@ -19,6 +21,12 @@ namespace Xamarin.Forms.GoogleMaps
         public object Tag { get; set; }
 
         public object NativeObject { get; internal set; }
+
+        public int ZIndex
+        {
+            get { return (int)GetValue(ZIndexProperty); }
+            set { SetValue(ZIndexProperty, value); }
+        }
 
         private TileLayer(Func<int, int, int, Uri> makeTileUri, int tileSize = 256)
         {

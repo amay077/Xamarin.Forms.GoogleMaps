@@ -249,6 +249,9 @@ namespace Xamarin.Forms.Maps.WinRT
                     var latitudeDelta = Math.Abs(center.Latitude - boundingBox.NorthwestCorner.Latitude);
                     var longitudeDelta = Math.Abs(center.Longitude - boundingBox.NorthwestCorner.Longitude);
                     Element.VisibleRegion = new MapSpan(center, latitudeDelta, longitudeDelta);
+                    // Simone Marra
+                    UpdateCornersBounds(this.Control);
+                    // End Simone Marra
                 }
             }
             catch (Exception)
@@ -256,6 +259,96 @@ namespace Xamarin.Forms.Maps.WinRT
                 //couldnt update visible region
             }
         }
+
+        // Simone Marra
+        private void UpdateCornersBounds(MapControl map)
+        {
+            Geopoint topLeft = null;
+            Geopoint topRight = null;
+            Geopoint bottomLeft = null;
+            Geopoint bottomRight = null;
+
+            // TODO: [Simone] I'm not sure about the catch code... I have not tested it yet!
+
+            try
+            {
+                map.GetLocationFromOffset(new Windows.Foundation.Point(0, 0), out topLeft);
+            }
+            catch
+            {
+                var topOfMap = new Geopoint(new BasicGeoposition()
+                {
+                    Latitude = 85,
+                    Longitude = 0
+                });
+
+                Windows.Foundation.Point topPoint;
+                map.GetOffsetFromLocation(topOfMap, out topPoint);
+                map.GetLocationFromOffset(new Windows.Foundation.Point(0, topPoint.Y), out topLeft);
+            }
+
+            try
+            {
+                map.GetLocationFromOffset(new Windows.Foundation.Point(map.ActualWidth, 0), out topRight);
+            }
+            catch
+            {
+                var topOfMap = new Geopoint(new BasicGeoposition()
+                {
+                    Latitude = 85,
+                    Longitude = 0
+                });
+
+                Windows.Foundation.Point topPoint;
+                map.GetOffsetFromLocation(topOfMap, out topPoint);
+                map.GetLocationFromOffset(new Windows.Foundation.Point(topPoint.X, topPoint.Y), out topRight);
+            }
+
+            try
+            {
+                map.GetLocationFromOffset(new Windows.Foundation.Point(map.ActualWidth, map.ActualHeight), out bottomRight);
+            }
+            catch
+            {
+                var bottomOfMap = new Geopoint(new BasicGeoposition()
+                {
+                    Latitude = -85,
+                    Longitude = 0
+                });
+
+                Windows.Foundation.Point bottomPoint;
+                map.GetOffsetFromLocation(bottomOfMap, out bottomPoint);
+                map.GetLocationFromOffset(new Windows.Foundation.Point(bottomPoint.X, bottomPoint.Y), out bottomRight);
+            }
+
+            try
+            {
+                map.GetLocationFromOffset(new Windows.Foundation.Point(0, map.ActualHeight), out bottomLeft);
+            }
+            catch
+            {
+                var bottomOfMap = new Geopoint(new BasicGeoposition()
+                {
+                    Latitude = -85,
+                    Longitude = 0
+                });
+
+                Windows.Foundation.Point bottomPoint;
+                map.GetOffsetFromLocation(bottomOfMap, out bottomPoint);
+                map.GetLocationFromOffset(new Windows.Foundation.Point(0, bottomPoint.Y), out bottomLeft);
+            }
+
+            if((topLeft != null) && (topRight != null) && (bottomLeft != null) && (bottomRight != null))
+            {
+                var farLeft = new Position(topLeft.Position.Latitude, topLeft.Position.Longitude);
+                var farRight = new Position(topRight.Position.Latitude, topRight.Position.Longitude);
+                var nearLeft = new Position(bottomLeft.Position.Latitude, bottomLeft.Position.Longitude);
+                var nearRight = new Position(bottomRight.Position.Latitude, bottomRight.Position.Longitude);
+
+                Element.Region = new MapRegion(nearLeft, nearRight, farLeft, farRight);
+            }
+        }
+        // End Simone Marra
 
         private static GeoboundingBox GetBounds(MapControl map)
         {

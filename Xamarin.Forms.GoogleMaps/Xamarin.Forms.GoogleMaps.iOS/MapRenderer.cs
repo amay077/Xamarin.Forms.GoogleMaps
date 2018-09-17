@@ -19,13 +19,19 @@ namespace Xamarin.Forms.GoogleMaps.iOS
     {
         bool _shouldUpdateRegion = true;
 
+        // ReSharper disable once MemberCanBePrivate.Global
         protected MapView NativeMap => (MapView)Control;
+        // ReSharper disable once MemberCanBePrivate.Global
         protected Map Map => (Map)Element;
+
+        internal static PlatformConfig Config { private get; set; }
 
         readonly UiSettingsLogic _uiSettingsLogic = new UiSettingsLogic();
         readonly CameraLogic _cameraLogic;
 
         readonly BaseLogic<MapView>[] _logics;
+
+        private bool _ready = false;
 
         public MapRenderer()
         {
@@ -34,9 +40,9 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                 new PolylineLogic(),
                 new PolygonLogic(),
                 new CircleLogic(),
-                new PinLogic(OnMarkerCreating, OnMarkerCreated, OnMarkerDeleting, OnMarkerDeleted),
+                new PinLogic(Config.ImageFactory, OnMarkerCreating, OnMarkerCreated, OnMarkerDeleting, OnMarkerDeleted),
                 new TileLayerLogic(),
-                new GroundOverlayLogic()
+                new GroundOverlayLogic(Config.ImageFactory)
             };
 
             _cameraLogic = new CameraLogic(() =>
@@ -54,17 +60,25 @@ namespace Xamarin.Forms.GoogleMaps.iOS
         {
             if (disposing)
             {
-                Map.OnSnapshot -= OnSnapshot;
+                if(Map!=null)
+                {
+                    Map.OnSnapshot -= OnSnapshot;
+                    foreach (var logic in _logics)
+                    {
+                        logic.Unregister(NativeMap, Map);
+                    }
+                }               
                 _cameraLogic.Unregister();
-
-                foreach (var logic in _logics)
-                    logic.Unregister(NativeMap, Map);
+                _uiSettingsLogic.Unregister();
 
                 var mkMapView = (MapView)Control;
-                mkMapView.CoordinateLongPressed -= CoordinateLongPressed;
-                mkMapView.CoordinateTapped -= CoordinateTapped;
-                mkMapView.CameraPositionChanged -= CameraPositionChanged;
-                mkMapView.DidTapMyLocationButton = null;
+                if(mkMapView!=null)
+                {
+                    mkMapView.CoordinateLongPressed -= CoordinateLongPressed;
+                    mkMapView.CoordinateTapped -= CoordinateTapped;
+                    mkMapView.CameraPositionChanged -= CameraPositionChanged;
+                    mkMapView.DidTapMyLocationButton = null;
+                }
             }
 
             base.Dispose(disposing);
@@ -121,7 +135,8 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                 _cameraLogic.Register(Map, NativeMap);
                 Map.OnSnapshot += OnSnapshot;
 
-                _cameraLogic.MoveCamera(mapModel.InitialCameraUpdate);
+                //_cameraLogic.MoveCamera(mapModel.InitialCameraUpdate);
+                //_ready = true;
 
                 _uiSettingsLogic.Register(Map, NativeMap);
                 UpdateMapType();
@@ -154,8 +169,6 @@ namespace Xamarin.Forms.GoogleMaps.iOS
             {
                 return;
             }
-
-            var mapModel = (Map)Element;
 
             if (e.PropertyName == Map.MapTypeProperty.PropertyName)
             {
@@ -219,9 +232,10 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                 return;
             }
 
-            if (_shouldUpdateRegion)
+            if (_shouldUpdateRegion && !_ready)
             {
                 _cameraLogic.MoveCamera(((Map)Element).InitialCameraUpdate);
+                _ready = true;
                 _shouldUpdateRegion = false;
             }
 
@@ -259,7 +273,12 @@ namespace Xamarin.Forms.GoogleMaps.iOS
             var minLon = Math.Min(Math.Min(Math.Min(region.NearLeft.Longitude, region.NearRight.Longitude), region.FarLeft.Longitude), region.FarRight.Longitude);
             var maxLat = Math.Max(Math.Max(Math.Max(region.NearLeft.Latitude, region.NearRight.Latitude), region.FarLeft.Latitude), region.FarRight.Latitude);
             var maxLon = Math.Max(Math.Max(Math.Max(region.NearLeft.Longitude, region.NearRight.Longitude), region.FarLeft.Longitude), region.FarRight.Longitude);
+            
+#pragma warning disable 618
             mapModel.VisibleRegion = new MapSpan(pos.Target.ToPosition(), maxLat - minLat, maxLon - minLon);
+#pragma warning restore 618
+
+            Map.Region = mkMapView.Projection.VisibleRegion.ToRegion();
 
             var camera = pos.ToXamarinForms();
             Map.CameraPosition = camera;
@@ -283,23 +302,31 @@ namespace Xamarin.Forms.GoogleMaps.iOS
 
         private void UpdateHasScrollEnabled(bool? initialScrollGesturesEnabled = null)
         {
+#pragma warning disable 618
             NativeMap.Settings.ScrollGestures = initialScrollGesturesEnabled ?? ((Map)Element).HasScrollEnabled;
+#pragma warning restore 618
         }
 
         private void UpdateHasZoomEnabled(bool? initialZoomGesturesEnabled = null)
         {
+#pragma warning disable 618
             NativeMap.Settings.ZoomGestures = initialZoomGesturesEnabled ?? ((Map)Element).HasZoomEnabled;
+#pragma warning restore 618
         }
 
         private void UpdateHasRotationEnabled(bool? initialRotateGesturesEnabled = null)
         {
+#pragma warning disable 618
             NativeMap.Settings.RotateGestures = initialRotateGesturesEnabled ?? ((Map)Element).HasRotationEnabled;
+#pragma warning restore 618
         }
 
         private void UpdateIsShowingUser(bool? initialMyLocationButtonEnabled = null)
         {
+#pragma warning disable 618
             ((MapView)Control).MyLocationEnabled = ((Map)Element).IsShowingUser;
             ((MapView)Control).Settings.MyLocationButton = initialMyLocationButtonEnabled ?? ((Map)Element).IsShowingUser;
+#pragma warning restore 618
         }
 
         void UpdateMyLocationEnabled()
@@ -346,7 +373,6 @@ namespace Xamarin.Forms.GoogleMaps.iOS
             ((MapView)Control).Padding = ((Map)Element).Padding.ToUIEdgeInsets();
         }
 
-        private Google.Maps.MapStyle _mapStyle = null;
         void UpdateMapStyle()
         {
             if (Map.MapStyle == null)
@@ -355,8 +381,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
             }
             else
             {
-                NSError err = null;
-                var mapStyle = Google.Maps.MapStyle.FromJson(Map.MapStyle.JsonStyle, err);
+                var mapStyle = Google.Maps.MapStyle.FromJson(Map.MapStyle.JsonStyle, null);
                 ((MapView)Control).MapStyle = mapStyle;
             }
         }

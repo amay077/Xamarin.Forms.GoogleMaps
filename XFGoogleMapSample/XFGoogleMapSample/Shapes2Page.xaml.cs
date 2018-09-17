@@ -22,9 +22,9 @@ namespace XFGoogleMapSample
             polygon1.Positions.Add(new Position(35.75, 139.93));
             polygon1.Positions.Add(new Position(35.85, 139.83));
             polygon1.Positions.Add(new Position(35.65, 139.83));
-            polygon1.StrokeWidth = 1f;
+            polygon1.StrokeWidth = 5f;
             polygon1.StrokeColor = Color.Red;
-            polygon1.FillColor = Color.Red;
+            polygon1.FillColor = Color.FromRgba(255, 0, 0, 160);
             map.Polygons.Add(polygon1);
             map.Polygons.Add(CreateShiftedPolygon(polygon1, 0d, 0.05d, Color.Yellow));
             map.Polygons.Add(CreateShiftedPolygon(polygon1, 0d, 0.10d, Color.Green));
@@ -44,7 +44,7 @@ namespace XFGoogleMapSample
             var circle1 = new Circle();
             circle1.StrokeWidth = 10f;
             circle1.StrokeColor = Color.Red;
-            circle1.FillColor = Color.Red;
+            circle1.FillColor = Color.FromRgba(255, 0, 0, 160);
             circle1.Center = new Position(35.85, 140.23);
             circle1.Radius = Distance.FromKilometers(8);
             map.Circles.Add(circle1);

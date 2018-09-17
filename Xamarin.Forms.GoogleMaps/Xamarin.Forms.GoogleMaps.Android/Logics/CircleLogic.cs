@@ -44,6 +44,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
             opts.InvokeStrokeColor(outerItem.StrokeColor.ToAndroid());
             opts.InvokeFillColor(outerItem.FillColor.ToAndroid());
             opts.Clickable(outerItem.IsClickable);
+            opts.InvokeZIndex(outerItem.ZIndex);
 
             var nativeCircle = NativeMap.AddCircle(opts);
 

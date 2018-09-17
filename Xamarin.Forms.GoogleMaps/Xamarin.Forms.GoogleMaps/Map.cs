@@ -88,6 +88,14 @@ namespace Xamarin.Forms.GoogleMaps
         internal Action<TakeSnapshotMessage> OnSnapshot{ get; set; }
 
         MapSpan _visibleRegion;
+        MapRegion _region;
+
+        //// Simone Marra
+        //public static Position _TopLeft = new Position();
+        //public static Position _TopRight = new Position();
+        //public static Position _BottomLeft = new Position();
+        //public static Position _BottomRight = new Position();
+        //// End Simone Marra
 
         public Map()
         {
@@ -214,6 +222,7 @@ namespace Xamarin.Forms.GoogleMaps
             get { return _groundOverlays; }
         }
 
+        [Obsolete("Please use Map.Region instead of this")]
         public MapSpan VisibleRegion
         {
             get { return _visibleRegion; }
@@ -225,6 +234,21 @@ namespace Xamarin.Forms.GoogleMaps
                     throw new ArgumentNullException(nameof(value));
                 OnPropertyChanging();
                 _visibleRegion = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public MapRegion Region
+        {
+            get { return _region; }
+            internal set
+            {
+                if (_region == value)
+                    return;
+                if (value == null)
+                    throw new ArgumentNullException(nameof(value));
+                OnPropertyChanging();
+                _region = value;
                 OnPropertyChanged();
             }
         }

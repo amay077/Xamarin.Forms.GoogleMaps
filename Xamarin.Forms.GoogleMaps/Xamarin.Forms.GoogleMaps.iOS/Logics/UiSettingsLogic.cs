@@ -54,5 +54,10 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
             NativeMap.Settings.ZoomGestures = Map.UiSettings.ZoomGesturesEnabled;
             ZoomGesturesEnabled = Map.UiSettings.ZoomGesturesEnabled;
         }
+
+        protected override void OnUpdateMapToolbarEnabled()
+        {
+            // no-op
+        }
     }
 }
