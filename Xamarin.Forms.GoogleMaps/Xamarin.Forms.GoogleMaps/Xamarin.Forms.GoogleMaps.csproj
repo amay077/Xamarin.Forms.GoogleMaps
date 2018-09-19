@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>netstandard2.0;netstandard1.0</TargetFrameworks>
     <Authors>amay077</Authors>
     <Product>Xamarin.Forms.GoogleMaps</Product>
     <FileVersion>3.0.1.0</FileVersion>

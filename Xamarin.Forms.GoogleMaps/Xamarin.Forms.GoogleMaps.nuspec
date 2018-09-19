@@ -3,8 +3,15 @@
 	<metadata minClientVersion="2.8.3">
 		<id>Xamarin.Forms.GoogleMaps</id>
 		<title>Xamarin.Forms.GoogleMaps</title>
-		<version>3.0.3</version>
+		<version>3.0.4-beta1</version>
 		<releaseNotes>
+
+# 3.0.4-beta1
+
+## Experimental
+
+* #555 Add support .NET Standard 1.0 to nuget package
+
 # 3.0.3
 
 ## Bug Fixes
@@ -37,6 +44,7 @@ full release notes is here - https://github.com/amay077/Xamarin.Forms.GoogleMaps
 	</metadata>
 	<files>
 		<!--Core-->
+		<file src="Xamarin.Forms.GoogleMaps\bin\Release\netstandard1.0\Xamarin.Forms.GoogleMaps.dll" target="lib\netstandard1.0" />
 		<file src="Xamarin.Forms.GoogleMaps\bin\Release\netstandard2.0\Xamarin.Forms.GoogleMaps.dll" target="lib\netstandard2.0" />
 
     	<!--Xamarin.Android-->
