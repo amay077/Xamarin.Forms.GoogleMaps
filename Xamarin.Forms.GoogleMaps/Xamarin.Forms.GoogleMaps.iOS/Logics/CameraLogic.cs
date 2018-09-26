@@ -48,8 +48,15 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
             Position center = mapSpan.Center;
             var halfLat = mapSpan.LatitudeDegrees / 2d;
             var halfLong = mapSpan.LongitudeDegrees / 2d;
-            var mapRegion = new CoordinateBounds(new CLLocationCoordinate2D(center.Latitude - halfLat, center.Longitude - halfLong),
-                new CLLocationCoordinate2D(center.Latitude + halfLat, center.Longitude + halfLong));
+            var mapRegion = new CoordinateBounds(new VisibleRegion(
+                center.Latitude + halfLat,
+                center.Longitude + halfLong + (center.Longitude + halfLong > 180 ? -360 : 0),
+                center.Latitude + halfLat,
+                center.Longitude - halfLong + (center.Longitude - halfLong < -180 ? 360 : 0),
+                center.Latitude - halfLat,
+                center.Longitude + halfLong + (center.Longitude + halfLong > 180 ? -360 : 0),
+                center.Latitude - halfLat,
+                center.Longitude - halfLong + (center.Longitude - halfLong < -180 ? 360 : 0)));
 
             if (animated)
             {
