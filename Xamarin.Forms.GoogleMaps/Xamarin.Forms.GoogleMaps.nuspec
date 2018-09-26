@@ -3,14 +3,18 @@
 	<metadata minClientVersion="2.8.3">
 		<id>Xamarin.Forms.GoogleMaps</id>
 		<title>Xamarin.Forms.GoogleMaps</title>
-		<version>3.0.4-beta1</version>
+		<version>3.0.4</version>
 		<releaseNotes>
 
-# 3.0.4-beta1
+# 3.0.4
 
-## Experimental
+## New Features
 
 * #555 Add support .NET Standard 1.0 to nuget package
+
+## Bug Fixes
+
+* #559 [iOS]MoveToRegion fails when longitude greater than 90 or less than -90
 
 # 3.0.3
 
