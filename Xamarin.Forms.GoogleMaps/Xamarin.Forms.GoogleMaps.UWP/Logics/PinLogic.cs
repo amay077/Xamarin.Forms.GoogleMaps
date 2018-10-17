@@ -39,6 +39,31 @@ namespace Xamarin.Forms.GoogleMaps.Logics.UWP
                 }
             }
         }
+        
+        internal override void OnMapPropertyChanged(PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == Map.SelectedPinProperty.PropertyName)
+            {
+                var pin = Map.SelectedPin;
+                if (pin != null)
+                {
+                    foreach (var outerItem in GetItems(Map).Where(x => !ReferenceEquals(x,pin)))
+                    {
+                        if ((outerItem.NativeObject as PushPin).DetailsView.Visibility == Windows.UI.Xaml.Visibility.Visible)
+                        {
+                            (outerItem.NativeObject as PushPin).DetailsView.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                        }
+                    }
+
+
+                    var pushPin = (pin.NativeObject as PushPin);
+                    if (pushPin.DetailsView.Visibility != Windows.UI.Xaml.Visibility.Visible)
+                    {
+                        pushPin.DetailsView.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                    }             
+                }
+            }
+        }
 
         private void NewNativeMap_MapTapped(MapControl sender, MapInputEventArgs args)
         {
