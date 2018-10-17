@@ -151,12 +151,24 @@ namespace Xamarin.Forms.Maps.WinRT
             MapControl.SetNormalizedAnchorPoint(this, anchor);
         }
 
-        //TODO: implement xamarin view to UWP
         private void TransformXamarinViewToUWPBitmap(Pin outerItem, ContentControl nativeItem)
         {
             if (outerItem?.Icon?.Type == BitmapDescriptorType.View && outerItem?.Icon?.View != null)
             {
+                var iconView = outerItem.Icon.View;
 
+                ViewToRendererConverter converter = new ViewToRendererConverter();
+                var frameworkElement = converter.Convert(iconView, null, null, null) as FrameworkElement;
+
+                frameworkElement.Height = iconView.HeightRequest;
+                frameworkElement.Width = iconView.WidthRequest;
+
+                if (Icon != null)
+                {
+                    Root.Children.Remove(Icon);
+                }
+                Icon = frameworkElement;
+                Root.Children.Add(Icon);
             }
         }
 
