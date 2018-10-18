@@ -7,6 +7,7 @@ using Xamarin.Forms.GoogleMaps.iOS.Extensions;
 using CoreGraphics;
 using System.Linq;
 using Xamarin.Forms.GoogleMaps.iOS.Factories;
+using UIKit;
 
 namespace Xamarin.Forms.GoogleMaps.Logics.iOS
 {
@@ -51,8 +52,16 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
             nativeOverlay.Tappable = outerItem.IsClickable;
             nativeOverlay.ZIndex = outerItem.ZIndex;
 
+            if (outerItem.Icon != null)
+            {
+                nativeOverlay.Icon = factory.ToUIImage(outerItem.Icon);
+            }
+
             outerItem.NativeObject = nativeOverlay;
-            nativeOverlay.Map = NativeMap;
+            nativeOverlay.Map = outerItem.IsVisible ? NativeMap : null;
+
+            OnUpdateIconView(outerItem, nativeOverlay);
+
             return nativeOverlay;
         }
 
@@ -83,8 +92,15 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
 
         internal override void OnUpdateIcon(GroundOverlay outerItem, NativeGroundOverlay nativeItem)
         {
-            var factory = _imageFactory ?? DefaultImageFactory.Instance;
-            nativeItem.Icon = factory.ToUIImage(outerItem.Icon);
+            if (outerItem.Icon.Type == BitmapDescriptorType.View)
+            {
+                OnUpdateIconView(outerItem, nativeItem);
+            }
+            else
+            {
+                var factory = _imageFactory ?? DefaultImageFactory.Instance;
+                nativeItem.Icon = factory.ToUIImage(outerItem.Icon);
+            }
         }
 
         internal override void OnUpdateIsClickable(GroundOverlay outerItem, NativeGroundOverlay nativeItem)
@@ -100,6 +116,24 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
         internal override void OnUpdateZIndex(GroundOverlay outerItem, NativeGroundOverlay nativeItem)
         {
             nativeItem.ZIndex = outerItem.ZIndex;
+        }
+
+        protected void OnUpdateIconView(GroundOverlay outerItem, NativeGroundOverlay nativeItem)
+        {
+            if (outerItem?.Icon?.Type == BitmapDescriptorType.View && outerItem?.Icon?.View != null)
+            {
+                NativeMap.InvokeOnMainThread(() =>
+                {
+                    var iconView = outerItem.Icon.View;
+                    var nativeView = Utils.ConvertFormsToNative(iconView, new CGRect(0, 0, iconView.WidthRequest, iconView.HeightRequest));
+                    nativeView.BackgroundColor = UIColor.Clear;
+                    //nativeItem.GroundAnchor = new CGPoint(iconView.AnchorX, iconView.AnchorY);
+                    nativeItem.Icon = Utils.ConvertViewToImage(nativeView);
+
+                    // Would have been way cooler to do this instead, but surprisingly, we can't do this on Android:
+                    // nativeItem.IconView = nativeView;
+                });
+            }
         }
     }
 }
