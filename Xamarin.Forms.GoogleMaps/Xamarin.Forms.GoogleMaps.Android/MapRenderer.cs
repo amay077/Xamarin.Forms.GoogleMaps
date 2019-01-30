@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using Android.Gms.Maps;
@@ -27,14 +28,14 @@ namespace Xamarin.Forms.GoogleMaps.Android
     {
         readonly CameraLogic _cameraLogic;
         readonly UiSettingsLogic _uiSettingsLogic = new UiSettingsLogic();
-        readonly BaseLogic<GoogleMap>[] _logics;
+        internal readonly List<BaseLogic<GoogleMap>> _logics;
 
         public MapRenderer(Context context) : base(context)
         {
             _cameraLogic = new CameraLogic(UpdateVisibleRegion);
 
             AutoPackage = false;
-            _logics = new BaseLogic<GoogleMap>[]
+            _logics = new List<BaseLogic<GoogleMap>>
             {
                 new PolylineLogic(),
                 new PolygonLogic(),
@@ -49,7 +50,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
         static Bundle s_bundle;
         internal static Bundle Bundle { set { s_bundle = value; } }
 
-        internal static PlatformConfig Config { private get; set; }
+        protected internal static PlatformConfig Config { protected get; set; }
 
         // ReSharper disable once MemberCanBePrivate.Global
         protected GoogleMap NativeMap { get; private set; }

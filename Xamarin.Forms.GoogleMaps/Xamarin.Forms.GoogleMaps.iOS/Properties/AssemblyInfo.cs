@@ -1,4 +1,5 @@
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
@@ -22,5 +23,6 @@ using Xamarin.Forms.GoogleMaps.iOS;
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 
 [assembly: Guid("4a5d02cd-7350-46b6-bbd5-204b727c67c9")]
+[assembly: InternalsVisibleTo("Xamarin.Forms.GoogleMaps.Clustering.iOS")]
 [assembly: ExportRenderer(typeof(Map), typeof(MapRenderer))]
 [assembly: Preserve]

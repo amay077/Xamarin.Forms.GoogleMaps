@@ -1,5 +1,6 @@
 ﻿﻿using System;
-using System.ComponentModel;
+ using System.Collections.Generic;
+ using System.ComponentModel;
 using Xamarin.Forms.Platform.iOS;
 using Google.Maps;
 using System.Drawing;
@@ -24,18 +25,18 @@ namespace Xamarin.Forms.GoogleMaps.iOS
         // ReSharper disable once MemberCanBePrivate.Global
         protected Map Map => (Map)Element;
 
-        internal static PlatformConfig Config { private get; set; }
+        protected internal static PlatformConfig Config { protected get; set; }
 
         readonly UiSettingsLogic _uiSettingsLogic = new UiSettingsLogic();
         readonly CameraLogic _cameraLogic;
 
-        readonly BaseLogic<MapView>[] _logics;
+        internal readonly List<BaseLogic<MapView>> _logics;
 
-        private bool _ready = false;
+        private bool _ready;
 
         public MapRenderer()
         {
-            _logics = new BaseLogic<MapView>[]
+            _logics = new List<BaseLogic<MapView>>
             {
                 new PolylineLogic(),
                 new PolygonLogic(),
