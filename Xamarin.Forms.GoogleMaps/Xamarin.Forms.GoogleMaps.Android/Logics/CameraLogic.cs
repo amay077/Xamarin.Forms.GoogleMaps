@@ -30,8 +30,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
             nativeMap.CameraChange += NativeMap_CameraChange;
             nativeMap.CameraMoveStarted += NativeMap_CameraMoveStarted;
             nativeMap.CameraMove += NativeMap_CameraMove;
-            //TODO fix handling camera idle event in both CameraLogic and ClusterLogic
-            //nativeMap.CameraIdle += NativeMap_CameraIdle;
+            nativeMap.CameraIdle += NativeMap_CameraIdle;
         }
 
         public override void Unregister()
@@ -46,13 +45,11 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
             {
                 return;
             }
-                
             
             nativeMap.CameraChange -= NativeMap_CameraChange;
             nativeMap.CameraMoveStarted -= NativeMap_CameraMoveStarted;
             nativeMap.CameraMove -= NativeMap_CameraMove;
-            //TODO fix handling camera idle event in both CameraLogic and ClusterLogic
-            //nativeMap.CameraIdle -= NativeMap_CameraIdle;
+            nativeMap.CameraIdle -= NativeMap_CameraIdle;
         }
 
         public override void OnMoveToRegionRequest(MoveToRegionMessage m)
