@@ -198,6 +198,6 @@ Xamarin.Forms.GoogleMaps 開発の継続のため、寄付を募集していま�
 
 ## ライセンス
 
-[LICENSE](LICENSE) をみて下さい。
+[LICENSE](LICENSE.txt) をみて下さい。
 
 logo.png by [alecive](http://www.iconarchive.com/show/flatwoken-icons-by-alecive.html) - [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/deed)
