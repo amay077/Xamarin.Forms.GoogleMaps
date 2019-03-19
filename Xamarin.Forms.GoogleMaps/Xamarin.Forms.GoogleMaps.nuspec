@@ -39,7 +39,7 @@ full release notes is here - https://github.com/amay077/Xamarin.Forms.GoogleMaps
 		<authors>amay077</authors>
 		<copyright>Copyright 2016-2018</copyright>
 		<iconUrl>https://raw.githubusercontent.com/amay077/Xamarin.Forms.GoogleMaps/master/logo.png</iconUrl>
-    <licenseUrl>https://github.com/amay077/Xamarin.Forms.GoogleMaps/blob/master/LICENSE</licenseUrl>
+		<license type="file">LICENSE.txt</license>
     <projectUrl>https://github.com/amay077/Xamarin.Forms.GoogleMaps</projectUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
 		<description>Yet another Maps library for Xamarin.Forms that optimized for Google maps.</description>
@@ -59,6 +59,9 @@ full release notes is here - https://github.com/amay077/Xamarin.Forms.GoogleMaps
 	</dependencies>
 	</metadata>
 	<files>
+		<!--License-->
+		<file src="..\LICENSE.txt" target="" />
+
 		<!--Core-->
 		<file src="Xamarin.Forms.GoogleMaps\bin\Release\netstandard1.0\Xamarin.Forms.GoogleMaps.dll" target="lib\netstandard1.0" />
 		<file src="Xamarin.Forms.GoogleMaps\bin\Release\netstandard2.0\Xamarin.Forms.GoogleMaps.dll" target="lib\netstandard2.0" />
