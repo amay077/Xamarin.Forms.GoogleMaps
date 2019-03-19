@@ -1,5 +1,27 @@
 Xamarin.Forms.GoogleMaps Release Notes
 ----
+# 3.0.5
+
+## New Features
+
+* PR#572 [UWP]Allow pin changed event to collapse info windows
+* PR#567 [UWP]Add ability to provide xaml for pin
+
+## Bug Fixes
+
+* #573 [Android]Ground Overlay doesn't display custom image from View
+* PR#566 [UWP]Avoid deadlocks when using custom tile layer
+
+# 3.0.4
+
+## New Features
+
+* #555 Add support .NET Standard 1.0 to nuget package
+
+## Bug Fixes
+
+* #559 [iOS]MoveToRegion fails when longitude greater than 90 or less than -90
+
 # 3.0.3
 
 ## Bug Fixes
