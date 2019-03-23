@@ -161,7 +161,7 @@ namespace XFGoogleMapSample
             labelStatus.Text = $"[{time}]SelectedPin changed - {e?.SelectedPin?.Label ?? "nothing"}";
         }
 
-        // DO NOT mark async method
+        // Do NOT mark async method.
         // Because Xamarin.Forms.GoogleMaps wait synchronously for this callback returns.
         void Map_PinClicked(object sender, PinClickedEventArgs e)
         {
@@ -174,7 +174,7 @@ namespace XFGoogleMapSample
             //if (switchHandlePinClicked.IsToggled)
             //{
             //    map.SelectedPin = e.Pin;
-            //    map.MoveToRegion(MapSpan.FromCenterAndRadius(e.Pin.Position, Distance.FromMeters(500)), true);
+            //    map.AnimateCamera(CameraUpdateFactory.NewPosition(e.Pin.Position));
             //}
         }
     }
