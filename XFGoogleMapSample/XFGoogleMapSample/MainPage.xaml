@@ -30,6 +30,8 @@
                         Text="Tiles" />
                 <Button x:Name="buttonCustomPins"
                         Text="Custom Pin" />
+                <Button x:Name="buttonPinItemsSource"
+                        Text="Pin with ItemsSource" />
                 <Button x:Name="buttonShapesWithInitialize"
                         Text="Shapes with initialize" />
                 <Button x:Name="buttonBindingPin"
