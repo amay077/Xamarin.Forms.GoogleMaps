@@ -1,5 +1,11 @@
 Xamarin.Forms.GoogleMaps Release Notes
 ----
+# 3.0.6
+
+## Bug Fixes
+
+* #609 [Android]Anchor is initialized when updating Pin
+
 # 3.0.5
 
 ## New Features
