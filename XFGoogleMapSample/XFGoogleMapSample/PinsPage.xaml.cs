@@ -161,10 +161,10 @@ namespace XFGoogleMapSample
             labelStatus.Text = $"[{time}]SelectedPin changed - {e?.SelectedPin?.Label ?? "nothing"}";
         }
 
-        async void Map_PinClicked(object sender, PinClickedEventArgs e)
+        // DO NOT mark async method
+        // Because Xamarin.Forms.GoogleMaps wait synchronously for this callback returns.
+        void Map_PinClicked(object sender, PinClickedEventArgs e)
         {
-            await DisplayAlert("Pin Clicked", $"{e.Pin.Label} Clicked.", "Close");
-
             e.Handled = switchHandlePinClicked.IsToggled;
 
             // If you set e.Handled = true,
