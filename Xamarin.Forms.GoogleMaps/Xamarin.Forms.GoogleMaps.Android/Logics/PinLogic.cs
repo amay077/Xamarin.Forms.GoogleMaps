@@ -311,8 +311,6 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
                 var factory = _bitmapDescriptorFactory ?? DefaultBitmapDescriptorFactory.Instance;
                 var nativeDescriptor = factory.ToNative(outerItem.Icon);
                 nativeItem.SetIcon(nativeDescriptor);
-                nativeItem.SetAnchor(0.5f, 1f);
-                nativeItem.SetInfoWindowAnchor(0.5f, 0f);
             }
         }
 
