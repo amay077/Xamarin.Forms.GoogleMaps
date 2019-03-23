@@ -16,11 +16,11 @@ namespace Xamarin.Forms.GoogleMaps
 {
     public class Map : View, IEnumerable<Pin>
     {
-        public static readonly BindableProperty ItemsSourceProperty = BindableProperty.Create(nameof(ItemsSource), typeof(IEnumerable), typeof(Map), null, propertyChanged: OnItemsSourcePropertyChanged);
+        public static readonly BindableProperty ItemsSourceProperty = BindableProperty.Create(nameof(IEnumerable), typeof(IEnumerable), typeof(Map), default(IEnumerable),
+            propertyChanged: (b, o, n) => ((Map)b).OnItemsSourcePropertyChanged((IEnumerable)o, (IEnumerable)n));
 
-        public static readonly BindableProperty ItemTemplateProperty = BindableProperty.Create(nameof(ItemTemplate), typeof(DataTemplate), null);
-
-        public static readonly BindableProperty ItemSelectedCommandProperty = BindableProperty.Create(nameof(ItemSelectedCommand), typeof(ICommand), typeof(Map), null);
+        public static readonly BindableProperty ItemTemplateProperty = BindableProperty.Create(nameof(ItemTemplate), typeof(DataTemplate), typeof(Map), default(DataTemplate),
+            propertyChanged: (b, o, n) => ((Map)b).OnItemTemplatePropertyChanged((DataTemplate)o, (DataTemplate)n));
 
         public static readonly BindableProperty MapTypeProperty = BindableProperty.Create(nameof(MapType), typeof(MapType), typeof(Map), default(MapType));
 
@@ -70,7 +70,6 @@ namespace Xamarin.Forms.GoogleMaps
 
         public event EventHandler<PinClickedEventArgs> PinClicked;
         public event EventHandler<SelectedPinChangedEventArgs> SelectedPinChanged;
-        public event EventHandler<SelectedItemChangedEventArgs> SelectedItemChanged;
         public event EventHandler<InfoWindowClickedEventArgs> InfoWindowClicked;
         public event EventHandler<InfoWindowLongClickedEventArgs> InfoWindowLongClicked;
 
@@ -211,12 +210,6 @@ namespace Xamarin.Forms.GoogleMaps
         {
             get => (DataTemplate)GetValue(ItemTemplateProperty);
             set => SetValue(ItemTemplateProperty, value);
-        }
-
-        public ICommand ItemSelectedCommand
-        {
-            get => (ICommand)GetValue(ItemSelectedCommandProperty);
-            set => SetValue(ItemSelectedCommandProperty, value);
         }
 
         public IList<Pin> Pins
@@ -376,16 +369,6 @@ namespace Xamarin.Forms.GoogleMaps
         internal void SendSelectedPinChanged(Pin selectedPin)
         {
             SelectedPinChanged?.Invoke(this, new SelectedPinChangedEventArgs(selectedPin));
-            SendSelectedItemChanged(selectedPin.BindingContext);
-        }
-
-        internal void SendSelectedItemChanged(object item)
-        {
-            SelectedItemChanged?.Invoke(this, new SelectedItemChangedEventArgs(item));
-            if(ItemSelectedCommand?.CanExecute(item) ?? false)
-            {
-                ItemSelectedCommand.Execute(item);
-            }
         }
 
         internal bool SendPinClicked(Pin pin)
@@ -479,79 +462,99 @@ namespace Xamarin.Forms.GoogleMaps
             OnSnapshot?.Invoke(message);
         }
 
-        static void OnItemsSourcePropertyChanged(BindableObject bindable, object oldValue, object newValue)
+        void OnItemsSourcePropertyChanged(IEnumerable oldItemsSource, IEnumerable newItemsSource)
         {
-            var map = bindable as Map;
-            if(oldValue is INotifyCollectionChanged oldObservableCollection)
+            if (oldItemsSource is INotifyCollectionChanged ncc)
             {
-                oldObservableCollection
-                    .CollectionChanged -= map.ItemsSourceChanged;
+                ncc.CollectionChanged -= OnItemsSourceCollectionChanged;
             }
 
-            if(newValue is INotifyCollectionChanged observableCollection)
+            if (newItemsSource is INotifyCollectionChanged ncc1)
             {
-                observableCollection.CollectionChanged += map.ItemsSourceChanged;
+                ncc1.CollectionChanged += OnItemsSourceCollectionChanged;
             }
 
-            if(map.ItemTemplate != null)
-            {
-                map.AddNewPins(map.ItemsSource);
-            }
+            _pins.Clear();
+            CreatePinItems();
         }
 
-        static void OnItemTemplateChanged(BindableObject bindable, object oldValue, object newValue)
+        void OnItemTemplatePropertyChanged(DataTemplate oldItemTemplate, DataTemplate newItemTemplate)
         {
-            var map = bindable as Map;
-            if(map.ItemsSource.Cast<object>().Any())
+            if (newItemTemplate is DataTemplateSelector)
             {
-                map.Pins.Clear();
-                map.AddNewPins(map.ItemsSource);
+                throw new NotSupportedException($"You are using an instance of {nameof(DataTemplateSelector)} to set the {nameof(Map)}.{ItemTemplateProperty.PropertyName} property. Use an instance of a {nameof(DataTemplate)} property instead to set an item template.");
             }
+
+            _pins.Clear();
+            CreatePinItems();
         }
 
-        private void ItemsSourceChanged(object sender, NotifyCollectionChangedEventArgs e)
+        void OnItemsSourceCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            switch(e.Action)
+            switch (e.Action)
             {
                 case NotifyCollectionChangedAction.Add:
-                    AddNewPins(e.NewItems);
+                    if (e.NewStartingIndex == -1)
+                        goto case NotifyCollectionChangedAction.Reset;
+                    foreach (object item in e.NewItems)
+                        CreatePin(item);
                     break;
-                default:
-                    Pins.Clear();
-                    AddNewPins(ItemsSource);
+                case NotifyCollectionChangedAction.Move:
+                    if (e.OldStartingIndex == -1 || e.NewStartingIndex == -1)
+                        goto case NotifyCollectionChangedAction.Reset;
+                    // Not tracking order
+                    break;
+                case NotifyCollectionChangedAction.Remove:
+                    if (e.OldStartingIndex == -1)
+                        goto case NotifyCollectionChangedAction.Reset;
+                    foreach (object item in e.OldItems)
+                        RemovePin(item);
+                    break;
+                case NotifyCollectionChangedAction.Replace:
+                    if (e.OldStartingIndex == -1)
+                        goto case NotifyCollectionChangedAction.Reset;
+                    foreach (object item in e.OldItems)
+                        RemovePin(item);
+                    foreach (object item in e.NewItems)
+                        CreatePin(item);
+                    break;
+                case NotifyCollectionChangedAction.Reset:
+                    _pins.Clear();
                     break;
             }
         }
 
-        private void AddNewPins(IEnumerable items)
+        void CreatePinItems()
         {
-            foreach (var item in items)
+            if (ItemsSource == null || ItemTemplate == null)
             {
-                CreatePinFor(item);
+                return;
+            }
+
+            foreach (object item in ItemsSource)
+            {
+                CreatePin(item);
             }
         }
 
-        private void CreatePinFor(object item)
+        void CreatePin(object newItem)
         {
-            object content = null;
-            switch(ItemTemplate)
+            if (ItemTemplate == null)
             {
-                case DataTemplateSelector selector:
-                    var template = selector.SelectTemplate(item, this);
-                    content = template.CreateContent();
-                    break;
-                case DataTemplate dataTemplate:
-                    content = dataTemplate.CreateContent();
-                    break;
+                return;
             }
 
-            if (content is Pin pin)
+            var pin = (Pin)ItemTemplate.CreateContent();
+            pin.BindingContext = newItem;
+            _pins.Add(pin);
+        }
+
+        void RemovePin(object itemToRemove)
+        {
+            Pin pinToRemove = _pins.FirstOrDefault(pin => pin.BindingContext?.Equals(itemToRemove) == true);
+            if (pinToRemove != null)
             {
-                Pins.Add(pin);
-            }
-            else
-            {
-                Forms.Internals.Log.Warning("ERROR", $"The DataTemplate returned a '{content.GetType().Name}' instead of expected type 'Pin'.");
+                _pins.Remove(pinToRemove);
             }
         }
     }
