@@ -3,8 +3,14 @@
 	<metadata minClientVersion="2.8.3">
 		<id>Xamarin.Forms.GoogleMaps</id>
 		<title>Xamarin.Forms.GoogleMaps</title>
-		<version>3.0.5</version>
+		<version>3.0.6</version>
 		<releaseNotes>
+
+# 3.0.6
+
+## Bug Fixes
+
+* #609 [Android]Anchor is initialized when updating Pin
 
 # 3.0.5
 
