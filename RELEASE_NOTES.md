@@ -1,5 +1,11 @@
 Xamarin.Forms.GoogleMaps Release Notes
 ----
+# 3.1.0
+
+## New Features
+
+* #519 Add support ItemsSource and ItemTemplate for Pins 
+
 # 3.0.6
 
 ## Bug Fixes

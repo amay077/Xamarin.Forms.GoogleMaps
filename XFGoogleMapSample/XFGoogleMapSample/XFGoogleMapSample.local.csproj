@@ -7,7 +7,7 @@
     <FileVersion>2.0.0.1</FileVersion>
     <AssemblyVersion>2.0.0.1</AssemblyVersion>
     <Version>2.0.1</Version>
-    <Copyright>Copyright © amay077. 2016 - 2018</Copyright>
+    <Copyright>Copyright © amay077. 2016 - 2019</Copyright>
   </PropertyGroup>
 
   <Import Project="$(ProjectDir)XFGoogleMapSample.CopyFile.targets" />
