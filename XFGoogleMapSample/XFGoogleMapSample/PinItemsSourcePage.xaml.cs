@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -21,7 +22,7 @@ namespace XFGoogleMapSample
             InitializeComponent();
 
             BindingContext = new ViewModel();
-            _map.InitialCameraUpdate = CameraUpdateFactory.NewPositionZoom(startPosition, 10);
+            _map.InitialCameraUpdate = CameraUpdateFactory.NewPositionZoom(startPosition, 3);
         }
     }
 
@@ -43,9 +44,9 @@ namespace XFGoogleMapSample
         public ViewModel()
         {
             _places = new ObservableCollection<Place>() {
-                    new Place("New York, USA", "The City That Never Sleeps", new Position(40.67, -73.94)),
-                    new Place("Los Angeles, USA", "City of Angels", new Position(34.11, -118.41)),
-                    new Place("San Francisco, USA", "Bay City ", new Position(37.77, -122.45))
+                    new Place("New York, USA", "The City That Never Sleeps", new Position(40.67, -73.94), 1),
+                    new Place("Los Angeles, USA", "City of Angels", new Position(34.11, -118.41), 2),
+                    new Place("San Francisco, USA", "Bay City ", new Position(37.77, -122.45), 3)
                 };
 
             AddPlaceCommand = new Command(AddPlace);
@@ -80,6 +81,7 @@ namespace XFGoogleMapSample
             foreach (Place place in Places)
             {
                 place.Position = new Position(lastLatitude, place.Position.Longitude);
+                place.IconNumber = 3;
             }
         }
 
@@ -114,26 +116,27 @@ namespace XFGoogleMapSample
 
         Place NewPlace()
         {
+            var rand = new Random(Environment.TickCount);
             ++_pinCreatedCount;
 
             return new Place(
                 $"Pin {_pinCreatedCount}",
                 $"Desc {_pinCreatedCount}",
-                RandomPosition.Next(PinItemsSourcePage.startPosition, 8, 19));
+                RandomPosition.Next(PinItemsSourcePage.startPosition, 8, 19),
+                rand.Next(0, 4));
         }
     }
 
     [Preserve(AllMembers = true)]
     class Place : INotifyPropertyChanged
     {
-        Position _position;
-
         public event PropertyChangedEventHandler PropertyChanged;
 
         public string Address { get; }
 
         public string Description { get; }
 
+        Position _position;
         public Position Position
         {
             get => _position;
@@ -147,11 +150,56 @@ namespace XFGoogleMapSample
             }
         }
 
-        public Place(string address, string description, Position position)
+        int _iconNumber;
+        public int IconNumber 
+        { 
+            get => _iconNumber;
+            set
+            {
+                if (_iconNumber != value)
+                {
+                    _iconNumber = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IconNumber)));
+                }
+            }
+        }
+
+        public Place(string address, string description, Position position, int iconNumber)
         {
             Address = address;
             Description = description;
             Position = position;
+            IconNumber = iconNumber;
+        }
+    }
+
+    public class IconConverter : IValueConverter
+    {
+        private readonly Color[] _colors = new Color[] 
+        {
+            Color.Yellow,
+            Color.Gray,
+            Color.Green,
+            Color.Azure,
+            Color.Pink
+        };
+
+        object IValueConverter.Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var iconNo = value as int?;
+            if (iconNo != null)
+            {
+                return BitmapDescriptorFactory.DefaultMarker(_colors[iconNo.Value]);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        object IValueConverter.ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
         }
     }
 }
