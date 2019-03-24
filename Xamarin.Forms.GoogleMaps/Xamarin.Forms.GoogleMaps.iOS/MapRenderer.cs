@@ -30,13 +30,13 @@ namespace Xamarin.Forms.GoogleMaps.iOS
         readonly UiSettingsLogic _uiSettingsLogic = new UiSettingsLogic();
         readonly CameraLogic _cameraLogic;
 
-        internal readonly List<BaseLogic<MapView>> _logics;
-
         private bool _ready;
 
+        internal readonly IList<BaseLogic<MapView>> Logics;
+        
         public MapRenderer()
         {
-            _logics = new List<BaseLogic<MapView>>
+            Logics = new List<BaseLogic<MapView>>
             {
                 new PolylineLogic(),
                 new PolygonLogic(),
@@ -64,7 +64,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                 if(Map!=null)
                 {
                     Map.OnSnapshot -= OnSnapshot;
-                    foreach (var logic in _logics)
+                    foreach (var logic in Logics)
                     {
                         logic.Unregister(NativeMap, Map);
                     }
@@ -151,7 +151,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                 UpdateMyLocationEnabled();
                 _uiSettingsLogic.Initialize();
 
-                foreach (var logic in _logics)
+                foreach (var logic in Logics)
                 {
                     logic.Register(oldMapView, (Map)e.OldElement, NativeMap, Map);
                     logic.RestoreItems();
@@ -217,7 +217,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                 UpdateMapStyle();
             }
 
-            foreach (var logic in _logics)
+            foreach (var logic in Logics)
             {
                 logic.OnMapPropertyChanged(e);
             }
