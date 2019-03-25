@@ -1,5 +1,11 @@
 Xamarin.Forms.GoogleMaps Release Notes
 ----
+# 3.2.0
+
+## New Features
+
+* #123, PR603 [Android/iOS]Add support Xamarin.Forms.GoogleMaps.Clustering by @mierzynskim
+
 # 3.1.0
 
 ## New Features
