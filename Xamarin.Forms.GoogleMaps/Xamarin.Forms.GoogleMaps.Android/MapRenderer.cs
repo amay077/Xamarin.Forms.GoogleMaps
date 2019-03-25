@@ -29,7 +29,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
         readonly CameraLogic _cameraLogic;
         readonly UiSettingsLogic _uiSettingsLogic = new UiSettingsLogic();
         
-        internal readonly IList<BaseLogic<GoogleMap>> Logics;
+        internal IList<BaseLogic<GoogleMap>> Logics { get; }
 
         public MapRenderer(Context context) : base(context)
         {

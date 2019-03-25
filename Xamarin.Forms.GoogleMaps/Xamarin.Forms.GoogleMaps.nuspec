@@ -3,8 +3,14 @@
 	<metadata minClientVersion="2.8.3">
 		<id>Xamarin.Forms.GoogleMaps</id>
 		<title>Xamarin.Forms.GoogleMaps</title>
-		<version>3.1.0</version>
+		<version>3.2.0</version>
 		<releaseNotes>
+# 3.2.0
+
+## New Features
+
+* #123, PR603 [Android/iOS]Add support Xamarin.Forms.GoogleMaps.Clustering by @mierzynskim
+
 # 3.1.0
 
 ## New Features
