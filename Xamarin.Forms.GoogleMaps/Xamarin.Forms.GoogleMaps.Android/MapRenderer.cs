@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using Android.Gms.Maps;
@@ -27,14 +28,15 @@ namespace Xamarin.Forms.GoogleMaps.Android
     {
         readonly CameraLogic _cameraLogic;
         readonly UiSettingsLogic _uiSettingsLogic = new UiSettingsLogic();
-        readonly BaseLogic<GoogleMap>[] _logics;
+        
+        internal readonly IList<BaseLogic<GoogleMap>> Logics;
 
         public MapRenderer(Context context) : base(context)
         {
             _cameraLogic = new CameraLogic(UpdateVisibleRegion);
 
             AutoPackage = false;
-            _logics = new BaseLogic<GoogleMap>[]
+            Logics = new List<BaseLogic<GoogleMap>>
             {
                 new PolylineLogic(),
                 new PolygonLogic(),
@@ -49,7 +51,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
         static Bundle s_bundle;
         internal static Bundle Bundle { set { s_bundle = value; } }
 
-        internal static PlatformConfig Config { private get; set; }
+        protected internal static PlatformConfig Config { protected get; set; }
 
         // ReSharper disable once MemberCanBePrivate.Global
         protected GoogleMap NativeMap { get; private set; }
@@ -126,7 +128,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
             {
                 _scaledDensity = activity.GetScaledDensity();
                 _cameraLogic.ScaledDensity = _scaledDensity;
-                foreach (var logic in _logics)
+                foreach (var logic in Logics)
                 {
                     logic.ScaledDensity = _scaledDensity;
                 }
@@ -135,7 +137,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
             var newMap = e.NewElement;
             NativeMap = await mapView.GetGoogleMapAsync();
 
-            foreach (var logic in _logics)
+            foreach (var logic in Logics)
             {
                 logic.Register(oldNativeMap, oldMap, NativeMap, newMap);
                 logic.ScaledDensity = _scaledDensity;
@@ -215,7 +217,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
         {
             _cameraLogic.MoveCamera(Map.InitialCameraUpdate);
 
-            foreach (var logic in _logics)
+            foreach (var logic in Logics)
             {
                 if (logic.Map != null)
                 {
@@ -288,7 +290,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 UpdateMapStyle();
             }
 
-            foreach (var logic in _logics)
+            foreach (var logic in Logics)
             {
                 logic.OnMapPropertyChanged(e);
             }
@@ -492,7 +494,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 map.OnSnapshot -= OnSnapshot;
                 _cameraLogic.Unregister();
 
-                foreach (var logic in _logics)
+                foreach (var logic in Logics)
                 {
                     logic.Unregister(nativeMap, map);
                 }

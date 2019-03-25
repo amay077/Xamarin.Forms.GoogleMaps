@@ -1,5 +1,6 @@
 ﻿﻿using System;
-using System.ComponentModel;
+ using System.Collections.Generic;
+ using System.ComponentModel;
 using Xamarin.Forms.Platform.iOS;
 using Google.Maps;
 using System.Drawing;
@@ -24,18 +25,18 @@ namespace Xamarin.Forms.GoogleMaps.iOS
         // ReSharper disable once MemberCanBePrivate.Global
         protected Map Map => (Map)Element;
 
-        internal static PlatformConfig Config { private get; set; }
+        protected internal static PlatformConfig Config { protected get; set; }
 
         readonly UiSettingsLogic _uiSettingsLogic = new UiSettingsLogic();
         readonly CameraLogic _cameraLogic;
 
-        readonly BaseLogic<MapView>[] _logics;
+        private bool _ready;
 
-        private bool _ready = false;
-
+        internal readonly IList<BaseLogic<MapView>> Logics;
+        
         public MapRenderer()
         {
-            _logics = new BaseLogic<MapView>[]
+            Logics = new List<BaseLogic<MapView>>
             {
                 new PolylineLogic(),
                 new PolygonLogic(),
@@ -63,7 +64,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                 if(Map!=null)
                 {
                     Map.OnSnapshot -= OnSnapshot;
-                    foreach (var logic in _logics)
+                    foreach (var logic in Logics)
                     {
                         logic.Unregister(NativeMap, Map);
                     }
@@ -150,7 +151,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                 UpdateMyLocationEnabled();
                 _uiSettingsLogic.Initialize();
 
-                foreach (var logic in _logics)
+                foreach (var logic in Logics)
                 {
                     logic.Register(oldMapView, (Map)e.OldElement, NativeMap, Map);
                     logic.RestoreItems();
@@ -216,7 +217,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                 UpdateMapStyle();
             }
 
-            foreach (var logic in _logics)
+            foreach (var logic in Logics)
             {
                 logic.OnMapPropertyChanged(e);
             }

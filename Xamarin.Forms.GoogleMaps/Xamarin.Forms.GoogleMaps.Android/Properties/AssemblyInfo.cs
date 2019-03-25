@@ -1,4 +1,5 @@
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Android;
 using Android.App;
@@ -19,5 +20,6 @@ using Xamarin.Forms.GoogleMaps.Android;
 // Add some common permissions, these can be removed if not needed
 
 [assembly: UsesPermission(Manifest.Permission.Internet)]
+[assembly: InternalsVisibleTo("Xamarin.Forms.GoogleMaps.Clustering.Android")]
 [assembly: ExportRenderer(typeof(Map), typeof(MapRenderer))]
 [assembly: Preserve]

@@ -45,7 +45,6 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
             {
                 return;
             }
-                
             
             nativeMap.CameraChange -= NativeMap_CameraChange;
             nativeMap.CameraMoveStarted -= NativeMap_CameraMoveStarted;
