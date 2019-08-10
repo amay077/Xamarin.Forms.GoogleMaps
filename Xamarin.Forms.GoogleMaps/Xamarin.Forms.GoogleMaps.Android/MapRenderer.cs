@@ -54,7 +54,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
         protected internal static PlatformConfig Config { protected get; set; }
 
         // ReSharper disable once MemberCanBePrivate.Global
-        protected GoogleMap NativeMap { get; private set; }
+        protected virtual GoogleMap NativeMap { get; private set; }
 
         // ReSharper disable once MemberCanBePrivate.Global
         protected Map Map => Element;
