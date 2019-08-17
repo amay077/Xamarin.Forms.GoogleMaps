@@ -90,21 +90,23 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 var hash = Convert.ToBase64String(sha.ComputeHash(bytes));
 
                 var exists = cache.ContainsKey(hash);
-                if (exists)
-                {
-                    lruTracker.Remove(hash);
+                lock (lruTracker)
+                {//LinkedList is not thread safe impl, will crash in multi-trheads scenerios, and so using lock to work-around
+                    if (exists)
+                    {
+                        lruTracker.Remove(hash);
+                        lruTracker.AddLast(hash);
+                        return cache[hash];
+                    }
+                    if (lruTracker.Count > 10) // O(1)
+                    {
+                        global::Android.Gms.Maps.Model.BitmapDescriptor tmp;
+                        cache.TryRemove(lruTracker.First.Value, out tmp);
+                        lruTracker.RemoveFirst();
+                    }
                     lruTracker.AddLast(hash);
-                    return cache[hash];
-                }
-                if (lruTracker.Count > 10) // O(1)
-                {
-                    global::Android.Gms.Maps.Model.BitmapDescriptor tmp;
-                    cache.TryRemove(lruTracker.First.Value, out tmp);
-                    lruTracker.RemoveFirst();
-                }
+                }//lock lruTracker
                 cache.GetOrAdd(hash, img);
-                lruTracker.AddLast(hash);
-
                 return img;
             });
         }
