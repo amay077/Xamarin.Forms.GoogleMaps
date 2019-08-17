@@ -3,8 +3,19 @@
 	<metadata minClientVersion="2.8.3">
 		<id>Xamarin.Forms.GoogleMaps</id>
 		<title>Xamarin.Forms.GoogleMaps</title>
-		<version>3.2.0</version>
+		<version>3.2.1</version>
 		<releaseNotes>
+# 3.2.1
+
+## New Features
+
+* PR#640 [Android]Make Android MapRenderer.NativeMap overridable
+* #443 [UWP]Added Polygon and Circle
+
+## Bug Fixes
+
+* #524, PR#642 [Android]Crash when using BitmapDescriptorFactory.FromView
+
 # 3.2.0
 
 ## New Features
