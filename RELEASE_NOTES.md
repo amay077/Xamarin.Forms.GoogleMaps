@@ -1,5 +1,17 @@
 Xamarin.Forms.GoogleMaps Release Notes
 ----
+
+# 3.2.1
+
+## New Features
+
+* PR#640 [Android]Make Android MapRenderer.NativeMap overridable
+* #443 [UWP]Added Polygon and Circle
+
+## Bug Fixes
+
+* #524, PR#642 [Android]Crash when using BitmapDescriptorFactory.FromView
+
 # 3.2.0
 
 ## New Features
