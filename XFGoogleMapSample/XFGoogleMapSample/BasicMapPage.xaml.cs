@@ -164,6 +164,10 @@ namespace XFGoogleMapSample
                 var stream = await map.TakeSnapshot();
                 imageSnapshot.Source = ImageSource.FromStream(() => stream);
             };
+
+            map.TileLayers.Add(TileLayer.FromTileUri((int x, int y, int zoom) =>
+                new Uri($"http://tile.openstreetmap.org/{zoom}/{x}/{y}.png")));
+            map.MapType = MapType.None;
         }
     }
 }

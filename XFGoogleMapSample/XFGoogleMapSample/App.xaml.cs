@@ -10,7 +10,8 @@ namespace XFGoogleMapSample
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new MainPage());
+            //MainPage = new NavigationPage(new MainPage());
+            MainPage = new NavigationPage(new BasicMapPage());
         }
 
         protected override void OnStart()
