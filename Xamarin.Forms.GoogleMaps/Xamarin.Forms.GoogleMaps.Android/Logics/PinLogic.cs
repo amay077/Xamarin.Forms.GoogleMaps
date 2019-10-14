@@ -326,9 +326,14 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
                 var otherView = new FrameLayout(nativeView.Context);
                 nativeView.LayoutParameters = new FrameLayout.LayoutParams(Utils.DpToPx((float)iconView.WidthRequest), Utils.DpToPx((float)iconView.HeightRequest));
                 otherView.AddView(nativeView);
-                nativeItem.SetIcon(await Utils.ConvertViewToBitmapDescriptor(otherView));
-                nativeItem.SetAnchor((float)iconView.AnchorX, (float)iconView.AnchorY);
-                nativeItem.Visible = true;
+
+                var icon = await Utils.ConvertViewToBitmapDescriptor(otherView);
+                if (outerItem.NativeObject != null)
+                {
+                    nativeItem.SetIcon(icon);
+                    nativeItem.SetAnchor((float)iconView.AnchorX, (float)iconView.AnchorY);
+                    nativeItem.Visible = true;
+                }
             }
         }
 
