@@ -3,17 +3,16 @@
 	<metadata minClientVersion="2.8.3">
 		<id>Xamarin.Forms.GoogleMaps.PerSafe</id>
 		<title>Xamarin.Forms.GoogleMaps.PerSafe</title>
-		<version>1.0.0</version>
+		<version> 3.2.1.1</version>
 		<releaseNotes>
-# 1.0.0
+#  3.2.1.1
 
 # Bug Fixes
 	* Make iOS MapRenderer callbacks used for MapView protected
 	* Check that marker is on map before setting the icon
 		</releaseNotes>
 		<authors>PerSafe</authors>
-		<copyright>Copyright 2016-2019</copyright>
-		<iconUrl>https://raw.githubusercontent.com/amay077/Xamarin.Forms.GoogleMaps/master/logo.png</iconUrl>
+		<copyright>Copyright 2016-2019</copyright>		
 		<license type="file">LICENSE.txt</license>
     <projectUrl>https://github.com/Persafe/Xamarin.Forms.GoogleMaps</projectUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -48,10 +47,6 @@
 		<!--Xamarin.iOS-->
 		<file src="Xamarin.Forms.GoogleMaps.iOS\bin\Release\Xamarin.Forms.GoogleMaps.iOS.dll" target="lib\Xamarin.iOS10\Xamarin.Forms.GoogleMaps.iOS.dll" />
 		<file src="Xamarin.Forms.GoogleMaps\bin\Release\netstandard2.0\Xamarin.Forms.GoogleMaps.dll" target="lib\Xamarin.iOS10\Xamarin.Forms.GoogleMaps.dll" />
-
-	    <!--uap-->
-		<file src="Xamarin.Forms.GoogleMaps.UWP\bin\Release\Xamarin.Forms.GoogleMaps.UWP.dll" target="lib\UAP10\Xamarin.Forms.GoogleMaps.UWP.dll" />
-		<file src="Xamarin.Forms.GoogleMaps\bin\Release\netstandard2.0\Xamarin.Forms.GoogleMaps.dll" target="lib\UAP10\Xamarin.Forms.GoogleMaps.dll" />
 
 	</files>
 </package>
