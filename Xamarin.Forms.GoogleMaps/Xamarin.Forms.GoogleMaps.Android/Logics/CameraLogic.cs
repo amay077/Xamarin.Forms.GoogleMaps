@@ -63,10 +63,10 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
             span = span.ClampLatitude(85, -85);
             var ne = new LatLng(span.Center.Latitude + span.LatitudeDegrees / 2, span.Center.Longitude + span.LongitudeDegrees / 2);
             var sw = new LatLng(span.Center.Latitude - span.LatitudeDegrees / 2, span.Center.Longitude - span.LongitudeDegrees / 2);
-            var update = GCameraUpdateFactory.NewLatLngBounds(new LatLngBounds(sw, ne), 0);
 
             try
             {
+                var update = GCameraUpdateFactory.NewLatLngBounds(new LatLngBounds(sw, ne), 0);
                 if (animate)
                     _nativeMap.AnimateCamera(update);
                 else
@@ -95,6 +95,9 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
             var callback = new DelegateCancelableCallback(
                     () => m.Callback.OnFinished(),
                     () => m.Callback.OnCanceled());
+
+            if (update == null)
+                return;
 
             if (m.Duration.HasValue)
             {
