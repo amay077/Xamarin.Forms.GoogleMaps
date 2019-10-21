@@ -256,7 +256,7 @@ namespace Xamarin.Forms.GoogleMaps.iOS
             });
         }
 
-        void CameraPositionChanged(object sender, GMSCameraEventArgs args)
+        protected void CameraPositionChanged(object sender, GMSCameraEventArgs args)
         {
             OnCameraPositionChanged(args.Position);
         }
@@ -286,12 +286,12 @@ namespace Xamarin.Forms.GoogleMaps.iOS
             Map.SendCameraChanged(camera);
         }
 
-        void CoordinateTapped(object sender, GMSCoordEventArgs e)
+        protected void CoordinateTapped(object sender, GMSCoordEventArgs e)
         {
             Map.SendMapClicked(e.Coordinate.ToPosition());
         }
 
-        void CoordinateLongPressed(object sender, GMSCoordEventArgs e)
+        protected void CoordinateLongPressed(object sender, GMSCoordEventArgs e)
         {
             Map.SendMapLongClicked(e.Coordinate.ToPosition());
         }
