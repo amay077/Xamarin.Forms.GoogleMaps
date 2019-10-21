@@ -10,6 +10,16 @@
     <ContentPage.Resources>
         <ResourceDictionary>
             <cv:IconConverter x:Key="iconConverter" />
+            <cv:MapItemTemplateSelector x:Key="MapItemTemplateSelector">
+                <cv:MapItemTemplateSelector.DataTemplate>
+                    <DataTemplate>
+                        <map:Pin Position="{Binding Position}"
+                                 Address="{Binding Address}"
+                                 Label="{Binding Description}"
+                                 Icon="{Binding IconNumber, Converter={StaticResource iconConverter}}"/>
+                    </DataTemplate>
+                </cv:MapItemTemplateSelector.DataTemplate>
+            </cv:MapItemTemplateSelector>
         </ResourceDictionary>
     </ContentPage.Resources>
     
@@ -20,16 +30,8 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <map:Map ItemsSource="{Binding Places}"
+                     ItemTemplateSelector="{StaticResource MapItemTemplateSelector}"
                      x:Name="_map">
-                <map:Map.ItemTemplate>
-                    <DataTemplate>
-                        <map:Pin Position="{Binding Position}"
-                                 Address="{Binding Address}"
-                                 Label="{Binding Description}"
-                                 Icon="{Binding IconNumber, Converter={StaticResource iconConverter}}"
-                                 />
-                    </DataTemplate>
-                </map:Map.ItemTemplate>
             </map:Map>
             <StackLayout Orientation="Horizontal"
                          Grid.Row="1">

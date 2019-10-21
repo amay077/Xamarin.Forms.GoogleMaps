@@ -22,6 +22,9 @@ namespace Xamarin.Forms.GoogleMaps
         public static readonly BindableProperty ItemTemplateProperty = BindableProperty.Create(nameof(ItemTemplate), typeof(DataTemplate), typeof(Map), default(DataTemplate),
             propertyChanged: (b, o, n) => ((Map)b).OnItemTemplatePropertyChanged((DataTemplate)o, (DataTemplate)n));
 
+        public static readonly BindableProperty ItemTemplateSelectorProperty = BindableProperty.Create(nameof(ItemTemplateSelector), typeof(DataTemplateSelector), typeof(Map), default(DataTemplateSelector),
+            propertyChanged: (b, o, n) => ((Map)b).OnItemTemplateSelectorPropertyChanged());
+
         public static readonly BindableProperty MapTypeProperty = BindableProperty.Create(nameof(MapType), typeof(MapType), typeof(Map), default(MapType));
 
 #pragma warning disable CS0618 // Type or member is obsolete
@@ -212,6 +215,12 @@ namespace Xamarin.Forms.GoogleMaps
             set => SetValue(ItemTemplateProperty, value);
         }
 
+        public DataTemplateSelector ItemTemplateSelector
+        {
+            get { return (DataTemplateSelector)GetValue(ItemTemplateSelectorProperty); }
+            set { SetValue(ItemTemplateSelectorProperty, value); }
+        }
+
         public IList<Pin> Pins
         {
             get { return _pins; }
@@ -371,6 +380,12 @@ namespace Xamarin.Forms.GoogleMaps
             SelectedPinChanged?.Invoke(this, new SelectedPinChangedEventArgs(selectedPin));
         }
 
+        void OnItemTemplateSelectorPropertyChanged()
+        {
+            _pins.Clear();
+            CreatePinItems();
+        }
+
         internal bool SendPinClicked(Pin pin)
         {
             var args = new PinClickedEventArgs(pin);
@@ -526,7 +541,7 @@ namespace Xamarin.Forms.GoogleMaps
 
         void CreatePinItems()
         {
-            if (ItemsSource == null || ItemTemplate == null)
+            if (ItemsSource == null || (ItemTemplate == null && ItemTemplateSelector == null))
             {
                 return;
             }
@@ -539,12 +554,14 @@ namespace Xamarin.Forms.GoogleMaps
 
         void CreatePin(object newItem)
         {
-            if (ItemTemplate == null)
-            {
-                return;
-            }
+            DataTemplate itemTemplate = ItemTemplate;
+            if (itemTemplate == null)
+                itemTemplate = ItemTemplateSelector?.SelectTemplate(newItem, this);
 
-            var pin = (Pin)ItemTemplate.CreateContent();
+            if (itemTemplate == null)
+                return;
+
+            var pin = (Pin)itemTemplate.CreateContent();
             pin.BindingContext = newItem;
             _pins.Add(pin);
         }
