@@ -100,6 +100,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 try
                 {
                     var oldNativeView = Control as MapView;
+                    oldNativeView.ViewTreeObserver.GlobalLayout -= ViewTreeObserver_GlobalLayout;
                     // ReSharper disable once PossibleNullReferenceException
                     oldNativeMap = await oldNativeView?.GetGoogleMapAsync();
                     oldMap = e.OldElement;
@@ -119,6 +120,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
             }
 
             var mapView = new MapView(Context);
+            mapView.ViewTreeObserver.GlobalLayout += ViewTreeObserver_GlobalLayout;
             mapView.OnCreate(s_bundle);
             mapView.OnResume();
             SetNativeControl(mapView);
@@ -144,6 +146,16 @@ namespace Xamarin.Forms.GoogleMaps.Android
             }
 
             OnMapReady(NativeMap, newMap);
+        }
+
+        private void ViewTreeObserver_GlobalLayout(object sender, EventArgs e)
+        {
+            _onLayout = true;
+
+            if (_ready && _onLayout)
+            {
+                InitializeLogic();
+            }
         }
 
         private void OnSnapshot(TakeSnapshotMessage snapshotMessage)
@@ -201,13 +213,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 return;
             }
 
-            _onLayout = true;
-
-            if (_ready && _onLayout)
-            {
-                InitializeLogic();
-            }
-            else if (changed && NativeMap != null)
+            if (changed && NativeMap != null)
             {
                 UpdateVisibleRegion(NativeMap.CameraPosition.Target);
             }

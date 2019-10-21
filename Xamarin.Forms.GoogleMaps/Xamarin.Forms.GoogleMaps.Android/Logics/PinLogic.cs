@@ -327,7 +327,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
                 nativeView.LayoutParameters = new FrameLayout.LayoutParams(Utils.DpToPx((float)iconView.WidthRequest), Utils.DpToPx((float)iconView.HeightRequest));
                 otherView.AddView(nativeView);
                 var icon = await Utils.ConvertViewToBitmapDescriptor(otherView);
-                if (outerItem.NativeObject != null)
+                if (outerItem.NativeObject != null && nativeItem != null)
                 {
                     nativeItem.SetIcon(icon);
                     nativeItem.SetAnchor((float)iconView.AnchorX, (float)iconView.AnchorY);
