@@ -130,10 +130,10 @@
       <HintPath>$(SolutionDir)\packages\Xamarin.Forms.3.0.0.482510\lib\Xamarin.iOS10\Xamarin.Forms.Xaml.dll</HintPath>
     </Reference>
     <Reference Include="Xamarin.Forms.GoogleMaps">
-      <HintPath>$(SolutionDir)\packages\Xamarin.Forms.GoogleMaps.3.2.1\lib\Xamarin.iOS10\Xamarin.Forms.GoogleMaps.dll</HintPath>
+      <HintPath>$(SolutionDir)\packages\Xamarin.Forms.GoogleMaps.3.3.0\lib\Xamarin.iOS10\Xamarin.Forms.GoogleMaps.dll</HintPath>
     </Reference>
     <Reference Include="Xamarin.Forms.GoogleMaps.iOS">
-      <HintPath>$(SolutionDir)\packages\Xamarin.Forms.GoogleMaps.3.2.1\lib\Xamarin.iOS10\Xamarin.Forms.GoogleMaps.iOS.dll</HintPath>
+      <HintPath>$(SolutionDir)\packages\Xamarin.Forms.GoogleMaps.3.3.0\lib\Xamarin.iOS10\Xamarin.Forms.GoogleMaps.iOS.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
