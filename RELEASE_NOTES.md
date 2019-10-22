@@ -1,6 +1,18 @@
 Xamarin.Forms.GoogleMaps Release Notes
 ----
 
+# 3.3.0
+
+## New Features
+
+* PR#643 [iOS]Make iOS MapRenderer callbacks used for MapView protected
+* #654 [Android/iOS]Add ItemTemplateSelector
+* #663 [iOS]Support iOS Dark mode **REQUIRES Deployment target: 9.0+**
+
+## Bug Fixes
+
+* #657 [Android]Java.Lang.IllegalArgumentException: 'Unmanaged descriptor'
+
 # 3.2.1
 
 ## New Features
