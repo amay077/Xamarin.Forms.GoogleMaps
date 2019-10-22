@@ -45,4 +45,8 @@ Thumbs.db
 .idea/
 UserPrefs.xml
 
+#Visual Studio
 .vs/
+
+#Xamarin
+*.designer.cs
