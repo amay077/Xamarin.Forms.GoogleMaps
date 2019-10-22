@@ -164,8 +164,18 @@ This is just a short list of apps and projects that use Xamarin.Forms.GoogleMaps
       <p>by <a target="_blank" href="http://www.shin-yosha.co.jp/">SHIN-YOSHA corp.</a></p>
     </td>
     <td align="center">
+      <h3>CmsApp</h3>
+      <a target="_blank" href="https://itunes.apple.com/us/app/cmsmobileapp/id1151248489?ls=1&mt=8">iOS</a>
+      &nbsp;/&nbsp;<a target="_blank" href="https://play.google.com/store/apps/details?id=net.winsir.cms.CmsMobile">Android</a>
+      <img src="https://user-images.githubusercontent.com/20931876/64476046-8540a400-d147-11e9-9b62-22894d5e2ffd.png" width="200" width="200" style="max-width:100%;">
+      <p>by <a target="_blank" href="http://cms.winsir.net/">Ruben Carreon</a></p>
     </td>
     <td align="center">
+      <h3>UsynligO</h3>
+      <a target="_blank" href="https://apps.apple.com/us/app/usynligo/id1306699569">iOS</a>
+      &nbsp;/&nbsp;<a target="_blank" href="https://play.google.com/store/apps/details?id=com.Benum.UsynligO">Android</a>
+      <img src="https://lh3.googleusercontent.com/fqVdiOUQTz7oBwCccvmgq8z8tmV0Ip6tLBI6SCEDVHiKcVGGZWwUrEufJ-iOmUZhxu8=s180-rw" width="200" width="200" style="max-width:100%;">
+      <p>by <a target="_blank" href="https://play.google.com/store/apps/developer?id=Trond+Benum">Trond Benum</a></p>
     </td>
   </tr>
 </table>
