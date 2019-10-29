@@ -31,7 +31,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
             Context context,
             IBitmapDescriptorFactory bitmapDescriptorFactory,
             Action<Pin, MarkerOptions> onMarkerCreating,
-            Action<Pin, Marker> onMarkerCreated, 
+            Action<Pin, Marker> onMarkerCreated,
             Action<Pin, Marker> onMarkerDeleting,
             Action<Pin, Marker> onMarkerDeleted)
         {
@@ -59,6 +59,8 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
             }
         }
 
+        private bool isUnregistered = false;
+
         internal override void Unregister(GoogleMap nativeMap, Map map)
         {
             if (nativeMap != null)
@@ -70,8 +72,10 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
                 nativeMap.InfoWindowClose -= OnInfoWindowClose;
                 nativeMap.InfoWindowClick -= OnInfoWindowClick;
                 nativeMap.InfoWindowLongClick -= OnInfoWindowLongClick;
-            }
 
+                isUnregistered = true;
+            }
+            
             base.Unregister(nativeMap, map);
         }
 
@@ -303,8 +307,16 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
         {
             if (outerItem.Icon != null && outerItem.Icon.Type == BitmapDescriptorType.View)
             {
-                // If the pin has an IconView set this method will convert it into an icon for the marker
-                TransformXamarinViewToAndroidBitmap(outerItem, nativeItem);
+                try
+                {
+                    // If the pin has an IconView set this method will convert it into an icon for the marker
+                    TransformXamarinViewToAndroidBitmap(outerItem, nativeItem);
+                }
+                catch (Exception ex)
+                {
+
+                }
+
             }
             else
             {
@@ -320,14 +332,15 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
             {
                 var iconView = outerItem.Icon.View;
                 var nativeView = await Utils.ConvertFormsToNative(
-                    iconView, 
-                    new Rectangle(0, 0, (double)Utils.DpToPx((float)iconView.WidthRequest), (double)Utils.DpToPx((float)iconView.HeightRequest)), 
+                    iconView,
+                    new Rectangle(0, 0, (double)Utils.DpToPx((float)iconView.WidthRequest), (double)Utils.DpToPx((float)iconView.HeightRequest)),
                     Platform.Android.Platform.CreateRendererWithContext(iconView, _context));
                 var otherView = new FrameLayout(nativeView.Context);
                 nativeView.LayoutParameters = new FrameLayout.LayoutParams(Utils.DpToPx((float)iconView.WidthRequest), Utils.DpToPx((float)iconView.HeightRequest));
                 otherView.AddView(nativeView);
                 var icon = await Utils.ConvertViewToBitmapDescriptor(otherView);
-                if (outerItem.NativeObject != null && nativeItem != null)
+
+                if (outerItem.NativeObject != null && nativeItem != null && !isUnregistered)
                 {
                     nativeItem.SetIcon(icon);
                     nativeItem.SetAnchor((float)iconView.AnchorX, (float)iconView.AnchorY);

@@ -3,8 +3,13 @@
 	<metadata minClientVersion="2.8.3">
 		<id>Xamarin.Forms.GoogleMaps.PerSafe</id>
 		<title>Xamarin.Forms.GoogleMaps.PerSafe</title>
-		<version> 3.2.1.4</version>
+		<version> 3.2.1.11</version>
 		<releaseNotes>
+# 3.2.1.5
+
+# Bug Fixes
+	* Several checks are added to see if map is already disposed
+
 # 3.2.1.4
 
 # Bug Fixes

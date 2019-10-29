@@ -104,6 +104,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
                     // ReSharper disable once PossibleNullReferenceException
                     oldNativeMap = await oldNativeView?.GetGoogleMapAsync();
                     oldMap = e.OldElement;
+
                     Uninitialize(oldNativeMap, oldMap);
                     oldNativeView?.Dispose();
                 } 
