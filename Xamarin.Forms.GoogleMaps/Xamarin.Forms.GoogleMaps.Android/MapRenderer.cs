@@ -153,7 +153,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
         {
             _onLayout = true;
 
-            if (_ready && _onLayout)
+            if (_ready && _onLayout && Map.Width > 0)
             {
                 InitializeLogic();
             }
