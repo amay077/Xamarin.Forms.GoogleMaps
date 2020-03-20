@@ -2,7 +2,7 @@
 
 namespace Xamarin.Forms.GoogleMaps
 {
-    public sealed class Pin : BindableObject
+    public class Pin : BindableObject
     {
         public static readonly BindableProperty TypeProperty = BindableProperty.Create(nameof(Type), typeof(PinType), typeof(Pin), default(PinType));
 
