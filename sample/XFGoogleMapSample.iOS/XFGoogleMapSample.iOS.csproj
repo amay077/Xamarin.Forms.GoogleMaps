@@ -27,6 +27,8 @@
     <MtouchArch>x86_64</MtouchArch>
     <MtouchLink>None</MtouchLink>
     <MtouchDebug>true</MtouchDebug>
+    <CodesignKey>Apple Development: Hironobu OKUYAMA (KK86B2J5J3)</CodesignKey>
+    <CodesignProvision>VS: WildCard Development</CodesignProvision>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>none</DebugType>
@@ -62,7 +64,11 @@
     <CodesignKey>iPhone Developer</CodesignKey>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'Default' ">
+    <AppExtensionDebugBundleId />
+  </PropertyGroup>
   <ItemGroup>
+    <Compile Include="CachingImageFactory.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <None Include="Entitlements.plist" />
@@ -128,6 +134,16 @@
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
+    <ProjectReference Include="..\..\lib\Xamarin.Forms.GoogleMaps.iOS\Xamarin.Forms.GoogleMaps.iOS.csproj">
+      <Project>{3e30fc2e-9f71-41a9-80bb-8835e8de3a0e}</Project>
+      <Name>Xamarin.Forms.GoogleMaps.iOS</Name>
+      <IsAppExtension>false</IsAppExtension>
+      <IsWatchApp>false</IsWatchApp>
+    </ProjectReference>
+    <ProjectReference Include="..\..\lib\Xamarin.Forms.GoogleMaps\Xamarin.Forms.GoogleMaps.csproj">
+      <Project>{0527d41f-73ba-41b1-89ba-bde66c7b69b9}</Project>
+      <Name>Xamarin.Forms.GoogleMaps</Name>
+    </ProjectReference>
     <ProjectReference Include="..\XFGoogleMapSample\XFGoogleMapSample.csproj">
       <Project>{66BB97DD-014B-4930-A7C3-A2932CDC4493}</Project>
       <Name>XFGoogleMapSample</Name>
