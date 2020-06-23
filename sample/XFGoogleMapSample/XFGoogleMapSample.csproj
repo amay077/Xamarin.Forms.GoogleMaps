@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Xamarin.Forms.GoogleMaps\Xamarin.Forms.GoogleMaps.csproj" />
+    <ProjectReference Include="..\..\lib\Xamarin.Forms.GoogleMaps\Xamarin.Forms.GoogleMaps.csproj" />
+    <ProjectReference Include="..\..\lib\Xamarin.Forms.GoogleMaps\Xamarin.Forms.GoogleMaps.csproj" />
   </ItemGroup>
 </Project>
