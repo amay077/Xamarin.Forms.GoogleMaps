@@ -11,6 +11,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="marker01.png" />
+    <None Remove="marker02.png" />
+    <None Remove="marker03.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="marker01.png" />
+    <EmbeddedResource Include="marker02.png" />
+    <EmbeddedResource Include="marker03.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Xamarin.Forms" Version="4.5.0.495" />
     <PackageReference Include="Xamarin.Essentials" Version="1.3.1" />
   </ItemGroup>

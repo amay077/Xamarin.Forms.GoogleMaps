@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:maps="clr-namespace:Xamarin.Forms.GoogleMaps;assembly=Xamarin.Forms.GoogleMaps"
+    x:Class="XFGoogleMapSample.MultiplePinsIconsCaching"
+    Title="Custom Pin">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label>Pin count:</Label>
+            <Label x:Name="lblPinCount">-</Label>
+            <maps:Map x:Name="map"
+                      Grid.Row="1"
+                      VerticalOptions="FillAndExpand" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
