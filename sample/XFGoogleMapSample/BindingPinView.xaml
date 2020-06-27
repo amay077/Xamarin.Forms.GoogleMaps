@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<StackLayout xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             WidthRequest="37" 
+             HeightRequest="48"
+             AnchorX="0.5"
+             AnchorY="1.0"
+             x:Class="XFGoogleMapSample.BindingPinView">
+    <AbsoluteLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+
+        <Image Source="pin_red.png" 
+            AbsoluteLayout.LayoutBounds="0, 0, 37, 48"
+            AbsoluteLayout.LayoutFlags="None" />
+
+        <Label Text="{Binding Display}" TextColor="Black" FontSize="8" HorizontalTextAlignment="Center" 
+                BackgroundColor="Transparent" WidthRequest="100" HeightRequest="40"
+                AbsoluteLayout.LayoutBounds="8, 10, 21, 16"
+                AbsoluteLayout.LayoutFlags="None" />
+
+    </AbsoluteLayout>
+</StackLayout>
