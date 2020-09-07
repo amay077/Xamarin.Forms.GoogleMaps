@@ -205,10 +205,6 @@ Xamarin.Forms.GoogleMaps 開発の継続のため、寄付を募集していま�
 
 * [Gumroad](https://gum.co/xfgmdnate)
 
-**Kyash**
-
-![kyash](kyash_qr.jpg)
-
 あなたの寄付で開発者のモチベーションが上がります、どうかよろしくおねがいします :sushi:
 
 ## ライセンス
