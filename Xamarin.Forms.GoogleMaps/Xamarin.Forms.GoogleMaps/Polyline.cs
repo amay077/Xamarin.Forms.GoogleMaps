@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
@@ -16,6 +16,7 @@ namespace Xamarin.Forms.GoogleMaps
         public static readonly BindableProperty StrokeColorProperty = BindableProperty.Create(nameof(StrokeColor), typeof(Color), typeof(Polyline), Color.Blue);
         public static readonly BindableProperty IsClickableProperty = BindableProperty.Create(nameof(IsClickable), typeof(bool), typeof(Polyline), false);
         public static readonly BindableProperty ZIndexProperty = BindableProperty.Create(nameof(ZIndex), typeof(int), typeof(Polyline), 0);
+        public static readonly BindableProperty IsGeodesicProperty = BindableProperty.Create(nameof(IsGeodesic), typeof(bool), typeof(Polyline), false);
 
         private readonly ObservableCollection<Position> _positions = new ObservableCollection<Position>();
 
@@ -43,6 +44,12 @@ namespace Xamarin.Forms.GoogleMaps
         {
             get { return (int)GetValue(ZIndexProperty); }
             set { SetValue(ZIndexProperty, value); }
+        }
+
+        public bool IsGeodesic
+        {
+            get { return (bool)GetValue(IsGeodesicProperty); }
+            set { SetValue(IsGeodesicProperty, value); }
         }
 
         public IList<Position> Positions

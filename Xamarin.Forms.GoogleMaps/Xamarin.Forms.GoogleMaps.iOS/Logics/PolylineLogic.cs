@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -89,6 +89,11 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
         internal override void OnUpdateZIndex(Polyline outerItem, NativePolyline nativeItem)
         {
             nativeItem.ZIndex = outerItem.ZIndex;
+        }
+
+        internal override void OnUpdateIsGeodesic(Polyline outerItem, NativePolyline nativeItem)
+        {
+            nativeItem.Geodesic = outerItem.IsGeodesic;
         }
     }
 }

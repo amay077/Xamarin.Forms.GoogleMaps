@@ -41,6 +41,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
             foreach (var p in outerItem.Positions)
                 opts.Add(new LatLng(p.Latitude, p.Longitude));
 
+            opts.Geodesic(outerItem.IsGeodesic);
             opts.InvokeWidth(outerItem.StrokeWidth * this.ScaledDensity); // TODO: convert from px to pt. Is this collect? (looks like same iOS Maps)
             opts.InvokeColor(outerItem.StrokeColor.ToAndroid());
             opts.Clickable(outerItem.IsClickable);
@@ -104,6 +105,11 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
         internal override void OnUpdateZIndex(Polyline outerItem, NativePolyline nativeItem)
         {
             nativeItem.ZIndex = outerItem.ZIndex;
+        }
+
+        internal override void OnUpdateIsGeodesic(Polyline outerItem, NativePolyline nativeItem)
+        {
+            nativeItem.Geodesic = outerItem.IsGeodesic;
         }
     }
 }
