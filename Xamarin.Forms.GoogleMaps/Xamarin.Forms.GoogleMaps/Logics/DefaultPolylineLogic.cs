@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 
@@ -21,11 +21,13 @@ namespace Xamarin.Forms.GoogleMaps.Logics
             else if (e.PropertyName == Polyline.StrokeColorProperty.PropertyName) OnUpdateStrokeColor(outerItem, nativeItem);
             else if (e.PropertyName == Polyline.StrokeWidthProperty.PropertyName) OnUpdateStrokeWidth(outerItem, nativeItem);
             else if (e.PropertyName == Polyline.ZIndexProperty.PropertyName) OnUpdateZIndex(outerItem, nativeItem);
+            else if (e.PropertyName == Polyline.IsGeodesicProperty.PropertyName) OnUpdateIsGeodesic(outerItem, nativeItem);
         }
 
         internal abstract void OnUpdateIsClickable(Polyline outerItem, TNative nativeItem);
         internal abstract void OnUpdateStrokeColor(Polyline outerItem, TNative nativeItem);
         internal abstract void OnUpdateStrokeWidth(Polyline outerItem, TNative nativeItem);
         internal abstract void OnUpdateZIndex(Polyline outerItem, TNative nativeItem);
+        internal abstract void OnUpdateIsGeodesic(Polyline outerItem, TNative nativeItem);
     }
 }
