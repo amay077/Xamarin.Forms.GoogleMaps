@@ -1,4 +1,3 @@
-using System;
 using Xamarin.Forms;
 using Xamarin.Forms.GoogleMaps;
 using System.Reflection;
@@ -9,8 +8,6 @@ namespace XFGoogleMapSample
 {
     public partial class MultiplePinsIconsCaching : ContentPage
     {
-        bool _dirty;
-
         // bundle(Android:Asset, iOS:Bundle) images
         readonly string[] _bundles =
         {

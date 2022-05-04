@@ -107,8 +107,6 @@ namespace Xamarin.Forms.GoogleMaps
             _polylines.CollectionChanged += PolylinesOnCollectionChanged;
             _polygons.CollectionChanged += PolygonsOnCollectionChanged;
             _circles.CollectionChanged += CirclesOnCollectionChanged;
-            _tileLayers.CollectionChanged += TileLayersOnCollectionChanged;
-            _groundOverlays.CollectionChanged += GroundOverlays_CollectionChanged;
         }
 
         public bool HasScrollEnabled

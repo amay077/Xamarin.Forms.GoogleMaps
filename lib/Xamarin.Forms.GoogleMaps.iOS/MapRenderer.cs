@@ -154,7 +154,6 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                     logic.RestoreItems();
                     logic.OnMapPropertyChanged(new PropertyChangedEventArgs(Map.SelectedPinProperty.PropertyName));
                 }
-
             }
         }
 

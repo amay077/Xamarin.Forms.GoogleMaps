@@ -1,5 +1,4 @@
-﻿using System;
-namespace Xamarin.Forms.GoogleMaps
+﻿namespace Xamarin.Forms.GoogleMaps
 {
     public enum AnimationStatus
     {
