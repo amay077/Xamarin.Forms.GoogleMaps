@@ -10,23 +10,23 @@ namespace Xamarin.Forms.GoogleMaps
 
         internal MapRegion(Position nearLeft, Position nearRight, Position farLeft, Position farRight)
         {
-            this.NearLeft = nearLeft;
-            this.NearRight = nearRight;
-            this.FarLeft = farLeft;
-            this.FarRight = farRight;
+            NearLeft = nearLeft;
+            NearRight = nearRight;
+            FarLeft = farLeft;
+            FarRight = farRight;
         }
 
-        public bool Equals(MapRegion other)
+        public bool Equals(MapRegion region)
         {
-            if (other == null) 
+            if (region == null) 
             {
                 return false;
             }
 
-            return NearLeft.Equals(other.NearLeft)
-                           && NearRight.Equals(other.NearRight)
-                           && FarLeft.Equals(other.FarLeft)
-                           && FarRight.Equals(other.FarRight);
+            return NearLeft.Equals(region.NearLeft)
+                           && NearRight.Equals(region.NearRight)
+                           && FarLeft.Equals(region.FarLeft)
+                           && FarRight.Equals(region.FarRight);
         }
 
         public override int GetHashCode()

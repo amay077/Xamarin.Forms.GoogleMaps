@@ -113,7 +113,7 @@ namespace XFGoogleMapSample
                 var screen = map.ToScreenLocation(e.Point);
                 var latlng = map.FromScreenLocation(screen);
 
-                this.DisplayAlert("MapClicked", $"{lat}/{lng}", "CLOSE");
+                DisplayAlert("MapClicked", $"{lat}/{lng}", "CLOSE");
             };
 
             // Map Long clicked
@@ -121,7 +121,7 @@ namespace XFGoogleMapSample
             {
                 var lat = e.Point.Latitude.ToString("0.000");
                 var lng = e.Point.Longitude.ToString("0.000");
-                this.DisplayAlert("MapLongClicked", $"{lat}/{lng}", "CLOSE");
+                DisplayAlert("MapLongClicked", $"{lat}/{lng}", "CLOSE");
             };
 
             // Map MyLocationButton clicked
@@ -130,7 +130,7 @@ namespace XFGoogleMapSample
                 args.Handled = switchHandleMyLocationButton.IsToggled;
                 if (switchHandleMyLocationButton.IsToggled)
                 {
-                    this.DisplayAlert("MyLocationButtonClicked", 
+                    DisplayAlert("MyLocationButtonClicked", 
                                  "If set MyLocationButtonClickedEventArgs.Handled = true then skip obtain current location", 
                                  "OK");
                 }
@@ -143,28 +143,28 @@ namespace XFGoogleMapSample
             map.TileLayers.Add(objTile);
 
 
-            map.CameraChanged += (sender, args) =>
+            map.CameraIdled += (sender, args) =>
             {
-                var p = args.Position;
-                labelStatus.Text = $"Lat={p.Target.Latitude:0.00}, Long={p.Target.Longitude:0.00}, Zoom={p.Zoom:0.00}, Bearing={p.Bearing:0.00}, Tilt={p.Tilt:0.00}";
+                var position = args.Position;
+                labelStatus.Text = $"Lat={position.Target.Latitude:0.00}, Long={position.Target.Longitude:0.00}, Zoom={position.Zoom:0.00}, Bearing={position.Bearing:0.00}, Tilt={position.Tilt:0.00}";
             };
 
             // Geocode
             buttonGeocode.Clicked += async (sender, e) =>
             {
-                var geocoder = new Xamarin.Forms.GoogleMaps.Geocoder();
+                var geocoder = new Geocoder();
                 var positions = await geocoder.GetPositionsForAddressAsync(entryAddress.Text);
                 if (positions.Count() > 0)
                 {
-                    var pos = positions.First();
-                    map.MoveToRegion(MapSpan.FromCenterAndRadius(pos, Distance.FromMeters(5000)));
-                    var reg = map.VisibleRegion;
+                    var position = positions.First();
+                    map.MoveToRegion(MapSpan.FromCenterAndRadius(position, Distance.FromMeters(5000)));
+                    var region = map.Region;
                     var format = "0.00";
-                    labelStatus.Text = $"Center = {reg.Center.Latitude.ToString(format)}, {reg.Center.Longitude.ToString(format)}";
+                    labelStatus.Text = $"Center = {(region.FarLeft.Latitude - region.FarRight.Latitude).ToString(format)}, {(region.FarLeft.Longitude - region.FarRight.Longitude).ToString(format)}";
                 }
                 else
                 {
-                    await this.DisplayAlert("Not found", "Geocoder returns no results", "Close");
+                    await DisplayAlert("Not found", "Geocoder returns no results", "Close");
                 }
             };
 

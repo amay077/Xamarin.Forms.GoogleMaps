@@ -1,18 +1,16 @@
-﻿﻿using System;
- using System.Collections.Generic;
- using System.ComponentModel;
-using Xamarin.Forms.Platform.iOS;
-using Google.Maps;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
-using Xamarin.Forms.GoogleMaps.Logics.iOS;
-using Xamarin.Forms.GoogleMaps.Logics;
-using Xamarin.Forms.GoogleMaps.iOS.Extensions;
+using System.Threading.Tasks;
+using Google.Maps;
 using UIKit;
 using Xamarin.Forms.GoogleMaps.Internals;
-using GCameraUpdate = Google.Maps.CameraUpdate;
+using Xamarin.Forms.GoogleMaps.iOS.Extensions;
+using Xamarin.Forms.GoogleMaps.Logics;
+using Xamarin.Forms.GoogleMaps.Logics.iOS;
+using Xamarin.Forms.Platform.iOS;
 using GCameraPosition = Google.Maps.CameraPosition;
-using System.Threading.Tasks;
-using Foundation;
 
 namespace Xamarin.Forms.GoogleMaps.iOS
 {
@@ -134,12 +132,11 @@ namespace Xamarin.Forms.GoogleMaps.iOS
                 }
 
                 _cameraLogic.Register(Map, NativeMap);
+
                 Map.OnSnapshot += OnSnapshot;
 
-                //_cameraLogic.MoveCamera(mapModel.InitialCameraUpdate);
-                //_ready = true;
-
                 _uiSettingsLogic.Register(Map, NativeMap);
+
                 UpdateMapType();
                 UpdateIsShowingUser(_uiSettingsLogic.MyLocationButtonEnabled);
                 UpdateHasScrollEnabled(_uiSettingsLogic.ScrollGesturesEnabled);
@@ -261,27 +258,13 @@ namespace Xamarin.Forms.GoogleMaps.iOS
             OnCameraPositionChanged(args.Position);
         }
 
-        void OnCameraPositionChanged(GCameraPosition pos)
+        void OnCameraPositionChanged(GCameraPosition position)
         {
-            if (Element == null)
-                return;
+            if (Element == null) return;
 
-            var mapModel = (Map)Element;
-            var mkMapView = (MapView)Control;
+            Map.Region = ((MapView)Control).Projection.VisibleRegion.ToRegion();
 
-            var region = mkMapView.Projection.VisibleRegion;
-            var minLat = Math.Min(Math.Min(Math.Min(region.NearLeft.Latitude, region.NearRight.Latitude), region.FarLeft.Latitude), region.FarRight.Latitude);
-            var minLon = Math.Min(Math.Min(Math.Min(region.NearLeft.Longitude, region.NearRight.Longitude), region.FarLeft.Longitude), region.FarRight.Longitude);
-            var maxLat = Math.Max(Math.Max(Math.Max(region.NearLeft.Latitude, region.NearRight.Latitude), region.FarLeft.Latitude), region.FarRight.Latitude);
-            var maxLon = Math.Max(Math.Max(Math.Max(region.NearLeft.Longitude, region.NearRight.Longitude), region.FarLeft.Longitude), region.FarRight.Longitude);
-            
-#pragma warning disable 618
-            mapModel.VisibleRegion = new MapSpan(pos.Target.ToPosition(), maxLat - minLat, maxLon - minLon);
-#pragma warning restore 618
-
-            Map.Region = mkMapView.Projection.VisibleRegion.ToRegion();
-
-            var camera = pos.ToXamarinForms();
+            var camera = position.ToXamarinForms();
             Map.CameraPosition = camera;
             Map.SendCameraChanged(camera);
         }
@@ -303,31 +286,23 @@ namespace Xamarin.Forms.GoogleMaps.iOS
 
         private void UpdateHasScrollEnabled(bool? initialScrollGesturesEnabled = null)
         {
-#pragma warning disable 618
-            NativeMap.Settings.ScrollGestures = initialScrollGesturesEnabled ?? ((Map)Element).HasScrollEnabled;
-#pragma warning restore 618
+            NativeMap.Settings.ScrollGestures = initialScrollGesturesEnabled ?? ((Map)Element).UiSettings.ScrollGesturesEnabled;
         }
 
         private void UpdateHasZoomEnabled(bool? initialZoomGesturesEnabled = null)
         {
-#pragma warning disable 618
-            NativeMap.Settings.ZoomGestures = initialZoomGesturesEnabled ?? ((Map)Element).HasZoomEnabled;
-#pragma warning restore 618
+            NativeMap.Settings.ZoomGestures = initialZoomGesturesEnabled ?? ((Map)Element).UiSettings.ZoomGesturesEnabled;
         }
 
         private void UpdateHasRotationEnabled(bool? initialRotateGesturesEnabled = null)
         {
-#pragma warning disable 618
-            NativeMap.Settings.RotateGestures = initialRotateGesturesEnabled ?? ((Map)Element).HasRotationEnabled;
-#pragma warning restore 618
+            NativeMap.Settings.RotateGestures = initialRotateGesturesEnabled ?? ((Map)Element).UiSettings.RotateGesturesEnabled;
         }
 
         private void UpdateIsShowingUser(bool? initialMyLocationButtonEnabled = null)
         {
-#pragma warning disable 618
-            ((MapView)Control).MyLocationEnabled = ((Map)Element).IsShowingUser;
-            ((MapView)Control).Settings.MyLocationButton = initialMyLocationButtonEnabled ?? ((Map)Element).IsShowingUser;
-#pragma warning restore 618
+            ((MapView)Control).MyLocationEnabled = ((Map)Element).UiSettings.MyLocationButtonEnabled;
+            ((MapView)Control).Settings.MyLocationButton = initialMyLocationButtonEnabled ?? ((Map)Element).UiSettings.MyLocationButtonEnabled;
         }
 
         void UpdateMyLocationEnabled()

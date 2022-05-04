@@ -5,7 +5,6 @@ using Android.Gms.Common;
 using Android.Gms.Maps;
 using Android.OS;
 using Xamarin.Forms.GoogleMaps.Android;
-using Xamarin.Forms.GoogleMaps.Android.Factories;
 
 namespace Xamarin
 {
@@ -25,9 +24,7 @@ namespace Xamarin
             MapRenderer.Bundle = bundle;
             MapRenderer.Config = config ?? new PlatformConfig();
 
-#pragma warning disable 618
-            if (GooglePlayServicesUtil.IsGooglePlayServicesAvailable(Context) == ConnectionResult.Success)
-#pragma warning restore 618
+            if (GoogleApiAvailability.Instance.IsGooglePlayServicesAvailable(Context) == ConnectionResult.Success)
             {
                 try
                 {

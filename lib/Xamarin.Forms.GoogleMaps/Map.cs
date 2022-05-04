@@ -5,12 +5,10 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
-using Xamarin.Forms.GoogleMaps.Internals;
-using Xamarin.Forms.GoogleMaps.Helpers;
 using System.Threading.Tasks;
 using Xamarin.Forms.GoogleMaps.Extensions;
-using System.ComponentModel;
-using System.Windows.Input;
+using Xamarin.Forms.GoogleMaps.Helpers;
+using Xamarin.Forms.GoogleMaps.Internals;
 
 namespace Xamarin.Forms.GoogleMaps
 {
@@ -27,7 +25,6 @@ namespace Xamarin.Forms.GoogleMaps
 
         public static readonly BindableProperty MapTypeProperty = BindableProperty.Create(nameof(MapType), typeof(MapType), typeof(Map), default(MapType));
 
-#pragma warning disable CS0618 // Type or member is obsolete
         public static readonly BindableProperty IsShowingUserProperty = BindableProperty.Create(nameof(IsShowingUser), typeof(bool), typeof(Map), default(bool));
 
         public static readonly BindableProperty MyLocationEnabledProperty = BindableProperty.Create(nameof(MyLocationEnabled), typeof(bool), typeof(Map), default(bool));
@@ -37,7 +34,6 @@ namespace Xamarin.Forms.GoogleMaps
         public static readonly BindableProperty HasZoomEnabledProperty = BindableProperty.Create(nameof(HasZoomEnabled), typeof(bool), typeof(Map), true);
 
         public static readonly BindableProperty HasRotationEnabledProperty = BindableProperty.Create(nameof(HasRotationEnabled), typeof(bool), typeof(Map), true);
-#pragma warning restore CS0618 // Type or member is obsolete
 
         public static readonly BindableProperty SelectedPinProperty = BindableProperty.Create(nameof(SelectedPin), typeof(Pin), typeof(Map), default(Pin), defaultBindingMode: BindingMode.TwoWay);
 
@@ -84,7 +80,6 @@ namespace Xamarin.Forms.GoogleMaps
         public event EventHandler<MapLongClickedEventArgs> MapLongClicked;
         public event EventHandler<MyLocationButtonClickedEventArgs> MyLocationButtonClicked;
 
-        [Obsolete("Please use Map.CameraIdled instead of this")]
         public event EventHandler<CameraChangedEventArgs> CameraChanged;
         public event EventHandler<CameraMoveStartedEventArgs> CameraMoveStarted;
         public event EventHandler<CameraMovingEventArgs> CameraMoving;
@@ -104,13 +99,6 @@ namespace Xamarin.Forms.GoogleMaps
         MapSpan _visibleRegion;
         MapRegion _region;
 
-        //// Simone Marra
-        //public static Position _TopLeft = new Position();
-        //public static Position _TopRight = new Position();
-        //public static Position _BottomLeft = new Position();
-        //public static Position _BottomRight = new Position();
-        //// End Simone Marra
-
         public Map()
         {
             VerticalOptions = HorizontalOptions = LayoutOptions.FillAndExpand;
@@ -123,21 +111,18 @@ namespace Xamarin.Forms.GoogleMaps
             _groundOverlays.CollectionChanged += GroundOverlays_CollectionChanged;
         }
 
-        [Obsolete("Please use Map.UiSettings.ScrollGesturesEnabled instead of this")]
         public bool HasScrollEnabled
         {
             get { return (bool)GetValue(HasScrollEnabledProperty); }
             set { SetValue(HasScrollEnabledProperty, value); }
         }
 
-        [Obsolete("Please use Map.UiSettings.ZoomGesturesEnabled and ZoomControlsEnabled instead of this")]
         public bool HasZoomEnabled
         {
             get { return (bool)GetValue(HasZoomEnabledProperty); }
             set { SetValue(HasZoomEnabledProperty, value); }
         }
 
-        [Obsolete("Please use Map.UiSettings.RotateGesturesEnabled instead of this")]
         public bool HasRotationEnabled
         {
             get { return (bool)GetValue(HasRotationEnabledProperty); }
@@ -156,7 +141,6 @@ namespace Xamarin.Forms.GoogleMaps
             set { SetValue(IndoorEnabledProperty, value);}
         }
 
-        [Obsolete("Please use Map.MyLocationEnabled and Map.UiSettings.MyLocationButtonEnabled instead of this")]
         public bool IsShowingUser
         {
             get { return (bool)GetValue(IsShowingUserProperty); }
@@ -366,16 +350,6 @@ namespace Xamarin.Forms.GoogleMaps
             if (e.NewItems != null && e.NewItems.Cast<Circle>().Any(circle => (
                 circle?.Center == null || circle?.Radius == null || circle.Radius.Meters <= 0f)))
                 throw new ArgumentException("Circle must have a center and radius");
-        }
-
-        void TileLayersOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            //if (e.NewItems != null && e.NewItems.Cast<ITileLayer>().Any(tileLayer => (circle.Center == null || circle.Radius == null || circle.Radius.Meters <= 0f)))
-            //  throw new ArgumentException("Circle must have a center and radius");
-        }
-
-        void GroundOverlays_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
         }
 
         internal void SendSelectedPinChanged(Pin selectedPin)

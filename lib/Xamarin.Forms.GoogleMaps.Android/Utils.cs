@@ -1,7 +1,4 @@
-﻿// Original code from https://github.com/javiholcman/Wapps.Forms.Map/
-// Cacheing implemented by Gadzair
-
-using System;
+﻿using System;
 using Android.Graphics;
 using Android.Views;
 using Xamarin.Forms.Platform.Android;
@@ -49,19 +46,12 @@ namespace Xamarin.Forms.GoogleMaps.Android
             });
         }
 
-        public static Bitmap ConvertViewToBitmap(global::Android.Views.View v)
+        public static Bitmap ConvertViewToBitmap(global::Android.Views.View view)
         {
-            v.SetLayerType(LayerType.Hardware, null);
-            v.DrawingCacheEnabled = true;
-
-            v.Measure(global::Android.Views.View.MeasureSpec.MakeMeasureSpec(0, MeasureSpecMode.Unspecified),
-                global::Android.Views.View.MeasureSpec.MakeMeasureSpec(0, MeasureSpecMode.Unspecified));
-            v.Layout(0, 0, v.MeasuredWidth, v.MeasuredHeight);
-
-            v.BuildDrawingCache(true);
-            Bitmap b = Bitmap.CreateBitmap(v.GetDrawingCache(true));
-            v.DrawingCacheEnabled = false; // clear drawing cache
-            return b;
+            Bitmap bitmap = Bitmap.CreateBitmap(view.Width, view.Height, Bitmap.Config.Argb8888);
+            Canvas canvas = new Canvas(bitmap);
+            view.Draw(canvas);
+            return bitmap;
         }
 
         private static LinkedList<string> lruTracker = new LinkedList<string>();
