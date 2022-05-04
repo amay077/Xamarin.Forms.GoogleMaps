@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.GoogleMaps;
 
@@ -47,7 +47,7 @@ namespace XFGoogleMapSample
 
             buttonSeeStylingWizard.Clicked += (sender, e) => 
             {
-                Device.OpenUri(new Uri("https://mapstyle.withgoogle.com/"));
+                Launcher.OpenAsync(new Uri("https://mapstyle.withgoogle.com/"));
             };
 
         }

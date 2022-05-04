@@ -1,5 +1,4 @@
-﻿using System;
-using Google.Maps;
+﻿using Google.Maps;
 using Xamarin.Forms.GoogleMaps.iOS;
 
 namespace Xamarin
@@ -10,7 +9,7 @@ namespace Xamarin
 
         public static void Init(string apiKey, PlatformConfig config = null)
         {
-            MapServices.ProvideAPIKey(apiKey);
+            MapServices.ProvideApiKey(apiKey);
             GeocoderBackend.Register();
             MapRenderer.Config = config ?? new PlatformConfig();
             IsInitialized = true;

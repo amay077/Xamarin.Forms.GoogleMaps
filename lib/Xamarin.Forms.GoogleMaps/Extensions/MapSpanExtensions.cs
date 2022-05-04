@@ -1,5 +1,4 @@
-﻿using System;
-namespace Xamarin.Forms.GoogleMaps.Extensions
+﻿namespace Xamarin.Forms.GoogleMaps.Extensions
 {
     public static class MapSpanExtensions
     {
