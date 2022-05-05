@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="XFGoogleMapSample.MainPage"
+             Title="Xamarin.Forms.GoogleMaps sample">
+
+    <ContentPage.Content>
+        <ScrollView Orientation="Vertical"
+                HorizontalOptions="Fill"
+                VerticalOptions="Fill">
+
+            <StackLayout
+                HorizontalOptions="Fill"
+                VerticalOptions="Start"
+                Orientation="Vertical">
+
+                <Button x:Name="buttonBasicMap"
+                        Text="Basic Map" />
+                <Button x:Name="buttonCamera"
+                        Text="Camera Control" />
+                <Button x:Name="buttonPins"
+                        Text="Pins" />
+                <Button x:Name="buttonShapes"
+                        Text="Shapes" />
+                <Button x:Name="buttonShapes2"
+                        Text="Shapes2" />
+                <Button x:Name="buttonTiles"
+                        Text="Tiles" />
+                <Button x:Name="buttonCustomPins"
+                        Text="Custom Pin" />
+                <Button x:Name="buttonPinItemsSource"
+                        Text="Pin with ItemsSource" />
+                <Button x:Name="buttonShapesWithInitialize"
+                        Text="Shapes with initialize" />
+                <Button x:Name="buttonBindingPin"
+                        Text="Binding Pin" />
+                <Button x:Name="buttonGroundOverlays"
+                        Text="GroundOverlays" />
+                <Button x:Name="buttonMapStyles"
+                        Text="Map Styles" />
+                <Button x:Name="buttonPinIconsCaching"
+                        Text="Pins icons caching" />
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>
