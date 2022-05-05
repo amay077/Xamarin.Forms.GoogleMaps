@@ -1,11 +1,50 @@
-<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="MSBuild.Sdk.Extras/2.0.41">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>xamarin.ios10;monoandroid90;netstandard2.0</TargetFrameworks>
+    <Version>5.0.0</Version>
+
   </PropertyGroup>
 
+    <!-- If config is debug create debug symbols -->
+  <PropertyGroup Condition=" '$(Configuration)'=='Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+  <!-- If config is release create a package -->
+  <PropertyGroup Condition=" '$(Configuration)'=='Release' ">
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+
+    <!-- sourcelink: Include PDB in the built .nupkg -->
+    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+  </PropertyGroup>
+
+  <!-- Create the item groups for the different platforms -->
   <ItemGroup>
+    <None Remove="Xamarin.Google.iOS.Maps" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- Include a folder for each platform -->
+    <Folder Include="ios\" />
+    <Folder Include="android\" />
+    <Folder Include="standard\" />
+    <Folder Include="shared\" />
+    
+    <Compile Include="shared\**\*.cs" />
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2401" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" $(TargetFramework.StartsWith('netstandard')) ">
+    <Compile Include="standard\**\*.standard.cs" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" $(TargetFramework.StartsWith('xamarin.ios')) ">
+    <Compile Include="ios\**\*.ios.cs" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" $(TargetFramework.StartsWith('monoandroid')) ">
+    <Compile Include="android\**\*.android.cs" />
   </ItemGroup>
 
 </Project>
