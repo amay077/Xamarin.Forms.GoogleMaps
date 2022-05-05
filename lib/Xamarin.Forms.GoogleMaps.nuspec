@@ -3,15 +3,14 @@
 	<metadata minClientVersion="2.8.3">
 		<id>Xamarin.Forms.GoogleMaps</id>
 		<title>Xamarin.Forms.GoogleMaps</title>
-		<version>4.0.0-BETA1</version>
+		<version>5.0.0-BETA1</version>
 		<releaseNotes>
-# 4.0.0-BETA1
+# 5.0.0-BETA1
 
 - Supports latest SDK's
 
-full release notes is here - https://github.com/amay077/Xamarin.Forms.GoogleMaps/blob/master/RELEASE_NOTES.md
 		</releaseNotes>
-		<authors>amay077</authors>
+		<authors>amay077/MadsWW</authors>
 		<copyright>Copyright 2016-2020</copyright>
 		<license type="file">LICENSE.txt</license>
     <projectUrl>https://github.com/amay077/Xamarin.Forms.GoogleMaps</projectUrl>
@@ -21,14 +20,16 @@ full release notes is here - https://github.com/amay077/Xamarin.Forms.GoogleMaps
 		<tags>xamarin forms maps xamarinforms xamarinformsmaps xamarin.forms.maps xamarinformsgooglemaps xamarin.forms.googlemaps google googlemap</tags>
 	<dependencies>
       <group targetFramework="netstandard2.0">
-        <dependency id="Xamarin.Forms" version="4.5.0.495" />
+        <dependency id="Xamarin.Forms" version="5.0.0.2401" />
       </group>
       <group targetFramework="MonoAndroid90">
-        <dependency id="Xamarin.GooglePlayServices.Maps" version="71.1610.1"/>
-        <dependency id="Xamarin.Android.Support.v7.AppCompat" version="28.0.0.3"/>
+        <dependency id="Xamarin.GooglePlayServices.Maps" version="118.0.2"/>
+        <dependency id="Xamarin.AndroidX.AppCompat" version="1.3.1.5"/>
+        <dependency id="Xamarin.AndroidX.Migration" version="1.0.8"/>
       </group>
       <group targetFramework="Xamarin.iOS10">
-        <dependency id="Xamarin.Google.iOS.Maps" version="3.7.0.1"/>
+	    <dependency id="Xamarin.Forms" version="5.0.0.2401" />
+        <dependency id="Xamarin.Google.iOS.Maps" version="6.0.1"/>
       </group>
 	</dependencies>
 	</metadata>
