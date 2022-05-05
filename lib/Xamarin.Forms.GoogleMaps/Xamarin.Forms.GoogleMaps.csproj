@@ -20,10 +20,6 @@
     <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
   </PropertyGroup>
 
-  <!-- Create the item groups for the different platforms -->
-  <ItemGroup>
-    <None Remove="Xamarin.Google.iOS.Maps" />
-  </ItemGroup>
   <ItemGroup>
     <!-- Include a folder for each platform -->
     <Folder Include="ios\" />
