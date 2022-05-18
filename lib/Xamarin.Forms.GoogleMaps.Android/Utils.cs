@@ -48,10 +48,13 @@ namespace Xamarin.Forms.GoogleMaps.Android
 
         public static Bitmap ConvertViewToBitmap(global::Android.Views.View view)
         {
-            Bitmap bitmap = Bitmap.CreateBitmap(view.Width, view.Height, Bitmap.Config.Argb8888);
-            Canvas canvas = new Canvas(bitmap);
-            view.Draw(canvas);
-            return bitmap;
+            view.SetLayerType(LayerType.Hardware, null);
+
+            view.Measure(global::Android.Views.View.MeasureSpec.MakeMeasureSpec(0, MeasureSpecMode.Unspecified),
+                global::Android.Views.View.MeasureSpec.MakeMeasureSpec(0, MeasureSpecMode.Unspecified));
+            view.Layout(0, 0, view.MeasuredWidth, view.MeasuredHeight);
+
+            return Bitmap.CreateBitmap(view.Width, view.Height, Bitmap.Config.Argb8888);
         }
 
         private static LinkedList<string> lruTracker = new LinkedList<string>();
