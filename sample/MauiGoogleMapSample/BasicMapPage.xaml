@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:maps="clr-namespace:Maui.GoogleMaps;assembly=Maui.GoogleMaps"
+    x:Class="MauiGoogleMapSample.BasicMapPage"
+    Title="BasicMap">
+    <ContentPage.Content>
+        <Grid
+            HorizontalOptions="Fill"
+            VerticalOptions="Fill">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="4*" />
+                <RowDefinition Height="6*" />
+            </Grid.RowDefinitions>
+
+            <ScrollView Grid.Row="0"
+                        Orientation="Vertical">
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <Label Text="MapType"
+                           VerticalOptions="Center"
+                           Grid.Row="0"
+                           Grid.Column="0" />
+                    <Picker x:Name="pickerMapType"
+                            VerticalOptions="Center"
+                            Title="MapType"
+                            Grid.Row="0"
+                            Grid.Column="1" />
+
+                    <Label Text="MyLocationEnabled"
+                           VerticalOptions="Center"
+                           Grid.Row="1"
+                           Grid.Column="0" />
+                    <Switch x:Name="switchMyLocationEnabled"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Start"
+                            Grid.Row="1"
+                            Grid.Column="1" />
+
+                    <Label Text="UiSettings.MyLocationButtonEnabled"
+                           VerticalOptions="Center"
+                           Grid.Row="2"
+                           Grid.Column="0" />
+                    <Switch x:Name="switchMyLocationButtonEnabled"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Start"
+                            Grid.Row="2"
+                            Grid.Column="1" />
+
+                    <Label Text="Handle MyLocationButton"
+                           VerticalOptions="Center"
+                           Grid.Row="3"
+                           Grid.Column="0" />
+                    <Switch x:Name="switchHandleMyLocationButton"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Start"
+                            Grid.Row="3"
+                            Grid.Column="1" />
+
+                    <Label Text="UiSettings.ScrollGesturesEnabled"
+                           VerticalOptions="Center"
+                           Grid.Row="4"
+                           Grid.Column="0" />
+                    <Switch x:Name="switchScrollGesturesEnabled"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Start"
+                            Grid.Row="4"
+                            Grid.Column="1" />
+
+                    <Label Text="UiSettings.ZoomGesturesEnabled"
+                           VerticalOptions="Center"
+                           Grid.Row="5"
+                           Grid.Column="0" />
+                    <Switch x:Name="switchZoomGesturesEnabled"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Start"
+                            Grid.Row="5"
+                            Grid.Column="1" />
+                    
+                    <Label Text="UiSettings.ZoomControlsEnabled"
+                           VerticalOptions="Center"
+                           Grid.Row="6"
+                           Grid.Column="0" />
+                    <Switch x:Name="switchZoomControlsEnabled"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Start"
+                            Grid.Row="6"
+                            Grid.Column="1" />
+
+                    <Label Text="UiSettings.RotateGesturesEnabled"
+                           VerticalOptions="Center"
+                           Grid.Row="7"
+                           Grid.Column="0" />
+                    <Switch x:Name="switchRotateGesturesEnabled"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Start"
+                            Grid.Row="7"
+                            Grid.Column="1" />
+
+                    <Label Text="UiSettings.CompassEnabled"
+                           VerticalOptions="Center"
+                           Grid.Row="8"
+                           Grid.Column="0" />
+                    <Switch x:Name="switchCompassEnabled"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Start"
+                            Grid.Row="8"
+                            Grid.Column="1" />
+
+                    <Label Text="UiSettings.TiltGesturesEnabled"
+                           VerticalOptions="Center"
+                           Grid.Row="9"
+                           Grid.Column="0" />
+                    <Switch x:Name="switchTiltGesturesEnabled"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Start"
+                            Grid.Row="9"
+                            Grid.Column="1" />
+
+                    <Label Text="IsIndoorEnabled"
+                           VerticalOptions="Center"
+                           Grid.Row="10"
+                           Grid.Column="0" />
+                    <Switch x:Name="switchIndoorEnabled"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Start"
+                            Grid.Row="10"
+                            Grid.Column="1" />
+
+                    <Label Text="UiSettings.IndoorLevelPickerEnabled"
+                           VerticalOptions="Center"
+                           Grid.Row="11"
+                           Grid.Column="0" />
+                    <Switch x:Name="switchIndoorLevelPickerEnabled"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Start"
+                            Grid.Row="11"
+                            Grid.Column="1" />
+
+                    <Label Text="IsTrafficEnabled"
+                           VerticalOptions="Center"
+                           Grid.Row="12"
+                           Grid.Column="0" />
+                    <Switch x:Name="switchIsTrafficEnabled"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Start"
+                            Grid.Row="12"
+                            Grid.Column="1" />
+
+                    <Entry
+                        x:Name="entryAddress"
+                        VerticalOptions="Center"
+                        Text="new york"
+                        Grid.Row="13"
+                        Grid.Column="0" />
+                    <Button
+                        x:Name="buttonGeocode"
+                        VerticalOptions="Center"
+                        Text="GEOCODE"
+                        Grid.Row="13"
+                        Grid.Column="1" />
+
+                    <Label x:Name="labelStatus"
+                           Grid.Row="14"
+                           Grid.Column="0"
+                           Grid.ColumnSpan="2" />
+
+                    <Image x:Name="imageSnapshot"
+                           Margin="5"
+                           Grid.Row="15"
+                           Grid.Column="0"
+                           Grid.ColumnSpan="2" />
+                    <Button x:Name="buttonTakeSnapshot"
+                            VerticalOptions="Center"
+                            Text="Take Snapshot"
+                            Grid.Row="16"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="2" />
+
+                </Grid>
+            </ScrollView>
+
+            <!--
+            Initial CameraUpdate
+              Location = Sao Paulo
+              Zoom = 13
+              Rotation = 30
+              Tilt = 60
+            -->
+            <maps:Map Grid.Row="1" x:Name="map"
+                      InitialCameraUpdate="-23.68, -46.87, 13, 30, 60"
+                      VerticalOptions="FillAndExpand" />
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

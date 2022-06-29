@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:maps="clr-namespace:Maui.GoogleMaps;assembly=Maui.GoogleMaps"
+    x:Class="MauiGoogleMapSample.TilesPage"
+    Title="Tiles">
+    <ContentPage.Content>
+        <StackLayout
+            VerticalOptions="Fill"
+            Orientation="Vertical">
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+             
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                
+                <Button x:Name="buttonORMTile"
+                        Text="OpenRailwayMap (512px)" />
+                
+                <Button x:Name="buttonOSMITile"
+                        Text="OpenStreetMap"
+                        Grid.Column="1"/>
+                
+                <Button x:Name="buttonSyncImage"
+                        Text="Image (Sync)"
+                        Grid.Row="1" />
+                
+                <Button x:Name="buttonAsyncImage"
+                        Text="Image (Async)"
+                        Grid.Row="1"
+                        Grid.Column="1"/>
+
+                <Button x:Name="buttonRemove"
+                        Text="Remove Tile"
+                        Grid.Row="2" />               
+
+                <Button x:Name="buttonZIndex"
+                        Text="Tile ZIndex(-1 to 1)"
+                        Grid.Row="2"
+                        Grid.Column="1"/>               
+            </Grid>
+
+            <maps:Map x:Name="map" 
+                    VerticalOptions="FillAndExpand"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:maps="clr-namespace:Maui.GoogleMaps;assembly=Maui.GoogleMaps"
+    x:Class="MauiGoogleMapSample.CameraPage"
+    Title="Camera Operations">
+    <ContentPage.Content>
+        <Grid
+            HorizontalOptions="Fill"
+            VerticalOptions="Fill">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="4*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="6*" />
+            </Grid.RowDefinitions>
+
+            <ScrollView Grid.Row="0"
+                        Orientation="Vertical">
+
+                <StackLayout Orientation="Vertical">
+
+                    <Button x:Name="buttonMoveToPosition" Text="Move to LatLng" />
+                    <Button x:Name="buttonMoveToPositionZoom" Text="Move to LatLngZoom" />
+                    <Button x:Name="buttonMoveToBounds" Text="Move to LatLngBounds" />
+                    <Button x:Name="buttonMoveToCameraPosition" Text="Move to CameraPosition" />
+                    <Button x:Name="buttonAnimateToPosition" Text="Animate to LatLng" />
+                    <Button x:Name="buttonAnimateToPositionZoom" Text="Animate to LatLngZoom" />
+                    <Button x:Name="buttonAnimateToBounds" Text="Animate to LatLngBounds" />
+                    <Button x:Name="buttonAnimateToCameraPosition" Text="Animate to CameraPosition" />
+
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Padding(L,T,R,B):" 
+                            HorizontalOptions="Start" 
+                            VerticalOptions="Center"/>
+                        <Entry x:Name="entryPadding" Text="0, 0, 0, 0" 
+                            HorizontalOptions="FillAndExpand" 
+                            VerticalOptions="Center" />
+                    </StackLayout>
+
+                </StackLayout>
+            </ScrollView>
+
+            <Label Grid.Row="1" x:Name="labelStatus" HeightRequest="40" />
+
+            <maps:Map Grid.Row="2" x:Name="map"
+                      VerticalOptions="FillAndExpand" />
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

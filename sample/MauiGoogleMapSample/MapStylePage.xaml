@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:maps="clr-namespace:Maui.GoogleMaps;assembly=Maui.GoogleMaps"
+    x:Class="MauiGoogleMapSample.MapStylePage"
+    Title="MapStylePage">
+    <ContentPage.Content>
+        <Grid
+            HorizontalOptions="Fill"
+            VerticalOptions="Fill">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="4*" />
+                <RowDefinition Height="6*" />
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Editor x:Name="editorMapStyle"
+                        Grid.Row="1"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="FillAndExpand"
+                        Grid.Column="0" 
+                        Grid.ColumnSpan="2"/>
+
+                <Button x:Name="buttonSeeStylingWizard"
+                        VerticalOptions="Center"
+                        Text="See Google Maps Styling Wizard"
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"/>
+
+                <Button x:Name="buttonClearStyle"
+                        VerticalOptions="Center"
+                        Text="Clear Styles"
+                        Grid.Row="2"
+                        Grid.Column="0" />
+
+                <Button x:Name="buttonMapStyle"
+                        VerticalOptions="Center"
+                        Text="Apply Styles"
+                        Grid.Row="2"
+                        Grid.Column="1" />
+
+            </Grid>
+            
+            <maps:Map Grid.Row="1" x:Name="map"
+                      InitialCameraUpdate="35.71, 139.81, 8, 30, 0"
+                      VerticalOptions="FillAndExpand" />
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:maps="clr-namespace:Maui.GoogleMaps;assembly=Maui.GoogleMaps"
+    x:Class="MauiGoogleMapSample.GroundOverlaysPage"
+    Title="GroundOverlays">
+    <ContentPage.Content>
+
+        <StackLayout
+            VerticalOptions="Fill"
+            Orientation="Vertical">
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+             
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Label
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    VerticalTextAlignment="Center"
+                    HorizontalTextAlignment="End"
+                    Text="Icon:" />
+                <Picker x:Name="pickerIcon"
+                        Grid.Row="0"
+                        Grid.Column="1"/>
+
+                <Label
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    VerticalTextAlignment="Center"
+                    HorizontalTextAlignment="End"
+                    Text="Transparency:" />
+                <Slider
+                    x:Name="sliderTransparency"
+                    Minimum="0"
+                    Maximum="10"
+                    Grid.Row="1"
+                    Grid.Column="1" />
+
+                <Label
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    VerticalTextAlignment="Center"
+                    HorizontalTextAlignment="End"
+                    Text="Bearing:" />
+                <Slider 
+                    x:Name="sliderBearing"
+                    Minimum="0"
+                    Maximum="360"
+                    Grid.Row="2"
+                    Grid.Column="1" />
+
+                <Label
+                    Grid.Row="3"
+                    Grid.Column="0"
+                    VerticalTextAlignment="Center"
+                    HorizontalTextAlignment="End"
+                    Text="IsClickable:" />
+                <Switch
+                    x:Name="switchIsClickable"
+                    Grid.Row="3"
+                    Grid.Column="1" />
+                
+                <Label
+                    Grid.Row="4"
+                    Grid.Column="0"
+                    VerticalTextAlignment="Center"
+                    HorizontalTextAlignment="End"
+                    Text="ZIndex:" />
+                <StackLayout
+                    Grid.Row="4"
+                    Grid.Column="1"
+                    Orientation="Horizontal"
+                    VerticalOptions="Start"
+                    HorizontalOptions="FillAndExpand">
+                    <Button
+                        x:Name="buttonToFront"
+                        VerticalOptions="Start"
+                        HorizontalOptions="FillAndExpand"
+                        Text="To Front"/>
+                    <Button
+                        x:Name="buttonToBack"
+                        VerticalOptions="Start"
+                        HorizontalOptions="FillAndExpand"
+                        Text="To Back"/>
+                </StackLayout>
+            </Grid>         
+            <maps:Map x:Name="map" 
+                    VerticalOptions="FillAndExpand"/>
+            
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

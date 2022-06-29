@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:maps="clr-namespace:Maui.GoogleMaps;assembly=Maui.GoogleMaps"
+    x:Class="MauiGoogleMapSample.MultiplePinsIconsCaching"
+    Title="Custom Pin">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label>Pin count:</Label>
+            <Label x:Name="lblPinCount">-</Label>
+            <maps:Map x:Name="map"
+                      Grid.Row="1"
+                      VerticalOptions="FillAndExpand" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

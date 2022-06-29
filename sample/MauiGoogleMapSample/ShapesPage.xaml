@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:maps="clr-namespace:Maui.GoogleMaps;assembly=Maui.GoogleMaps"
+    x:Class="MauiGoogleMapSample.ShapesPage"
+    Title="Shapes">
+    <ContentPage.Content>
+
+        <StackLayout
+            VerticalOptions="Fill"
+            Orientation="Vertical">
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                
+                <Button x:Name="buttonAddPolyline"
+                        Text="Add Polyline" />
+                <Button x:Name="buttonRemovePolyline"
+                        Text="Remove Polyline"
+                        Grid.Column="1"/>
+
+                <Button x:Name="buttonAddPolygon"
+                        Text="Add Polygon"
+                        Grid.Row="1" />
+                <Button x:Name="buttonRemovePolygon"
+                        Text="Remove Polygon"
+                        Grid.Row="1"
+                        Grid.Column="1"/>
+                <Button x:Name="buttonAddHole"
+                        Text="Add Hole"
+                        Grid.Row="2" />
+                <Button x:Name="buttonRemoveHole"
+                        Text="Remove Holes"
+                        Grid.Row="2"
+                        Grid.Column="1"/>
+
+                <Button x:Name="buttonAddCircle"
+                        Text="Add Circle"
+                        Grid.Row="3" />
+                <Button x:Name="buttonRemoveCircle"
+                        Text="Remove Circle"
+                        Grid.Row="3"
+                        Grid.Column="1"/>
+                
+            </Grid>         
+            <maps:Map x:Name="map" 
+                    VerticalOptions="FillAndExpand"/>
+            
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

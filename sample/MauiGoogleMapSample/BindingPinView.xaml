@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Grid xmlns="http://schemas.microsoft.com/dotnet/2021/maui" 
+      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+      WidthRequest="37" 
+      HeightRequest="48"
+      x:Class="MauiGoogleMapSample.BindingPinView">
+    <Image Source="pin_red.png" />
+
+    <Label Margin="0,10,0,0" Text="{Binding Display}" TextColor="Black" FontSize="8" HorizontalTextAlignment="Center" 
+                BackgroundColor="Transparent"/>
+</Grid>

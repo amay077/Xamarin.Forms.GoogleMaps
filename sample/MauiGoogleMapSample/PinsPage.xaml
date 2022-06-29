@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:maps="clr-namespace:Maui.GoogleMaps;assembly=Maui.GoogleMaps"
+    x:Class="MauiGoogleMapSample.PinsPage"
+    Title="Pins">
+
+    <ContentPage.Content>
+
+        <Grid
+            VerticalOptions="Fill">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <ScrollView
+                Grid.Row="0"
+                Orientation="Vertical">
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Button x:Name="buttonAddPinTokyo"
+                            Text="Add pin to Tokyo"
+                            Grid.Row="0"
+                            Grid.Column="0" />
+                    <Button x:Name="buttonRemovePinTokyo"
+                            Text="Remove pin to Tokyo"
+                            Grid.Row="0"
+                            Grid.Column="1" />
+
+                    <Button x:Name="buttonAddPinNewYork"
+                            Text="Add pin to New York"
+                            Grid.Row="1"
+                            Grid.Column="0" />
+                    <Button x:Name="buttonRemovePinNewYork"
+                            Text="Remove pin to New York"
+                            Grid.Row="1"
+                            Grid.Column="1" />
+
+                    <Button x:Name="buttonClearPins"
+                            Text="Clear Pins"
+                            Grid.Row="2"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="2" />
+
+                    <Button x:Name="buttonSelectPinNewYork"
+                            Text="Select New York"
+                            Grid.Row="3"
+                            Grid.Column="0" />
+
+                    <Button x:Name="buttonClearSelection"
+                            Text="Clear Selection"
+                            Grid.Row="3"
+                            Grid.Column="1" />
+
+                    <StackLayout Orientation="Horizontal"
+                                 Grid.Row="4"
+                                 Grid.Column="0"
+                                 Grid.ColumnSpan="2">
+                        <Switch x:Name="switchHandlePinClicked"
+                                IsToggled="false"
+                                VerticalOptions="Center"
+                                HorizontalOptions="Start" />
+                        <Label Text="Handle Pin Clicked"
+                               VerticalOptions="Center" />
+                    </StackLayout>
+
+                    <StackLayout Orientation="Horizontal"
+                                 Grid.Row="5"
+                                 Grid.Column="0"
+                                 Grid.ColumnSpan="2">
+                        <Switch x:Name="switchIsVisibleTokyo"
+                                IsToggled="true"
+                                VerticalOptions="Center"
+                                HorizontalOptions="Start" />
+                        <Label Text="IsVisible Pin Tokyo"
+                               VerticalOptions="Center" />
+                    </StackLayout>
+
+                    <Grid
+                        Grid.Row="6"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Grid.Column="0" Text="Anchor Pin NewYork"
+                               VerticalOptions="Center" />
+                        <Slider Grid.Column="1" x:Name="sliderAnchorXNewyork" Minimum="0" Maximum="100" Value="50" />
+                        <Slider Grid.Column="2" x:Name="sliderAnchorYNewyork" Minimum="0" Maximum="100" Value="100" />
+                    </Grid>
+
+                    <Label x:Name="labelStatus"
+                           Text="Show status when Pin selected."
+                           Grid.Row="7"
+                           Grid.Column="0"
+                           Grid.ColumnSpan="2" />
+
+                </Grid>
+            </ScrollView>
+
+            <maps:Map x:Name="map"
+                      Grid.Row="1"
+                      VerticalOptions="FillAndExpand" />
+
+        </Grid>
+
+    </ContentPage.Content>
+</ContentPage>

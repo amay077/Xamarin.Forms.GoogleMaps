@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:maps="clr-namespace:Maui.GoogleMaps;assembly=Maui.GoogleMaps"
+    x:Class="MauiGoogleMapSample.CustomPinsPage"
+    Title="Custom Pin">
+    <ContentPage.Content>
+        <Grid
+            VerticalOptions="Fill">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <ScrollView
+                Grid.Row="0"
+                Orientation="Vertical">
+            
+                <Grid Margin="15,10,15,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+
+                    <Switch x:Name="switchPinColor"
+                            VerticalOptions="Center"
+                            Grid.Row="0"
+                            Grid.Column="0"/>
+
+                    <Label  Text="Default:"
+                            VerticalTextAlignment="Center"
+                            HorizontalTextAlignment="End"
+                            Grid.Row="0"
+                            Grid.Column="1"/>
+
+                    <Picker x:Name="buttonPinColor"
+                            Grid.Row="0"
+                            Grid.Column="2"/>
+
+                    <Switch x:Name="switchPinBundle"
+                            VerticalOptions="Center"
+                            Grid.Row="1"
+                            Grid.Column="0"/>
+
+                    <Label  Text="Bundle:"
+                            VerticalTextAlignment="Center"
+                            HorizontalTextAlignment="End"
+                            Grid.Row="1"
+                            Grid.Column="1"/>
+
+                    <Picker x:Name="buttonPinBundle"
+                            Grid.Row="1"
+                            Grid.Column="2"/>
+
+                    <Switch x:Name="switchPinStream"
+                            VerticalOptions="Center"
+                            Grid.Row="2"
+                            Grid.Column="0"/>
+
+                    <Label  Text="Stream:"
+                            VerticalTextAlignment="Center"
+                            HorizontalTextAlignment="End"
+                            Grid.Row="2"
+                            Grid.Column="1"/>
+
+                    <Picker x:Name="buttonPinStream"
+                            Grid.Row="2"
+                            Grid.Column="2"/>
+
+                    <Button x:Name="buttonPinSetToNull"
+                            Text="Set to null"
+                            Grid.Row="3"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="2"/>
+
+                    <StackLayout
+                            Orientation="Horizontal"
+                            Grid.Row="3"
+                            Grid.Column="2">
+                        <Switch x:Name="switchIsDraggable"
+                            VerticalOptions="Center"/>
+                        <Label  Text="IsDraggable"
+                            VerticalOptions="Center"
+                            HorizontalTextAlignment="Start"/>
+                    </StackLayout>
+
+                    <StackLayout
+                          Orientation="Horizontal"
+                          Grid.Row="4"
+                          Grid.Column="2">
+                        <Switch x:Name="switchFlat"
+                            VerticalOptions="Center"/>
+                        <Label  Text="Flat"
+                            VerticalOptions="Center"
+                            HorizontalTextAlignment="Start"/>
+                    </StackLayout>
+
+                    <Label  Text="Rotation with InfoWindow Anchor:"
+                            HorizontalOptions="End"
+                            VerticalOptions="Center"
+                            Grid.Row="6"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="2"/>
+                    <Slider x:Name="sliderRotation"
+                            Minimum="0"
+                            Maximum="360"
+                            Grid.Row="6"
+                            Grid.Column="2" />
+
+                    <Label  Text="Transparency:"
+                            HorizontalOptions="End"
+                            VerticalOptions="Center"
+                            Grid.Row="7"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="2"/>
+                    <Slider x:Name="sliderTransparency"
+                            Minimum="0"
+                            Maximum="10"
+                            Value="0"
+                            Grid.Row="7"
+                            Grid.Column="2" />
+
+                    <Label  Text="ZIndex:"
+                            HorizontalOptions="End"
+                            VerticalOptions="Center"
+                            Grid.Row="8"
+                            Grid.Column="0" />
+
+                    <Button x:Name="buttonMoveToFront"
+                            Text="Move to Front"
+                            Grid.Row="8"
+                            Grid.Column="1" />
+
+                    <Button x:Name="buttonMoveToBack"
+                            Text="Move to Back"
+                            Grid.Row="8"
+                            Grid.Column="2" />
+
+                    <Label  x:Name="labelDragStatus"
+                            Text="Show status when Pin drag."
+                            Grid.Row="9"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="3"/>
+
+                    <StackLayout
+                            Orientation="Horizontal"
+                            Grid.Row="10"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="3">
+                        <Switch x:Name="switchMapToolbarEnabled"
+                            VerticalOptions="Center"/>
+                        <Label Text="UiSettings.MapToolbarEnabled"
+                            VerticalOptions="Center"
+                            HorizontalTextAlignment="Start"/>
+                    </StackLayout>
+
+                </Grid>
+            </ScrollView>   
+                
+            <maps:Map x:Name="map"
+                      Grid.Row="1"
+                      VerticalOptions="FillAndExpand" />
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

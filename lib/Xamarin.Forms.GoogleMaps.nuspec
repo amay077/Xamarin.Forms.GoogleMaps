@@ -3,7 +3,7 @@
 	<metadata minClientVersion="2.8.3">
 		<id>Xamarin.Forms.GoogleMaps</id>
 		<title>Xamarin.Forms.GoogleMaps</title>
-		<version>4.0.0-BETA1</version>
+		<version>4.0.0-BETA2</version>
 		<releaseNotes>
 # 4.0.0-BETA1
 
@@ -12,7 +12,7 @@
 full release notes is here - https://github.com/amay077/Xamarin.Forms.GoogleMaps/blob/master/RELEASE_NOTES.md
 		</releaseNotes>
 		<authors>amay077</authors>
-		<copyright>Copyright 2016-2020</copyright>
+		<copyright>Copyright 2016-2022</copyright>
 		<license type="file">LICENSE.txt</license>
     <projectUrl>https://github.com/amay077/Xamarin.Forms.GoogleMaps</projectUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -21,14 +21,13 @@ full release notes is here - https://github.com/amay077/Xamarin.Forms.GoogleMaps
 		<tags>xamarin forms maps xamarinforms xamarinformsmaps xamarin.forms.maps xamarinformsgooglemaps xamarin.forms.googlemaps google googlemap</tags>
 	<dependencies>
       <group targetFramework="netstandard2.0">
-        <dependency id="Xamarin.Forms" version="4.5.0.495" />
+        <dependency id="Xamarin.Forms" version="5.0.0.2401" />
       </group>
-      <group targetFramework="MonoAndroid90">
-        <dependency id="Xamarin.GooglePlayServices.Maps" version="71.1610.1"/>
-        <dependency id="Xamarin.Android.Support.v7.AppCompat" version="28.0.0.3"/>
+      <group targetFramework="MonoAndroid12.0">
+        <dependency id="Xamarin.GooglePlayServices.Maps" version="118.0.2"/>
       </group>
       <group targetFramework="Xamarin.iOS10">
-        <dependency id="Xamarin.Google.iOS.Maps" version="3.7.0.1"/>
+        <dependency id="Xamarin.Google.iOS.Maps" version="6.0.1"/>
       </group>
 	</dependencies>
 	</metadata>
@@ -40,16 +39,11 @@ full release notes is here - https://github.com/amay077/Xamarin.Forms.GoogleMaps
 		<file src="Xamarin.Forms.GoogleMaps\bin\Release\netstandard2.0\Xamarin.Forms.GoogleMaps.dll" target="lib\netstandard2.0" />
 
     	<!--Xamarin.Android-->
-		<file src="Xamarin.Forms.GoogleMaps.Android\bin\Release\Xamarin.Forms.GoogleMaps.Android.dll" target="lib\MonoAndroid90\Xamarin.Forms.GoogleMaps.Android.dll" />
-		<file src="Xamarin.Forms.GoogleMaps\bin\Release\netstandard2.0\Xamarin.Forms.GoogleMaps.dll" target="lib\MonoAndroid90\Xamarin.Forms.GoogleMaps.dll" />
+		<file src="Xamarin.Forms.GoogleMaps.Android\bin\Release\Xamarin.Forms.GoogleMaps.Android.dll" target="lib\MonoAndroid12.0\Xamarin.Forms.GoogleMaps.Android.dll" />
+		<file src="Xamarin.Forms.GoogleMaps\bin\Release\netstandard2.0\Xamarin.Forms.GoogleMaps.dll" target="lib\MonoAndroid12.0\Xamarin.Forms.GoogleMaps.dll" />
 
 		<!--Xamarin.iOS-->
 		<file src="Xamarin.Forms.GoogleMaps.iOS\bin\Release\Xamarin.Forms.GoogleMaps.iOS.dll" target="lib\Xamarin.iOS10\Xamarin.Forms.GoogleMaps.iOS.dll" />
 		<file src="Xamarin.Forms.GoogleMaps\bin\Release\netstandard2.0\Xamarin.Forms.GoogleMaps.dll" target="lib\Xamarin.iOS10\Xamarin.Forms.GoogleMaps.dll" />
-
-	    <!--uap
-		<file src="Xamarin.Forms.GoogleMaps.UWP\bin\Release\Xamarin.Forms.GoogleMaps.UWP.dll" target="lib\UAP10\Xamarin.Forms.GoogleMaps.UWP.dll" />
-		<file src="Xamarin.Forms.GoogleMaps\bin\Release\netstandard2.0\Xamarin.Forms.GoogleMaps.dll" target="lib\UAP10\Xamarin.Forms.GoogleMaps.dll" />
-		-->
 	</files>
 </package>

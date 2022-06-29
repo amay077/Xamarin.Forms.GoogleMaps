@@ -5,7 +5,6 @@ using System.IO;
 using Android.Gms.Maps;
 using Android.Gms.Maps.Model;
 using Android.OS;
-using Java.Lang;
 using Xamarin.Forms.Platform.Android;
 using Math = System.Math;
 using Android.App;
@@ -526,6 +525,7 @@ namespace Xamarin.Forms.GoogleMaps.Android
         }
 
         bool _disposed;
+
         protected override void Dispose(bool disposing)
         {
             if (disposing && !_disposed)
