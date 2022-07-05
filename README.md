@@ -1,4 +1,4 @@
-## ![](logo.png) Xamarin.Forms.GoogleMaps 
+## ![](logo.png) Maui.GoogleMaps 
 
 ![](https://img.shields.io/nuget/v/Onion.Maui.GoogleMaps.svg) ![](https://img.shields.io/nuget/dt/Onion.Maui.GoogleMaps.svg)
 
@@ -68,6 +68,10 @@ public static MauiApp CreateMauiApp()
 ```
 
 Namespace is ``Maui.GoogleMaps`` instead of ``Xamarin.Forms.GoogleMaps``. 
+
+## Known issues ❗❗❗
+Currently i've encountered an issue on ios simulators: https://github.com/amay077/Xamarin.Forms.GoogleMaps/issues/786 
+Workaround: just relaunch a couple of time until it works. Unfortunately there is nothing i can do about it. Works well on a real device though, so why bother
 
 Sample application is here.
 
