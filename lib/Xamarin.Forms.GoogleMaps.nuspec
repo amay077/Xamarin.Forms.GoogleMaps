@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
 	<metadata minClientVersion="2.8.3">
-		<id>Xamarin.Forms.GoogleMaps</id>
-		<title>Xamarin.Forms.GoogleMaps</title>
-		<version>5.0.1</version>
+		<id>Xamarin.Forms.Custom.GoogleMaps</id>
+		<title>Xamarin.Forms.Custom.GoogleMaps</title>
+		<version>5.0.2</version>
 		<releaseNotes>
-# 5.0.1
+# 5.0.2
 
 - Supports latest SDK's
 

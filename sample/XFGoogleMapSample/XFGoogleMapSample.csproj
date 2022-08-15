@@ -18,6 +18,7 @@
     <None Remove="marker01.png" />
     <None Remove="marker02.png" />
     <None Remove="marker03.png" />
+    <None Remove="Xamarin.Build.Download" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,8 +28,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2401" />
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2515" />
     <PackageReference Include="Xamarin.Essentials" Version="1.7.2" />
+    <PackageReference Include="Xamarin.Build.Download" Version="0.11.3" />
   </ItemGroup>
 
   <ItemGroup>

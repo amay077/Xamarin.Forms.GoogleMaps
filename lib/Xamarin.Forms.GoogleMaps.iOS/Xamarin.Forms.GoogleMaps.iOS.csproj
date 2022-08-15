@@ -74,10 +74,10 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Xamarin.Forms">
-      <Version>5.0.0.2401</Version>
+      <Version>5.0.0.2515</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Google.iOS.Maps">
-      <Version>6.0.1</Version>
+      <Version>6.0.1.1</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

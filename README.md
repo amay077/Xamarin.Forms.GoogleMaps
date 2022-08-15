@@ -4,7 +4,7 @@
 
 [日本語の README はこちら！](README-ja.md)
 
-Yet another maps library for Xamarin.Forms that optimized for Google maps.
+Updated to XF5 version of Amay077 Xamarin.Forms.GoogleMaps.
 
 Usage is almost the same as [Xamarin.Forms.Maps](https://www.nuget.org/packages/Xamarin.Forms.Maps), Because this is forked from [Xamarin.Forms.Maps - github](https://github.com/xamarin/Xamarin.Forms) 
 
