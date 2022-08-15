@@ -10,7 +10,7 @@
             VerticalOptions="Fill">
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
@@ -20,6 +20,7 @@
             
                 <Grid Margin="15,10,15,0">
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
@@ -160,9 +161,14 @@
                             Grid.Column="0"
                             Grid.ColumnSpan="3"/>
 
+                    <Switch
+                        x:Name="fromViewSwitch"
+                        Grid.Row="10"
+                        Grid.Column="0"/>
+
                     <StackLayout
                             Orientation="Horizontal"
-                            Grid.Row="10"
+                            Grid.Row="11"
                             Grid.Column="0"
                             Grid.ColumnSpan="3">
                         <Switch x:Name="switchMapToolbarEnabled"
@@ -171,6 +177,9 @@
                             VerticalOptions="Center"
                             HorizontalTextAlignment="Start"/>
                     </StackLayout>
+
+                    
+
 
                 </Grid>
             </ScrollView>   

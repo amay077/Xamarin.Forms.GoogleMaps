@@ -8,6 +8,7 @@ using System.Security.Cryptography;
 using Android.Runtime;
 using System.Threading.Tasks;
 using System.Collections.Concurrent;
+using static Android.Graphics.Bitmap;
 
 namespace Xamarin.Forms.GoogleMaps.Android
 {
@@ -51,10 +52,10 @@ namespace Xamarin.Forms.GoogleMaps.Android
             view.SetLayerType(LayerType.Hardware, null);
 
             view.Measure(global::Android.Views.View.MeasureSpec.MakeMeasureSpec(0, MeasureSpecMode.Unspecified),
-                global::Android.Views.View.MeasureSpec.MakeMeasureSpec(0, MeasureSpecMode.Unspecified));
+                         global::Android.Views.View.MeasureSpec.MakeMeasureSpec(0, MeasureSpecMode.Unspecified));
             view.Layout(0, 0, view.MeasuredWidth, view.MeasuredHeight);
 
-            return Bitmap.CreateBitmap(view.Width, view.Height, Bitmap.Config.Argb8888);
+            return CreateBitmap(view.Width, view.Height, Config.Argb8888);
         }
 
         private static LinkedList<string> lruTracker = new LinkedList<string>();

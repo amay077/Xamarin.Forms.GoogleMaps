@@ -19,6 +19,7 @@
     <None Remove="marker02.png" />
     <None Remove="marker03.png" />
     <None Remove="Xamarin.Build.Download" />
+    <None Remove="Views\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -36,5 +37,8 @@
   <ItemGroup>
     <ProjectReference Include="..\..\lib\Xamarin.Forms.GoogleMaps\Xamarin.Forms.GoogleMaps.csproj" />
     <ProjectReference Include="..\..\lib\Xamarin.Forms.GoogleMaps\Xamarin.Forms.GoogleMaps.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\" />
   </ItemGroup>
 </Project>

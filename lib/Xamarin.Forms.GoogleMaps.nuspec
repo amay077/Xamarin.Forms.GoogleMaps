@@ -3,9 +3,9 @@
 	<metadata minClientVersion="2.8.3">
 		<id>Xamarin.Forms.Custom.GoogleMaps</id>
 		<title>Xamarin.Forms.Custom.GoogleMaps</title>
-		<version>5.0.2</version>
+		<version>5.0.3</version>
 		<releaseNotes>
-# 5.0.2
+# 5.0.3
 
 - Supports latest SDK's
 
@@ -15,21 +15,23 @@
 		<license type="file">LICENSE.txt</license>
     <projectUrl>https://github.com/amay077/Xamarin.Forms.GoogleMaps</projectUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
-		<description>Yet another Maps library for Xamarin.Forms that optimized for Google maps.</description>
-		<summary>Yet another Maps library for Xamarin.Forms that optimized for Google maps</summary>
+		<description>Maps library for Xamarin.Forms 5 that optimized for Google maps.</description>
+		<summary>Updated to Xamarin Forms 5 version of Amay077 Xamarin.Forms.GoogleMaps</summary>
 		<tags>xamarin forms maps xamarinforms xamarinformsmaps xamarin.forms.maps xamarinformsgooglemaps xamarin.forms.googlemaps google googlemap</tags>
 	<dependencies>
       <group targetFramework="netstandard2.0">
-        <dependency id="Xamarin.Forms" version="5.0.0.2401" />
+        <dependency id="Xamarin.Forms" version="5.0.0.2515" />
       </group>
       <group targetFramework="MonoAndroid90">
-        <dependency id="Xamarin.GooglePlayServices.Maps" version="118.0.2"/>
-        <dependency id="Xamarin.AndroidX.AppCompat" version="1.3.1.5"/>
-        <dependency id="Xamarin.AndroidX.Migration" version="1.0.8"/>
+        <dependency id="Xamarin.AndroidX.AppCompat" version="1.4.2.1"/>
+		<dependency id="Xamarin.AndroidX.Core" version="1.8.0.1"/>
+        <dependency id="Xamarin.AndroidX.Migration" version="1.0.10"/>
+		<dependency id="Xamarin.Forms" version="5.0.0.2515" />
+        <dependency id="Xamarin.GooglePlayServices.Maps" version="118.0.2.2"/>
       </group>
       <group targetFramework="Xamarin.iOS10">
-	    <dependency id="Xamarin.Forms" version="5.0.0.2401" />
-        <dependency id="Xamarin.Google.iOS.Maps" version="6.0.1"/>
+	    <dependency id="Xamarin.Forms" version="5.0.0.2515" />
+        <dependency id="Xamarin.Google.iOS.Maps" version="6.0.1.1"/>
       </group>
 	</dependencies>
 	</metadata>
