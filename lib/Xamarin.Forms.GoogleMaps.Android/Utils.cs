@@ -36,7 +36,8 @@ namespace Xamarin.Forms.GoogleMaps.Android
 
         public static Task<global::Android.Views.View> ConvertFormsToNative(View view, Rectangle size, IVisualElementRenderer vRenderer)
         {
-            return Task.Run(() => {
+            return Task.Run(() =>
+            {
                 var viewGroup = vRenderer.View;
                 vRenderer.Tracker.UpdateLayout();
                 var layoutParams = new ViewGroup.LayoutParams((int)size.Width, (int)size.Height);
@@ -55,7 +56,13 @@ namespace Xamarin.Forms.GoogleMaps.Android
                          global::Android.Views.View.MeasureSpec.MakeMeasureSpec(0, MeasureSpecMode.Unspecified));
             view.Layout(0, 0, view.MeasuredWidth, view.MeasuredHeight);
 
-            return CreateBitmap(view.Width, view.Height, Config.Argb8888);
+            var bitmap =  CreateBitmap(view.MeasuredWidth, view.MeasuredHeight, Config.Argb8888);
+
+            var canvas = new Canvas(bitmap);
+
+            view.Draw(canvas);
+
+            return bitmap;
         }
 
         private static LinkedList<string> lruTracker = new LinkedList<string>();

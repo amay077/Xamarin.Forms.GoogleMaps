@@ -3,16 +3,17 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="XFGoogleMapSample.Views.RoundPinView"
-    HeightRequest="16"
-    WidthRequest="16">
+    HeightRequest="32"
+    WidthRequest="32"
+    BackgroundColor="Transparent">
 
     <ContentView.Content>
+
         <Frame
             BackgroundColor="Blue"
-            CornerRadius="8"
-            HeightRequest="16"
-            WidthRequest="16"
-            IsClippedToBounds="True"/>
+            HeightRequest="32"
+            WidthRequest="32"
+            CornerRadius="16"/>
 
     </ContentView.Content>
 </ContentView>

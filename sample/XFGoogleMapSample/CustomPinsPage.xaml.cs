@@ -285,7 +285,7 @@ namespace XFGoogleMapSample
                     _pinTokyo.Icon = BitmapDescriptorFactory.FromView(new RoundPinView());
                 }
 
-                map.MoveToRegion(MapSpan.FromCenterAndRadius(_pinTokyo.Position, Distance.FromMeters(10000)));
+                map.MoveToRegion(MapSpan.FromCenterAndRadius(_pinTokyo.Position, Distance.FromMeters(5000)));
             }
             catch(Exception ex)
             {

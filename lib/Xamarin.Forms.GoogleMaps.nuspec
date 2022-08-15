@@ -3,9 +3,9 @@
 	<metadata minClientVersion="2.8.3">
 		<id>Xamarin.Forms.Custom.GoogleMaps</id>
 		<title>Xamarin.Forms.Custom.GoogleMaps</title>
-		<version>5.0.3</version>
+		<version>5.0.4</version>
 		<releaseNotes>
-# 5.0.3
+# 5.0.4
 
 - Supports latest SDK's
 
