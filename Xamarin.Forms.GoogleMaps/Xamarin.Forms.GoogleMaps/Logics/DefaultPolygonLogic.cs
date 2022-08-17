@@ -3,7 +3,7 @@ using System.ComponentModel;
 
 namespace Xamarin.Forms.GoogleMaps.Logics
 {
-    internal abstract class DefaultPolygonLogic<TNative, TNativeMap> : DefaultLogic<Polygon, TNative, TNativeMap>
+    public abstract class DefaultPolygonLogic<TNative, TNativeMap> : DefaultLogic<Polygon, TNative, TNativeMap>
         where TNative : class
         where TNativeMap : class
     {
@@ -23,10 +23,10 @@ namespace Xamarin.Forms.GoogleMaps.Logics
             else if (e.PropertyName == Polygon.ZIndexProperty.PropertyName) OnUpdateZIndex(outerItem, nativeItem);
         }
 
-        internal abstract void OnUpdateIsClickable(Polygon outerItem, TNative nativeItem);
-        internal abstract void OnUpdateStrokeColor(Polygon outerItem, TNative nativeItem);
-        internal abstract void OnUpdateStrokeWidth(Polygon outerItem, TNative nativeItem);
-        internal abstract void OnUpdateFillColor(Polygon outerItem, TNative nativeItem);
-        internal abstract void OnUpdateZIndex(Polygon outerItem, TNative nativeItem);
+        protected abstract void OnUpdateIsClickable(Polygon outerItem, TNative nativeItem);
+        protected abstract void OnUpdateStrokeColor(Polygon outerItem, TNative nativeItem);
+        protected abstract void OnUpdateStrokeWidth(Polygon outerItem, TNative nativeItem);
+        protected abstract void OnUpdateFillColor(Polygon outerItem, TNative nativeItem);
+        protected abstract void OnUpdateZIndex(Polygon outerItem, TNative nativeItem);
     }
 }

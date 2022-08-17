@@ -1,7 +1,7 @@
 ﻿using System;
 namespace Xamarin.Forms.GoogleMaps.Internals
 {
-    internal interface IAnimationCallback
+    public interface IAnimationCallback
     {
         void OnFinished();
         void OnCanceled();

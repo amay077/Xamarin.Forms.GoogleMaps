@@ -4,7 +4,7 @@ using Android.Graphics;
 
 namespace Xamarin.Forms.GoogleMaps.Android.Logics
 {
-    internal sealed class DelegateSnapshotReadyCallback : Java.Lang.Object, GoogleMap.ISnapshotReadyCallback
+    public sealed class DelegateSnapshotReadyCallback : Java.Lang.Object, GoogleMap.ISnapshotReadyCallback
     {
         private readonly Action<Bitmap> _handler;
 

@@ -3,7 +3,7 @@ using System;
 
 namespace Xamarin.Forms.GoogleMaps.Logics.iOS
 {
-    internal sealed class UiSettingsLogic : BaseUiSettingsLogic<Google.Maps.MapView>
+    public sealed class UiSettingsLogic : BaseUiSettingsLogic<Google.Maps.MapView>
     {
         // These properties are 'null' when call Initialize()
         // If 'not null' then set true/false in app's page constructor.

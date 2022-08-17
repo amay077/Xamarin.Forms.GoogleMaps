@@ -5,7 +5,7 @@ using System.ComponentModel;
 
 namespace Xamarin.Forms.GoogleMaps.Logics
 {
-    internal abstract class BaseUiSettingsLogic<TNativeMap>
+    public abstract class BaseUiSettingsLogic<TNativeMap>
     {
         protected Map Map { get; private set; }
         protected TNativeMap NativeMap { get; private set; }

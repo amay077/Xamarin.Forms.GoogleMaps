@@ -5,7 +5,7 @@ using System.Collections.Specialized;
 
 namespace Xamarin.Forms.GoogleMaps.Logics
 {
-    internal abstract class DefaultLogic<TOuter, TNative, TNativeMap> : BaseLogic<TNativeMap>
+    public abstract class DefaultLogic<TOuter, TNative, TNativeMap> : BaseLogic<TNativeMap>
         where TOuter : BindableObject
         where TNative : class
         where TNativeMap : class
@@ -62,7 +62,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics
             _outerItems.Clear();
         }
 
-        internal override void RestoreItems()
+        public override void RestoreItems()
         {
             var items = GetItems(Map);
 
@@ -82,7 +82,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics
             AddItems((IList)items);
         }
 
-        internal override void NotifyReset() =>
+        protected override void NotifyReset() =>
             OnCollectionChanged(GetItems(Map), new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
 
         protected virtual void OnItemPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)

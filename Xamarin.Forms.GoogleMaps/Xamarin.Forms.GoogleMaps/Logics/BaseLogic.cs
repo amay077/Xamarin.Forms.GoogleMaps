@@ -5,16 +5,16 @@ using System.ComponentModel;
 
 namespace Xamarin.Forms.GoogleMaps.Logics
 {
-    internal abstract class BaseLogic<TNativeMap>
+    public abstract class BaseLogic<TNativeMap>
     {
-        public float ScaledDensity { get; internal set; }
+        public float ScaledDensity { get; /*internal*/ set; }
 
         public TNativeMap NativeMap { get; private set; }
         public Map Map { get; private set; }
 
         protected abstract INotifyCollectionChanged GetItemAsNotifyCollectionChanged(Map map);
 
-        internal virtual void Register(TNativeMap oldNativeMap, Map oldMap, TNativeMap newNativeMap, Map newMap)
+        public virtual void Register(TNativeMap oldNativeMap, Map oldMap, TNativeMap newNativeMap, Map newMap)
         {
             this.NativeMap = newNativeMap;
             this.Map = newMap;
@@ -26,7 +26,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics
                 inccItems.CollectionChanged += OnCollectionChanged;
         }
 
-        internal virtual void Unregister(TNativeMap nativeMap, Map map)
+        public virtual void Unregister(TNativeMap nativeMap, Map map)
         {
             if (map != null)
             {
@@ -71,11 +71,11 @@ namespace Xamarin.Forms.GoogleMaps.Logics
 
         protected abstract void ResetItems();
 
-        internal abstract void NotifyReset();
+        protected abstract void NotifyReset();
 
-        internal abstract void RestoreItems();
+        public abstract void RestoreItems();
 
-        internal virtual void OnMapPropertyChanged(PropertyChangedEventArgs e)
+        public virtual void OnMapPropertyChanged(PropertyChangedEventArgs e)
         {
         }
     }

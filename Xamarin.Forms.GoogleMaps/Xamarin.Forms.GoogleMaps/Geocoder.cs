@@ -6,9 +6,9 @@ namespace Xamarin.Forms.GoogleMaps
 {
     public sealed class Geocoder
     {
-        internal static Func<string, Task<IEnumerable<Position>>> GetPositionsForAddressAsyncFunc;
+        public static Func<string, Task<IEnumerable<Position>>> GetPositionsForAddressAsyncFunc;
 
-        internal static Func<Position, Task<IEnumerable<string>>> GetAddressesForPositionFuncAsync;
+        public static Func<Position, Task<IEnumerable<string>>> GetAddressesForPositionFuncAsync;
 
         public Task<IEnumerable<string>> GetAddressesForPositionAsync(Position position)
         {

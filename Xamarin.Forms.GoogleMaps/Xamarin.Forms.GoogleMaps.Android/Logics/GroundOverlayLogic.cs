@@ -12,7 +12,7 @@ using Android.Content;
 
 namespace Xamarin.Forms.GoogleMaps.Logics.Android
 {
-    internal class GroundOverlayLogic : DefaultGroundOverlayLogic<NativeGroundOverlay, GoogleMap>
+    public class GroundOverlayLogic : DefaultGroundOverlayLogic<NativeGroundOverlay, GoogleMap>
     {
         protected override IList<GroundOverlay> GetItems(Map map) => map.GroundOverlays;
 
@@ -27,7 +27,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
             _bitmapDescriptorFactory = bitmapDescriptorFactory;
         }
 
-        internal override void Register(GoogleMap oldNativeMap, Map oldMap, GoogleMap newNativeMap, Map newMap)
+        public override void Register(GoogleMap oldNativeMap, Map oldMap, GoogleMap newNativeMap, Map newMap)
         {
             base.Register(oldNativeMap, oldMap, newNativeMap, newMap);
 
@@ -37,7 +37,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
             }
         }
 
-        internal override void Unregister(GoogleMap nativeMap, Map map)
+        public override void Unregister(GoogleMap nativeMap, Map map)
         {
             if (nativeMap != null)
             {
@@ -103,17 +103,17 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
             targetOuterItem?.SendTap();
         }
 
-        internal override void OnUpdateBearing(GroundOverlay outerItem, NativeGroundOverlay nativeItem)
+        protected override void OnUpdateBearing(GroundOverlay outerItem, NativeGroundOverlay nativeItem)
         {
             nativeItem.Bearing = outerItem.Bearing;
         }
 
-        internal override void OnUpdateBounds(GroundOverlay outerItem, NativeGroundOverlay nativeItem)
+        protected override void OnUpdateBounds(GroundOverlay outerItem, NativeGroundOverlay nativeItem)
         {
             nativeItem.SetPositionFromBounds(outerItem.Bounds.ToLatLngBounds()); 
         }
 
-        internal override void OnUpdateIcon(GroundOverlay outerItem, NativeGroundOverlay nativeItem)
+        protected override void OnUpdateIcon(GroundOverlay outerItem, NativeGroundOverlay nativeItem)
         {
             if (outerItem.Icon != null && outerItem.Icon.Type == BitmapDescriptorType.View)
             {
@@ -128,17 +128,17 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
             }
         }
 
-        internal override void OnUpdateIsClickable(GroundOverlay outerItem, NativeGroundOverlay nativeItem)
+        protected override void OnUpdateIsClickable(GroundOverlay outerItem, NativeGroundOverlay nativeItem)
         {
             nativeItem.Clickable = outerItem.IsClickable;
         }
 
-        internal override void OnUpdateTransparency(GroundOverlay outerItem, NativeGroundOverlay nativeItem)
+        protected override void OnUpdateTransparency(GroundOverlay outerItem, NativeGroundOverlay nativeItem)
         {
             nativeItem.Transparency = outerItem.Transparency;
         }
 
-        internal override void OnUpdateZIndex(GroundOverlay outerItem, NativeGroundOverlay nativeItem)
+        protected override void OnUpdateZIndex(GroundOverlay outerItem, NativeGroundOverlay nativeItem)
         {
             nativeItem.ZIndex = outerItem.ZIndex;
         }

@@ -2,12 +2,12 @@
 
 namespace Xamarin.Forms.GoogleMaps.Logics
 {
-    internal abstract class BaseCameraLogic<TNativeMap> : IMapRequestDelegate where TNativeMap:class
+    public abstract class BaseCameraLogic<TNativeMap> : IMapRequestDelegate where TNativeMap:class
     {
         protected Map _map;
         protected TNativeMap _nativeMap;
 
-        public float ScaledDensity { get; internal set; }
+        public float ScaledDensity { get; /*internal*/ set; }
 
         public virtual void Register(Map map, TNativeMap nativeMap)
         {

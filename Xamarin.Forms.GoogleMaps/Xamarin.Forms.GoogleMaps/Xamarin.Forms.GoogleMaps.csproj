@@ -1,18 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;netstandard1.0</TargetFrameworks>
-    <Authors>amay077</Authors>
-    <Product>Xamarin.Forms.GoogleMaps</Product>
-    <FileVersion>3.0.1.0</FileVersion>
-    <AssemblyVersion>3.0.1.0</AssemblyVersion>
-    <Version>3.0.1</Version>
-    <Copyright>Copyright © amay077. 2016 - 2019</Copyright>
-    <PackageIcon>logo.png</PackageIcon>
+    <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="3.0.0.482510" />
-    <None Include="logo.png" Pack="true" PackagePath="\"/>    
+    <None Remove="Xamarin.Forms" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2012" />
   </ItemGroup>
 </Project>

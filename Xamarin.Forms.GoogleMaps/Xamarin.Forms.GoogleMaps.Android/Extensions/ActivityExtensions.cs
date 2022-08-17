@@ -4,7 +4,7 @@ using Android.Util;
 
 namespace Xamarin.Forms.GoogleMaps.Android.Extensions
 {
-    internal static class ActivityExtensions
+    public static class ActivityExtensions
     {
         public static float GetScaledDensity(this Activity self) 
         {

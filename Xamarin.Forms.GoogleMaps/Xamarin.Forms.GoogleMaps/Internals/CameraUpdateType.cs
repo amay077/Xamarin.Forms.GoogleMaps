@@ -1,7 +1,7 @@
 ﻿using System;
 namespace Xamarin.Forms.GoogleMaps.Internals
 {
-    internal enum CameraUpdateType
+    public enum CameraUpdateType
     {
         LatLng,
         LatLngZoom,

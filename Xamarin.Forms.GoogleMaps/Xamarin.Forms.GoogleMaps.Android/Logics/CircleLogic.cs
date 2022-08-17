@@ -10,9 +10,9 @@ using System.Linq;
 
 namespace Xamarin.Forms.GoogleMaps.Logics.Android
 {
-    internal class CircleLogic : DefaultCircleLogic<NativeCircle, GoogleMap>
+    public class CircleLogic : DefaultCircleLogic<NativeCircle, GoogleMap>
     {
-        internal override void Register(GoogleMap oldNativeMap, Map oldMap, GoogleMap newNativeMap, Map newMap)
+        public override void Register(GoogleMap oldNativeMap, Map oldMap, GoogleMap newNativeMap, Map newMap)
         {
             base.Register(oldNativeMap, oldMap, newNativeMap, newMap);
 
@@ -22,7 +22,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.Android
             }
         }
 
-        internal override void Unregister(GoogleMap nativeMap, Map map)
+        public override void Unregister(GoogleMap nativeMap, Map map)
         {
             if (nativeMap != null)
             {

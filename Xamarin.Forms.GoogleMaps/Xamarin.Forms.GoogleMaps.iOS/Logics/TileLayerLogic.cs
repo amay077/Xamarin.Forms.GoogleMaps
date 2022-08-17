@@ -9,7 +9,7 @@ using NativeUrlTileLayer = Google.Maps.UrlTileLayer;
 
 namespace Xamarin.Forms.GoogleMaps.Logics.iOS
 {
-    internal class TileLayerLogic : DefaultLogic<TileLayer, NativeTileLayer, MapView>
+    public class TileLayerLogic : DefaultLogic<TileLayer, NativeTileLayer, MapView>
     {
         protected override IList<TileLayer> GetItems(Map map) => map.TileLayers;
 

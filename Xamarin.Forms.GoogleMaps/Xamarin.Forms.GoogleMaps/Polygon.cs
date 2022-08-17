@@ -61,7 +61,7 @@ namespace Xamarin.Forms.GoogleMaps
 
         public object Tag { get; set; }
 
-        public object NativeObject { get; internal set; }
+        public object NativeObject { get; /*internal*/ set; }
 
         public event EventHandler Clicked;
 
@@ -69,7 +69,7 @@ namespace Xamarin.Forms.GoogleMaps
         {
         }
 
-        internal bool SendTap()
+        public bool SendTap()
         {
             EventHandler handler = Clicked;
             if (handler == null)
@@ -79,7 +79,7 @@ namespace Xamarin.Forms.GoogleMaps
             return true;
         }
 
-        internal void SetOnPositionsChanged(Action<Polygon, NotifyCollectionChangedEventArgs> handler)
+        public void SetOnPositionsChanged(Action<Polygon, NotifyCollectionChangedEventArgs> handler)
         {
             _positionsChangedHandler = handler;
             if (handler != null)
@@ -92,7 +92,7 @@ namespace Xamarin.Forms.GoogleMaps
             }
         }
 
-        internal void SetOnHolesChanged(Action<Polygon, NotifyCollectionChangedEventArgs> handler)
+        public void SetOnHolesChanged(Action<Polygon, NotifyCollectionChangedEventArgs> handler)
         {
             _holesChangedHandler = handler;
             if (handler != null)

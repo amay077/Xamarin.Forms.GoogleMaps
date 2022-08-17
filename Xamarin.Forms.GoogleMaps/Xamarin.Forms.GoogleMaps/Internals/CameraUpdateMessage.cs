@@ -1,7 +1,7 @@
 ﻿using System;
 namespace Xamarin.Forms.GoogleMaps.Internals
 {
-    internal sealed class CameraUpdateMessage
+    public sealed class CameraUpdateMessage
     {
         public CameraUpdate Update { get; }
         public TimeSpan? Duration { get; }

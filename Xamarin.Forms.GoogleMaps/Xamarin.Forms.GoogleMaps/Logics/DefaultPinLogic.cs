@@ -3,7 +3,7 @@ using System.ComponentModel;
 
 namespace Xamarin.Forms.GoogleMaps.Logics
 {
-    internal abstract class DefaultPinLogic<TNative, TNativeMap> : DefaultLogic<Pin, TNative, TNativeMap>
+    public abstract class DefaultPinLogic<TNative, TNativeMap> : DefaultLogic<Pin, TNative, TNativeMap>
         where TNative : class
         where TNativeMap : class
     {

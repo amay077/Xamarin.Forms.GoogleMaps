@@ -4,7 +4,7 @@ using Xamarin.Forms.GoogleMaps.Android.Extensions;
 
 namespace Xamarin.Forms.GoogleMaps.Android
 {
-    internal static class VisibleRegionExtensions
+    public static class VisibleRegionExtensions
     {
         public static MapRegion ToRegion(this VisibleRegion visibleRegion)
         {

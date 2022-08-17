@@ -3,7 +3,7 @@ using System.ComponentModel;
 
 namespace Xamarin.Forms.GoogleMaps.Logics
 {
-    internal abstract class DefaultGroundOverlayLogic<TNative, TNativeMap> : DefaultLogic<GroundOverlay, TNative, TNativeMap>
+    public abstract class DefaultGroundOverlayLogic<TNative, TNativeMap> : DefaultLogic<GroundOverlay, TNative, TNativeMap>
         where TNative : class
         where TNativeMap : class
     {
@@ -24,11 +24,11 @@ namespace Xamarin.Forms.GoogleMaps.Logics
             else if (e.PropertyName == GroundOverlay.ZIndexProperty.PropertyName) OnUpdateZIndex(outerItem, nativeItem);
         }
 
-        internal abstract void OnUpdateBearing(GroundOverlay outerItem, TNative nativeItem);
-        internal abstract void OnUpdateBounds(GroundOverlay outerItem, TNative nativeItem);
-        internal abstract void OnUpdateIcon(GroundOverlay outerItem, TNative nativeItem);
-        internal abstract void OnUpdateIsClickable(GroundOverlay outerItem, TNative nativeItem);
-        internal abstract void OnUpdateTransparency(GroundOverlay outerItem, TNative nativeItem);
-        internal abstract void OnUpdateZIndex(GroundOverlay outerItem, TNative nativeItem);
+        protected abstract void OnUpdateBearing(GroundOverlay outerItem, TNative nativeItem);
+        protected abstract void OnUpdateBounds(GroundOverlay outerItem, TNative nativeItem);
+        protected abstract void OnUpdateIcon(GroundOverlay outerItem, TNative nativeItem);
+        protected abstract void OnUpdateIsClickable(GroundOverlay outerItem, TNative nativeItem);
+        protected abstract void OnUpdateTransparency(GroundOverlay outerItem, TNative nativeItem);
+        protected abstract void OnUpdateZIndex(GroundOverlay outerItem, TNative nativeItem);
     }
 }

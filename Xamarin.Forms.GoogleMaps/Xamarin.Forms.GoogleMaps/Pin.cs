@@ -110,7 +110,7 @@ namespace Xamarin.Forms.GoogleMaps
 
         public object Tag { get; set; }
 
-        public object NativeObject { get; internal set; }
+        public object NativeObject { get; /*internal*/ set; }
 
         [Obsolete("Please use Map.PinClicked instead of this")]
         public event EventHandler Clicked;
@@ -148,7 +148,7 @@ namespace Xamarin.Forms.GoogleMaps
             return !Equals(left, right);
         }
 
-        internal bool SendTap()
+        public bool SendTap()
         {
             EventHandler handler = Clicked;
             if (handler == null)

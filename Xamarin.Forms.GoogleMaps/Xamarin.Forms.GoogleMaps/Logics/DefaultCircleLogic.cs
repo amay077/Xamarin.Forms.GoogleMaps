@@ -4,7 +4,7 @@ using System.ComponentModel;
 
 namespace Xamarin.Forms.GoogleMaps.Logics
 {
-    internal abstract class DefaultCircleLogic<TNative, TNativeMap> : DefaultLogic<Circle, TNative, TNativeMap>
+    public abstract class DefaultCircleLogic<TNative, TNativeMap> : DefaultLogic<Circle, TNative, TNativeMap>
         where TNative : class
         where TNativeMap : class
     {
