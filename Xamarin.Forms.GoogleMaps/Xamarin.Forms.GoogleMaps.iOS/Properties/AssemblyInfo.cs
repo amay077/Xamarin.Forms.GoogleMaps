@@ -2,29 +2,30 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Xamarin.Forms;
+using Xamarin.Forms.Internals;
 using Xamarin.Forms.GoogleMaps;
 using Xamarin.Forms.GoogleMaps.iOS;
-using Xamarin.Forms.Internals;
-
-// General Information about an assembly is controlled through the following 
+using Xamarin.Forms.GoogleMaps.Internals;
+// General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
+
 [assembly: AssemblyTitle("Xamarin.Forms.GoogleMaps.iOS")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Xamarin.Forms.GoogleMaps.iOS")]
-[assembly: AssemblyCopyright("Copyright ©  2022")]
-[assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
-// Setting ComVisible to false makes the types in this assembly not visible 
-// to COM components.  If you need to access a type in this assembly from 
+// Setting ComVisible to false makes the types in this assembly not visible
+// to COM components.  If you need to access a type in this assembly from
 // COM, set the ComVisible attribute to true on that type.
+
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("50c7b8c9-e664-45af-b88e-0c9b8b9c1be1")]
+
+[assembly: Guid("4a5d02cd-7350-46b6-bbd5-204b727c67c9")]
+[assembly: ExportRenderer(typeof(Map), typeof(MapRenderer))]
+[assembly: Preserve]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -36,9 +37,11 @@ using Xamarin.Forms.Internals;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyCompany(ProductInformation.Author)]
+[assembly: AssemblyProduct(ProductInformation.Name)]
+[assembly: AssemblyCopyright(ProductInformation.Copyright)]
+[assembly: AssemblyTrademark(ProductInformation.Trademark)]
+[assembly: AssemblyVersion(ProductInformation.Version)]
+[assembly: AssemblyFileVersion(ProductInformation.Version)]
 
-[assembly: ExportRenderer(typeof(Map), typeof(MapRenderer))]
-[assembly: Preserve]
 
