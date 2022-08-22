@@ -4,6 +4,7 @@ using System.Linq;
 
 using Xamarin.Forms;
 using Xamarin.Forms.GoogleMaps;
+using Xamarin.Essentials;
 
 namespace XFGoogleMapSample
 {
@@ -28,8 +29,14 @@ namespace XFGoogleMapSample
             pickerMapType.SelectedIndex = 0;
 
             // MyLocationEnabled
-            switchMyLocationEnabled.Toggled += (sender, e) =>
+            switchMyLocationEnabled.Toggled += async (sender, e) =>
             {
+                var status = await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
+                if (status != PermissionStatus.Granted)
+                {
+                    await this.DisplayAlert("Permission Error", "This feature needs Location permission.", "CLOSE");
+                }
+
                 map.MyLocationEnabled = e.Value;
             };
             switchMyLocationEnabled.IsToggled = map.MyLocationEnabled;
@@ -165,6 +172,8 @@ namespace XFGoogleMapSample
                 imageSnapshot.Source = ImageSource.FromStream(() => stream);
             };
         }
+
+        
     }
 }
 

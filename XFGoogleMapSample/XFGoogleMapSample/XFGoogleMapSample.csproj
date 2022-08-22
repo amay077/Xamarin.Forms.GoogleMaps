@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2012" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.7.3" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Xamarin.Forms.GoogleMaps\Xamarin.Forms.GoogleMaps\Xamarin.Forms.GoogleMaps.csproj" />
@@ -23,6 +24,7 @@
     <None Remove="marker02.png" />
     <None Remove="marker03.png" />
     <None Remove="marker01.png" />
+    <None Remove="Xamarin.Essentials" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="marker02.png" />

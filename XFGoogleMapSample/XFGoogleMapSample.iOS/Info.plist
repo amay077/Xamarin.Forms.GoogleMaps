@@ -34,10 +34,14 @@
 	<string>XFGoogleMapSample</string>
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/AppIcon.appiconset</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Can we use your location</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>We are using your location</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>googlechromes</string>
 		<string>comgooglemaps</string>
-	</array>	
+	</array>
 </dict>
 </plist>
