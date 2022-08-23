@@ -46,7 +46,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Extensions\ActivityExtensions.cs" />
     <Compile Include="Extensions\BoundsExtensions.cs" />
@@ -79,9 +78,6 @@
     <Compile Include="Utils.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\AboutResources.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="Xamarin.AndroidX.AppCompat" Version="1.2.0.5" />
     <PackageReference Include="Xamarin.GooglePlayServices.Maps">
       <Version>118.0.2.2</Version>
@@ -89,12 +85,6 @@
     <PackageReference Include="Xamarin.Forms">
       <Version>5.0.0.2012</Version>
     </PackageReference>
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\values\strings.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Resources\drawable\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xamarin.Forms.GoogleMaps\Xamarin.Forms.GoogleMaps.csproj">
