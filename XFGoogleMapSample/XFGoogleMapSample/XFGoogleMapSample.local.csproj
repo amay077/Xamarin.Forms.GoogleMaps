@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>portable</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2012" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.7.3" />
+    <PackageReference Include="Xamarin.Forms.GoogleMaps" Version="5.0.0-BETA1" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Variables_sample.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="marker02.png" />
+    <None Remove="marker03.png" />
+    <None Remove="marker01.png" />
+    <None Remove="Xamarin.Essentials" />
+    <None Remove="Xamarin.Forms.GoogleMaps" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="marker02.png" />
+    <EmbeddedResource Include="marker03.png" />
+    <EmbeddedResource Include="marker01.png" />
+  </ItemGroup>
+</Project>
