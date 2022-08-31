@@ -132,13 +132,43 @@ Xamarin.Forms.GoogleMaps が使われているアプリを紹介します(他に
     <td align="center">
       <h3><a target="_blank" href="https://play.google.com/store/apps/details?id=jp.co.Shin_yosha.NowStation">NowStation</a></h3>
       <img src="https://user-images.githubusercontent.com/40679902/52461171-30d54600-2bb1-11e9-9568-36d4f3826815.png" width="200" width="200" style="max-width:100%;">
-      <p>by <a target="_blank" href="http://www.shin-yosha.co.jp/">新陽社</a></p>
+      <p>by <a target="_blank" href="http://www.shin-yosha.co.jp/">SHIN-YOSHA corp.</a></p>
+    </td>
+    <td align="center">
+      <h3>CmsApp</h3>
+      <a target="_blank" href="https://itunes.apple.com/us/app/cmsmobileapp/id1151248489?ls=1&mt=8">iOS</a>
+      &nbsp;/&nbsp;<a target="_blank" href="https://play.google.com/store/apps/details?id=net.winsir.cms.CmsMobile">Android</a>
+      <img src="https://user-images.githubusercontent.com/20931876/64476046-8540a400-d147-11e9-9b62-22894d5e2ffd.png" width="200" width="200" style="max-width:100%;">
+      <p>by <a target="_blank" href="http://cms.winsir.net/">Ruben Carreon</a></p>
+    </td>
+    <td align="center">
+      <h3>UsynligO</h3>
+      <a target="_blank" href="https://apps.apple.com/us/app/usynligo/id1306699569">iOS</a>
+      &nbsp;/&nbsp;<a target="_blank" href="https://play.google.com/store/apps/details?id=com.Benum.UsynligO">Android</a>
+      <img src="https://lh3.googleusercontent.com/fqVdiOUQTz7oBwCccvmgq8z8tmV0Ip6tLBI6SCEDVHiKcVGGZWwUrEufJ-iOmUZhxu8=s180-rw" width="200" width="200" style="max-width:100%;">
+      <p>by <a target="_blank" href="https://play.google.com/store/apps/developer?id=Trond+Benum">Trond Benum</a></p>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <h3>Taiwan-AskFaceMask (問口罩)</h3>
+      <a target="_blank" href="https://apps.apple.com/tw/app/id1498868646">iOS</a>
+      &nbsp;/&nbsp;<a target="_blank" href="https://play.google.com/store/apps/details?id=tw.goodjob.askfacemaskapp">Android</a>
+      <img src="showcase_taiwan_askfacemask.gif" width="200" width="200" style="max-width:100%;">
+      <p>by <a target="_blank" href="https://github.com/JamestsaiTW">JamestsaiTW</a></p>
+    </td>
+    <td align="center">
+      <h3>Bipbip Navigation GPS</h3>
+      <a target="_blank" href="https://apps.apple.com/app/id1588690430">iOS</a>
+      &nbsp;/&nbsp;<a target="_blank" href="https://play.google.com/store/apps/details?id=com.Beepbip">Android</a>
+      <img src="showcase_bipbip.png" width="200" width="200" style="max-width:100%;">
+      <p>by <a target="_blank" href="https://bipbip.tv/">Bipbip</a></p>
     </td>
     <td align="center">
     </td>
     <td align="center">
     </td>
-  </tr>    
+  </tr>  
 </table>
 
 ## リリースノーツ

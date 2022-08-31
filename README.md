@@ -147,6 +147,26 @@ This is just a short list of apps and projects that use Xamarin.Forms.GoogleMaps
       <p>by <a target="_blank" href="https://play.google.com/store/apps/developer?id=Trond+Benum">Trond Benum</a></p>
     </td>
   </tr>
+  <tr>
+    <td align="center">
+      <h3>Taiwan-AskFaceMask (問口罩)</h3>
+      <a target="_blank" href="https://apps.apple.com/tw/app/id1498868646">iOS</a>
+      &nbsp;/&nbsp;<a target="_blank" href="https://play.google.com/store/apps/details?id=tw.goodjob.askfacemaskapp">Android</a>
+      <img src="showcase_taiwan_askfacemask.gif" width="200" width="200" style="max-width:100%;">
+      <p>by <a target="_blank" href="https://github.com/JamestsaiTW">JamestsaiTW</a></p>
+    </td>
+    <td align="center">
+      <h3>Bipbip Navigation GPS</h3>
+      <a target="_blank" href="https://apps.apple.com/app/id1588690430">iOS</a>
+      &nbsp;/&nbsp;<a target="_blank" href="https://play.google.com/store/apps/details?id=com.Beepbip">Android</a>
+      <img src="showcase_bipbip.png" width="200" width="200" style="max-width:100%;">
+      <p>by <a target="_blank" href="https://bipbip.tv/">Bipbip</a></p>
+    </td>
+    <td align="center">
+    </td>
+    <td align="center">
+    </td>
+  </tr>  
 </table>
 
 ## Releases
