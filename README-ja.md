@@ -1,5 +1,5 @@
 ## ![logo](logo.png) Xamarin.Forms.GoogleMaps 
-![](https://img.shields.io/nuget/v/Xamarin.Forms.GoogleMaps.svg) ![](https://img.shields.io/nuget/dt/Xamarin.Forms.GoogleMaps.svg) [![Build status](https://build.appcenter.ms/v0.1/apps/99e6fb9e-fe8c-49df-b190-8aa1732a0ad2/branches/master/badge)](https://appcenter.ms) [![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](http://gitter.im/Xamarin-Forms-GoogleMaps/public) [![donate/kyash](https://img.shields.io/badge/donate-kyash-orange.svg)](#寄付)
+![](https://img.shields.io/nuget/v/Xamarin.Forms.GoogleMaps.svg) ![](https://img.shields.io/nuget/dt/Xamarin.Forms.GoogleMaps.svg) [![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](http://gitter.im/Xamarin-Forms-GoogleMaps/public) [![donate/kyash](https://img.shields.io/badge/donate-kyash-orange.svg)](#寄付)
 
 [English README is here！](README.md)
 
@@ -59,7 +59,7 @@ Xamarin公式の地図ライブラリ [Xamarin.Forms.Maps](https://developer.xam
 | ------------------- | :-----------: |
 |iOS Unified|Yes|
 |Android|Yes|
-|Windows 10 UWP|Yes (Bing map)|
+|Windows 10 UWP|No|
 |その他|No|
 
 ## 使い方
@@ -86,39 +86,6 @@ public partial class AppDelegate : global::Xamarin.Forms.Platform.iOS.FormsAppli
     }
 }
 ``` 
-
-UWP の場合、 Xamarin.Forms.GoogleMaps.UWP.dll の Assembly を ``Xamarin.Forms.Forms.Init()`` に渡す必要があります。
-
-```csharp
-// App.xaml.cs
-protected override void OnLaunched(LaunchActivatedEventArgs e)
-{
-    Frame rootFrame = Window.Current.Content as Frame;
-
-    if (rootFrame == null)
-    {
-        rootFrame = new Frame();
-        rootFrame.NavigationFailed += OnNavigationFailed;
-
-        // Should add UWP side assembly to rendererAssemblies
-        var rendererAssemblies = new []
-        {
-            typeof(Xamarin.Forms.GoogleMaps.UWP.MapRenderer).GetTypeInfo().Assembly
-        };
-        Xamarin.Forms.Forms.Init(e, rendererAssemblies);
-        
-        Xamarin.FormsGoogleMaps.Init("your_bing_maps_api_key");
-
-        Window.Current.Content = rootFrame;
-    }
-
-    if (rootFrame.Content == null)
-    {
-        rootFrame.Navigate(typeof(MainPage), e.Arguments);
-    }
-    Window.Current.Activate();
-}
-```
 
 既定の名前空間が ``Xamarin.Forms.Maps`` から ``Xamarin.Forms.GoogleMaps`` に変更されています。他のAPIはすべて同じです。
 
@@ -188,8 +155,8 @@ Xamarin.Forms.GoogleMaps が使われているアプリを紹介します(他に
 * ~~Polygon, Polyline, Circle の描画サポート~~ v1.1.0で対応
 * [その他の機能改善リスト](https://github.com/amay077/Xamarin.Forms.GoogleMaps/labels/enhancement)
 
-Windows 10 UWP 対応は「とりあえず」残しました。
-が、基本的には Android/iOS での Google Maps に最適化するので、UWP では未対応の機能が増えると予想されます。  
+Windows 10 UWP 対応は v5.0.0 から削除しました。
+Android/iOS のみ対応します。
 
 ## CONTRIBUTION
 
@@ -203,7 +170,7 @@ Xamarin.Forms.GoogleMaps 開発の継続のため、寄付を募集していま�
 
 **Gumroad**
 
-* [Gumroad](https://gum.co/xfgmdnate)
+* [Gumroad](https://amay077.gumroad.com/)
 
 あなたの寄付で開発者のモチベーションが上がります、どうかよろしくおねがいします :sushi:
 
