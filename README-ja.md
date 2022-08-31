@@ -130,9 +130,6 @@ Xamarin.Forms.GoogleMaps が使われているアプリを紹介します(他に
       <img src="https://user-images.githubusercontent.com/1848210/47026824-b3d31c00-d13c-11e8-926a-d7e68403e856.png" width="200" width="200" style="max-width:100%;">
     </td>
     <td align="center">
-      <h3><a target="_blank" href="https://play.google.com/store/apps/details?id=jp.co.Shin_yosha.NowStation">NowStation</a></h3>
-      <img src="https://user-images.githubusercontent.com/40679902/52461171-30d54600-2bb1-11e9-9568-36d4f3826815.png" width="200" width="200" style="max-width:100%;">
-      <p>by <a target="_blank" href="http://www.shin-yosha.co.jp/">SHIN-YOSHA corp.</a></p>
     </td>
     <td align="center">
       <h3>CmsApp</h3>
