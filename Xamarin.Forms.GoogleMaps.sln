@@ -3,12 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.810.25
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XFGoogleMapSample.Droid", "XFGoogleMapSample\XFGoogleMapSample.Droid\XFGoogleMapSample.Droid.csproj", "{DA9F7643-B69C-4B8E-9416-D14CC2A9B63D}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XFGoogleMapSample.iOS", "XFGoogleMapSample\XFGoogleMapSample.iOS\XFGoogleMapSample.iOS.csproj", "{02BE2F00-7178-4B53-BE86-1801CA70BD6F}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XFGoogleMapSample", "XFGoogleMapSample\XFGoogleMapSample\XFGoogleMapSample.csproj", "{C28FEFA7-6CCB-4CDE-8238-6280CC2135BB}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Forms.GoogleMaps", "Xamarin.Forms.GoogleMaps\Xamarin.Forms.GoogleMaps\Xamarin.Forms.GoogleMaps.csproj", "{CA981CF6-C2AD-4609-B8AA-9E5EC72F2000}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Forms.GoogleMaps.iOS", "Xamarin.Forms.GoogleMaps\Xamarin.Forms.GoogleMaps.iOS\Xamarin.Forms.GoogleMaps.iOS.csproj", "{71D6FDBA-410F-4B72-89E1-DF7FC2386511}"

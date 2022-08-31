@@ -67,7 +67,7 @@
       <Version>118.0.2.2</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Forms.GoogleMaps">
-      <Version>5.0.0-BETA1</Version>
+      <Version>5.0.0</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
