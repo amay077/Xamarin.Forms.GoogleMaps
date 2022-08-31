@@ -164,8 +164,7 @@ Latest scheduled features as follows:
 * ~~Adding Polygon, Polyline, Circle~~ add in v1.1.0
 * and more [enhancements](https://github.com/amay077/Xamarin.Forms.GoogleMaps/labels/enhancement)!
 
-You can use in Windows 10 UWP but this support is reluctant.
-Because this library has been determined to optimized for Google Maps, New features will not support in UWP.
+Windows 10 UWP is no longer supported from v5.0.0.
 
 ## Contribution
 
