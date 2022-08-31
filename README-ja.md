@@ -117,9 +117,11 @@ Xamarin.Forms.GoogleMaps が使われているアプリを紹介します(他に
       <p>&nbsp;</p>
     </td>
     <td align="center">
-      <h3><a target="_new" href="https://www.uspace.city/">UPSPACE</a></h3>
-      <img src="showcase_upspace.png" width="200" width="200" style="max-width:100%;">
-      <p>&nbsp;</p>
+      <h3>yakala.co</h3>
+      <a target="_blank" href="https://apps.apple.com/tr/app/yakala-co/id834961121?l=tr">iOS</a>
+      &nbsp;/&nbsp;<a target="_blank" href="https://play.google.com/store/apps/details?id=com.mobven.yakalaco">Android</a>
+      <img src="showcase_yakala.png" width="200" width="200" style="max-width:100%;">
+      <p>by <a target="_blank" href="http://www.dakicksoft.com/">Dakicksoft</a></p>
     </td>
   </tr>
   <tr>
