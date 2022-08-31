@@ -1,6 +1,13 @@
 Xamarin.Forms.GoogleMaps Release Notes
 ----
 
+# 5.0.0
+
+## New Features
+
+* Support Xamarin.Forms 5.0
+* UWP is no longer supported
+
 # 3.3.0
 
 ## New Features
