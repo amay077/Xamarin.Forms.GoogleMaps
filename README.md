@@ -60,7 +60,7 @@ For more information, see [Comparison with Xamarin.Forms.Maps](https://github.co
 | ------------------- | :-----------: |
 |iOS Unified|Yes|
 |Android|Yes|
-|Windows 10 UWP|Yes (Bing map)|
+|Windows 10 UWP|No|
 |Others|No|
 
 ## Usage
@@ -86,39 +86,6 @@ public partial class AppDelegate : global::Xamarin.Forms.Platform.iOS.FormsAppli
     }
 }
 ``` 
-
-In UWP, you should add Xamarin.Forms.GoogleMaps.UWP.dll to rendererAssemblies with ``Xamarin.Forms.Forms.Init()``.
-
-```csharp
-// App.xaml.cs
-protected override void OnLaunched(LaunchActivatedEventArgs e)
-{
-    Frame rootFrame = Window.Current.Content as Frame;
-
-    if (rootFrame == null)
-    {
-        rootFrame = new Frame();
-        rootFrame.NavigationFailed += OnNavigationFailed;
-
-        // Should add UWP side assembly to rendererAssemblies
-        var rendererAssemblies = new []
-        {
-            typeof(Xamarin.Forms.GoogleMaps.UWP.MapRenderer).GetTypeInfo().Assembly
-        };
-        Xamarin.Forms.Forms.Init(e, rendererAssemblies);
-        
-        Xamarin.FormsGoogleMaps.Init("your_bing_maps_api_key");
-
-        Window.Current.Content = rootFrame;
-    }
-
-    if (rootFrame.Content == null)
-    {
-        rootFrame.Navigate(typeof(MainPage), e.Arguments);
-    }
-    Window.Current.Activate();
-}
-```
 
 Namespace is ``Xamarin.Forms.GoogleMaps`` instead of ``Xamarin.Forms.Maps``. 
 
