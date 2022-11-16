@@ -3,13 +3,13 @@
 	<metadata minClientVersion="2.8.3">
 		<id>Onion.Maui.GoogleMaps</id>
 		<title>Maui.GoogleMaps</title>
-		<version>5.0.0-alpha1</version>
+		<version>5.0.0</version>
 		<releaseNotes>
-# 5.0.0-alpha1
+# 5.0.0
 
-- Support MAUI
-- Android icons are now loaded from Resources/drawable folder (regular MauiImage)
-- Pin is not a sealed class anymore
+- Built with net7.0
+- Removed Xamarin Forms support
+- Dependencies update
 		</releaseNotes>
 		<authors>themronion</authors>
 		<copyright>Copyright 2016-2022</copyright>
@@ -20,24 +20,14 @@
 		<summary>Maps library for MAUI that is optimized for Google maps</summary>
 		<tags>maui maps mauimaps maui.maps mauigooglemaps maui.googlemaps google googlemap</tags>
 	<dependencies>
-      <group targetFramework="netstandard2.0">
-        <dependency id="Xamarin.Forms" version="5.0.0.2401" />
-      </group>
-		<group targetFramework="net6.0">
+		<group targetFramework="net7.0">
 		</group>
-      <group targetFramework="MonoAndroid12.0">
-        <dependency id="Xamarin.GooglePlayServices.Maps" version="118.0.2"/>
-      </group>
-	  <group targetFramework="net6.0-android">
-		<dependency id="Xamarin.GooglePlayServices.Maps" version="118.0.2"/>
+	  <group targetFramework="net7.0-android">
+		<dependency id="Xamarin.GooglePlayServices.Maps" version="118.1.0"/>
 	  </group>
-      <group targetFramework="Xamarin.iOS10">
-        <dependency id="Xamarin.Google.iOS.Maps" version="6.0.1"/>
-		<dependency id="Xamarin.Build.Download" version="0.11.2"/>
-      </group>
-	  <group targetFramework="net6.0-ios">
-        <dependency id="Xamarin.Google.iOS.Maps" version="6.0.1"/>
-		<dependency id="Xamarin.Build.Download" version="0.11.2"/>
+	  <group targetFramework="net7.0-ios">
+        <dependency id="Xamarin.Google.iOS.Maps" version="6.0.1.1"/>
+		<dependency id="Xamarin.Build.Download" version="0.11.4"/>
       </group>
 	</dependencies>
 	</metadata>
@@ -46,20 +36,8 @@
 		<file src="..\LICENSE.txt" target="" />
 		
 		<!--Maui-->
-		<file src="Maui.GoogleMaps\bin\Release\net6.0\Maui.GoogleMaps.dll" target="lib\net6.0" />
-		<file src="Maui.GoogleMaps\bin\Release\net6.0-android\Maui.GoogleMaps.dll" target="lib\net6.0-android" />
-		<file src="Maui.GoogleMaps\bin\Release\net6.0-ios\Maui.GoogleMaps.dll" target="lib\net6.0-ios" />
-		
-		<!--Xamarin.Forms-->
-		<!--Core-->
-		<file src="Xamarin.Forms.GoogleMaps\bin\Release\netstandard2.0\Xamarin.Forms.GoogleMaps.dll" target="lib\netstandard2.0" />
-
-    	<!--Xamarin.Android-->
-		<file src="Xamarin.Forms.GoogleMaps.Android\bin\Release\Xamarin.Forms.GoogleMaps.Android.dll" target="lib\MonoAndroid12.0\Xamarin.Forms.GoogleMaps.Android.dll" />
-		<file src="Xamarin.Forms.GoogleMaps\bin\Release\netstandard2.0\Xamarin.Forms.GoogleMaps.dll" target="lib\MonoAndroid12.0\Xamarin.Forms.GoogleMaps.dll" />
-
-		<!--Xamarin.iOS-->
-		<file src="Xamarin.Forms.GoogleMaps.iOS\bin\Release\Xamarin.Forms.GoogleMaps.iOS.dll" target="lib\Xamarin.iOS10\Xamarin.Forms.GoogleMaps.iOS.dll" />
-		<file src="Xamarin.Forms.GoogleMaps\bin\Release\netstandard2.0\Xamarin.Forms.GoogleMaps.dll" target="lib\Xamarin.iOS10\Xamarin.Forms.GoogleMaps.dll" />
+		<file src="Maui.GoogleMaps\bin\Release\net7.0\Maui.GoogleMaps.dll" target="lib\net7.0" />
+		<file src="Maui.GoogleMaps\bin\Release\net7.0-android\Maui.GoogleMaps.dll" target="lib\net7.0-android" />
+		<file src="Maui.GoogleMaps\bin\Release\net7.0-ios\Maui.GoogleMaps.dll" target="lib\net7.0-ios" />
 	</files>
 </package>

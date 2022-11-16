@@ -132,12 +132,6 @@ namespace MauiGoogleMapSample
 
             };
 
-            var objTile = TileLayer.FromTileUri((int x, int y, int zoom) =>
-                new Uri($"http://tile.openstreetmap.org/{zoom}/{x}/{y}.png"));
-            objTile.Tag = "OSMTILE"; // Can set any object
-            map.TileLayers.Add(objTile);
-
-
             map.CameraChanged += (sender, args) =>
             {
                 var p = args.Position;

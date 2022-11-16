@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net6.0;net6.0-android;net6.0-ios</TargetFrameworks>
+		<TargetFrameworks>net7.0;net7.0-android;net7.0-ios</TargetFrameworks>
 		<UseMaui>true</UseMaui>
 		<SingleProject>true</SingleProject>
 		<ImplicitUsings>enable</ImplicitUsings>
@@ -10,17 +10,17 @@
 	
 	</PropertyGroup>
 
-	<ItemGroup Condition="$(TargetFramework.StartsWith('net6.0-ios')) != true ">
+	<ItemGroup Condition="$(TargetFramework.StartsWith('net7.0-ios')) != true ">
 		<Compile Remove="Platforms\iOS\*.cs" />
 		<None Include="Platforms\iOS\*.cs" />
 	</ItemGroup>
 
-	<ItemGroup Condition="$(TargetFramework.StartsWith('net6.0-android')) != true ">
+	<ItemGroup Condition="$(TargetFramework.StartsWith('net7.0-android')) != true ">
 		<Compile Remove="Platforms\Android\*.cs" />
 		<None Include="Platforms\Android\*.cs" />
 	</ItemGroup>
 
-	<ItemGroup Condition="$(TargetFramework.StartsWith('net6.0-ios')) == true OR $(TargetFramework.StartsWith('net6.0-android')) == true">
+	<ItemGroup Condition="$(TargetFramework.StartsWith('net7.0-ios')) == true OR $(TargetFramework.StartsWith('net7.0-android')) == true">
 		<Compile Remove="**\*.Standard.cs" />
 		<None Include="**\*.Standard.cs" />
 		<Compile Remove="**\Standard\**\*.cs" />
@@ -36,21 +36,21 @@
 		<TreatWarningsAsErrors>false</TreatWarningsAsErrors>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="$(TargetFramework.StartsWith('net6.0-android'))">
+	<PropertyGroup Condition="$(TargetFramework.StartsWith('net7.0-android'))">
 		<DefineConstants>$(DefineConstants);MONOANDROID</DefineConstants>
 	</PropertyGroup>
 
-	<PropertyGroup Condition=" '$(TargetFramework)' == 'net6.0-ios' ">
+	<PropertyGroup Condition=" '$(TargetFramework)' == 'net7.0-ios' ">
 		<DefineConstants>$(DefineConstants);IOS</DefineConstants>
 	</PropertyGroup>
 
-	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0-android'">
-	  <PackageReference Include="Xamarin.GooglePlayServices.Maps" Version="118.0.2.1" />
+	<ItemGroup Condition="'$(TargetFramework)' == 'net7.0-android'">
+	  <PackageReference Include="Xamarin.GooglePlayServices.Maps" Version="118.1.0" />
 	</ItemGroup>
 
-	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0-ios'">
+	<ItemGroup Condition="'$(TargetFramework)' == 'net7.0-ios'">
 	  <PackageReference Include="Xamarin.Google.iOS.Maps" Version="6.0.1.1" />
-	  <PackageReference Include="Xamarin.Build.Download" Version="0.11.2" />
+	  <PackageReference Include="Xamarin.Build.Download" Version="0.11.4" />
 	</ItemGroup>
 
 
