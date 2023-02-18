@@ -12,7 +12,7 @@ using GCameraUpdateFactory = Android.Gms.Maps.CameraUpdateFactory;
 
 namespace Xamarin.Forms.GoogleMaps.Logics.Android
 {
-    internal sealed class CameraLogic : BaseCameraLogic<GoogleMap>
+    public sealed class CameraLogic : BaseCameraLogic<GoogleMap>
     {
         private readonly Action<LatLng> _updateVisibleRegion;
 

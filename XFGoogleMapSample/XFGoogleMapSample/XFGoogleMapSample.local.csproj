@@ -1,47 +1,33 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Authors>amay077</Authors>
-    <Product>XFGoogleMapSample</Product>
-    <FileVersion>2.0.0.1</FileVersion>
-    <AssemblyVersion>2.0.0.1</AssemblyVersion>
-    <Version>2.0.1</Version>
-    <Copyright>Copyright © amay077. 2016 - 2019</Copyright>
-    <AssemblyName>XFGoogleMapSample</AssemblyName>
-    <RootNamespace>XFGoogleMapSample</RootNamespace>
+    <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
   </PropertyGroup>
 
-  <Import Project="$(ProjectDir)XFGoogleMapSample.CopyFile.targets" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>portable</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="3.0.0.482510" />
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2012" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.7.3" />
+    <PackageReference Include="Xamarin.Forms.GoogleMaps" Version="5.0.0" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Remove="Properties\AssemblyInfo.cs" />
     <Compile Remove="Variables_sample.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Remove="marker01.png" />
     <None Remove="marker02.png" />
     <None Remove="marker03.png" />
+    <None Remove="marker01.png" />
+    <None Remove="Xamarin.Essentials" />
+    <None Remove="Xamarin.Forms.GoogleMaps" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="marker01.png" />
     <EmbeddedResource Include="marker02.png" />
     <EmbeddedResource Include="marker03.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Xamarin.Forms.GoogleMaps\Xamarin.Forms.GoogleMaps\Xamarin.Forms.GoogleMaps.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Update="MultiplePinsIconsCaching.xaml.cs">
-      <DependentUpon>MultiplePinsIconsCaching.xaml</DependentUpon>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Update="BoundsTestPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
+    <EmbeddedResource Include="marker01.png" />
   </ItemGroup>
 </Project>

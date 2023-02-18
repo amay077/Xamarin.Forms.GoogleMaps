@@ -4,7 +4,7 @@ using System.ComponentModel;
 
 namespace Xamarin.Forms.GoogleMaps.Logics
 {
-    internal abstract class DefaultPolylineLogic<TNative, TNativeMap> : DefaultLogic<Polyline, TNative, TNativeMap>
+    public abstract class DefaultPolylineLogic<TNative, TNativeMap> : DefaultLogic<Polyline, TNative, TNativeMap>
         where TNative : class
         where TNativeMap : class
     {
@@ -24,10 +24,10 @@ namespace Xamarin.Forms.GoogleMaps.Logics
             else if (e.PropertyName == Polyline.IsGeodesicProperty.PropertyName) OnUpdateIsGeodesic(outerItem, nativeItem);
         }
 
-        internal abstract void OnUpdateIsClickable(Polyline outerItem, TNative nativeItem);
-        internal abstract void OnUpdateStrokeColor(Polyline outerItem, TNative nativeItem);
-        internal abstract void OnUpdateStrokeWidth(Polyline outerItem, TNative nativeItem);
-        internal abstract void OnUpdateZIndex(Polyline outerItem, TNative nativeItem);
-        internal abstract void OnUpdateIsGeodesic(Polyline outerItem, TNative nativeItem);
+        protected abstract void OnUpdateIsClickable(Polyline outerItem, TNative nativeItem);
+        protected abstract void OnUpdateStrokeColor(Polyline outerItem, TNative nativeItem);
+        protected abstract void OnUpdateStrokeWidth(Polyline outerItem, TNative nativeItem);
+        protected abstract void OnUpdateZIndex(Polyline outerItem, TNative nativeItem);
+        protected abstract void OnUpdateIsGeodesic(Polyline outerItem, TNative nativeItem);
     }
 }

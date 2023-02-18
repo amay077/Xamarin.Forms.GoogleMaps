@@ -57,11 +57,11 @@ namespace Xamarin.Forms.GoogleMaps
 
         public object Tag { get; set; }
 
-        public object NativeObject { get; internal set; }
+        public object NativeObject { get; /*internal*/ set; }
 
         public event EventHandler Clicked;
 
-        internal bool SendTap()
+        public bool SendTap()
         {
             EventHandler handler = Clicked;
             if (handler == null)

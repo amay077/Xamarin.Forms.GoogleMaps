@@ -5,7 +5,7 @@ using System;
 
 namespace Xamarin.Forms.GoogleMaps.Android.Extensions
 {
-    internal static class MapViewExtensions
+    public static class MapViewExtensions
     {
         [MethodImpl(MethodImplOptions.NoInlining)]
         internal static Task<GoogleMap> GetGoogleMapAsync(this MapView self)

@@ -13,7 +13,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
     {
         protected override IList<Circle> GetItems(Map map) => map.Circles;
 
-        internal override void Register(MapView oldNativeMap, Map oldMap, MapView newNativeMap, Map newMap)
+        public override void Register(MapView oldNativeMap, Map oldMap, MapView newNativeMap, Map newMap)
         {
             base.Register(oldNativeMap, oldMap, newNativeMap, newMap);
 
@@ -23,7 +23,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
             }
         }
 
-        internal override void Unregister(MapView nativeMap, Map map)
+        public override void Unregister(MapView nativeMap, Map map)
         {
             if (nativeMap != null)
             {

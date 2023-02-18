@@ -90,13 +90,13 @@ namespace Xamarin.Forms.GoogleMaps
         public event EventHandler<CameraMovingEventArgs> CameraMoving;
         public event EventHandler<CameraIdledEventArgs> CameraIdled;
 
-        internal Action<MoveToRegionMessage> OnMoveToRegion { get; set; }
+        public Action<MoveToRegionMessage> OnMoveToRegion { get; set; }
 
-        internal Action<CameraUpdateMessage> OnMoveCamera { get; set; }
+        public Action<CameraUpdateMessage> OnMoveCamera { get; set; }
 
-        internal Action<CameraUpdateMessage> OnAnimateCamera { get; set; }
+        public Action<CameraUpdateMessage> OnAnimateCamera { get; set; }
 
-        internal Action<TakeSnapshotMessage> OnSnapshot{ get; set; }
+        public Action<TakeSnapshotMessage> OnSnapshot{ get; set; }
 
         MapSpan _visibleRegion;
         MapRegion _region;
@@ -188,7 +188,7 @@ namespace Xamarin.Forms.GoogleMaps
         public CameraPosition CameraPosition
         {
             get { return (CameraPosition)GetValue(CameraPositionProperty); }
-            internal set { SetValue(CameraPositionProperty, value); }
+            /*internal*/ set { SetValue(CameraPositionProperty, value); }
         }
 
         public Thickness Padding
@@ -255,7 +255,7 @@ namespace Xamarin.Forms.GoogleMaps
         public MapSpan VisibleRegion
         {
             get { return _visibleRegion; }
-            internal set
+            /*internal*/ set
             {
                 if (_visibleRegion == value)
                     return;
@@ -270,7 +270,7 @@ namespace Xamarin.Forms.GoogleMaps
         public MapRegion Region
         {
             get { return _region; }
-            internal set
+            /*internal*/ set
             {
                 if (_region == value)
                     return;
@@ -375,7 +375,7 @@ namespace Xamarin.Forms.GoogleMaps
         {
         }
 
-        internal void SendSelectedPinChanged(Pin selectedPin)
+        public void SendSelectedPinChanged(Pin selectedPin)
         {
             SelectedPinChanged?.Invoke(this, new SelectedPinChangedEventArgs(selectedPin));
         }
@@ -386,73 +386,73 @@ namespace Xamarin.Forms.GoogleMaps
             CreatePinItems();
         }
 
-        internal bool SendPinClicked(Pin pin)
+        public bool SendPinClicked(Pin pin)
         {
             var args = new PinClickedEventArgs(pin);
             PinClicked?.Invoke(this, args);
             return args.Handled;
         }
 
-        internal void SendInfoWindowClicked(Pin pin)
+        public void SendInfoWindowClicked(Pin pin)
         {
             var args = new InfoWindowClickedEventArgs(pin);
             InfoWindowClicked?.Invoke(this, args);
         }
 
-        internal void SendInfoWindowLongClicked(Pin pin)
+        public void SendInfoWindowLongClicked(Pin pin)
         {
             var args = new InfoWindowLongClickedEventArgs(pin);
             InfoWindowLongClicked?.Invoke(this, args);
         }
 
-        internal void SendPinDragStart(Pin pin)
+        public void SendPinDragStart(Pin pin)
         {
             PinDragStart?.Invoke(this, new PinDragEventArgs(pin));
         }
 
-        internal void SendPinDragEnd(Pin pin)
+        public void SendPinDragEnd(Pin pin)
         {
             PinDragEnd?.Invoke(this, new PinDragEventArgs(pin));
         }
 
-        internal void SendPinDragging(Pin pin)
+        public void SendPinDragging(Pin pin)
         {
             PinDragging?.Invoke(this, new PinDragEventArgs(pin));
         }
 
-        internal void SendMapClicked(Position point)
+        public void SendMapClicked(Position point)
         {
             MapClicked?.Invoke(this, new MapClickedEventArgs(point));
         }
 
-        internal void SendMapLongClicked(Position point)
+        public void SendMapLongClicked(Position point)
         {
             MapLongClicked?.Invoke(this, new MapLongClickedEventArgs(point));
         }
 
-        internal bool SendMyLocationClicked()
+        public bool SendMyLocationClicked()
         {
             var args = new MyLocationButtonClickedEventArgs();
             MyLocationButtonClicked?.Invoke(this, args);
             return args.Handled;
         }
 
-        internal void SendCameraChanged(CameraPosition position)
+        public void SendCameraChanged(CameraPosition position)
         {
             CameraChanged?.Invoke(this, new CameraChangedEventArgs(position));
         }
 
-        internal void SendCameraMoveStarted(bool isGesture)
+        public void SendCameraMoveStarted(bool isGesture)
         {
             CameraMoveStarted?.Invoke(this, new CameraMoveStartedEventArgs(isGesture));
         }
 
-        internal void SendCameraMoving(CameraPosition position)
+        public void SendCameraMoving(CameraPosition position)
         {
             CameraMoving?.Invoke(this, new CameraMovingEventArgs(position));
         }
 
-        internal void SendCameraIdled(CameraPosition position)
+        public void SendCameraIdled(CameraPosition position)
         {
             CameraIdled?.Invoke(this, new CameraIdledEventArgs(position));
         }

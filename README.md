@@ -1,6 +1,6 @@
 ## ![](logo.png) Xamarin.Forms.GoogleMaps 
 
-![](https://img.shields.io/nuget/v/Xamarin.Forms.GoogleMaps.svg) ![](https://img.shields.io/nuget/dt/Xamarin.Forms.GoogleMaps.svg) [![Build status](https://build.appcenter.ms/v0.1/apps/99e6fb9e-fe8c-49df-b190-8aa1732a0ad2/branches/master/badge)](https://appcenter.ms) [![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/Xamarin-Forms-GoogleMaps/public) [![donate/gumload](https://img.shields.io/badge/donate-gumload-orange.svg)](#donation)
+![](https://img.shields.io/nuget/v/Xamarin.Forms.GoogleMaps.svg) ![](https://img.shields.io/nuget/dt/Xamarin.Forms.GoogleMaps.svg) [![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/Xamarin-Forms-GoogleMaps/public) [![donate/gumload](https://img.shields.io/badge/donate-gumload-orange.svg)](#donation)
 
 [日本語の README はこちら！](README-ja.md)
 
@@ -60,7 +60,7 @@ For more information, see [Comparison with Xamarin.Forms.Maps](https://github.co
 | ------------------- | :-----------: |
 |iOS Unified|Yes|
 |Android|Yes|
-|Windows 10 UWP|Yes (Bing map)|
+|Windows 10 UWP|No|
 |Others|No|
 
 ## Usage
@@ -86,39 +86,6 @@ public partial class AppDelegate : global::Xamarin.Forms.Platform.iOS.FormsAppli
     }
 }
 ``` 
-
-In UWP, you should add Xamarin.Forms.GoogleMaps.UWP.dll to rendererAssemblies with ``Xamarin.Forms.Forms.Init()``.
-
-```csharp
-// App.xaml.cs
-protected override void OnLaunched(LaunchActivatedEventArgs e)
-{
-    Frame rootFrame = Window.Current.Content as Frame;
-
-    if (rootFrame == null)
-    {
-        rootFrame = new Frame();
-        rootFrame.NavigationFailed += OnNavigationFailed;
-
-        // Should add UWP side assembly to rendererAssemblies
-        var rendererAssemblies = new []
-        {
-            typeof(Xamarin.Forms.GoogleMaps.UWP.MapRenderer).GetTypeInfo().Assembly
-        };
-        Xamarin.Forms.Forms.Init(e, rendererAssemblies);
-        
-        Xamarin.FormsGoogleMaps.Init("your_bing_maps_api_key");
-
-        Window.Current.Content = rootFrame;
-    }
-
-    if (rootFrame.Content == null)
-    {
-        rootFrame.Navigate(typeof(MainPage), e.Arguments);
-    }
-    Window.Current.Activate();
-}
-```
 
 Namespace is ``Xamarin.Forms.GoogleMaps`` instead of ``Xamarin.Forms.Maps``. 
 
@@ -148,9 +115,11 @@ This is just a short list of apps and projects that use Xamarin.Forms.GoogleMaps
       <p>&nbsp;</p>
     </td>
     <td align="center">
-      <h3><a target="_new" href="https://www.uspace.city/">UPSPACE</a></h3>
-      <img src="showcase_upspace.png" width="200" width="200" style="max-width:100%;">
-      <p>&nbsp;</p>
+      <h3>yakala.co</h3>
+      <a target="_blank" href="https://apps.apple.com/tr/app/yakala-co/id834961121?l=tr">iOS</a>
+      &nbsp;/&nbsp;<a target="_blank" href="https://play.google.com/store/apps/details?id=com.mobven.yakalaco">Android</a>
+      <img src="showcase_yakala.png" width="200" width="200" style="max-width:100%;">
+      <p>by <a target="_blank" href="http://www.dakicksoft.com/">Dakicksoft</a></p>
     </td>
   </tr>
   <tr>
@@ -159,9 +128,6 @@ This is just a short list of apps and projects that use Xamarin.Forms.GoogleMaps
       <img src="https://user-images.githubusercontent.com/1848210/47026824-b3d31c00-d13c-11e8-926a-d7e68403e856.png" width="200" width="200" style="max-width:100%;">
     </td>
     <td align="center">
-      <h3><a target="_blank" href="https://play.google.com/store/apps/details?id=jp.co.Shin_yosha.NowStation">NowStation</a></h3>
-      <img src="https://user-images.githubusercontent.com/40679902/52461171-30d54600-2bb1-11e9-9568-36d4f3826815.png" width="200" width="200" style="max-width:100%;">
-      <p>by <a target="_blank" href="http://www.shin-yosha.co.jp/">SHIN-YOSHA corp.</a></p>
     </td>
     <td align="center">
       <h3>CmsApp</h3>
@@ -178,6 +144,26 @@ This is just a short list of apps and projects that use Xamarin.Forms.GoogleMaps
       <p>by <a target="_blank" href="https://play.google.com/store/apps/developer?id=Trond+Benum">Trond Benum</a></p>
     </td>
   </tr>
+  <tr>
+    <td align="center">
+      <h3>Taiwan-AskFaceMask (問口罩)</h3>
+      <a target="_blank" href="https://apps.apple.com/tw/app/id1498868646">iOS</a>
+      &nbsp;/&nbsp;<a target="_blank" href="https://play.google.com/store/apps/details?id=tw.goodjob.askfacemaskapp">Android</a>
+      <img src="showcase_taiwan_askfacemask.gif" width="200" width="200" style="max-width:100%;">
+      <p>by <a target="_blank" href="https://github.com/JamestsaiTW">JamestsaiTW</a></p>
+    </td>
+    <td align="center">
+      <h3>Bipbip Navigation GPS</h3>
+      <a target="_blank" href="https://apps.apple.com/app/id1588690430">iOS</a>
+      &nbsp;/&nbsp;<a target="_blank" href="https://play.google.com/store/apps/details?id=com.Beepbip">Android</a>
+      <img src="showcase_bipbip.png" width="200" width="200" style="max-width:100%;">
+      <p>by <a target="_blank" href="https://bipbip.tv/">Bipbip</a></p>
+    </td>
+    <td align="center">
+    </td>
+    <td align="center">
+    </td>
+  </tr>  
 </table>
 
 ## Releases
@@ -197,8 +183,7 @@ Latest scheduled features as follows:
 * ~~Adding Polygon, Polyline, Circle~~ add in v1.1.0
 * and more [enhancements](https://github.com/amay077/Xamarin.Forms.GoogleMaps/labels/enhancement)!
 
-You can use in Windows 10 UWP but this support is reluctant.
-Because this library has been determined to optimized for Google Maps, New features will not support in UWP.
+Windows 10 UWP is no longer supported from v5.0.0.
 
 ## Contribution
 
@@ -214,7 +199,7 @@ You can join to out [gitter room](https://gitter.im/Xamarin-Forms-GoogleMaps/pub
 
 I will continue to work hard with your support!
 
-Donate through [Gumroad](https://gum.co/xfgmdnate).
+Donate through [Gumroad](https://amay077.gumroad.com/).
 
 If this project help you reduce time to develop, you can give me a :sushi: :)
 

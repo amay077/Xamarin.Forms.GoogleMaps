@@ -8,7 +8,7 @@ namespace Xamarin.Forms.GoogleMaps
         public Position FarLeft { get; }
         public Position FarRight { get; }
 
-        internal MapRegion(Position nearLeft, Position nearRight, Position farLeft, Position farRight)
+        public MapRegion(Position nearLeft, Position nearRight, Position farLeft, Position farRight)
         {
             this.NearLeft = nearLeft;
             this.NearRight = nearRight;

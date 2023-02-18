@@ -8,9 +8,4 @@ using Xamarin.Forms.Internals;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 
-[assembly: InternalsVisibleTo("Xamarin.Forms.GoogleMaps.Android")]
-[assembly: InternalsVisibleTo("Xamarin.Forms.GoogleMaps.Clustering.Android")]
-[assembly: InternalsVisibleTo("Xamarin.Forms.GoogleMaps.iOS")]
-[assembly: InternalsVisibleTo("Xamarin.Forms.GoogleMaps.Clustering.iOS")]
-[assembly: InternalsVisibleTo("Xamarin.Forms.GoogleMaps.UWP")]
 [assembly: Preserve]

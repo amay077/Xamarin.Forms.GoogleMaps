@@ -5,7 +5,7 @@ using Xamarin.Forms.GoogleMaps.Internals;
 
 namespace Xamarin.Forms.GoogleMaps.Android.Extensions
 {
-    internal static class CameraUpdateExtensions
+    public static class CameraUpdateExtensions
     {
         public static GCameraUpdate ToAndroid(this CameraUpdate self, float scaledDensity)
         {

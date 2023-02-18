@@ -4,7 +4,7 @@ using Android.Gms.Maps.Model;
 using System.Linq;
 namespace Xamarin.Forms.GoogleMaps.Android
 {
-    internal static class PositionExtensions
+    public static class PositionExtensions
     {
         public static LatLng ToLatLng(this Position self)
         {

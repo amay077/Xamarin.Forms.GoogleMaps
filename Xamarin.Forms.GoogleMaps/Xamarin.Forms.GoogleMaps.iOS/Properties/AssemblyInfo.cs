@@ -1,10 +1,11 @@
-using System.Reflection;
+﻿using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
 using Xamarin.Forms.GoogleMaps;
 using Xamarin.Forms.GoogleMaps.iOS;
+using Xamarin.Forms.GoogleMaps.Internals;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
@@ -23,6 +24,24 @@ using Xamarin.Forms.GoogleMaps.iOS;
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 
 [assembly: Guid("4a5d02cd-7350-46b6-bbd5-204b727c67c9")]
-[assembly: InternalsVisibleTo("Xamarin.Forms.GoogleMaps.Clustering.iOS")]
 [assembly: ExportRenderer(typeof(Map), typeof(MapRenderer))]
 [assembly: Preserve]
+
+// Version information for an assembly consists of the following four values:
+//
+//      Major Version
+//      Minor Version 
+//      Build Number
+//      Revision
+//
+// You can specify all the values or you can default the Build and Revision Numbers 
+// by using the '*' as shown below:
+// [assembly: AssemblyVersion("1.0.*")]
+[assembly: AssemblyCompany(ProductInformation.Author)]
+[assembly: AssemblyProduct(ProductInformation.Name)]
+[assembly: AssemblyCopyright(ProductInformation.Copyright)]
+[assembly: AssemblyTrademark(ProductInformation.Trademark)]
+[assembly: AssemblyVersion(ProductInformation.Version)]
+[assembly: AssemblyFileVersion(ProductInformation.Version)]
+
+

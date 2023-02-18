@@ -3,7 +3,7 @@ using System.IO;
 
 namespace Xamarin.Forms.GoogleMaps.Internals
 {
-    internal sealed class TakeSnapshotMessage
+    public sealed class TakeSnapshotMessage
     {
         public Action<Stream> OnSnapshot { get; }
 
