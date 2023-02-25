@@ -1,19 +1,10 @@
 ## ![](logo.png) Maui.GoogleMaps 
 
-![](https://img.shields.io/nuget/v/Onion.Maui.GoogleMaps.svg) ![](https://img.shields.io/nuget/dt/Onion.Maui.GoogleMaps.svg)
+![NuGet](https://img.shields.io/nuget/v/Onion.Maui.GoogleMaps.svg?label=NuGet) ![](https://img.shields.io/nuget/dt/Onion.Maui.GoogleMaps.svg)
 
-Maps library for MAUI that optimized for Google maps.
+Maps library for MAUI that uses Google maps on both mobile platforms - Android and iOS.
 
-Usage is almost the same as [Xamarin.Forms.Maps](https://www.nuget.org/packages/Xamarin.Forms.Maps), Because this is forked from [Xamarin.Forms.GoogleMaps - github](https://github.com/amay077/Xamarin.Forms.GoogleMaps) which was forked before from [Xamarin.Forms.Maps - github](https://github.com/xamarin/Xamarin.Forms)
-
-## Comparison with Xamarin.Forms.Maps
-
-For more information, see [Comparison with Xamarin.Forms.Maps](https://github.com/amay077/Xamarin.Forms.GoogleMaps/wiki/Comparison-with-Xamarin.Forms.Maps).
-
-## Setup
-
-* Available on NuGet: https://www.nuget.org/packages/Onion.Maui.GoogleMaps/ [![NuGet](https://img.shields.io/nuget/v/Onion.Maui.GoogleMaps.svg?label=NuGet)](https://www.nuget.org/packages/Onion.Maui.GoogleMaps/)
-* Install into your MAUI project
+Usage is almost the same as [Xamarin.Forms.GoogleMaps - github](https://github.com/amay077/Xamarin.Forms.GoogleMaps) because it was forked from it. More information about library capabilities can be found there. Please note that after the migration to MAUI some properties, events or commands may have been omitted. Also, the namespace is ``Maui.GoogleMaps`` instead of ``Xamarin.Forms.GoogleMaps``. 
 
 ## Platform Support
 
@@ -24,13 +15,11 @@ For more information, see [Comparison with Xamarin.Forms.Maps](https://github.co
 |Windows 10/11|No|
 |Others|No|
 
-## Usage
-
-Same as this
-
-* [Map Control - Xamarin](https://developer.xamarin.com/guides/xamarin-forms/user-interface/map/)
-
-Get your API Keys from Google, then in Platforms/Android: 
+## Setup
+* Target .NET 7 for best experience
+* Install into your MAUI project by downloading the library from nuget: [![NuGet](https://img.shields.io/nuget/v/Onion.Maui.GoogleMaps.svg?label=NuGet)](https://www.nuget.org/packages/Onion.Maui.GoogleMaps/)
+* Finish the [Google Cloud Console setup](https://developers.google.com/maps/get-started#create-project)
+* Get your API Keys from Google, then in Platforms/Android: 
 
 ```csharp
 // MainApplication.cs
@@ -67,21 +56,13 @@ public static MauiApp CreateMauiApp()
 }
 ```
 
-Namespace is ``Maui.GoogleMaps`` instead of ``Xamarin.Forms.GoogleMaps``. 
-
-## Known issues ❗❗❗
-Currently i've encountered an issue on ios simulators: https://github.com/amay077/Xamarin.Forms.GoogleMaps/issues/786 
-Workaround: just relaunch a couple of time until it works. Unfortunately there is nothing i can do about it. Works well on a real device though, so why bother
-
 Sample application is here.
 
 * [MauiGoogleMapSample](https://github.com/themronion/Maui.GoogleMaps/tree/maui/sample/MauiGoogleMapSample)
 
 ## Contribution
 
-We really appreciate your contribution.
-
-Please read the [contribution guideline](CONTRIBUTING.md).
+I really appreciate your contribution. If u have spotted a bug you want to fix or have a feature/enhancement you would like to implement please open a pull request targeting the  ``maui`` branch. If u have any questions you are free to reach out to me - all contact info is available in my profile.
 
 ## License
 
