@@ -1,47 +1,46 @@
 ---
 name: Bug report
-about: Create a report to help us improve
+about: Create a report to help the community
 
 ---
 
 ### VERSIONS
 
-* Xamarin.Forms.GoogleMaps - x.x.x
-* Xamarin.Forms - x.x.x
-* 
+* Maui.GoogleMaps - x.x.x
+* .NET SDK - x.x.x
+
+### IDE
+
+- [ ] Rider
+- [x] Visual Studio
+- [ ] Visual Studio for Mac
 
 ### PLATFORMS
 
 - [ ] Android
 - [x] iOS
-- [ ] UWP
 
 ### ACTUAL BEHAVIOR
-
-<!-- write about of your problem. -->
+```
+// Write about of your problem
+```
 
 ### ACTUAL SCREENSHOTS/STACKTRACE
 
-<!-- Let me show your actual  screenshots or stacktrace. If you want to capture simulator screen to animation GIF, I recomend to [LICEcap](http://www.cockos.com/licecap/). -->
-
-![something_image](your_image.png) 
-
 ```
-// paste stacktrace
+// Paste stacktrace/screenshots/recordings
 ```
 
-### EXPECTED BEHAVIOR
-
-<!-- write about behavior what you expected -->
+### EXPECTED BEHAVIOR 
+```
+// Write about the behavior what you expected
+```
 
 ### HOW TO REPRODUCE
-
-<!-- Let me show how to reproduce with steps or codes) -->
+```
+// code and steps to reproduce
+```
 
 1. 
 2. 
 3. 
-
-```csharp
-// code for reproduce
-```
