@@ -165,7 +165,7 @@ Xamarin.Forms.GoogleMaps が使われているアプリを紹介します(他に
       <h3>eLandFly</h3>
       <a target="_blank" href="https://apps.apple.com/app/id1527799439">iOS</a>
       &nbsp;/&nbsp;<a target="_blank" href="https://play.google.com/store/apps/details?id=com.elandfly.elandfly">Android</a>
-      <img src="showcase_bipbip.png" width="200" width="200" style="max-width:100%;">
+      <img src="showcase_elandfly.png" width="200" width="200" style="max-width:100%;">
       <p>by <a target="_blank" href="https://www.elandfly.com/">elandfly.com</a></p>            
     </td>
     <td align="center">
