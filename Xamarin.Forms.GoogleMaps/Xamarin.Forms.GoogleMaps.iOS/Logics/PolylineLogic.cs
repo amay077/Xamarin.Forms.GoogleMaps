@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -44,6 +44,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
             nativePolyline.StrokeColor = outerItem.StrokeColor.ToUIColor();
             nativePolyline.Tappable = outerItem.IsClickable;
             nativePolyline.ZIndex = outerItem.ZIndex;
+            nativePolyline.Geodesic = outerItem.IsGeodesic;
 
             outerItem.NativeObject = nativePolyline;
             nativePolyline.Map = NativeMap;
@@ -89,6 +90,11 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
         protected override void OnUpdateZIndex(Polyline outerItem, NativePolyline nativeItem)
         {
             nativeItem.ZIndex = outerItem.ZIndex;
+        }
+
+        protected override void OnUpdateIsGeodesic(Polyline outerItem, NativePolyline nativeItem)
+        {
+            nativeItem.Geodesic = outerItem.IsGeodesic;
         }
     }
 }
