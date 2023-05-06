@@ -23,9 +23,26 @@ namespace MauiGoogleMapSample
             pickerMapType.SelectedIndex = 0;
 
             // MyLocationEnabled
-            switchMyLocationEnabled.Toggled += (sender, e) =>
+            switchMyLocationEnabled.Toggled += async (sender, e) =>
             {
-                map.MyLocationEnabled = e.Value;
+                if (e.Value)
+                {
+                    var status = await CheckAndRequestLocationPermission();
+                    if (status == PermissionStatus.Granted)
+                    {
+                        map.MyLocationEnabled = e.Value;
+                        await DisplayAlert("Location", "Please be aware, that GEO needs to be on to make this work", "OK");
+                    }
+                    else
+                    {
+                        await DisplayAlert("Permission", "Failed due to permission error", "OK");
+                        switchMyLocationEnabled.IsToggled = false;
+                    }
+                }
+                else
+                {
+                    map.MyLocationEnabled = e.Value;
+                }
             };
             switchMyLocationEnabled.IsToggled = map.MyLocationEnabled;
 
@@ -163,6 +180,29 @@ namespace MauiGoogleMapSample
                 var stream = await map.TakeSnapshot();
                 imageSnapshot.Source = ImageSource.FromStream(() => stream);
             };
+        }
+
+        public async Task<PermissionStatus> CheckAndRequestLocationPermission()
+        {
+            PermissionStatus status = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
+
+            if (status == PermissionStatus.Granted)
+                return status;
+
+            if (status == PermissionStatus.Denied && DeviceInfo.Platform == DevicePlatform.iOS)
+            {
+                await DisplayAlert("Permission", "Please give location permission in settings", "OK");
+                return status;
+            }
+
+            if (Permissions.ShouldShowRationale<Permissions.LocationWhenInUse>())
+            {
+                await DisplayAlert("Permission", "Permission needed to turn on geo", "OK");
+            }
+
+            status = await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
+
+            return status;
         }
     }
 }

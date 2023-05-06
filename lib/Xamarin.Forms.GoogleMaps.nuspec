@@ -3,16 +3,16 @@
 	<metadata minClientVersion="2.8.3">
 		<id>Onion.Maui.GoogleMaps</id>
 		<title>Maui.GoogleMaps</title>
-		<version>5.0.0</version>
+		<version>5.0.1</version>
 		<releaseNotes>
-# 5.0.0
+# 5.0.1
 
-- Built with net7.0
-- Removed Xamarin Forms support
+- Removed net7.0 target (only android and ios left)
+- Reconfigure map initialization to be able to use it on the first page
 - Dependencies update
 		</releaseNotes>
 		<authors>themronion</authors>
-		<copyright>Copyright 2016-2022</copyright>
+		<copyright>Copyright 2022-2023</copyright>
 		<license type="file">LICENSE.txt</license>
     <projectUrl>https://github.com/themronion/Maui.GoogleMaps/tree/maui</projectUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -20,10 +20,8 @@
 		<summary>Maps library for MAUI that is optimized for Google maps</summary>
 		<tags>maui maps mauimaps maui.maps mauigooglemaps maui.googlemaps google googlemap</tags>
 	<dependencies>
-		<group targetFramework="net7.0">
-		</group>
 	  <group targetFramework="net7.0-android">
-		<dependency id="Xamarin.GooglePlayServices.Maps" version="118.1.0"/>
+		<dependency id="Xamarin.GooglePlayServices.Maps" version="118.1.0.1"/>
 	  </group>
 	  <group targetFramework="net7.0-ios">
         <dependency id="Xamarin.Google.iOS.Maps" version="6.0.1.1"/>
@@ -36,7 +34,6 @@
 		<file src="..\LICENSE.txt" target="" />
 		
 		<!--Maui-->
-		<file src="Maui.GoogleMaps\bin\Release\net7.0\Maui.GoogleMaps.dll" target="lib\net7.0" />
 		<file src="Maui.GoogleMaps\bin\Release\net7.0-android\Maui.GoogleMaps.dll" target="lib\net7.0-android" />
 		<file src="Maui.GoogleMaps\bin\Release\net7.0-ios\Maui.GoogleMaps.dll" target="lib\net7.0-ios" />
 	</files>
