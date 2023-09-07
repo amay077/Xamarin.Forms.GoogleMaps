@@ -38,7 +38,9 @@ namespace Xamarin.Forms.GoogleMaps.Android
 
         public static Task<ViewGroup> ConvertFormsToNative(View view, Rectangle size, IVisualElementRenderer vRenderer)
         {
-            return Task.Run(() => {
+            var tcs = new TaskCompletionSource<ViewGroup>();
+
+            Device.BeginInvokeOnMainThread(() => {
                 var viewGroup = vRenderer.ViewGroup;
                 vRenderer.Tracker.UpdateLayout();
                 var layoutParams = new ViewGroup.LayoutParams((int)size.Width, (int)size.Height);
@@ -46,8 +48,11 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 view.Layout(size);
                 viewGroup.Layout(0, 0, (int)view.WidthRequest, (int)view.HeightRequest);
                 //await FixImageSourceOfImageViews(viewGroup as ViewGroup); // Not sure why this was being done in original
-                return viewGroup;
+
+                tcs.TrySetResult(viewGroup);
             });
+
+            return  tcs.Task;
         }
 
         public static Bitmap ConvertViewToBitmap(global::Android.Views.View v)
