@@ -65,15 +65,17 @@ namespace Xamarin.Forms.GoogleMaps.Android
             return b;
         }
 
+        private static object cacheLock = new object();
         private static LinkedList<string> lruTracker = new LinkedList<string>();
         private static ConcurrentDictionary<string, global::Android.Gms.Maps.Model.BitmapDescriptor> cache = new ConcurrentDictionary<string, global::Android.Gms.Maps.Model.BitmapDescriptor>();
 
         public static Task<global::Android.Gms.Maps.Model.BitmapDescriptor> ConvertViewToBitmapDescriptor(global::Android.Views.View v)
         {
+            var bmp = ConvertViewToBitmap(v);
+            var img = global::Android.Gms.Maps.Model.BitmapDescriptorFactory.FromBitmap(bmp);
+
             return Task.Run(() => {
 
-                var bmp = ConvertViewToBitmap(v);
-                var img = global::Android.Gms.Maps.Model.BitmapDescriptorFactory.FromBitmap(bmp);
 
                 var buffer = ByteBuffer.Allocate(bmp.ByteCount);
                 bmp.CopyPixelsToBuffer(buffer);
@@ -89,9 +91,9 @@ namespace Xamarin.Forms.GoogleMaps.Android
                 var sha = MD5.Create();
                 var hash = Convert.ToBase64String(sha.ComputeHash(bytes));
 
-                var exists = cache.ContainsKey(hash);
-                lock (lruTracker)
-                {//LinkedList is not thread safe impl, will crash in multi-trheads scenerios, and so using lock to work-around
+                lock (cacheLock)
+                {
+                    var exists = cache.ContainsKey(hash);
                     if (exists)
                     {
                         lruTracker.Remove(hash);
@@ -105,8 +107,8 @@ namespace Xamarin.Forms.GoogleMaps.Android
                         lruTracker.RemoveFirst();
                     }
                     lruTracker.AddLast(hash);
-                }//lock lruTracker
-                cache.GetOrAdd(hash, img);
+                    cache.GetOrAdd(hash, img);
+                }
                 return img;
             });
         }
