@@ -1,5 +1,4 @@
-﻿using Android.App;
-using Android.Gms.Maps;
+﻿using Android.Gms.Maps;
 using Android.Gms.Maps.Model;
 using Android.Graphics;
 using Android.OS;
@@ -9,12 +8,11 @@ using Maui.GoogleMaps.Android.Logics;
 using Maui.GoogleMaps.Internals;
 using Maui.GoogleMaps.Logics;
 using Maui.GoogleMaps.Logics.Android;
-using Microsoft.Maui.Handlers;
 using Math = System.Math;
 
 namespace Maui.GoogleMaps.Handlers
 {
-    public partial class MapHandler : ViewHandler<Map, MapView>
+    public partial class MapHandler
     {
         readonly OnMapClickListener onMapClickListener = new();
         readonly OnMapLongClickListener onMapLongClickListener = new();

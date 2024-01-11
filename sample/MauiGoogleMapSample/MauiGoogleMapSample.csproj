@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net7.0-android;net7.0-ios</TargetFrameworks>
+		<TargetFrameworks>net8.0-android;net8.0-ios</TargetFrameworks>
 
 		<OutputType>Exe</OutputType>
 		<RootNamespace>MauiGoogleMapSample</RootNamespace>
@@ -54,10 +54,14 @@
 	  <EmbeddedResource Include="marker03.png" />
 	</ItemGroup>
 
-	<!--<ItemGroup>
-	  <AndroidResource Include="Resources\Styles\Colors.xaml" />
-	  <AndroidResource Include="Resources\Styles\Styles.xaml" />
-	</ItemGroup>-->
+	<ItemGroup>
+	  <PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'net8.0-android'">
+		<PackageReference Include="Xamarin.AndroidX.Collection" Version="1.3.0.2" />
+		<PackageReference Include="Xamarin.AndroidX.Collection.Ktx" Version="1.3.0.2" />
+	</ItemGroup>
 
 	<ItemGroup>
 	  <ProjectReference Include="..\..\lib\Maui.GoogleMaps\Maui.GoogleMaps.csproj" />

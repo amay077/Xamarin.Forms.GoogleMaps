@@ -1,4 +1,4 @@
-## ![](logo.png) Maui.GoogleMaps 
+## ![Logo](https://raw.githubusercontent.com/themronion/Maui.GoogleMaps/maui/lib/Maui.GoogleMaps/logo.png) Maui.GoogleMaps 
 
 ![NuGet](https://img.shields.io/nuget/v/Onion.Maui.GoogleMaps.svg?label=NuGet) ![](https://img.shields.io/nuget/dt/Onion.Maui.GoogleMaps.svg)
 
@@ -16,7 +16,7 @@ Usage is almost the same as [Xamarin.Forms.GoogleMaps - github](https://github.c
 |Others|No|
 
 ## Setup
-* Target .NET 7 for best experience
+* Target .NET 8 for best experience
 * Install into your MAUI project by downloading the library from nuget: [![NuGet](https://img.shields.io/nuget/v/Onion.Maui.GoogleMaps.svg?label=NuGet)](https://www.nuget.org/packages/Onion.Maui.GoogleMaps/)
 * Finish the [Google Cloud Console setup](https://developers.google.com/maps/get-started#create-project)
 * Get your API Keys from Google, then in Platforms/Android: 
@@ -69,6 +69,4 @@ I really appreciate your contribution. If u have spotted a bug you want to fix o
 See [LICENSE](LICENSE.txt) .
 
 * logo.png by [alecive](http://www.iconarchive.com/show/flatwoken-icons-by-alecive.html) - [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/deed)
-* Android Icon made by [Hanan](http://www.flaticon.com/free-icon/android_109464) from www.flaticon.com
-* Apple Icon made by [Dave Gandy](http://www.flaticon.com/free-icon/apple-logo_25345) from www.flaticon.com
 

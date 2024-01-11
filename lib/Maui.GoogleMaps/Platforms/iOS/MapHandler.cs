@@ -10,7 +10,7 @@ using Maui.GoogleMaps.iOS.Extensions;
 
 namespace Maui.GoogleMaps.Handlers
 {
-    public partial class MapHandler : ViewHandler<Map, MapView>
+    public partial class MapHandler
     {
         bool _shouldUpdateRegion = true;
 
