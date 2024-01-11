@@ -507,31 +507,59 @@ namespace Maui.GoogleMaps
             {
                 case NotifyCollectionChangedAction.Add:
                     if (e.NewStartingIndex == -1)
+                    {
                         goto case NotifyCollectionChangedAction.Reset;
+                    }
+
                     foreach (object item in e.NewItems)
+                    {
                         CreatePin(item);
+                    }
+
                     break;
+
                 case NotifyCollectionChangedAction.Move:
                     if (e.OldStartingIndex == -1 || e.NewStartingIndex == -1)
+                    {
                         goto case NotifyCollectionChangedAction.Reset;
-                    // Not tracking order
+                    }
+
                     break;
+
                 case NotifyCollectionChangedAction.Remove:
                     if (e.OldStartingIndex == -1)
+                    {
                         goto case NotifyCollectionChangedAction.Reset;
+                    }
+
                     foreach (object item in e.OldItems)
+                    {
                         RemovePin(item);
+                    }
+
                     break;
+
                 case NotifyCollectionChangedAction.Replace:
                     if (e.OldStartingIndex == -1)
+                    {
                         goto case NotifyCollectionChangedAction.Reset;
+                    }
+
                     foreach (object item in e.OldItems)
+                    {
                         RemovePin(item);
+                    }
+
                     foreach (object item in e.NewItems)
+                    {
                         CreatePin(item);
+                    }
+
                     break;
+
                 case NotifyCollectionChangedAction.Reset:
                     _pins.Clear();
+                    CreatePinItems();
                     break;
             }
         }
