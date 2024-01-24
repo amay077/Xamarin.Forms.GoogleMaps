@@ -9,13 +9,10 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
 		<PackageId>Onion.Maui.GoogleMaps</PackageId>
 		<Title>Maui.GoogleMaps</Title>
-		<PackageVersion>5.0.2</PackageVersion>
+		<PackageVersion>5.0.3</PackageVersion>
 		<PackageReleaseNotes>
-# 5.0.2
-
-- Update to net8 + added back plain net8.0 target
-- Fix pin reset
-- Dependencies update
+# 5.0.3
+- Refactoring + optimized pin display on Android
 		</PackageReleaseNotes>
 		<Authors>themronion</Authors>
 		<Copyright>Copyright 2022-2024</Copyright>
@@ -31,8 +28,8 @@
 
 	<ItemGroup>
 		<None Include="..\..\LICENSE.txt" Pack="True" PackagePath="" />
-		<None Include="..\..\README.md" Pack="True" PackagePath=""/>
-		<None Include="..\..\logo.png" Pack="True" PackagePath=""/>
+		<None Include="..\..\README.md" Pack="True" PackagePath="" />
+		<None Include="..\..\logo.png" Pack="True" PackagePath="" />
 	</ItemGroup>
 
 	<ItemGroup>

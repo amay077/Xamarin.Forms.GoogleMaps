@@ -23,12 +23,12 @@ namespace MauiGoogleMapSample
                 Label = "Tokyo SKYTREE",
                 Address = "Sumida-ku, Tokyo, Japan",
                 Position = new Position(35.71d, 139.81d),
-                Icon = BitmapDescriptorFactory.FromView(new BindingPinView(pinDisplay.Text))
+                Icon = BitmapDescriptorFactory.FromView(() => new BindingPinView(pinDisplay.Text))
             };
             map.Pins.Add(pin);
             pinDisplay.TextChanged += (sender, e) =>
             {
-                pin.Icon = BitmapDescriptorFactory.FromView(new BindingPinView(e.NewTextValue));
+                pin.Icon = BitmapDescriptorFactory.FromView(() => new BindingPinView(e.NewTextValue));
             };
         }
     }
