@@ -1,17 +1,17 @@
 ﻿using Google.Maps;
 
-namespace Maui.GoogleMaps.iOS.Extensions
+namespace Maui.GoogleMaps.iOS.Extensions;
+
+internal static class EnumerableExtensions
 {
-    internal static class EnumerableExtensions
+    public static MutablePath ToMutablePath(this IEnumerable<Position> enumerable)
     {
-        public static MutablePath ToMutablePath(this IEnumerable<Position> self)
+        var path = new MutablePath();
+        foreach (var position in enumerable)
         {
-            var path = new MutablePath();
-            foreach (var p in self)
-            {
-                path.AddLatLon(p.Latitude, p.Longitude);
-            }
-            return path;
+            path.AddLatLon(position.Latitude, position.Longitude);
         }
+
+        return path;
     }
 }

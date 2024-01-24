@@ -1,9 +1,13 @@
 ﻿using Maui.GoogleMaps.Android.Factories;
 
-namespace Maui.GoogleMaps.Android
+namespace Maui.GoogleMaps.Android;
+
+public sealed class PlatformConfig
 {
-    public sealed class PlatformConfig
+    public IBitmapDescriptorFactory BitmapDescriptorFactory { get; set; }
+
+    internal IBitmapDescriptorFactory GetBitmapdescriptionFactory()
     {
-        public IBitmapDescriptorFactory BitmapDescriptorFactory { get; set; }
+        return BitmapDescriptorFactory ?? DefaultBitmapDescriptorFactory.Instance;
     }
 }

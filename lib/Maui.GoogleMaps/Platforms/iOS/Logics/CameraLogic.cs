@@ -1,150 +1,148 @@
-﻿using CoreLocation;
-using Google.Maps;
+﻿using Google.Maps;
 using Maui.GoogleMaps.iOS.Extensions;
 using Maui.GoogleMaps.Internals;
 
 using GCameraUpdate = Google.Maps.CameraUpdate;
 using CoreAnimation;
 
-namespace Maui.GoogleMaps.Logics.iOS
+namespace Maui.GoogleMaps.Logics.iOS;
+
+internal sealed class CameraLogic : BaseCameraLogic<MapView>
 {
-    internal sealed class CameraLogic : BaseCameraLogic<MapView>
+    private readonly Action _raiseCameraPositionChanged;
+
+    private volatile bool _isAnimate = false; // will be true while animation by _nativeMap.Animate
+    private volatile bool _raiseWillMoveFromMethod = false; // will be true between called _nativeMap.Animate and raised NativeMap_WillMove
+    private volatile bool _isCancelAnimate = false; // will be true if raised NativeMap_WillMove while animation by _nativeMap.Animate
+
+    public CameraLogic(Action raiseCameraPositionChanged)
     {
-        private readonly Action _raiseCameraPositionChanged;
+        _raiseCameraPositionChanged = raiseCameraPositionChanged;
+    }
 
-        private volatile bool _isAnimate = false; // will be true while animation by _nativeMap.Animate
-        private volatile bool _raiseWillMoveFromMethod = false; // will be true between called _nativeMap.Animate and raised NativeMap_WillMove
-        private volatile bool _isCancelAnimate = false; // will be true if raised NativeMap_WillMove while animation by _nativeMap.Animate
+    public override void Register(Map map, MapView nativeMap)
+    {
+        base.Register(map, nativeMap);
+        _nativeMap.WillMove += NativeMap_WillMove;
+        _nativeMap.CameraPositionChanged += NativeMap_CameraPositionChanged;
+        _nativeMap.CameraPositionIdle += NativeMap_CameraPositionIdle;
+    }
 
-        public CameraLogic(Action raiseCameraPositionChanged)
+    public override void Unregister()
+    {
+        _nativeMap.CameraPositionIdle -= NativeMap_CameraPositionIdle;
+        _nativeMap.CameraPositionChanged -= NativeMap_CameraPositionChanged;
+        _nativeMap.WillMove -= NativeMap_WillMove;
+        base.Unregister();
+    }
+
+    public override void OnMoveToRegionRequest(MoveToRegionMessage m)
+    {
+        MoveToRegion(m.Span, m.Animate);
+    }
+
+    public override void OnMoveCameraRequest(CameraUpdateMessage m)
+    {
+        MoveCamera(m.Update);
+        m.Callback.OnFinished();
+    }
+
+    public override void OnAnimateCameraRequest(CameraUpdateMessage m)
+    {
+        _isCancelAnimate = _isAnimate;
+
+        CATransaction.Begin();
+
+        if (m.Duration.HasValue)
         {
-            _raiseCameraPositionChanged = raiseCameraPositionChanged;
+            CATransaction.AnimationDuration = m.Duration.Value.TotalSeconds;
         }
 
-        public override void Register(Map map, MapView nativeMap)
+        CATransaction.CompletionBlock = () => 
         {
-            base.Register(map, nativeMap);
-            _nativeMap.WillMove += NativeMap_WillMove;
-            _nativeMap.CameraPositionChanged += NativeMap_CameraPositionChanged;
-            _nativeMap.CameraPositionIdle += NativeMap_CameraPositionIdle;
-        }
+            _isAnimate = false;
 
-        public override void Unregister()
-        {
-            _nativeMap.CameraPositionIdle -= NativeMap_CameraPositionIdle;
-            _nativeMap.CameraPositionChanged -= NativeMap_CameraPositionChanged;
-            _nativeMap.WillMove -= NativeMap_WillMove;
-            base.Unregister();
-        }
-
-        public override void OnMoveToRegionRequest(MoveToRegionMessage m)
-        {
-            MoveToRegion(m.Span, m.Animate);
-        }
-
-        internal void MoveToRegion(MapSpan mapSpan, bool animated = true)
-        {
-            Position center = mapSpan.Center;
-            var halfLat = mapSpan.LatitudeDegrees / 2d;
-            var halfLong = mapSpan.LongitudeDegrees / 2d;
-            var mapRegion = new CoordinateBounds(new VisibleRegion(
-                center.Latitude + halfLat,
-                center.Longitude + halfLong + (center.Longitude + halfLong > 180 ? -360 : 0),
-                center.Latitude + halfLat,
-                center.Longitude - halfLong + (center.Longitude - halfLong < -180 ? 360 : 0),
-                center.Latitude - halfLat,
-                center.Longitude + halfLong + (center.Longitude + halfLong > 180 ? -360 : 0),
-                center.Latitude - halfLat,
-                center.Longitude - halfLong + (center.Longitude - halfLong < -180 ? 360 : 0)));
-
-            if (animated)
+            if (_isCancelAnimate)
             {
-                _nativeMap.Animate(GCameraUpdate.FitBounds(mapRegion));
+                m.Callback.OnCanceled();
             }
             else
             {
-                _nativeMap.MoveCamera(GCameraUpdate.FitBounds(mapRegion));
-
-                // TODO WORKARROUND for CameraPositionChanged does not raise when call MoveCamera with CameraUpdate.FitBounds(issue #189)
-                _raiseCameraPositionChanged?.Invoke();
+                m.Callback.OnFinished();
             }
-        }
+            _isCancelAnimate = false;
+        };
+        _nativeMap.Animate(m.Update.ToIOS());
 
-        public override void OnMoveCameraRequest(CameraUpdateMessage m)
-        {
-            MoveCamera(m.Update);
-            m.Callback.OnFinished();
-        }
+        _isAnimate = true;
+        _raiseWillMoveFromMethod = true;
+        CATransaction.Commit();
+    }
 
-        internal void MoveCamera(CameraUpdate update)
+    internal void MoveToRegion(MapSpan mapSpan, bool animated = true)
+    {
+        Position center = mapSpan.Center;
+        var halfLat = mapSpan.LatitudeDegrees / 2d;
+        var halfLong = mapSpan.LongitudeDegrees / 2d;
+        var mapRegion = new CoordinateBounds(new VisibleRegion(
+            center.Latitude + halfLat,
+            center.Longitude + halfLong + (center.Longitude + halfLong > 180 ? -360 : 0),
+            center.Latitude + halfLat,
+            center.Longitude - halfLong + (center.Longitude - halfLong < -180 ? 360 : 0),
+            center.Latitude - halfLat,
+            center.Longitude + halfLong + (center.Longitude + halfLong > 180 ? -360 : 0),
+            center.Latitude - halfLat,
+            center.Longitude - halfLong + (center.Longitude - halfLong < -180 ? 360 : 0)));
+
+        if (animated)
         {
-            _nativeMap.MoveCamera(update.ToIOS());
+            _nativeMap.Animate(GCameraUpdate.FitBounds(mapRegion));
+        }
+        else
+        {
+            _nativeMap.MoveCamera(GCameraUpdate.FitBounds(mapRegion));
 
             // TODO WORKARROUND for CameraPositionChanged does not raise when call MoveCamera with CameraUpdate.FitBounds(issue #189)
-            if (update.UpdateType == CameraUpdateType.LatLngBounds)
-            {
-                _raiseCameraPositionChanged?.Invoke();
-            }
+            _raiseCameraPositionChanged?.Invoke();
         }
+    }
 
-        public override void OnAnimateCameraRequest(CameraUpdateMessage m)
+    internal void MoveCamera(CameraUpdate update)
+    {
+        _nativeMap.MoveCamera(update.ToIOS());
+
+        // TODO WORKARROUND for CameraPositionChanged does not raise when call MoveCamera with CameraUpdate.FitBounds(issue #189)
+        if (update.UpdateType == CameraUpdateType.LatLngBounds)
         {
-            _isCancelAnimate = _isAnimate;
-
-            CATransaction.Begin();
-
-            if (m.Duration.HasValue)
-            {
-                CATransaction.AnimationDuration = m.Duration.Value.TotalSeconds;
-            }
-
-            CATransaction.CompletionBlock = () => 
-            {
-                _isAnimate = false;
-
-                if (_isCancelAnimate)
-                {
-                    m.Callback.OnCanceled();
-                }
-                else
-                {
-                    m.Callback.OnFinished();
-                }
-                _isCancelAnimate = false;
-            };
-            _nativeMap.Animate(m.Update.ToIOS());
-
-            _isAnimate = true;
-            _raiseWillMoveFromMethod = true;
-            CATransaction.Commit();
+            _raiseCameraPositionChanged?.Invoke();
         }
+    }
 
-        void NativeMap_WillMove (object sender, GMSWillMoveEventArgs e)
+    void NativeMap_WillMove (object sender, GMSWillMoveEventArgs e)
+    {
+        _map.SendCameraMoveStarted(e.Gesture);
+        
+        // Skip the first event because Animate method causes first WillMove.
+        if (_raiseWillMoveFromMethod)
         {
-            _map.SendCameraMoveStarted(e.Gesture);
-            
-            // Skip the first event because Animate method causes first WillMove.
-            if (_raiseWillMoveFromMethod)
-            {
-                _raiseWillMoveFromMethod = false;
-                return;
-            }
-
-            // If dragging map when animation by Animate method then should call CallBack.OnCanceled.
-            if (_isAnimate)
-            {
-                _isCancelAnimate = true;
-            }
+            _raiseWillMoveFromMethod = false;
+            return;
         }
 
-        void NativeMap_CameraPositionChanged(object sender, GMSCameraEventArgs e)
+        // If dragging map when animation by Animate method then should call CallBack.OnCanceled.
+        if (_isAnimate)
         {
-            _map.SendCameraMoving(e.Position.ToXamarinForms());
+            _isCancelAnimate = true;
         }
+    }
 
-        void NativeMap_CameraPositionIdle(object sender, GMSCameraEventArgs e)
-        {
-            _map.SendCameraIdled(e.Position.ToXamarinForms());
-        }
+    void NativeMap_CameraPositionChanged(object sender, GMSCameraEventArgs e)
+    {
+        _map.SendCameraMoving(e.Position.ToMaui());
+    }
+
+    void NativeMap_CameraPositionIdle(object sender, GMSCameraEventArgs e)
+    {
+        _map.SendCameraIdled(e.Position.ToMaui());
     }
 }

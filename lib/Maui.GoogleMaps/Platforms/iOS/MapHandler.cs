@@ -5,7 +5,6 @@ using GCameraPosition = Google.Maps.CameraPosition;
 using Maui.GoogleMaps.iOS;
 using Maui.GoogleMaps.Logics.iOS;
 using Maui.GoogleMaps.Logics;
-using Microsoft.Maui.Handlers;
 using Maui.GoogleMaps.iOS.Extensions;
 
 namespace Maui.GoogleMaps.Handlers
@@ -52,9 +51,9 @@ namespace Maui.GoogleMaps.Handlers
                 new PolylineLogic(),
                 new PolygonLogic(),
                 new CircleLogic(),
-                new PinLogic(Config.ImageFactory, OnMarkerCreating, OnMarkerCreated, OnMarkerDeleting, OnMarkerDeleted),
+                new PinLogic(Config.GetImageFactory(), OnMarkerCreating, OnMarkerCreated, OnMarkerDeleting, OnMarkerDeleted),
                 new TileLayerLogic(),
-                new GroundOverlayLogic(Config.ImageFactory)
+                new GroundOverlayLogic(Config.GetImageFactory())
             };
 
             _cameraLogic = new CameraLogic(() =>
@@ -201,7 +200,7 @@ namespace Maui.GoogleMaps.Handlers
 
             Map.Region = mkMapView.Projection.VisibleRegion.ToRegion();
 
-            var camera = pos.ToXamarinForms();
+            var camera = pos.ToMaui();
             Map.CameraPosition = camera;
             Map.SendCameraChanged(camera);
         }

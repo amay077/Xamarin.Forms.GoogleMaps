@@ -1,9 +1,8 @@
 ﻿
-namespace Maui.GoogleMaps.Internals
+namespace Maui.GoogleMaps.Internals;
+
+internal interface IMapRequestDelegate
 {
-    internal interface IMapRequestDelegate
-    {
-        void OnMoveToRegionRequest(MoveToRegionMessage m);
-        void OnMoveCameraRequest(CameraUpdateMessage m);
-    }
+    void OnMoveToRegionRequest(MoveToRegionMessage m);
+    void OnMoveCameraRequest(CameraUpdateMessage m);
 }

@@ -6,41 +6,42 @@ using Android.OS;
 using Maui.GoogleMaps.Android;
 using Maui.GoogleMaps.Handlers;
 
-namespace Maui
+namespace Maui;
+
+public static class MauiGoogleMaps
 {
-    public static class MauiGoogleMaps
+    public static bool IsInitialized { get; private set; }
+
+    public static Context Context { get; private set; }
+
+    public static void Init(Activity activity, Bundle bundle, PlatformConfig config = null)
     {
-        public static bool IsInitialized { get; private set; }
-
-        public static Context Context { get; private set; }
-
-        public static void Init(Activity activity, Bundle bundle, PlatformConfig config = null)
+        if (IsInitialized)
         {
-            if (IsInitialized)
-                return;
+            return;
+        }
 
-            Context = activity;
+        Context = activity;
 
-            MapHandler.Bundle = bundle;
-            MapHandler.Config = config ?? new PlatformConfig();
+        MapHandler.Bundle = bundle;
+        MapHandler.Config = config ?? new PlatformConfig();
 
 #pragma warning disable 618
-            if (GooglePlayServicesUtil.IsGooglePlayServicesAvailable(Context) == ConnectionResult.Success)
+        if (GooglePlayServicesUtil.IsGooglePlayServicesAvailable(Context) == ConnectionResult.Success)
 #pragma warning restore 618
+        {
+            try
             {
-                try
-                {
-                    MapsInitializer.Initialize(Context, MapsInitializer.Renderer.Latest, null);
-                    IsInitialized = true;
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine("Google Play Services Not Found");
-                    Console.WriteLine("Exception: {0}", e);
-                }
+                MapsInitializer.Initialize(Context, MapsInitializer.Renderer.Latest, null);
+                IsInitialized = true;
             }
-
-            GeocoderBackend.Register(Context);
+            catch (Exception e)
+            {
+                Console.WriteLine("Google Play Services Not Found");
+                Console.WriteLine("Exception: {0}", e);
+            }
         }
+
+        GeocoderBackend.Register(Context);
     }
 }

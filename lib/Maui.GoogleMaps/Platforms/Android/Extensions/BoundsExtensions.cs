@@ -1,13 +1,11 @@
 ﻿using Android.Gms.Maps.Model;
 
-namespace Maui.GoogleMaps.Android.Extensions
+namespace Maui.GoogleMaps.Android.Extensions;
+
+internal static class BoundsExtensions
 {
-    internal static class BoundsExtensions
+    public static LatLngBounds ToLatLngBounds(this Bounds self)
     {
-        public static LatLngBounds ToLatLngBounds(this Bounds self)
-        {
-            return new LatLngBounds(self.SouthWest.ToLatLng(), self.NorthEast.ToLatLng());
-        }
+        return new LatLngBounds(self.SouthWest.ToLatLng(), self.NorthEast.ToLatLng());
     }
 }
-

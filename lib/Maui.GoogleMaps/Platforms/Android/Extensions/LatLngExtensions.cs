@@ -1,13 +1,11 @@
 ﻿using Android.Gms.Maps.Model;
 
-namespace Maui.GoogleMaps.Android.Extensions
+namespace Maui.GoogleMaps.Android.Extensions;
+
+internal static class LatLngExtensions
 {
-    internal static class LatLngExtensions
+    public static Position ToPosition(this LatLng self)
     {
-        public static Position ToPosition(this LatLng self)
-        {
-            return new Position(self.Latitude, self.Longitude);
-        }
+        return new Position(self.Latitude, self.Longitude);
     }
 }
-

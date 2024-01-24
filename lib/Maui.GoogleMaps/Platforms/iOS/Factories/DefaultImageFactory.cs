@@ -1,41 +1,70 @@
 ﻿using Foundation;
 using UIKit;
 using Microsoft.Maui.Platform;
+using System.Collections.Concurrent;
 
-namespace Maui.GoogleMaps.iOS.Factories
+namespace Maui.GoogleMaps.iOS.Factories;
+
+public sealed class DefaultImageFactory : IImageFactory
 {
-    // ReSharper disable once InconsistentNaming
-    public sealed class DefaultImageFactory : IImageFactory
-    {
-        private static readonly Lazy<DefaultImageFactory> _instance
-            = new Lazy<DefaultImageFactory>(() => new DefaultImageFactory());
+    private static readonly Lazy<DefaultImageFactory> _instance
+        = new Lazy<DefaultImageFactory>(() => new DefaultImageFactory());
 
-        public static DefaultImageFactory Instance
+    public static DefaultImageFactory Instance => _instance.Value;
+
+    private readonly ConcurrentDictionary<string, UIImage> _cacheDictionary = new();
+
+    private DefaultImageFactory()
+    {
+    }
+
+    public UIImage ToUIImage(BitmapDescriptor bitmapDescriptor, IMauiContext mauiContext)
+    {
+        if (bitmapDescriptor.Id != null && _cacheDictionary.TryGetValue(bitmapDescriptor.Id, out var cachedBitmap))
         {
-            get { return _instance.Value; }
+            return cachedBitmap;
         }
-        
-        private DefaultImageFactory()
+
+        var uiImage = GetUIImage(bitmapDescriptor, mauiContext);
+        if (bitmapDescriptor.Id != null)
         {
+            _cacheDictionary.TryAdd(bitmapDescriptor.Id, uiImage);
         }
-        
-        public UIImage ToUIImage(BitmapDescriptor descriptor)
+
+        return uiImage;
+    }
+
+    private UIImage GetUIImage(BitmapDescriptor descriptor, IMauiContext mauiContext)
+    {
+        switch (descriptor.Type)
         {
-            switch (descriptor.Type)
-            {
-                case BitmapDescriptorType.Default:
-                    return Google.Maps.Marker.MarkerImage(descriptor.Color.ToPlatform());
-                case BitmapDescriptorType.Bundle:
-                    return UIImage.FromBundle(descriptor.BundleName);
-                case BitmapDescriptorType.Stream:
-                    descriptor.Stream.Position = 0;
-                    // Resize to screen scale
-                    return UIImage.LoadFromData(NSData.FromStream(descriptor.Stream), UIScreen.MainScreen.Scale);
-                case BitmapDescriptorType.AbsolutePath:
-                    return UIImage.FromFile(descriptor.AbsolutePath);
-                default:
-                    return Google.Maps.Marker.MarkerImage(UIColor.Red);
-            }
+            case BitmapDescriptorType.Default:
+                return Google.Maps.Marker.MarkerImage(descriptor.Color.ToPlatform());
+
+            case BitmapDescriptorType.Bundle:
+                return UIImage.FromBundle(descriptor.BundleName);
+
+            case BitmapDescriptorType.Stream:
+                var stream = descriptor.Stream.Invoke();
+                if (stream.CanSeek && stream.Position > 0)
+                {
+                    stream.Position = 0;
+                }
+
+                // Resize to screen scale
+                return UIImage.LoadFromData(NSData.FromStream(stream), UIScreen.MainScreen.Scale);
+
+            case BitmapDescriptorType.AbsolutePath:
+                return UIImage.FromFile(descriptor.AbsolutePath);
+
+            case BitmapDescriptorType.View:
+                var iconView = descriptor.View();
+                var nativeView = Utils.ConvertMauiToNative(iconView, mauiContext);
+                var image = Utils.ConvertViewToImage(nativeView);
+                return image;
+
+            default:
+                return Google.Maps.Marker.MarkerImage(UIColor.Red);
         }
     }
 }

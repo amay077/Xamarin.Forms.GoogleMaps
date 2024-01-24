@@ -1,11 +1,10 @@
 ﻿
-namespace Maui.GoogleMaps.Internals
+namespace Maui.GoogleMaps.Internals;
+
+internal enum CameraUpdateType
 {
-    internal enum CameraUpdateType
-    {
-        LatLng,
-        LatLngZoom,
-        LatLngBounds,
-        CameraPosition
-    }
+    LatLng,
+    LatLngZoom,
+    LatLngBounds,
+    CameraPosition
 }

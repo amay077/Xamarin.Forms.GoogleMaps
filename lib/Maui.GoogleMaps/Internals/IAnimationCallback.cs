@@ -1,9 +1,8 @@
 ﻿
-namespace Maui.GoogleMaps.Internals
+namespace Maui.GoogleMaps.Internals;
+
+internal interface IAnimationCallback
 {
-    internal interface IAnimationCallback
-    {
-        void OnFinished();
-        void OnCanceled();
-    }
+    void OnFinished();
+    void OnCanceled();
 }

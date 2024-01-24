@@ -1,9 +1,8 @@
 ﻿using AndroidBitmapDescriptor = Android.Gms.Maps.Model.BitmapDescriptor;
 
-namespace Maui.GoogleMaps.Android.Factories
+namespace Maui.GoogleMaps.Android.Factories;
+
+public interface IBitmapDescriptorFactory
 {
-    public interface IBitmapDescriptorFactory
-    {
-        AndroidBitmapDescriptor ToNative(BitmapDescriptor descriptor);
-    }
+    AndroidBitmapDescriptor ToNative(BitmapDescriptor bitmapDescriptor, IMauiContext mauiContext);
 }

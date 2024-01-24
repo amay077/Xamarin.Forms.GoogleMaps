@@ -1,9 +1,8 @@
 ﻿using UIKit;
 
-namespace Maui.GoogleMaps.iOS.Factories
+namespace Maui.GoogleMaps.iOS.Factories;
+
+public interface IImageFactory
 {
-    public interface IImageFactory
-    {
-        UIImage ToUIImage(BitmapDescriptor descriptor);
-    }
+    UIImage ToUIImage(BitmapDescriptor descriptor, IMauiContext mauiContext);
 }

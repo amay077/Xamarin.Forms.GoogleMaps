@@ -1,13 +1,11 @@
 ﻿using CoreGraphics;
 
-namespace Maui.GoogleMaps.iOS.Extensions
+namespace Maui.GoogleMaps.iOS.Extensions;
+
+internal static class PointExtensions
 {
-    internal static class PointExtensions
+    public static CGPoint ToCGPoint(this Point self)
     {
-        public static CGPoint ToCGPoint(this Point self)
-        {
-            return new CGPoint((float)self.X, (float)self.Y);
-        }
+        return new CGPoint((float)self.X, (float)self.Y);
     }
 }
-

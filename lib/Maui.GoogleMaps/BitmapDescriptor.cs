@@ -1,69 +1,78 @@
 ﻿
-namespace Maui.GoogleMaps
+namespace Maui.GoogleMaps;
+
+public sealed class BitmapDescriptor
 {
-    public sealed class BitmapDescriptor
+    private BitmapDescriptor()
     {
-        public string Id { get; private set; }      
-        public BitmapDescriptorType Type { get; private set; }      
-        public Color Color { get; private set; }
-        public string BundleName { get; private set; }
-        public Stream Stream { get; private set; }
-        public string AbsolutePath { get; private set; }
-        public View View { get; private set; }
+    }
 
-        private BitmapDescriptor()
-        {
-        }
+    public string Id { get; private set; }
+    public BitmapDescriptorType Type { get; private set; }
+    public Color Color { get; private set; }
+    public string BundleName { get; private set; }
+    public Func<Stream> Stream { get; private set; }
+    public string AbsolutePath { get; private set; }
+    public Func<View> View { get; private set; }
 
-        internal static BitmapDescriptor DefaultMarker(Color color, string id)
+    internal static BitmapDescriptor DefaultMarker(Color color, string id)
+    {
+        return new BitmapDescriptor()
         {
-            return new BitmapDescriptor()
-            {
-                Id = id,
-                Type = BitmapDescriptorType.Default,
-                Color = color
-            };
-        }
+            Id = id,
+            Type = BitmapDescriptorType.Default,
+            Color = color
+        };
+    }
 
-        internal static BitmapDescriptor FromBundle(string bundleName, string id)
+    internal static BitmapDescriptor FromBundle(string bundleName, string id)
+    {
+        return new BitmapDescriptor()
         {
-            return new BitmapDescriptor()
-            {
-                Id = id,
-                Type = BitmapDescriptorType.Bundle,
-                BundleName = bundleName
-            };
-        }
+            Id = id,
+            Type = BitmapDescriptorType.Bundle,
+            BundleName = bundleName
+        };
+    }
 
-        internal static BitmapDescriptor FromStream(Stream stream, string id)
+    internal static BitmapDescriptor FromStream(Func<Stream> stream, string id)
+    {
+        return new BitmapDescriptor()
         {
-            return new BitmapDescriptor()
-            {
-                Id = id,
-                Type = BitmapDescriptorType.Stream,
-                Stream = stream
-            };
-        }
+            Id = id,
+            Type = BitmapDescriptorType.Stream,
+            Stream = stream
+        };
+    }
 
-        internal static BitmapDescriptor FromPath(string absolutePath, string id)
+    internal static BitmapDescriptor FromStream(Stream stream, string id)
+    {
+        return new BitmapDescriptor()
         {
-            return new BitmapDescriptor()
-            {
-                Id = id,
-                Type = BitmapDescriptorType.AbsolutePath,
-                AbsolutePath = absolutePath
-            };
-        }
+            Id = id,
+            Type = BitmapDescriptorType.Stream,
+            Stream = () => stream
+        };
+    }
 
-        internal static BitmapDescriptor FromView(View view, string id)
+    internal static BitmapDescriptor FromPath(string absolutePath, string id)
+    {
+        return new BitmapDescriptor()
         {
-            return new BitmapDescriptor()
-            {
-                Id = id,
-                Type = BitmapDescriptorType.View,
-                View = view
-            };
-        }
+            Id = id,
+            Type = BitmapDescriptorType.AbsolutePath,
+            AbsolutePath = absolutePath
+        };
+    }
+
+    internal static BitmapDescriptor FromView(Func<View> view, string id)
+    {
+        return new BitmapDescriptor()
+        {
+            Id = id,
+            Type = BitmapDescriptorType.View,
+            View = view
+        };
     }
 }
 

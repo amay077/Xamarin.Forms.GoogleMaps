@@ -5,68 +5,72 @@ using Maui.GoogleMaps.iOS;
 using NativeTileLayer = Google.Maps.TileLayer;
 using NativeUrlTileLayer = Google.Maps.UrlTileLayer;
 
-namespace Maui.GoogleMaps.Logics.iOS
+namespace Maui.GoogleMaps.Logics.iOS;
+
+internal class TileLayerLogic : DefaultLogic<TileLayer, NativeTileLayer, MapView>
 {
-    internal class TileLayerLogic : DefaultLogic<TileLayer, NativeTileLayer, MapView>
+    protected override IList<TileLayer> GetItems(Map map) => map.TileLayers;
+
+    protected override NativeTileLayer CreateNativeItem(TileLayer outerItem)
     {
-        protected override IList<TileLayer> GetItems(Map map) => map.TileLayers;
+        NativeTileLayer nativeTileLayer;
 
-        protected override NativeTileLayer CreateNativeItem(TileLayer outerItem)
+        if (outerItem.MakeTileUri != null)
         {
-            NativeTileLayer nativeTileLayer;
-
-            if (outerItem.MakeTileUri != null)
+            nativeTileLayer = NativeUrlTileLayer.FromUrlConstructor((nuint x, nuint y, nuint zoom) =>
             {
-                nativeTileLayer = NativeUrlTileLayer.FromUrlConstructor((nuint x, nuint y, nuint zoom) =>
-                {
-                    var uri = outerItem.MakeTileUri((int)x, (int)y, (int)zoom);
-                    return new NSUrl(uri.AbsoluteUri);
-                });
-                nativeTileLayer.TileSize = (nint)outerItem.TileSize;
-            }
-            else if (outerItem.TileImageSync != null)
-            {
-                nativeTileLayer = new TouchSyncTileLayer(outerItem.TileImageSync);
-                nativeTileLayer.TileSize = (nint)outerItem.TileSize;
-            }
-            else
-            {
-                nativeTileLayer = new TouchAsyncTileLayer(outerItem.TileImageAsync);
-                nativeTileLayer.TileSize = (nint)outerItem.TileSize;
-            }
-
-            nativeTileLayer.ZIndex = outerItem.ZIndex;
-
-            outerItem.NativeObject = nativeTileLayer;
-            nativeTileLayer.Map = NativeMap;
-
-            return nativeTileLayer;
+                var uri = outerItem.MakeTileUri((int)x, (int)y, (int)zoom);
+                return new NSUrl(uri.AbsoluteUri);
+            });
+            nativeTileLayer.TileSize = (nint)outerItem.TileSize;
         }
-
-        protected override NativeTileLayer DeleteNativeItem(TileLayer outerItem)
+        else if (outerItem.TileImageSync != null)
         {
-            var nativeTileLayer = outerItem.NativeObject as NativeTileLayer;
-            nativeTileLayer.Map = null;
-            return nativeTileLayer;
+            nativeTileLayer = new TouchSyncTileLayer(outerItem.TileImageSync);
+            nativeTileLayer.TileSize = (nint)outerItem.TileSize;
         }
-
-        protected override void OnItemPropertyChanged(object sender, PropertyChangedEventArgs e)
+        else
         {
-            base.OnItemPropertyChanged(sender, e);
-            var outerItem = sender as TileLayer;
-            var nativeItem = outerItem?.NativeObject as NativeTileLayer;
-
-            if (nativeItem == null)
-                return;
-
-            if (e.PropertyName == TileLayer.ZIndexProperty.PropertyName) OnUpdateZIndex(outerItem, nativeItem);
+            nativeTileLayer = new TouchAsyncTileLayer(outerItem.TileImageAsync);
+            nativeTileLayer.TileSize = (nint)outerItem.TileSize;
         }
 
-        private void OnUpdateZIndex(TileLayer outerItem, NativeTileLayer nativeItem)
+        nativeTileLayer.ZIndex = outerItem.ZIndex;
+
+        outerItem.NativeObject = nativeTileLayer;
+        nativeTileLayer.Map = NativeMap;
+
+        return nativeTileLayer;
+    }
+
+    protected override NativeTileLayer DeleteNativeItem(TileLayer outerItem)
+    {
+        var nativeTileLayer = outerItem.NativeObject as NativeTileLayer;
+        nativeTileLayer.Map = null;
+        return nativeTileLayer;
+    }
+
+    protected override void CheckCanCreateNativeItem(TileLayer outerItem)
+    {
+    }
+
+    protected override void OnItemPropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        base.OnItemPropertyChanged(sender, e);
+        
+        if (sender is not TileLayer { NativeObject: NativeTileLayer nativeItem } outerItem)
         {
-            nativeItem.ZIndex = outerItem.ZIndex;
+            return;
         }
 
+        if (e.PropertyName == TileLayer.ZIndexProperty.PropertyName)
+        {
+            OnUpdateZIndex(outerItem, nativeItem);
+        }
+    }
+
+    private void OnUpdateZIndex(TileLayer outerItem, NativeTileLayer nativeItem)
+    {
+        nativeItem.ZIndex = outerItem.ZIndex;
     }
 }
-

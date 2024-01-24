@@ -1,25 +1,24 @@
 ﻿
-namespace Maui.GoogleMaps.Internals
+namespace Maui.GoogleMaps.Internals;
+
+internal class DelegateAnimationCallback : IAnimationCallback
 {
-    internal class DelegateAnimationCallback : IAnimationCallback
+    readonly Action _onFinished;
+    readonly Action _onCanceled;
+
+    public DelegateAnimationCallback(Action onFinished, Action onCanceled)
     {
-        readonly Action _onFinished;
-        readonly Action _onCanceled;
+        _onFinished = onFinished;
+        _onCanceled = onCanceled;
+    }
 
-        public DelegateAnimationCallback(Action onFinished, Action onCanceled)
-        {
-            _onFinished = onFinished;
-            _onCanceled = onCanceled;
-        }
+    public void OnFinished()
+    {
+        _onFinished?.Invoke();
+    }
 
-        public void OnFinished()
-        {
-            _onFinished?.Invoke();
-        }
-
-        public void OnCanceled()
-        {
-            _onCanceled?.Invoke();
-        }
+    public void OnCanceled()
+    {
+        _onCanceled?.Invoke();
     }
 }

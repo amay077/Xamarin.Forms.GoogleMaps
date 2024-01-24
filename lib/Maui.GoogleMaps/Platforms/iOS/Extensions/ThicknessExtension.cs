@@ -1,13 +1,12 @@
 ﻿using System.Runtime.InteropServices;
 using UIKit;
 
-namespace Maui.GoogleMaps.iOS.Extensions
+namespace Maui.GoogleMaps.iOS.Extensions;
+
+internal static class ThicknessExtension
 {
-    internal static class ThicknessExtension
+    public static UIEdgeInsets ToUIEdgeInsets(this Thickness self)
     {
-        public static UIEdgeInsets ToUIEdgeInsets(this Thickness self)
-        {
-            return new UIEdgeInsets((NFloat)self.Top, (NFloat)self.Left, (NFloat)self.Bottom, (NFloat)self.Right);
-        }
+        return new UIEdgeInsets((NFloat)self.Top, (NFloat)self.Left, (NFloat)self.Bottom, (NFloat)self.Right);
     }
 }
