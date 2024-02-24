@@ -5,14 +5,10 @@ about: Suggest an idea for this project
 ---
 
 ### SUMMARY
-```
-// Write a summary of your feature request or suggestion
-```
-### DETAILS
+[Write a summary of your feature request or suggestion]
 
-```
-// Write details/usecases with text, code and images
-```
+### DETAILS
+[Write details/usecases with text, code and images]
 
 ### PLATFORMS
 
