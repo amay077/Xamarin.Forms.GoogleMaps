@@ -21,25 +21,17 @@ about: Create a report to help the community
 - [x] iOS
 
 ### ACTUAL BEHAVIOR
-```
-// Write about of your problem
-```
+[Write about of your problem]
+
 
 ### ACTUAL SCREENSHOTS/STACKTRACE
-
-```
-// Paste stacktrace/screenshots/recordings
-```
+[Paste stacktrace/screenshots/recordings]
 
 ### EXPECTED BEHAVIOR 
-```
-// Write about the behavior what you expected
-```
+[Write about the behavior what you expected]
 
 ### HOW TO REPRODUCE
-```
-// code and steps to reproduce
-```
+[code and steps to reproduce]
 
 1. 
 2. 
